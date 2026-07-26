@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="An interactive atlas of Madrid: population, buildings, elections, income and transport."
+    />
+    <meta name="theme-color" content="#fafaf7" />
+    <meta property="og:title" content="Madrid Interactive Atlas — Daniel Almazán" />
+    <meta
+      property="og:description"
+      content="Explore the city section by section, from population and elections to buildings and transport."
+    />
+    <title>Madrid Interactive Atlas — Daniel Almazán</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#atlas-map">Skip to map</a>
+    <main id="app">
+      <aside class="atlas-panel" aria-label="Atlas controls">
+        <header class="masthead">
+          <a class="wordmark" href="https://danielalmazan.com" aria-label="Daniel Almazán home">
+            <span class="wordmark-mark" aria-hidden="true">DA</span>
+            <span>Daniel Almazán</span>
+          </a>
+          <p class="eyebrow">Civic atlas · Madrid</p>
+          <h1>Read the city,<br /><em>section by section.</em></h1>
+          <p class="dek">
+            Population, buildings, elections, income and the networks that bind Madrid together.
+          </p>
+        </header>
+
+        <nav class="group-tabs" aria-label="Layer groups">
+          <button class="group-tab is-active" data-group="population" type="button">Population</button>
+          <button class="group-tab" data-group="buildings" type="button">Buildings</button>
+          <button class="group-tab" data-group="elections" type="button">Elections</button>
+          <button class="group-tab" data-group="income" type="button">Income</button>
+          <button class="group-tab" data-group="transport" type="button">Transport</button>
+        </nav>
+
+        <section id="layer-controls" class="control-stack" aria-live="polite"></section>
+
+        <section class="legend-panel" aria-label="Map legend">
+          <div class="section-heading">
+            <div>
+              <p class="kicker">Legend</p>
+              <h2 id="legend-title">Population</h2>
+            </div>
+            <span id="legend-date" class="date-chip"></span>
+          </div>
+          <div id="legend" class="legend"></div>
+        </section>
+
+        <section id="feature-panel" class="feature-panel" aria-live="polite">
+          <p class="feature-empty">
+            Select a census section or map feature to see its details.
+          </p>
+        </section>
+
+        <footer class="panel-footer">
+          <button id="about-button" class="text-button" type="button">Sources &amp; methodology</button>
+          <a href="https://danielalmazan.com" class="text-link">Back to portfolio</a>
+        </footer>
+      </aside>
+
+      <section class="map-stage" aria-label="Interactive map region">
+        <div class="map-topbar">
+          <label class="search-control">
+            <span class="visually-hidden">Search districts and neighbourhoods</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" />
+            </svg>
+            <input
+              id="place-search"
+              type="search"
+              autocomplete="off"
+              placeholder="Find a district or neighbourhood"
+              role="combobox"
+              aria-autocomplete="list"
+              aria-controls="search-results"
+              aria-expanded="false"
+            />
+            <kbd>/</kbd>
+          </label>
+          <div id="search-results" class="search-results" role="listbox" hidden></div>
+          <div class="map-actions">
+            <button id="pitch-button" class="icon-button" type="button" aria-pressed="false">
+              <span class="button-icon" aria-hidden="true">3D</span>
+              <span class="button-label">Buildings</span>
+            </button>
+            <button id="reset-button" class="icon-button" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 4v6h6M5.1 15A8 8 0 1 0 6 7.1L4 10" />
+              </svg>
+              <span class="button-label">Reset</span>
+            </button>
+            <button id="share-button" class="icon-button" type="button" aria-label="Share this map view">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4" />
+              </svg>
+              <span class="button-label">Share</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="atlas-map" role="application" aria-label="Map of Madrid" tabindex="0"></div>
+        <div id="map-status" class="map-status" role="status">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>Loading atlas…</span>
+        </div>
+        <button
+          id="sheet-toggle"
+          class="sheet-toggle"
+          type="button"
+          aria-controls="mobile-sheet"
+          aria-expanded="false"
+        >
+          <span class="sheet-handle" aria-hidden="true"></span>
+          <span id="sheet-toggle-label">Population</span>
+        </button>
+      </section>
+    </main>
+
+    <dialog id="about-dialog" class="about-dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">About this project</p>
+          <h2>Sources &amp; methodology</h2>
+        </div>
+        <button id="close-about" class="close-button" type="button" aria-label="Close">×</button>
+      </div>
+      <div id="methodology-content" class="methodology-content"></div>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <noscript>This atlas requires JavaScript to render the interactive map.</noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

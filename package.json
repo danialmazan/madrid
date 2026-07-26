@@ -1,0 +1,30 @@
+{
+  "name": "madrid-interactive-atlas",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "data": "Rscript scripts/00_run_pipeline.R",
+    "data:check": "Rscript scripts/09_validate_outputs.R"
+  },
+  "dependencies": {
+    "maplibre-gl": "^5.7.1",
+    "pmtiles": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "jsdom": "^26.1.0",
+    "lighthouse": "^13.4.1",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.0",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

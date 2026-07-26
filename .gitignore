@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.DS_Store
+.Rhistory
+.RData
+.Rproj.user/
+data/raw/
+data/processed/
+public/data/*.geojson
+public/data/*.csv
+playwright-report/
+test-results/

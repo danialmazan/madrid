@@ -1,0 +1,1045 @@
+[
+  {
+    "id": "district-01",
+    "name": "Centro",
+    "kind": "district",
+    "bbox": [-3.7229538601, 40.4050629477, -3.690455035, 40.4306476683]
+  },
+  {
+    "id": "district-02",
+    "name": "Arganzuela",
+    "kind": "district",
+    "bbox": [-3.7229538601, 40.3823311358, -3.6735198532, 40.4139892906]
+  },
+  {
+    "id": "district-03",
+    "name": "Retiro",
+    "kind": "district",
+    "bbox": [-3.6936390667, 40.394314244, -3.6586954772, 40.4216817192]
+  },
+  {
+    "id": "district-04",
+    "name": "Salamanca",
+    "kind": "district",
+    "bbox": [-3.6930891576, 40.4186743587, -3.6586954772, 40.4446063039]
+  },
+  {
+    "id": "district-05",
+    "name": "Chamartín",
+    "kind": "district",
+    "bbox": [-3.6917858347, 40.4373938491, -3.6606015259, 40.4840556575]
+  },
+  {
+    "id": "district-06",
+    "name": "Tetuán",
+    "kind": "district",
+    "bbox": [-3.7132776131, 40.4462149459, -3.6871224843, 40.4749771603]
+  },
+  {
+    "id": "district-07",
+    "name": "Chamberí",
+    "kind": "district",
+    "bbox": [-3.7199257914, 40.4252623683, -3.6884131352, 40.4471335398]
+  },
+  {
+    "id": "district-08",
+    "name": "Fuencarral - El Pardo",
+    "kind": "district",
+    "bbox": [-3.8889634159, 40.4685141281, -3.6017808478, 40.6432795098]
+  },
+  {
+    "id": "district-09",
+    "name": "Moncloa - Aravaca",
+    "kind": "district",
+    "bbox": [-3.8382569447, 40.3991031, -3.7083074601, 40.4797810119]
+  },
+  {
+    "id": "district-10",
+    "name": "Latina",
+    "kind": "district",
+    "bbox": [-3.8341619491, 40.3586959296, -3.7218228426, 40.4171749698]
+  },
+  {
+    "id": "district-11",
+    "name": "Carabanchel",
+    "kind": "district",
+    "bbox": [-3.7716237102, 40.3572607793, -3.7046407403, 40.4055235549]
+  },
+  {
+    "id": "district-12",
+    "name": "Usera",
+    "kind": "district",
+    "bbox": [-3.7209848726, 40.3612963173, -3.6817360555, 40.3952339817]
+  },
+  {
+    "id": "district-13",
+    "name": "Puente de Vallecas",
+    "kind": "district",
+    "bbox": [-3.6897460621, 40.360678194, -3.6218886854, 40.4063401973]
+  },
+  {
+    "id": "district-14",
+    "name": "Moratalaz",
+    "kind": "district",
+    "bbox": [-3.6652105123, 40.3925621919, -3.6203616246, 40.4186743587]
+  },
+  {
+    "id": "district-15",
+    "name": "Ciudad Lineal",
+    "kind": "district",
+    "bbox": [-3.6744383937, 40.4130602415, -3.6203616246, 40.4841831057]
+  },
+  {
+    "id": "district-16",
+    "name": "Hortaleza",
+    "kind": "district",
+    "bbox": [-3.6734614063, 40.4485762856, -3.6017115253, 40.5130971502]
+  },
+  {
+    "id": "district-17",
+    "name": "Villaverde",
+    "kind": "district",
+    "bbox": [-3.72492634, 40.3200528988, -3.6575136385, 40.3647852505]
+  },
+  {
+    "id": "district-18",
+    "name": "Villa de Vallecas",
+    "kind": "district",
+    "bbox": [-3.681924745, 40.3120647576, -3.5542510157, 40.3908385672]
+  },
+  {
+    "id": "district-19",
+    "name": "Vicálvaro",
+    "kind": "district",
+    "bbox": [-3.6297918554, 40.3600759936, -3.5181257154, 40.42604248]
+  },
+  {
+    "id": "district-20",
+    "name": "San Blas - Canillejas",
+    "kind": "district",
+    "bbox": [-3.648116433, 40.408432224, -3.5311484455, 40.4501684278]
+  },
+  {
+    "id": "district-21",
+    "name": "Barajas",
+    "kind": "district",
+    "bbox": [-3.6279713149, 40.4465576304, -3.5249116799, 40.5124046886]
+  },
+  {
+    "id": "neighbourhood-1",
+    "name": "Palacio",
+    "kind": "neighbourhood",
+    "district": "Centro",
+    "bbox": [-3.7229489, 40.4066676, -3.7059285, 40.4234381]
+  },
+  {
+    "id": "neighbourhood-2",
+    "name": "Embajadores",
+    "kind": "neighbourhood",
+    "district": "Centro",
+    "bbox": [-3.7116786, 40.4050776, -3.6918581, 40.4143078]
+  },
+  {
+    "id": "neighbourhood-3",
+    "name": "Cortes",
+    "kind": "neighbourhood",
+    "district": "Centro",
+    "bbox": [-3.7039184, 40.4090777, -3.6919381, 40.419758]
+  },
+  {
+    "id": "neighbourhood-4",
+    "name": "Justicia",
+    "kind": "neighbourhood",
+    "district": "Centro",
+    "bbox": [-3.7024084, 40.418738, -3.6904481, 40.4290483]
+  },
+  {
+    "id": "neighbourhood-5",
+    "name": "Universidad",
+    "kind": "neighbourhood",
+    "district": "Centro",
+    "bbox": [-3.7162288, 40.420008, -3.7006483, 40.4306583]
+  },
+  {
+    "id": "neighbourhood-6",
+    "name": "Sol",
+    "kind": "neighbourhood",
+    "district": "Centro",
+    "bbox": [-3.7088186, 40.4135178, -3.6992983, 40.420298]
+  },
+  {
+    "id": "neighbourhood-7",
+    "name": "Imperial",
+    "kind": "neighbourhood",
+    "district": "Arganzuela",
+    "bbox": [-3.7229489, 40.3996674, -3.7116786, 40.4139878]
+  },
+  {
+    "id": "neighbourhood-8",
+    "name": "Acacias",
+    "kind": "neighbourhood",
+    "district": "Arganzuela",
+    "bbox": [-3.7148987, 40.3952273, -3.6993383, 40.4066676]
+  },
+  {
+    "id": "neighbourhood-9",
+    "name": "Chopera",
+    "kind": "neighbourhood",
+    "district": "Arganzuela",
+    "bbox": [-3.7046384, 40.3890971, -3.6947482, 40.4010374]
+  },
+  {
+    "id": "neighbourhood-10",
+    "name": "Legazpi",
+    "kind": "neighbourhood",
+    "district": "Arganzuela",
+    "bbox": [-3.6980883, 40.3823369, -3.6764377, 40.3951473]
+  },
+  {
+    "id": "neighbourhood-11",
+    "name": "Delicias",
+    "kind": "neighbourhood",
+    "district": "Arganzuela",
+    "bbox": [-3.6993483, 40.3911471, -3.6796578, 40.4010274]
+  },
+  {
+    "id": "neighbourhood-12",
+    "name": "Palos de la Frontera",
+    "kind": "neighbourhood",
+    "district": "Arganzuela",
+    "bbox": [-3.7025484, 40.4003974, -3.6854879, 40.4075776]
+  },
+  {
+    "id": "neighbourhood-13",
+    "name": "Atocha",
+    "kind": "neighbourhood",
+    "district": "Arganzuela",
+    "bbox": [-3.6930081, 40.3923272, -3.6735176, 40.4084377]
+  },
+  {
+    "id": "neighbourhood-14",
+    "name": "Pacífico",
+    "kind": "neighbourhood",
+    "district": "Retiro",
+    "bbox": [-3.688858, 40.3989574, -3.6702175, 40.4074976]
+  },
+  {
+    "id": "neighbourhood-15",
+    "name": "Adelfas",
+    "kind": "neighbourhood",
+    "district": "Retiro",
+    "bbox": [-3.6767977, 40.3943172, -3.6652174, 40.4066576]
+  },
+  {
+    "id": "neighbourhood-16",
+    "name": "Estrella",
+    "kind": "neighbourhood",
+    "district": "Retiro",
+    "bbox": [-3.6702275, 40.4063376, -3.6586972, 40.4211981]
+  },
+  {
+    "id": "neighbourhood-17",
+    "name": "Ibiza",
+    "kind": "neighbourhood",
+    "district": "Retiro",
+    "bbox": [-3.6799578, 40.4154579, -3.6689975, 40.4216781]
+  },
+  {
+    "id": "neighbourhood-18",
+    "name": "Los Jerónimos",
+    "kind": "neighbourhood",
+    "district": "Retiro",
+    "bbox": [-3.6936381, 40.4063776, -3.6762877, 40.4216581]
+  },
+  {
+    "id": "neighbourhood-19",
+    "name": "Niño Jesús",
+    "kind": "neighbourhood",
+    "district": "Retiro",
+    "bbox": [-3.6788277, 40.4066576, -3.6693675, 40.4166879]
+  },
+  {
+    "id": "neighbourhood-20",
+    "name": "Recoletos",
+    "kind": "neighbourhood",
+    "district": "Salamanca",
+    "bbox": [-3.6930881, 40.419328, -3.6798478, 40.4293883]
+  },
+  {
+    "id": "neighbourhood-21",
+    "name": "Goya",
+    "kind": "neighbourhood",
+    "district": "Salamanca",
+    "bbox": [-3.6803478, 40.4211881, -3.6684875, 40.4289183]
+  },
+  {
+    "id": "neighbourhood-22",
+    "name": "Fuente del Berro",
+    "kind": "neighbourhood",
+    "district": "Salamanca",
+    "bbox": [-3.6689975, 40.418678, -3.6586972, 40.4314284]
+  },
+  {
+    "id": "neighbourhood-23",
+    "name": "Guindalera",
+    "kind": "neighbourhood",
+    "district": "Salamanca",
+    "bbox": [-3.6773977, 40.4281283, -3.6592272, 40.4446088]
+  },
+  {
+    "id": "neighbourhood-24",
+    "name": "Lista",
+    "kind": "neighbourhood",
+    "district": "Salamanca",
+    "bbox": [-3.6798378, 40.4283683, -3.6691075, 40.4374485]
+  },
+  {
+    "id": "neighbourhood-25",
+    "name": "Castellana",
+    "kind": "neighbourhood",
+    "district": "Salamanca",
+    "bbox": [-3.6907181, 40.4289283, -3.6791278, 40.4379786]
+  },
+  {
+    "id": "neighbourhood-26",
+    "name": "El Viso",
+    "kind": "neighbourhood",
+    "district": "Chamartín",
+    "bbox": [-3.6917881, 40.4374485, -3.6775777, 40.452129]
+  },
+  {
+    "id": "neighbourhood-27",
+    "name": "Prosperidad",
+    "kind": "neighbourhood",
+    "district": "Chamartín",
+    "bbox": [-3.6791278, 40.4373885, -3.6605973, 40.453159]
+  },
+  {
+    "id": "neighbourhood-28",
+    "name": "Ciudad Jardín",
+    "kind": "neighbourhood",
+    "district": "Chamartín",
+    "bbox": [-3.6786977, 40.4416987, -3.6649174, 40.452479]
+  },
+  {
+    "id": "neighbourhood-29",
+    "name": "Hispanoamérica",
+    "kind": "neighbourhood",
+    "district": "Chamartín",
+    "bbox": [-3.6906981, 40.451629, -3.6631273, 40.4600292]
+  },
+  {
+    "id": "neighbourhood-30",
+    "name": "Nueva España",
+    "kind": "neighbourhood",
+    "district": "Chamartín",
+    "bbox": [-3.6900281, 40.4584392, -3.6649374, 40.4677695]
+  },
+  {
+    "id": "neighbourhood-31",
+    "name": "Castilla",
+    "kind": "neighbourhood",
+    "district": "Chamartín",
+    "bbox": [-3.689338, 40.4660394, -3.6684075, 40.4840299]
+  },
+  {
+    "id": "neighbourhood-32",
+    "name": "Bellas Vistas",
+    "kind": "neighbourhood",
+    "district": "Tetuán",
+    "bbox": [-3.7132687, 40.4468488, -3.7029184, 40.4576592]
+  },
+  {
+    "id": "neighbourhood-33",
+    "name": "Cuatro Caminos",
+    "kind": "neighbourhood",
+    "district": "Tetuán",
+    "bbox": [-3.7039484, 40.4462088, -3.6903081, 40.4574991]
+  },
+  {
+    "id": "neighbourhood-34",
+    "name": "Castillejos",
+    "kind": "neighbourhood",
+    "district": "Tetuán",
+    "bbox": [-3.7014784, 40.4561391, -3.689348, 40.4660394]
+  },
+  {
+    "id": "neighbourhood-35",
+    "name": "Almenara",
+    "kind": "neighbourhood",
+    "district": "Tetuán",
+    "bbox": [-3.7021384, 40.4647294, -3.687118, 40.4749897]
+  },
+  {
+    "id": "neighbourhood-36",
+    "name": "Valdeacederas",
+    "kind": "neighbourhood",
+    "district": "Tetuán",
+    "bbox": [-3.7132787, 40.4605992, -3.6944482, 40.4737696]
+  },
+  {
+    "id": "neighbourhood-37",
+    "name": "Berruguete",
+    "kind": "neighbourhood",
+    "district": "Tetuán",
+    "bbox": [-3.7114986, 40.454019, -3.6983883, 40.4639993]
+  },
+  {
+    "id": "neighbourhood-38",
+    "name": "Gaztambide",
+    "kind": "neighbourhood",
+    "district": "Chamberí",
+    "bbox": [-3.7184088, 40.4301983, -3.7111286, 40.4392286]
+  },
+  {
+    "id": "neighbourhood-39",
+    "name": "Arapiles",
+    "kind": "neighbourhood",
+    "district": "Chamberí",
+    "bbox": [-3.7118586, 40.4296083, -3.7042384, 40.4389186]
+  },
+  {
+    "id": "neighbourhood-40",
+    "name": "Trafalgar",
+    "kind": "neighbourhood",
+    "district": "Chamberí",
+    "bbox": [-3.7058085, 40.4276382, -3.6957582, 40.4386786]
+  },
+  {
+    "id": "neighbourhood-41",
+    "name": "Almagro",
+    "kind": "neighbourhood",
+    "district": "Chamberí",
+    "bbox": [-3.7002583, 40.4252582, -3.688418, 40.4384886]
+  },
+  {
+    "id": "neighbourhood-42",
+    "name": "Ríos Rosas",
+    "kind": "neighbourhood",
+    "district": "Chamberí",
+    "bbox": [-3.7042384, 40.4379786, -3.6907181, 40.4468588]
+  },
+  {
+    "id": "neighbourhood-43",
+    "name": "Vallehermoso",
+    "kind": "neighbourhood",
+    "district": "Chamberí",
+    "bbox": [-3.7199289, 40.4386786, -3.7039484, 40.4471288]
+  },
+  {
+    "id": "neighbourhood-44",
+    "name": "El Pardo",
+    "kind": "neighbourhood",
+    "district": "Fuencarral - El Pardo",
+    "bbox": [-3.8888434, 40.4691795, -3.6018257, 40.6433648]
+  },
+  {
+    "id": "neighbourhood-45",
+    "name": "Fuentelarreina",
+    "kind": "neighbourhood",
+    "district": "Fuencarral - El Pardo",
+    "bbox": [-3.7517797, 40.4701195, -3.7320192, 40.4905201]
+  },
+  {
+    "id": "neighbourhood-46",
+    "name": "Peñagrande",
+    "kind": "neighbourhood",
+    "district": "Fuencarral - El Pardo",
+    "bbox": [-3.7392894, 40.4696295, -3.7126387, 40.48698]
+  },
+  {
+    "id": "neighbourhood-47",
+    "name": "Pilar",
+    "kind": "neighbourhood",
+    "district": "Fuencarral - El Pardo",
+    "bbox": [-3.7164788, 40.4685095, -3.7020884, 40.4856]
+  },
+  {
+    "id": "neighbourhood-48",
+    "name": "La Paz",
+    "kind": "neighbourhood",
+    "district": "Fuencarral - El Pardo",
+    "bbox": [-3.7093186, 40.4737696, -3.6850779, 40.4900901]
+  },
+  {
+    "id": "neighbourhood-49",
+    "name": "Valverde",
+    "kind": "neighbourhood",
+    "district": "Fuencarral - El Pardo",
+    "bbox": [-3.7009283, 40.4822599, -3.6576072, 40.520031]
+  },
+  {
+    "id": "neighbourhood-50",
+    "name": "Mirasierra",
+    "kind": "neighbourhood",
+    "district": "Fuencarral - El Pardo",
+    "bbox": [-3.7420395, 40.4830799, -3.6961882, 40.5132608]
+  },
+  {
+    "id": "neighbourhood-51",
+    "name": "El Goloso",
+    "kind": "neighbourhood",
+    "district": "Fuencarral - El Pardo",
+    "bbox": [-3.7394194, 40.5015105, -3.6628673, 40.5785628]
+  },
+  {
+    "id": "neighbourhood-52",
+    "name": "Casa de Campo",
+    "kind": "neighbourhood",
+    "district": "Moncloa - Aravaca",
+    "bbox": [-3.7814005, 40.3991074, -3.7147687, 40.4495289]
+  },
+  {
+    "id": "neighbourhood-53",
+    "name": "Argüelles",
+    "kind": "neighbourhood",
+    "district": "Moncloa - Aravaca",
+    "bbox": [-3.725209, 40.420288, -3.7108986, 40.4357385]
+  },
+  {
+    "id": "neighbourhood-54",
+    "name": "Ciudad Universitaria",
+    "kind": "neighbourhood",
+    "district": "Moncloa - Aravaca",
+    "bbox": [-3.7658701, 40.4341984, -3.7083085, 40.4797998]
+  },
+  {
+    "id": "neighbourhood-55",
+    "name": "Valdezarza",
+    "kind": "neighbourhood",
+    "district": "Moncloa - Aravaca",
+    "bbox": [-3.7285291, 40.4574891, -3.7084685, 40.4729596]
+  },
+  {
+    "id": "neighbourhood-56",
+    "name": "Valdemarín",
+    "kind": "neighbourhood",
+    "district": "Moncloa - Aravaca",
+    "bbox": [-3.8020811, 40.4612293, -3.76202, 40.4745997]
+  },
+  {
+    "id": "neighbourhood-57",
+    "name": "El Plantío",
+    "kind": "neighbourhood",
+    "district": "Moncloa - Aravaca",
+    "bbox": [-3.838272, 40.4590592, -3.798961, 40.4795798]
+  },
+  {
+    "id": "neighbourhood-58",
+    "name": "Aravaca",
+    "kind": "neighbourhood",
+    "district": "Moncloa - Aravaca",
+    "bbox": [-3.8014711, 40.4423287, -3.7572199, 40.4656294]
+  },
+  {
+    "id": "neighbourhood-59",
+    "name": "Los Cármenes",
+    "kind": "neighbourhood",
+    "district": "Latina",
+    "bbox": [-3.7448595, 40.3930072, -3.7218189, 40.4087477]
+  },
+  {
+    "id": "neighbourhood-60",
+    "name": "Puerta del Ángel",
+    "kind": "neighbourhood",
+    "district": "Latina",
+    "bbox": [-3.7422995, 40.4038275, -3.7218089, 40.4171779]
+  },
+  {
+    "id": "neighbourhood-61",
+    "name": "Lucero",
+    "kind": "neighbourhood",
+    "district": "Latina",
+    "bbox": [-3.76081, 40.3950673, -3.7410694, 40.4095677]
+  },
+  {
+    "id": "neighbourhood-62",
+    "name": "Aluche",
+    "kind": "neighbourhood",
+    "district": "Latina",
+    "bbox": [-3.7715603, 40.3835269, -3.7408894, 40.4028775]
+  },
+  {
+    "id": "neighbourhood-63",
+    "name": "Campamento",
+    "kind": "neighbourhood",
+    "district": "Latina",
+    "bbox": [-3.8341419, 40.3637763, -3.7643601, 40.4003174]
+  },
+  {
+    "id": "neighbourhood-64",
+    "name": "Cuatro Vientos",
+    "kind": "neighbourhood",
+    "district": "Latina",
+    "bbox": [-3.8069312, 40.3587062, -3.7618, 40.3816569]
+  },
+  {
+    "id": "neighbourhood-65",
+    "name": "Águilas",
+    "kind": "neighbourhood",
+    "district": "Latina",
+    "bbox": [-3.7877007, 40.3726266, -3.7559498, 40.3938372]
+  },
+  {
+    "id": "neighbourhood-66",
+    "name": "Comillas",
+    "kind": "neighbourhood",
+    "district": "Carabanchel",
+    "bbox": [-3.7175888, 40.385277, -3.7046484, 40.3996674]
+  },
+  {
+    "id": "neighbourhood-67",
+    "name": "Opañel",
+    "kind": "neighbourhood",
+    "district": "Carabanchel",
+    "bbox": [-3.7322292, 40.385237, -3.7150987, 40.3977173]
+  },
+  {
+    "id": "neighbourhood-68",
+    "name": "San Isidro",
+    "kind": "neighbourhood",
+    "district": "Carabanchel",
+    "bbox": [-3.7408794, 40.3885171, -3.7148987, 40.4055376]
+  },
+  {
+    "id": "neighbourhood-69",
+    "name": "Vista Alegre",
+    "kind": "neighbourhood",
+    "district": "Carabanchel",
+    "bbox": [-3.7593099, 40.3758267, -3.7317692, 40.3929972]
+  },
+  {
+    "id": "neighbourhood-70",
+    "name": "Puerta Bonita",
+    "kind": "neighbourhood",
+    "district": "Carabanchel",
+    "bbox": [-3.7507897, 40.3728366, -3.7276991, 40.3882171]
+  },
+  {
+    "id": "neighbourhood-71",
+    "name": "Buenavista",
+    "kind": "neighbourhood",
+    "district": "Carabanchel",
+    "bbox": [-3.7716203, 40.3572561, -3.7197689, 40.3785568]
+  },
+  {
+    "id": "neighbourhood-72",
+    "name": "Abrantes",
+    "kind": "neighbourhood",
+    "district": "Carabanchel",
+    "bbox": [-3.7371693, 40.3731966, -3.7175488, 40.386267]
+  },
+  {
+    "id": "neighbourhood-73",
+    "name": "Orcasitas",
+    "kind": "neighbourhood",
+    "district": "Usera",
+    "bbox": [-3.7209889, 40.3636463, -3.7031084, 40.3738366]
+  },
+  {
+    "id": "neighbourhood-74",
+    "name": "Orcasur",
+    "kind": "neighbourhood",
+    "district": "Usera",
+    "bbox": [-3.7048985, 40.3635463, -3.689748, 40.3841069]
+  },
+  {
+    "id": "neighbourhood-75",
+    "name": "San Fermín",
+    "kind": "neighbourhood",
+    "district": "Usera",
+    "bbox": [-3.6949482, 40.3612962, -3.6817178, 40.3823169]
+  },
+  {
+    "id": "neighbourhood-76",
+    "name": "Almendrales",
+    "kind": "neighbourhood",
+    "district": "Usera",
+    "bbox": [-3.7057485, 40.3785068, -3.6921481, 40.3890971]
+  },
+  {
+    "id": "neighbourhood-77",
+    "name": "Moscardó",
+    "kind": "neighbourhood",
+    "district": "Usera",
+    "bbox": [-3.7175588, 40.385127, -3.6980883, 40.3952373]
+  },
+  {
+    "id": "neighbourhood-78",
+    "name": "Zofío",
+    "kind": "neighbourhood",
+    "district": "Usera",
+    "bbox": [-3.7197689, 40.3733466, -3.7112386, 40.385277]
+  },
+  {
+    "id": "neighbourhood-79",
+    "name": "Pradolongo",
+    "kind": "neighbourhood",
+    "district": "Usera",
+    "bbox": [-3.7123187, 40.3711565, -3.7000783, 40.385847]
+  },
+  {
+    "id": "neighbourhood-80",
+    "name": "Entrevías",
+    "kind": "neighbourhood",
+    "district": "Puente de Vallecas",
+    "bbox": [-3.689748, 40.3606862, -3.652347, 40.3943372]
+  },
+  {
+    "id": "neighbourhood-81",
+    "name": "San Diego",
+    "kind": "neighbourhood",
+    "district": "Puente de Vallecas",
+    "bbox": [-3.6735176, 40.3806468, -3.6623673, 40.3983274]
+  },
+  {
+    "id": "neighbourhood-82",
+    "name": "Palomeras Bajas",
+    "kind": "neighbourhood",
+    "district": "Puente de Vallecas",
+    "bbox": [-3.6669574, 40.3760267, -3.652837, 40.3947273]
+  },
+  {
+    "id": "neighbourhood-83",
+    "name": "Palomeras Sureste",
+    "kind": "neighbourhood",
+    "district": "Puente de Vallecas",
+    "bbox": [-3.6543871, 40.3760167, -3.6218862, 40.3947973]
+  },
+  {
+    "id": "neighbourhood-84",
+    "name": "Portazgo",
+    "kind": "neighbourhood",
+    "district": "Puente de Vallecas",
+    "bbox": [-3.6540471, 40.3814269, -3.6399767, 40.3985374]
+  },
+  {
+    "id": "neighbourhood-85",
+    "name": "Numancia",
+    "kind": "neighbourhood",
+    "district": "Puente de Vallecas",
+    "bbox": [-3.6692575, 40.3915872, -3.6470569, 40.4063176]
+  },
+  {
+    "id": "neighbourhood-86",
+    "name": "Pavones",
+    "kind": "neighbourhood",
+    "district": "Moratalaz",
+    "bbox": [-3.6399767, 40.3925672, -3.6252763, 40.4043975]
+  },
+  {
+    "id": "neighbourhood-87",
+    "name": "Horcajo",
+    "kind": "neighbourhood",
+    "district": "Moratalaz",
+    "bbox": [-3.6342865, 40.4036575, -3.6203562, 40.4143778]
+  },
+  {
+    "id": "neighbourhood-88",
+    "name": "Marroquina",
+    "kind": "neighbourhood",
+    "district": "Moratalaz",
+    "bbox": [-3.6539471, 40.4037575, -3.6275864, 40.4160979]
+  },
+  {
+    "id": "neighbourhood-89",
+    "name": "Media Legua",
+    "kind": "neighbourhood",
+    "district": "Moratalaz",
+    "bbox": [-3.6640974, 40.4056176, -3.650137, 40.418668]
+  },
+  {
+    "id": "neighbourhood-90",
+    "name": "Fontarrón",
+    "kind": "neighbourhood",
+    "district": "Moratalaz",
+    "bbox": [-3.6652074, 40.3947973, -3.6361666, 40.4085277]
+  },
+  {
+    "id": "neighbourhood-91",
+    "name": "Vinateros",
+    "kind": "neighbourhood",
+    "district": "Moratalaz",
+    "bbox": [-3.651037, 40.4009574, -3.6342865, 40.4098277]
+  },
+  {
+    "id": "neighbourhood-92",
+    "name": "Ventas",
+    "kind": "neighbourhood",
+    "district": "Ciudad Lineal",
+    "bbox": [-3.6608273, 40.4143778, -3.6267763, 40.4331184]
+  },
+  {
+    "id": "neighbourhood-93",
+    "name": "Pueblo Nuevo",
+    "kind": "neighbourhood",
+    "district": "Ciudad Lineal",
+    "bbox": [-3.6482369, 40.4130678, -3.6203662, 40.4378986]
+  },
+  {
+    "id": "neighbourhood-94",
+    "name": "Quintana",
+    "kind": "neighbourhood",
+    "district": "Ciudad Lineal",
+    "bbox": [-3.6558871, 40.4321184, -3.6354666, 40.4425887]
+  },
+  {
+    "id": "neighbourhood-95",
+    "name": "La Concepción",
+    "kind": "neighbourhood",
+    "district": "Ciudad Lineal",
+    "bbox": [-3.6608073, 40.4314184, -3.6383567, 40.4469288]
+  },
+  {
+    "id": "neighbourhood-96",
+    "name": "San Pascual",
+    "kind": "neighbourhood",
+    "district": "Ciudad Lineal",
+    "bbox": [-3.6606073, 40.4359785, -3.6449068, 40.4494489]
+  },
+  {
+    "id": "neighbourhood-97",
+    "name": "San Juan Bautista",
+    "kind": "neighbourhood",
+    "district": "Ciudad Lineal",
+    "bbox": [-3.6631273, 40.4445988, -3.6481169, 40.4569091]
+  },
+  {
+    "id": "neighbourhood-98",
+    "name": "Colina",
+    "kind": "neighbourhood",
+    "district": "Ciudad Lineal",
+    "bbox": [-3.6649274, 40.453159, -3.6542071, 40.4633693]
+  },
+  {
+    "id": "neighbourhood-99",
+    "name": "Atalaya",
+    "kind": "neighbourhood",
+    "district": "Ciudad Lineal",
+    "bbox": [-3.6684075, 40.4600292, -3.6620373, 40.4674895]
+  },
+  {
+    "id": "neighbourhood-100",
+    "name": "Costillares",
+    "kind": "neighbourhood",
+    "district": "Ciudad Lineal",
+    "bbox": [-3.6744376, 40.4666994, -3.6593772, 40.48418]
+  },
+  {
+    "id": "neighbourhood-101",
+    "name": "Palomas",
+    "kind": "neighbourhood",
+    "district": "Hortaleza",
+    "bbox": [-3.6266463, 40.4495389, -3.6044857, 40.4581492]
+  },
+  {
+    "id": "neighbourhood-102",
+    "name": "Piovera",
+    "kind": "neighbourhood",
+    "district": "Hortaleza",
+    "bbox": [-3.6542171, 40.4485589, -3.6173861, 40.4626893]
+  },
+  {
+    "id": "neighbourhood-103",
+    "name": "Canillas",
+    "kind": "neighbourhood",
+    "district": "Hortaleza",
+    "bbox": [-3.6603273, 40.4569191, -3.6234263, 40.4694895]
+  },
+  {
+    "id": "neighbourhood-104",
+    "name": "Pinar del Rey",
+    "kind": "neighbourhood",
+    "district": "Hortaleza",
+    "bbox": [-3.6634473, 40.4621893, -3.6279664, 40.4812599]
+  },
+  {
+    "id": "neighbourhood-105",
+    "name": "Apóstol Santiago",
+    "kind": "neighbourhood",
+    "district": "Hortaleza",
+    "bbox": [-3.6657674, 40.4674794, -3.650017, 40.4829199]
+  },
+  {
+    "id": "neighbourhood-106",
+    "name": "Valdefuentes",
+    "kind": "neighbourhood",
+    "district": "Hortaleza",
+    "bbox": [-3.6734576, 40.4684795, -3.6017157, 40.5130908]
+  },
+  {
+    "id": "neighbourhood-107",
+    "name": "Villaverde Alto - Casco Histórico de Villaverde",
+    "kind": "neighbourhood",
+    "district": "Villaverde",
+    "bbox": [-3.724929, 40.320055, -3.6922781, 40.3647863]
+  },
+  {
+    "id": "neighbourhood-108",
+    "name": "San Cristóbal",
+    "kind": "neighbourhood",
+    "district": "Villaverde",
+    "bbox": [-3.6929681, 40.3327354, -3.6837479, 40.3502359]
+  },
+  {
+    "id": "neighbourhood-109",
+    "name": "Butarque",
+    "kind": "neighbourhood",
+    "district": "Villaverde",
+    "bbox": [-3.6925481, 40.320495, -3.6574872, 40.3597162]
+  },
+  {
+    "id": "neighbourhood-110",
+    "name": "Los Rosales",
+    "kind": "neighbourhood",
+    "district": "Villaverde",
+    "bbox": [-3.6940082, 40.3458358, -3.6809478, 40.3645263]
+  },
+  {
+    "id": "neighbourhood-111",
+    "name": "Ángeles",
+    "kind": "neighbourhood",
+    "district": "Villaverde",
+    "bbox": [-3.7070685, 40.3456358, -3.6929681, 40.3645263]
+  },
+  {
+    "id": "neighbourhood-112",
+    "name": "Casco Histórico de Vallecas",
+    "kind": "neighbourhood",
+    "district": "Villa de Vallecas",
+    "bbox": [-3.6819278, 40.3121448, -3.5542244, 40.3833069]
+  },
+  {
+    "id": "neighbourhood-113",
+    "name": "Santa Eugenia",
+    "kind": "neighbourhood",
+    "district": "Villa de Vallecas",
+    "bbox": [-3.6253263, 40.3759467, -3.5978256, 40.3908571]
+  },
+  {
+    "id": "neighbourhood-114",
+    "name": "Ensanche de Vallecas",
+    "kind": "neighbourhood",
+    "district": "Villa de Vallecas",
+    "bbox": [-3.6325265, 40.352006, -3.576225, 40.3792468]
+  },
+  {
+    "id": "neighbourhood-115",
+    "name": "Casco Histórico de Vicálvaro",
+    "kind": "neighbourhood",
+    "district": "Vicálvaro",
+    "bbox": [-3.6239463, 40.3600762, -3.5337138, 40.4260382]
+  },
+  {
+    "id": "neighbourhood-116",
+    "name": "Valdebernardo",
+    "kind": "neighbourhood",
+    "district": "Vicálvaro",
+    "bbox": [-3.6297964, 40.387547, -3.6055558, 40.4061776]
+  },
+  {
+    "id": "neighbourhood-117",
+    "name": "Valderrivas",
+    "kind": "neighbourhood",
+    "district": "Vicálvaro",
+    "bbox": [-3.6098759, 40.3925172, -3.5936055, 40.4046476]
+  },
+  {
+    "id": "neighbourhood-118",
+    "name": "El Cañaveral",
+    "kind": "neighbourhood",
+    "district": "Vicálvaro",
+    "bbox": [-3.5855552, 40.3893771, -3.5181534, 40.420088]
+  },
+  {
+    "id": "neighbourhood-119",
+    "name": "Simancas",
+    "kind": "neighbourhood",
+    "district": "San Blas - Canillejas",
+    "bbox": [-3.6380266, 40.4244782, -3.612176, 40.4436987]
+  },
+  {
+    "id": "neighbourhood-120",
+    "name": "Hellín",
+    "kind": "neighbourhood",
+    "district": "San Blas - Canillejas",
+    "bbox": [-3.6257263, 40.4257682, -3.6109859, 40.4345985]
+  },
+  {
+    "id": "neighbourhood-121",
+    "name": "Amposta",
+    "kind": "neighbourhood",
+    "district": "San Blas - Canillejas",
+    "bbox": [-3.6284064, 40.4221181, -3.615066, 40.4295383]
+  },
+  {
+    "id": "neighbourhood-122",
+    "name": "Arcos",
+    "kind": "neighbourhood",
+    "district": "San Blas - Canillejas",
+    "bbox": [-3.6265963, 40.4130878, -3.6108059, 40.4290183]
+  },
+  {
+    "id": "neighbourhood-123",
+    "name": "Rosas",
+    "kind": "neighbourhood",
+    "district": "San Blas - Canillejas",
+    "bbox": [-3.612186, 40.4083777, -3.5641447, 40.4498889]
+  },
+  {
+    "id": "neighbourhood-124",
+    "name": "Rejas",
+    "kind": "neighbourhood",
+    "district": "San Blas - Canillejas",
+    "bbox": [-3.6033857, 40.4379386, -3.5311138, 40.4501689]
+  },
+  {
+    "id": "neighbourhood-125",
+    "name": "Canillejas",
+    "kind": "neighbourhood",
+    "district": "San Blas - Canillejas",
+    "bbox": [-3.6199362, 40.4346085, -3.6024057, 40.4496989]
+  },
+  {
+    "id": "neighbourhood-126",
+    "name": "El Salvador",
+    "kind": "neighbourhood",
+    "district": "San Blas - Canillejas",
+    "bbox": [-3.6481169, 40.4385786, -3.6161261, 40.4498089]
+  },
+  {
+    "id": "neighbourhood-127",
+    "name": "Alameda de Osuna",
+    "kind": "neighbourhood",
+    "district": "Barajas",
+    "bbox": [-3.6077558, 40.4496489, -3.577905, 40.4653394]
+  },
+  {
+    "id": "neighbourhood-128",
+    "name": "Aeropuerto",
+    "kind": "neighbourhood",
+    "district": "Barajas",
+    "bbox": [-3.6019057, 40.4465488, -3.5248636, 40.5124108]
+  },
+  {
+    "id": "neighbourhood-129",
+    "name": "Casco Histórico de Barajas",
+    "kind": "neighbourhood",
+    "district": "Barajas",
+    "bbox": [-3.5823651, 40.4674594, -3.5742149, 40.4795898]
+  },
+  {
+    "id": "neighbourhood-130",
+    "name": "Timón",
+    "kind": "neighbourhood",
+    "district": "Barajas",
+    "bbox": [-3.6258963, 40.4676795, -3.5805451, 40.48502]
+  },
+  {
+    "id": "neighbourhood-131",
+    "name": "Corralejos",
+    "kind": "neighbourhood",
+    "district": "Barajas",
+    "bbox": [-3.6279664, 40.452759, -3.5822551, 40.4725296]
+  }
+]

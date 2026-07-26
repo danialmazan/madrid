@@ -1,0 +1,221 @@
+{
+  "validated_at": "2026-07-26T14:44:43Z",
+  "passed": true,
+  "counts": {
+    "manifest_sources": 54,
+    "manifest_layers": 40,
+    "pmtiles_archives": 25,
+    "building_footprints": 124329,
+    "building_height_polygons": 490298
+  },
+  "population": {
+    "source_residents": 3510354,
+    "joined_residents": 3510354,
+    "coverage": 1
+  },
+  "elections": [
+    {
+      "election": "general",
+      "difference": {
+        "census": 0,
+        "votes_cast": 0,
+        "valid_votes": 0,
+        "blank_votes": 0,
+        "candidate_votes": 0
+      },
+      "sections": 2450
+    },
+    {
+      "election": "local",
+      "difference": {
+        "census": 0,
+        "votes_cast": 0,
+        "valid_votes": 0,
+        "blank_votes": 0,
+        "candidate_votes": 0
+      },
+      "sections": 2450
+    },
+    {
+      "election": "assembly",
+      "difference": {
+        "census": 0,
+        "votes_cast": 0,
+        "valid_votes": 0,
+        "blank_votes": 0,
+        "candidate_votes": 0
+      },
+      "sections": 2450
+    }
+  ],
+  "archives": [
+    {
+      "name": "buildings-01.pmtiles",
+      "bytes": 5985617,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-02.pmtiles",
+      "bytes": 3150419,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-03.pmtiles",
+      "bytes": 2583897,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-04.pmtiles",
+      "bytes": 4945074,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-05.pmtiles",
+      "bytes": 5004472,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-06.pmtiles",
+      "bytes": 5280192,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-07.pmtiles",
+      "bytes": 4446291,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-08.pmtiles",
+      "bytes": 8029118,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-09.pmtiles",
+      "bytes": 8361965,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-10.pmtiles",
+      "bytes": 5491812,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-11.pmtiles",
+      "bytes": 6767579,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-12.pmtiles",
+      "bytes": 3639825,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-13.pmtiles",
+      "bytes": 6048778,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-14.pmtiles",
+      "bytes": 1476077,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-15.pmtiles",
+      "bytes": 5245124,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-16.pmtiles",
+      "bytes": 6659285,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-17.pmtiles",
+      "bytes": 3373297,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-18.pmtiles",
+      "bytes": 2915292,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-19.pmtiles",
+      "bytes": 2280532,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-20.pmtiles",
+      "bytes": 5239109,
+      "under_95_mb": true
+    },
+    {
+      "name": "buildings-21.pmtiles",
+      "bytes": 2653350,
+      "under_95_mb": true
+    },
+    {
+      "name": "sections-2023.pmtiles",
+      "bytes": 5199786,
+      "under_95_mb": true
+    },
+    {
+      "name": "sections-2025.pmtiles",
+      "bytes": 1570654,
+      "under_95_mb": true
+    },
+    {
+      "name": "sections-2026.pmtiles",
+      "bytes": 2039880,
+      "under_95_mb": true
+    },
+    {
+      "name": "transport.pmtiles",
+      "bytes": 2870143,
+      "under_95_mb": true
+    }
+  ],
+  "public_artifact_bytes": 111467843,
+  "licences": [
+    {
+      "title": "Padrón municipal de habitantes",
+      "licence": "Madrid open-data reuse terms",
+      "url": "https://datos.madrid.es/dataset/200076-0-padron/resource/200076-2-padron-csv/download/200076_20260714_062859.csv"
+    },
+    {
+      "title": "Censo anual de población",
+      "licence": "INE standard reuse conditions",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/69211.csv"
+    },
+    {
+      "title": "Catastro INSPIRE Buildings",
+      "licence": "Catastro data-access conditions",
+      "url": "https://www.catastro.hacienda.gob.es/INSPIRE/Buildings/28/28900-MADRID/A.ES.SDGC.BU.28900.zip"
+    },
+    {
+      "title": "Alturas de edificios",
+      "licence": "Madrid open-data reuse terms",
+      "url": "https://geoportal.madrid.es/fsdescargas/IDEAM_WBGEOPORTAL/CARTOGRAFIA/CARTOGRAFIA_ACTUALIZADA/ALTURAS_EDIFICIOS/ALTURAS_EDIFICIOS.ZIP"
+    },
+    {
+      "title": "2023 election results by polling table",
+      "licence": "Public-sector information reuse terms",
+      "url": "https://www.madrid.es/UnidadesDescentralizadas/UDCEstadistica/Nuevaweb/Elecciones%20y%20Participaci%C3%B3n%20Ciudadana/Elecciones/Resultados%20electorales/Congreso/Congreso%202023/Mesas/G1340123_prov.xlsx"
+    },
+    {
+      "title": "Household Income Distribution Atlas",
+      "licence": "INE standard reuse conditions",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31097.csv"
+    },
+    {
+      "title": "CRTM open transport data",
+      "licence": "CRTM open-data licence",
+      "url": "https://transparencia.crtm.es/presupuestos-contratos-y-gastos/datos-abiertos/"
+    },
+    {
+      "title": "BiciMAD stations",
+      "licence": "Madrid open-data reuse terms",
+      "url": "https://datos.emtmadrid.es/dataset/5fcc0945-2cbd-46c3-801a-6a83f4167c11/resource/105ce5df-793f-4e0a-a88e-5d3b3f024a5d/download/bikestationbicimad_geojson.json"
+    }
+  ]
+}

@@ -1,0 +1,4745 @@
+{
+  "generatedAt": "2026-07-26T14:36:47Z",
+  "version": "1.0.0",
+  "defaultLayer": "population-total",
+  "sources": [
+    {
+      "id": "sections-2026",
+      "url": "data/sections-2026.pmtiles",
+      "sourceLayer": "sections_2026",
+      "attribution": "Madrid City Council padrón · Madrid current census sections",
+      "minzoom": 0,
+      "maxzoom": 16
+    },
+    {
+      "id": "sections-2025",
+      "url": "data/sections-2025.pmtiles",
+      "sourceLayer": "sections_2025",
+      "attribution": "INE Population and Housing Census · INE census sections",
+      "minzoom": 0,
+      "maxzoom": 16
+    },
+    {
+      "id": "sections-2023",
+      "url": "data/sections-2023.pmtiles",
+      "sourceLayer": "sections_2023",
+      "attribution": "INE ADRH · Madrid/Interior election results · INE census sections",
+      "minzoom": 0,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-01",
+      "url": "data/buildings-01.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-01",
+      "url": "data/buildings-01.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-02",
+      "url": "data/buildings-02.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-02",
+      "url": "data/buildings-02.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-03",
+      "url": "data/buildings-03.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-03",
+      "url": "data/buildings-03.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-04",
+      "url": "data/buildings-04.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-04",
+      "url": "data/buildings-04.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-05",
+      "url": "data/buildings-05.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-05",
+      "url": "data/buildings-05.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-06",
+      "url": "data/buildings-06.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-06",
+      "url": "data/buildings-06.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-07",
+      "url": "data/buildings-07.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-07",
+      "url": "data/buildings-07.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-08",
+      "url": "data/buildings-08.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-08",
+      "url": "data/buildings-08.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-09",
+      "url": "data/buildings-09.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-09",
+      "url": "data/buildings-09.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-10",
+      "url": "data/buildings-10.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-10",
+      "url": "data/buildings-10.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-11",
+      "url": "data/buildings-11.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-11",
+      "url": "data/buildings-11.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-12",
+      "url": "data/buildings-12.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-12",
+      "url": "data/buildings-12.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-13",
+      "url": "data/buildings-13.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-13",
+      "url": "data/buildings-13.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-14",
+      "url": "data/buildings-14.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-14",
+      "url": "data/buildings-14.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-15",
+      "url": "data/buildings-15.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-15",
+      "url": "data/buildings-15.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-16",
+      "url": "data/buildings-16.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-16",
+      "url": "data/buildings-16.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-17",
+      "url": "data/buildings-17.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-17",
+      "url": "data/buildings-17.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-18",
+      "url": "data/buildings-18.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-18",
+      "url": "data/buildings-18.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-19",
+      "url": "data/buildings-19.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-19",
+      "url": "data/buildings-19.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-20",
+      "url": "data/buildings-20.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-20",
+      "url": "data/buildings-20.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-age-21",
+      "url": "data/buildings-21.pmtiles",
+      "sourceLayer": "building_age",
+      "attribution": "Catastro INSPIRE Buildings",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "building-height-21",
+      "url": "data/buildings-21.pmtiles",
+      "sourceLayer": "building_height",
+      "attribution": "Ayuntamiento de Madrid · estimated building heights",
+      "minzoom": 12,
+      "maxzoom": 16
+    },
+    {
+      "id": "metro-lines",
+      "url": "data/transport.pmtiles",
+      "sourceLayer": "metro_lines",
+      "attribution": "CRTM open data · EMT Madrid · BiciMAD",
+      "minzoom": 8,
+      "maxzoom": 16
+    },
+    {
+      "id": "metro-stops",
+      "url": "data/transport.pmtiles",
+      "sourceLayer": "metro_stops",
+      "attribution": "CRTM open data · EMT Madrid · BiciMAD",
+      "minzoom": 8,
+      "maxzoom": 16
+    },
+    {
+      "id": "metro_ligero-lines",
+      "url": "data/transport.pmtiles",
+      "sourceLayer": "metro_ligero_lines",
+      "attribution": "CRTM open data · EMT Madrid · BiciMAD",
+      "minzoom": 8,
+      "maxzoom": 16
+    },
+    {
+      "id": "metro_ligero-stops",
+      "url": "data/transport.pmtiles",
+      "sourceLayer": "metro_ligero_stops",
+      "attribution": "CRTM open data · EMT Madrid · BiciMAD",
+      "minzoom": 8,
+      "maxzoom": 16
+    },
+    {
+      "id": "cercanias-lines",
+      "url": "data/transport.pmtiles",
+      "sourceLayer": "cercanias_lines",
+      "attribution": "CRTM open data · EMT Madrid · BiciMAD",
+      "minzoom": 8,
+      "maxzoom": 16
+    },
+    {
+      "id": "cercanias-stops",
+      "url": "data/transport.pmtiles",
+      "sourceLayer": "cercanias_stops",
+      "attribution": "CRTM open data · EMT Madrid · BiciMAD",
+      "minzoom": 8,
+      "maxzoom": 16
+    },
+    {
+      "id": "emt-lines",
+      "url": "data/transport.pmtiles",
+      "sourceLayer": "emt_lines",
+      "attribution": "CRTM open data · EMT Madrid · BiciMAD",
+      "minzoom": 8,
+      "maxzoom": 16
+    },
+    {
+      "id": "emt-stops",
+      "url": "data/transport.pmtiles",
+      "sourceLayer": "emt_stops",
+      "attribution": "CRTM open data · EMT Madrid · BiciMAD",
+      "minzoom": 8,
+      "maxzoom": 16
+    },
+    {
+      "id": "bicimad-stops",
+      "url": "data/transport.pmtiles",
+      "sourceLayer": "bicimad_stops",
+      "attribution": "CRTM open data · EMT Madrid · BiciMAD",
+      "minzoom": 8,
+      "maxzoom": 16
+    }
+  ],
+  "layers": [
+    {
+      "id": "population-total",
+      "group": "population",
+      "kind": "choropleth",
+      "label": "Resident population",
+      "shortLabel": "Total residents",
+      "description": "Residents registered in the municipal padrón.",
+      "unit": "residents",
+      "referenceDate": "2026-07-01",
+      "geography": "2026 census sections",
+      "sourceIds": [
+        "sections-2026"
+      ],
+      "property": "population_total",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        500,
+        1000,
+        1500,
+        2200,
+        3500,
+        6000
+      ],
+      "format": "integer",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "population_total",
+          "label": "Residents",
+          "format": "integer"
+        },
+        {
+          "property": "population_density_km2",
+          "label": "Residents / km²",
+          "format": "integer"
+        },
+        {
+          "property": "under18_pct",
+          "label": "Under 18",
+          "format": "percent"
+        },
+        {
+          "property": "age65plus_pct",
+          "label": "65 and older",
+          "format": "percent"
+        },
+        {
+          "property": "foreign_citizenship_pct",
+          "label": "Foreign citizenship",
+          "format": "percent"
+        }
+      ]
+    },
+    {
+      "id": "population-density",
+      "group": "population",
+      "kind": "choropleth",
+      "label": "Population density",
+      "shortLabel": "Density",
+      "description": "Registered residents per square kilometre of section area.",
+      "unit": "residents / km²",
+      "referenceDate": "2026-07-01",
+      "geography": "2026 census sections",
+      "sourceIds": [
+        "sections-2026"
+      ],
+      "property": "population_density_km2",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        5000,
+        10000,
+        20000,
+        35000,
+        55000,
+        90000
+      ],
+      "format": "integer",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "population_total",
+          "label": "Residents",
+          "format": "integer"
+        },
+        {
+          "property": "population_density_km2",
+          "label": "Residents / km²",
+          "format": "integer"
+        },
+        {
+          "property": "under18_pct",
+          "label": "Under 18",
+          "format": "percent"
+        },
+        {
+          "property": "age65plus_pct",
+          "label": "65 and older",
+          "format": "percent"
+        },
+        {
+          "property": "foreign_citizenship_pct",
+          "label": "Foreign citizenship",
+          "format": "percent"
+        }
+      ]
+    },
+    {
+      "id": "population-under18",
+      "group": "population",
+      "kind": "choropleth",
+      "label": "Residents under 18",
+      "shortLabel": "Under 18",
+      "description": "Share of registered residents aged 0–17.",
+      "unit": "%",
+      "referenceDate": "2026-07-01",
+      "geography": "2026 census sections",
+      "sourceIds": [
+        "sections-2026"
+      ],
+      "property": "under18_pct",
+      "palette": [
+        "#edf5ed",
+        "#cce6d9",
+        "#8dceb4",
+        "#43aa8b",
+        "#247a67",
+        "#135348"
+      ],
+      "breaks": [
+        0,
+        10,
+        14,
+        18,
+        22,
+        27,
+        40
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "population_total",
+          "label": "Residents",
+          "format": "integer"
+        },
+        {
+          "property": "population_density_km2",
+          "label": "Residents / km²",
+          "format": "integer"
+        },
+        {
+          "property": "under18_pct",
+          "label": "Under 18",
+          "format": "percent"
+        },
+        {
+          "property": "age65plus_pct",
+          "label": "65 and older",
+          "format": "percent"
+        },
+        {
+          "property": "foreign_citizenship_pct",
+          "label": "Foreign citizenship",
+          "format": "percent"
+        }
+      ]
+    },
+    {
+      "id": "population-age65plus",
+      "group": "population",
+      "kind": "choropleth",
+      "label": "Residents aged 65+",
+      "shortLabel": "65 and older",
+      "description": "Share of registered residents aged 65 and older.",
+      "unit": "%",
+      "referenceDate": "2026-07-01",
+      "geography": "2026 census sections",
+      "sourceIds": [
+        "sections-2026"
+      ],
+      "property": "age65plus_pct",
+      "palette": [
+        "#fff2e8",
+        "#ffd2b6",
+        "#f8a56d",
+        "#fb7b2d",
+        "#d94c08",
+        "#963005"
+      ],
+      "breaks": [
+        0,
+        10,
+        15,
+        20,
+        25,
+        32,
+        50
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "population_total",
+          "label": "Residents",
+          "format": "integer"
+        },
+        {
+          "property": "population_density_km2",
+          "label": "Residents / km²",
+          "format": "integer"
+        },
+        {
+          "property": "under18_pct",
+          "label": "Under 18",
+          "format": "percent"
+        },
+        {
+          "property": "age65plus_pct",
+          "label": "65 and older",
+          "format": "percent"
+        },
+        {
+          "property": "foreign_citizenship_pct",
+          "label": "Foreign citizenship",
+          "format": "percent"
+        }
+      ]
+    },
+    {
+      "id": "population-foreign-citizenship",
+      "group": "population",
+      "kind": "choropleth",
+      "label": "Foreign citizenship",
+      "shortLabel": "Foreign citizenship",
+      "description": "Share of padrón residents without Spanish citizenship.",
+      "unit": "%",
+      "referenceDate": "2026-07-01",
+      "geography": "2026 census sections",
+      "sourceIds": [
+        "sections-2026"
+      ],
+      "property": "foreign_citizenship_pct",
+      "palette": [
+        "#f5eee9",
+        "#dfcdbf",
+        "#bf9f8a",
+        "#956e55",
+        "#694a38",
+        "#3f2b21"
+      ],
+      "breaks": [
+        0,
+        5,
+        10,
+        15,
+        22,
+        32,
+        55
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "population_total",
+          "label": "Residents",
+          "format": "integer"
+        },
+        {
+          "property": "population_density_km2",
+          "label": "Residents / km²",
+          "format": "integer"
+        },
+        {
+          "property": "under18_pct",
+          "label": "Under 18",
+          "format": "percent"
+        },
+        {
+          "property": "age65plus_pct",
+          "label": "65 and older",
+          "format": "percent"
+        },
+        {
+          "property": "foreign_citizenship_pct",
+          "label": "Foreign citizenship",
+          "format": "percent"
+        }
+      ]
+    },
+    {
+      "id": "population-foreign-born",
+      "group": "population",
+      "kind": "choropleth",
+      "label": "Foreign-born residents",
+      "shortLabel": "Foreign-born",
+      "description": "Share of residents born outside Spain. This annual census measure has a separate reference date.",
+      "unit": "%",
+      "referenceDate": "2025",
+      "geography": "2025 census sections",
+      "sourceIds": [
+        "sections-2025"
+      ],
+      "property": "foreign_born_pct",
+      "palette": [
+        "#f5eee9",
+        "#dfcdbf",
+        "#bf9f8a",
+        "#956e55",
+        "#694a38",
+        "#3f2b21"
+      ],
+      "breaks": [
+        0,
+        8,
+        15,
+        22,
+        30,
+        40,
+        65
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "foreign_born_pct",
+          "label": "Foreign-born",
+          "format": "percent"
+        },
+        {
+          "property": "section_id",
+          "label": "Section ID",
+          "format": "text"
+        }
+      ]
+    },
+    {
+      "id": "building-age",
+      "group": "buildings",
+      "kind": "fill",
+      "label": "Earliest construction year",
+      "shortLabel": "Construction year",
+      "description": "Earliest year in Catastro’s recorded construction interval. The full interval is shown in details.",
+      "unit": "year",
+      "referenceDate": "2026-02-20",
+      "geography": "Building footprints",
+      "sourceIds": [
+        "building-age-01",
+        "building-age-02",
+        "building-age-03",
+        "building-age-04",
+        "building-age-05",
+        "building-age-06",
+        "building-age-07",
+        "building-age-08",
+        "building-age-09",
+        "building-age-10",
+        "building-age-11",
+        "building-age-12",
+        "building-age-13",
+        "building-age-14",
+        "building-age-15",
+        "building-age-16",
+        "building-age-17",
+        "building-age-18",
+        "building-age-19",
+        "building-age-20",
+        "building-age-21"
+      ],
+      "property": "construction_start_year",
+      "palette": [
+        "#184e77",
+        "#52b69a",
+        "#d9ed92",
+        "#f9c74f",
+        "#f9844a",
+        "#c1121f"
+      ],
+      "breaks": [
+        1700,
+        1900,
+        1940,
+        1960,
+        1980,
+        2000,
+        2027
+      ],
+      "format": "year",
+      "minzoom": 12,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "construction_start_year",
+          "label": "Earliest year",
+          "format": "year"
+        },
+        {
+          "property": "construction_end_year",
+          "label": "Latest year",
+          "format": "year"
+        },
+        {
+          "property": "construction_year_range",
+          "label": "Recorded range",
+          "format": "text"
+        },
+        {
+          "property": "use",
+          "label": "Use",
+          "format": "text"
+        }
+      ]
+    },
+    {
+      "id": "building-height",
+      "group": "buildings",
+      "kind": "fill-extrusion",
+      "label": "Estimated building height",
+      "shortLabel": "Height",
+      "description": "Estimated height above the footprint elevation; switch on 3D to extrude polygons.",
+      "unit": "m",
+      "referenceDate": "2026-06-18",
+      "geography": "Municipal height polygons",
+      "sourceIds": [
+        "building-height-01",
+        "building-height-02",
+        "building-height-03",
+        "building-height-04",
+        "building-height-05",
+        "building-height-06",
+        "building-height-07",
+        "building-height-08",
+        "building-height-09",
+        "building-height-10",
+        "building-height-11",
+        "building-height-12",
+        "building-height-13",
+        "building-height-14",
+        "building-height-15",
+        "building-height-16",
+        "building-height-17",
+        "building-height-18",
+        "building-height-19",
+        "building-height-20",
+        "building-height-21"
+      ],
+      "property": "height_m",
+      "palette": [
+        "#fff2e8",
+        "#ffd2b6",
+        "#f8a56d",
+        "#fb7b2d",
+        "#d94c08",
+        "#963005"
+      ],
+      "breaks": [
+        0,
+        4,
+        8,
+        14,
+        24,
+        40,
+        120
+      ],
+      "format": "decimal",
+      "minzoom": 12,
+      "maxzoom": 16,
+      "opacity": 0.84,
+      "tooltip": [
+        {
+          "property": "height_m",
+          "label": "Height",
+          "format": "decimal",
+          "suffix": " m"
+        },
+        {
+          "property": "ground_elevation_m",
+          "label": "Ground elevation",
+          "format": "decimal",
+          "suffix": " m"
+        },
+        {
+          "property": "source_method",
+          "label": "Method",
+          "format": "text"
+        },
+        {
+          "property": "source_date",
+          "label": "Survey date",
+          "format": "text"
+        }
+      ]
+    },
+    {
+      "id": "election-general-turnout",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "General election turnout",
+      "shortLabel": "Turnout",
+      "description": "Ballots cast as a share of the resident electoral census.",
+      "unit": "%",
+      "referenceDate": "2023-07-23",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "turnout_pct_general",
+      "palette": [
+        "#edf5ed",
+        "#cce6d9",
+        "#8dceb4",
+        "#43aa8b",
+        "#247a67",
+        "#135348"
+      ],
+      "breaks": [
+        0,
+        45,
+        55,
+        65,
+        72,
+        80,
+        100
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_general",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_general",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_general",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_general",
+          "label": "Leading party",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "election": "general",
+        "party": "turnout"
+      }
+    },
+    {
+      "id": "election-general-leading",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "General election leading party",
+      "shortLabel": "Leading party",
+      "description": "Candidacy receiving the most votes in each section.",
+      "unit": "party",
+      "referenceDate": "2023-07-23",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "leading_party_general",
+      "palette": [
+        "PP",
+        "#1D84CE",
+        "PSOE",
+        "#E32322",
+        "VOX",
+        "#63A53A",
+        "SUMAR",
+        "#E65A91",
+        "MÁS MADRID",
+        "#16A085",
+        "MAS MADRID",
+        "#16A085",
+        "MM",
+        "#16A085",
+        "MM-VQ",
+        "#16A085",
+        "PODEMOS-IU-AV",
+        "#6B3FA0",
+        "PODEMOS-IU-AV-MADRID",
+        "#6B3FA0"
+      ],
+      "breaks": [],
+      "format": "text",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_general",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_general",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_general",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_general",
+          "label": "Leading party",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "election": "general",
+        "party": "leading"
+      }
+    },
+    {
+      "id": "election-general-pp",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "General election · PP",
+      "shortLabel": "PP",
+      "description": "Party votes divided by valid votes, including blank ballots.",
+      "unit": "%",
+      "referenceDate": "2023-07-23",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "share_pp_general",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        5,
+        10,
+        20,
+        35,
+        50,
+        75
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_general",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_general",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_general",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_general",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "share_pp_general",
+          "label": "PP share",
+          "format": "percent"
+        }
+      ],
+      "control": {
+        "election": "general",
+        "party": "PP"
+      }
+    },
+    {
+      "id": "election-general-psoe",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "General election · PSOE",
+      "shortLabel": "PSOE",
+      "description": "Party votes divided by valid votes, including blank ballots.",
+      "unit": "%",
+      "referenceDate": "2023-07-23",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "share_psoe_general",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        5,
+        10,
+        20,
+        35,
+        50,
+        75
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_general",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_general",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_general",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_general",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "share_psoe_general",
+          "label": "PSOE share",
+          "format": "percent"
+        }
+      ],
+      "control": {
+        "election": "general",
+        "party": "PSOE"
+      }
+    },
+    {
+      "id": "election-general-vox",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "General election · VOX",
+      "shortLabel": "VOX",
+      "description": "Party votes divided by valid votes, including blank ballots.",
+      "unit": "%",
+      "referenceDate": "2023-07-23",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "share_vox_general",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        5,
+        10,
+        20,
+        35,
+        50,
+        75
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_general",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_general",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_general",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_general",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "share_vox_general",
+          "label": "VOX share",
+          "format": "percent"
+        }
+      ],
+      "control": {
+        "election": "general",
+        "party": "VOX"
+      }
+    },
+    {
+      "id": "election-general-sumar",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "General election · SUMAR",
+      "shortLabel": "SUMAR",
+      "description": "Party votes divided by valid votes, including blank ballots.",
+      "unit": "%",
+      "referenceDate": "2023-07-23",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "share_sumar_general",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        5,
+        10,
+        20,
+        35,
+        50,
+        75
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_general",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_general",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_general",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_general",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "share_sumar_general",
+          "label": "SUMAR share",
+          "format": "percent"
+        }
+      ],
+      "control": {
+        "election": "general",
+        "party": "SUMAR"
+      }
+    },
+    {
+      "id": "election-local-turnout",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid local election turnout",
+      "shortLabel": "Turnout",
+      "description": "Ballots cast as a share of the resident electoral census.",
+      "unit": "%",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "turnout_pct_local",
+      "palette": [
+        "#edf5ed",
+        "#cce6d9",
+        "#8dceb4",
+        "#43aa8b",
+        "#247a67",
+        "#135348"
+      ],
+      "breaks": [
+        0,
+        45,
+        55,
+        65,
+        72,
+        80,
+        100
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_local",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_local",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_local",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_local",
+          "label": "Leading party",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "election": "local",
+        "party": "turnout"
+      }
+    },
+    {
+      "id": "election-local-leading",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid local election leading party",
+      "shortLabel": "Leading party",
+      "description": "Candidacy receiving the most votes in each section.",
+      "unit": "party",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "leading_party_local",
+      "palette": [
+        "PP",
+        "#1D84CE",
+        "PSOE",
+        "#E32322",
+        "VOX",
+        "#63A53A",
+        "SUMAR",
+        "#E65A91",
+        "MÁS MADRID",
+        "#16A085",
+        "MAS MADRID",
+        "#16A085",
+        "MM",
+        "#16A085",
+        "MM-VQ",
+        "#16A085",
+        "PODEMOS-IU-AV",
+        "#6B3FA0",
+        "PODEMOS-IU-AV-MADRID",
+        "#6B3FA0"
+      ],
+      "breaks": [],
+      "format": "text",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_local",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_local",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_local",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_local",
+          "label": "Leading party",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "election": "local",
+        "party": "leading"
+      }
+    },
+    {
+      "id": "election-local-pp",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid local election · PP",
+      "shortLabel": "PP",
+      "description": "Party votes divided by valid votes, including blank ballots.",
+      "unit": "%",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "share_pp_local",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        5,
+        10,
+        20,
+        35,
+        50,
+        75
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_local",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_local",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_local",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_local",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "share_pp_local",
+          "label": "PP share",
+          "format": "percent"
+        }
+      ],
+      "control": {
+        "election": "local",
+        "party": "PP"
+      }
+    },
+    {
+      "id": "election-local-psoe",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid local election · PSOE",
+      "shortLabel": "PSOE",
+      "description": "Party votes divided by valid votes, including blank ballots.",
+      "unit": "%",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "share_psoe_local",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        5,
+        10,
+        20,
+        35,
+        50,
+        75
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_local",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_local",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_local",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_local",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "share_psoe_local",
+          "label": "PSOE share",
+          "format": "percent"
+        }
+      ],
+      "control": {
+        "election": "local",
+        "party": "PSOE"
+      }
+    },
+    {
+      "id": "election-local-vox",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid local election · VOX",
+      "shortLabel": "VOX",
+      "description": "Party votes divided by valid votes, including blank ballots.",
+      "unit": "%",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "share_vox_local",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        5,
+        10,
+        20,
+        35,
+        50,
+        75
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_local",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_local",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_local",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_local",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "share_vox_local",
+          "label": "VOX share",
+          "format": "percent"
+        }
+      ],
+      "control": {
+        "election": "local",
+        "party": "VOX"
+      }
+    },
+    {
+      "id": "election-local-mas-madrid",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid local election · Más Madrid",
+      "shortLabel": "Más Madrid",
+      "description": "Party votes divided by valid votes, including blank ballots.",
+      "unit": "%",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "share_mas_madrid_local",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        5,
+        10,
+        20,
+        35,
+        50,
+        75
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_local",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_local",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_local",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_local",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "share_mas_madrid_local",
+          "label": "Más Madrid share",
+          "format": "percent"
+        }
+      ],
+      "control": {
+        "election": "local",
+        "party": "Más Madrid"
+      }
+    },
+    {
+      "id": "election-local-podemos-iu-av",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid local election · Podemos-IU-AV",
+      "shortLabel": "Podemos-IU-AV",
+      "description": "Party votes divided by valid votes, including blank ballots.",
+      "unit": "%",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "share_podemos_iu_av_local",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        5,
+        10,
+        20,
+        35,
+        50,
+        75
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_local",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_local",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_local",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_local",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "share_podemos_iu_av_local",
+          "label": "Podemos-IU-AV share",
+          "format": "percent"
+        }
+      ],
+      "control": {
+        "election": "local",
+        "party": "Podemos-IU-AV"
+      }
+    },
+    {
+      "id": "election-assembly-turnout",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid Assembly election turnout",
+      "shortLabel": "Turnout",
+      "description": "Ballots cast as a share of the resident electoral census.",
+      "unit": "%",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "turnout_pct_assembly",
+      "palette": [
+        "#edf5ed",
+        "#cce6d9",
+        "#8dceb4",
+        "#43aa8b",
+        "#247a67",
+        "#135348"
+      ],
+      "breaks": [
+        0,
+        45,
+        55,
+        65,
+        72,
+        80,
+        100
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_assembly",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_assembly",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_assembly",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_assembly",
+          "label": "Leading party",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "election": "assembly",
+        "party": "turnout"
+      }
+    },
+    {
+      "id": "election-assembly-leading",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid Assembly election leading party",
+      "shortLabel": "Leading party",
+      "description": "Candidacy receiving the most votes in each section.",
+      "unit": "party",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "leading_party_assembly",
+      "palette": [
+        "PP",
+        "#1D84CE",
+        "PSOE",
+        "#E32322",
+        "VOX",
+        "#63A53A",
+        "SUMAR",
+        "#E65A91",
+        "MÁS MADRID",
+        "#16A085",
+        "MAS MADRID",
+        "#16A085",
+        "MM",
+        "#16A085",
+        "MM-VQ",
+        "#16A085",
+        "PODEMOS-IU-AV",
+        "#6B3FA0",
+        "PODEMOS-IU-AV-MADRID",
+        "#6B3FA0"
+      ],
+      "breaks": [],
+      "format": "text",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_assembly",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_assembly",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_assembly",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_assembly",
+          "label": "Leading party",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "election": "assembly",
+        "party": "leading"
+      }
+    },
+    {
+      "id": "election-assembly-pp",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid Assembly election · PP",
+      "shortLabel": "PP",
+      "description": "Party votes divided by valid votes, including blank ballots.",
+      "unit": "%",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "share_pp_assembly",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        5,
+        10,
+        20,
+        35,
+        50,
+        75
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_assembly",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_assembly",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_assembly",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_assembly",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "share_pp_assembly",
+          "label": "PP share",
+          "format": "percent"
+        }
+      ],
+      "control": {
+        "election": "assembly",
+        "party": "PP"
+      }
+    },
+    {
+      "id": "election-assembly-psoe",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid Assembly election · PSOE",
+      "shortLabel": "PSOE",
+      "description": "Party votes divided by valid votes, including blank ballots.",
+      "unit": "%",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "share_psoe_assembly",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        5,
+        10,
+        20,
+        35,
+        50,
+        75
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_assembly",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_assembly",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_assembly",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_assembly",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "share_psoe_assembly",
+          "label": "PSOE share",
+          "format": "percent"
+        }
+      ],
+      "control": {
+        "election": "assembly",
+        "party": "PSOE"
+      }
+    },
+    {
+      "id": "election-assembly-vox",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid Assembly election · VOX",
+      "shortLabel": "VOX",
+      "description": "Party votes divided by valid votes, including blank ballots.",
+      "unit": "%",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "share_vox_assembly",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        5,
+        10,
+        20,
+        35,
+        50,
+        75
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_assembly",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_assembly",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_assembly",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_assembly",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "share_vox_assembly",
+          "label": "VOX share",
+          "format": "percent"
+        }
+      ],
+      "control": {
+        "election": "assembly",
+        "party": "VOX"
+      }
+    },
+    {
+      "id": "election-assembly-mas-madrid",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid Assembly election · Más Madrid",
+      "shortLabel": "Más Madrid",
+      "description": "Party votes divided by valid votes, including blank ballots.",
+      "unit": "%",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "share_mas_madrid_assembly",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        5,
+        10,
+        20,
+        35,
+        50,
+        75
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_assembly",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_assembly",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_assembly",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_assembly",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "share_mas_madrid_assembly",
+          "label": "Más Madrid share",
+          "format": "percent"
+        }
+      ],
+      "control": {
+        "election": "assembly",
+        "party": "Más Madrid"
+      }
+    },
+    {
+      "id": "election-assembly-podemos-iu-av",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid Assembly election · Podemos-IU-AV",
+      "shortLabel": "Podemos-IU-AV",
+      "description": "Party votes divided by valid votes, including blank ballots.",
+      "unit": "%",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "share_podemos_iu_av_assembly",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        0,
+        5,
+        10,
+        20,
+        35,
+        50,
+        75
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "turnout_pct_assembly",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_assembly",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_assembly",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_assembly",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "share_podemos_iu_av_assembly",
+          "label": "Podemos-IU-AV share",
+          "format": "percent"
+        }
+      ],
+      "control": {
+        "election": "assembly",
+        "party": "Podemos-IU-AV"
+      }
+    },
+    {
+      "id": "income-per-person",
+      "group": "income",
+      "kind": "choropleth",
+      "label": "Net income per person",
+      "shortLabel": "Income per person",
+      "description": "Mean annual net income per resident.",
+      "unit": "€ / person",
+      "referenceDate": "2023",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "income_per_person_eur",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        5000,
+        10000,
+        14000,
+        18000,
+        24000,
+        34000,
+        70000
+      ],
+      "format": "currency",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "income_per_person_eur",
+          "label": "Net income / person",
+          "format": "currency"
+        },
+        {
+          "property": "below_60_median_pct",
+          "label": "Below 60% median",
+          "format": "percent"
+        },
+        {
+          "property": "gini",
+          "label": "Gini coefficient",
+          "format": "decimal"
+        }
+      ]
+    },
+    {
+      "id": "income-below-median",
+      "group": "income",
+      "kind": "choropleth",
+      "label": "Population below 60% of median",
+      "shortLabel": "Below 60% median",
+      "description": "Share of people below 60% of the national median equivalised income.",
+      "unit": "%",
+      "referenceDate": "2023",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "below_60_median_pct",
+      "palette": [
+        "#fff2e8",
+        "#ffd2b6",
+        "#f8a56d",
+        "#fb7b2d",
+        "#d94c08",
+        "#963005"
+      ],
+      "breaks": [
+        0,
+        8,
+        14,
+        20,
+        28,
+        38,
+        65
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "income_per_person_eur",
+          "label": "Net income / person",
+          "format": "currency"
+        },
+        {
+          "property": "below_60_median_pct",
+          "label": "Below 60% median",
+          "format": "percent"
+        },
+        {
+          "property": "gini",
+          "label": "Gini coefficient",
+          "format": "decimal"
+        }
+      ]
+    },
+    {
+      "id": "income-gini",
+      "group": "income",
+      "kind": "choropleth",
+      "label": "Gini coefficient",
+      "shortLabel": "Gini coefficient",
+      "description": "Income inequality: higher values indicate a less equal distribution.",
+      "unit": "index",
+      "referenceDate": "2023",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "gini",
+      "palette": [
+        "#f5eee9",
+        "#dfcdbf",
+        "#bf9f8a",
+        "#956e55",
+        "#694a38",
+        "#3f2b21"
+      ],
+      "breaks": [
+        15,
+        22,
+        27,
+        32,
+        38,
+        45,
+        65
+      ],
+      "format": "decimal",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "income_per_person_eur",
+          "label": "Net income / person",
+          "format": "currency"
+        },
+        {
+          "property": "below_60_median_pct",
+          "label": "Below 60% median",
+          "format": "percent"
+        },
+        {
+          "property": "gini",
+          "label": "Gini coefficient",
+          "format": "decimal"
+        }
+      ]
+    },
+    {
+      "id": "transport-metro-lines",
+      "group": "transport",
+      "kind": "transport-line",
+      "label": "Metro lines",
+      "shortLabel": "Metro lines",
+      "description": "Static network snapshot.",
+      "unit": "route",
+      "referenceDate": "2026-07-26",
+      "geography": "Regional transport network",
+      "sourceIds": [
+        "metro-lines"
+      ],
+      "property": "route_short_name",
+      "palette": [],
+      "breaks": [],
+      "format": "text",
+      "minzoom": 9,
+      "maxzoom": 16,
+      "opacity": 0.9,
+      "tooltip": [
+        {
+          "property": "route_short_name",
+          "label": "Line",
+          "format": "text"
+        },
+        {
+          "property": "route_long_name",
+          "label": "Route",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "transportMode": "metro"
+      },
+      "lineColor": "#145C9E",
+      "lineWidth": 1.8
+    },
+    {
+      "id": "transport-metro-stops",
+      "group": "transport",
+      "kind": "transport-stop",
+      "label": "Metro stops",
+      "shortLabel": "Metro stops",
+      "description": "Stops appear only at useful zoom levels.",
+      "unit": "stop",
+      "referenceDate": "2026-07-26",
+      "geography": "Regional transport network",
+      "sourceIds": [
+        "metro-stops"
+      ],
+      "property": "stop_name",
+      "palette": [],
+      "breaks": [],
+      "format": "text",
+      "minzoom": 12,
+      "maxzoom": 16,
+      "opacity": 0.96,
+      "tooltip": [
+        {
+          "property": "stop_name",
+          "label": "Stop",
+          "format": "text"
+        },
+        {
+          "property": "route_short_name",
+          "label": "Line",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "transportMode": "metro"
+      },
+      "lineColor": "#145C9E"
+    },
+    {
+      "id": "transport-metro_ligero-lines",
+      "group": "transport",
+      "kind": "transport-line",
+      "label": "Metro Ligero lines",
+      "shortLabel": "Metro Ligero lines",
+      "description": "Static network snapshot.",
+      "unit": "route",
+      "referenceDate": "2026-07-26",
+      "geography": "Regional transport network",
+      "sourceIds": [
+        "metro_ligero-lines"
+      ],
+      "property": "route_short_name",
+      "palette": [],
+      "breaks": [],
+      "format": "text",
+      "minzoom": 10,
+      "maxzoom": 16,
+      "opacity": 0.9,
+      "tooltip": [
+        {
+          "property": "route_short_name",
+          "label": "Line",
+          "format": "text"
+        },
+        {
+          "property": "route_long_name",
+          "label": "Route",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "transportMode": "metro-ligero"
+      },
+      "lineColor": "#43AA8B",
+      "lineWidth": 1.8
+    },
+    {
+      "id": "transport-metro_ligero-stops",
+      "group": "transport",
+      "kind": "transport-stop",
+      "label": "Metro Ligero stops",
+      "shortLabel": "Metro Ligero stops",
+      "description": "Stops appear only at useful zoom levels.",
+      "unit": "stop",
+      "referenceDate": "2026-07-26",
+      "geography": "Regional transport network",
+      "sourceIds": [
+        "metro_ligero-stops"
+      ],
+      "property": "stop_name",
+      "palette": [],
+      "breaks": [],
+      "format": "text",
+      "minzoom": 12,
+      "maxzoom": 16,
+      "opacity": 0.96,
+      "tooltip": [
+        {
+          "property": "stop_name",
+          "label": "Stop",
+          "format": "text"
+        },
+        {
+          "property": "route_short_name",
+          "label": "Line",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "transportMode": "metro-ligero"
+      },
+      "lineColor": "#43AA8B"
+    },
+    {
+      "id": "transport-cercanias-lines",
+      "group": "transport",
+      "kind": "transport-line",
+      "label": "Cercanías lines",
+      "shortLabel": "Cercanías lines",
+      "description": "Static network snapshot.",
+      "unit": "route",
+      "referenceDate": "2026-07-26",
+      "geography": "Regional transport network",
+      "sourceIds": [
+        "cercanias-lines"
+      ],
+      "property": "route_short_name",
+      "palette": [],
+      "breaks": [],
+      "format": "text",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.9,
+      "tooltip": [
+        {
+          "property": "route_short_name",
+          "label": "Line",
+          "format": "text"
+        },
+        {
+          "property": "route_long_name",
+          "label": "Route",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "transportMode": "cercanias"
+      },
+      "lineColor": "#C21F39",
+      "lineWidth": 1.8
+    },
+    {
+      "id": "transport-cercanias-stops",
+      "group": "transport",
+      "kind": "transport-stop",
+      "label": "Cercanías stops",
+      "shortLabel": "Cercanías stops",
+      "description": "Stops appear only at useful zoom levels.",
+      "unit": "stop",
+      "referenceDate": "2026-07-26",
+      "geography": "Regional transport network",
+      "sourceIds": [
+        "cercanias-stops"
+      ],
+      "property": "stop_name",
+      "palette": [],
+      "breaks": [],
+      "format": "text",
+      "minzoom": 12,
+      "maxzoom": 16,
+      "opacity": 0.96,
+      "tooltip": [
+        {
+          "property": "stop_name",
+          "label": "Stop",
+          "format": "text"
+        },
+        {
+          "property": "route_short_name",
+          "label": "Line",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "transportMode": "cercanias"
+      },
+      "lineColor": "#C21F39"
+    },
+    {
+      "id": "transport-emt-lines",
+      "group": "transport",
+      "kind": "transport-line",
+      "label": "EMT lines",
+      "shortLabel": "EMT lines",
+      "description": "Static network snapshot.",
+      "unit": "route",
+      "referenceDate": "2026-07-26",
+      "geography": "Regional transport network",
+      "sourceIds": [
+        "emt-lines"
+      ],
+      "property": "route_short_name",
+      "palette": [],
+      "breaks": [],
+      "format": "text",
+      "minzoom": 11,
+      "maxzoom": 16,
+      "opacity": 0.9,
+      "tooltip": [
+        {
+          "property": "route_short_name",
+          "label": "Line",
+          "format": "text"
+        },
+        {
+          "property": "route_long_name",
+          "label": "Route",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "transportMode": "emt",
+        "routeProperty": "route_short_name",
+        "routes": [
+          {
+            "value": "001",
+            "label": "001 · Estacion de Atocha - Moncloa"
+          },
+          {
+            "value": "1",
+            "label": "1 · Plaza de Cristo Rey - Prosperidad"
+          },
+          {
+            "value": "002",
+            "label": "002 · Puerta Toledo - Argüelles"
+          },
+          {
+            "value": "2",
+            "label": "2 · Plaza de Manuel Becerra - Avenida Reina Victoria"
+          },
+          {
+            "value": "3",
+            "label": "3 · Puerta de Toledo - Plaza de San Amaro"
+          },
+          {
+            "value": "4",
+            "label": "4 · Plaza de Ciudad Lineal - Puerta de Arganda"
+          },
+          {
+            "value": "5",
+            "label": "5 · Puerta del Sol/sevilla - Estacion de Chamartin"
+          },
+          {
+            "value": "6",
+            "label": "6 · Plaza Tirso de Molina - Orcasitas"
+          },
+          {
+            "value": "7",
+            "label": "7 · Plaza de Alonso Martinez - Manoteras"
+          },
+          {
+            "value": "8",
+            "label": "8 · Plaza de Legazpi - Valdebernardo"
+          },
+          {
+            "value": "9",
+            "label": "9 · Puerta del Sol/sevilla - Hortaleza"
+          },
+          {
+            "value": "10",
+            "label": "10 · Plaza de Cibeles - Palomeras"
+          },
+          {
+            "value": "11",
+            "label": "11 · Marques de Viana - Barrio Blanco"
+          },
+          {
+            "value": "12",
+            "label": "12 · Plaza de Cristo Rey - Paseo Marques de Zafra"
+          },
+          {
+            "value": "14",
+            "label": "14 · Plaza de Conde de Casal - Avenida de Pio XII"
+          },
+          {
+            "value": "15",
+            "label": "15 · Puerta del Sol/sevilla - la Elipa"
+          },
+          {
+            "value": "16",
+            "label": "16 · Moncloa - Avenida de Pio XII"
+          },
+          {
+            "value": "17",
+            "label": "17 · Plaza Mayor - Colonia Parque de Europa"
+          },
+          {
+            "value": "18",
+            "label": "18 · Plaza Mayor - Villaverde Cruce"
+          },
+          {
+            "value": "19",
+            "label": "19 · Plaza de Cataluña - Plaza de Legazpi"
+          },
+          {
+            "value": "20",
+            "label": "20 · Puerta del Sol/sevilla - Pavones"
+          },
+          {
+            "value": "21",
+            "label": "21 · Paseo del Pintor Rosales - Barrio el Salvador"
+          },
+          {
+            "value": "22",
+            "label": "22 · Plaza de Legazpi - Villaverde Alto"
+          },
+          {
+            "value": "23",
+            "label": "23 · Plaza Mayor - Villaverde Cruce"
+          },
+          {
+            "value": "24",
+            "label": "24 · Estacion de Atocha - Estacion el Pozo"
+          },
+          {
+            "value": "25",
+            "label": "25 · Plaza de España - Casa de Campo"
+          },
+          {
+            "value": "26",
+            "label": "26 · Plaza de Tirso de Molina - Diego de Leon"
+          },
+          {
+            "value": "27",
+            "label": "27 · Glorieta de Embajadores - Plaza de Castilla"
+          },
+          {
+            "value": "28",
+            "label": "28 · Puerta de Alcala - Barrio de Canillejas"
+          },
+          {
+            "value": "29",
+            "label": "29 · Avenida de Felipe II - Manoteras"
+          },
+          {
+            "value": "30",
+            "label": "30 · Avenida de Felipe II - Pavones"
+          },
+          {
+            "value": "31",
+            "label": "31 · Plaza Mayor - Aluche"
+          },
+          {
+            "value": "32",
+            "label": "32 · Plaza de Tirso de Molina - Pavones"
+          },
+          {
+            "value": "33",
+            "label": "33 · Principe Pio - Casa de Campo"
+          },
+          {
+            "value": "34",
+            "label": "34 · Plaza de Cibeles - las Aguilas"
+          },
+          {
+            "value": "35",
+            "label": "35 · Plaza Mayor - Carabanchel Alto"
+          },
+          {
+            "value": "36",
+            "label": "36 · Atocha - Campamento"
+          },
+          {
+            "value": "37",
+            "label": "37 · Glorieta de Cuatro Caminos - Puente de Vallecas"
+          },
+          {
+            "value": "38",
+            "label": "38 · Plaza de Manuel Becerra - las Rosas"
+          },
+          {
+            "value": "39",
+            "label": "39 · Plaza de España - Colonia San Ignacio de Loyola"
+          },
+          {
+            "value": "40",
+            "label": "40 · Tribunal - Alfonso XIII"
+          },
+          {
+            "value": "41",
+            "label": "41 · Atocha - Colonia Manzanares"
+          },
+          {
+            "value": "42",
+            "label": "42 · Plaza de Castilla - Barrio de Peñagrande"
+          },
+          {
+            "value": "43",
+            "label": "43 · Avenida de Felipe II - Estrecho"
+          },
+          {
+            "value": "44",
+            "label": "44 · Plaza del Callao - Marques de Viana"
+          },
+          {
+            "value": "45",
+            "label": "45 · Plaza de Legazpi - Avenida Reina Victoria"
+          },
+          {
+            "value": "46",
+            "label": "46 · Puerta del Sol/sevilla - Moncloa"
+          },
+          {
+            "value": "47",
+            "label": "47 · Atocha - Carabanchel Alto"
+          },
+          {
+            "value": "48",
+            "label": "48 · Plaza de Manuel Becerra - Barrio de Canillejas"
+          },
+          {
+            "value": "49",
+            "label": "49 · Plaza de Castilla - Pitis"
+          },
+          {
+            "value": "50",
+            "label": "50 · Plaza Mayor - Avenida del Manzanares"
+          },
+          {
+            "value": "51",
+            "label": "51 · Puerta del Sol/sevilla - Plaza del Peru"
+          },
+          {
+            "value": "52",
+            "label": "52 · Puerta del Sol/sevilla - Santamarca"
+          },
+          {
+            "value": "53",
+            "label": "53 · Puerta del Sol/sevilla - Arturo Soria"
+          },
+          {
+            "value": "54",
+            "label": "54 · Estacion de Atocha - Congosto"
+          },
+          {
+            "value": "55",
+            "label": "55 · Atocha - Batan"
+          },
+          {
+            "value": "56",
+            "label": "56 · Diego de Leon - Numancia"
+          },
+          {
+            "value": "57",
+            "label": "57 · Estacion de Atocha - Alto del Arenal"
+          },
+          {
+            "value": "58",
+            "label": "58 · Puente Vallecas - Barrio de Santa Eugenia"
+          },
+          {
+            "value": "59",
+            "label": "59 · Estacion de Atocha - Colonia San Cristobal de los Angeles"
+          },
+          {
+            "value": "60",
+            "label": "60 · Plaza de la Cebada - Orcasitas"
+          },
+          {
+            "value": "61",
+            "label": "61 · Moncloa - Narvaez"
+          },
+          {
+            "value": "62",
+            "label": "62 · Plaza de Cristo Rey - los Puertos"
+          },
+          {
+            "value": "63",
+            "label": "63 · Avenida de Felipe II - Barrio de Santa Eugenia"
+          },
+          {
+            "value": "64",
+            "label": "64 · Glorieta de Cuatro Caminos - Pitis"
+          },
+          {
+            "value": "65",
+            "label": "65 · Plaza de Jacinto Benavente - Colonia Gran Capitan"
+          },
+          {
+            "value": "66",
+            "label": "66 · Glorieta de Cuatro Caminos - Fuencarral"
+          },
+          {
+            "value": "67",
+            "label": "67 · Plaza de Castilla - Barrio de Peñagrande"
+          },
+          {
+            "value": "70",
+            "label": "70 · Plaza de Castilla - Alsacia"
+          },
+          {
+            "value": "71",
+            "label": "71 · Plaza de Manuel Becerra - Puerta de Arganda"
+          },
+          {
+            "value": "72",
+            "label": "72 · Diego de Leon - Hortaleza"
+          },
+          {
+            "value": "73",
+            "label": "73 · Diego de Leon - Feria de Madrid"
+          },
+          {
+            "value": "74",
+            "label": "74 · Paseo del Pintor Rosales - Parque de las Avenidas"
+          },
+          {
+            "value": "75",
+            "label": "75 · Plaza del Callao - Colonia Manzanares"
+          },
+          {
+            "value": "76",
+            "label": "76 · Plaza Beata Maria Ana de Jesus - Villaverde Alto"
+          },
+          {
+            "value": "77",
+            "label": "77 · Plaza de Ciudad Lineal - Colonia Fin de Semana"
+          },
+          {
+            "value": "78",
+            "label": "78 · Glorieta de Embajadores - Barrio de San Fermin"
+          },
+          {
+            "value": "79",
+            "label": "79 · Plaza de Legazpi - Villaverde Alto"
+          },
+          {
+            "value": "81",
+            "label": "81 · Oporto - Hospital 12 de Octubre"
+          },
+          {
+            "value": "82",
+            "label": "82 · Moncloa - Pitis"
+          },
+          {
+            "value": "83",
+            "label": "83 · Moncloa - Barrio de la Paz"
+          },
+          {
+            "value": "85",
+            "label": "85 · Estacion de Atocha - Butarque"
+          },
+          {
+            "value": "86",
+            "label": "86 · Estacion de Atocha - Villaverde Alto"
+          },
+          {
+            "value": "87",
+            "label": "87 · Plaza de la Republica Dominicana - las Carcavas"
+          },
+          {
+            "value": "88",
+            "label": "88 · Canillejas - Rejas"
+          },
+          {
+            "value": "100",
+            "label": "100 · Moratalaz - Valderrivas"
+          },
+          {
+            "value": "101",
+            "label": "101 · Canillejas - Aeropuerto - Barajas"
+          },
+          {
+            "value": "102",
+            "label": "102 · Estacion de Atocha - Estacion el Pozo"
+          },
+          {
+            "value": "103",
+            "label": "103 · Estacion el Pozo - Ecobulevar"
+          },
+          {
+            "value": "104",
+            "label": "104 · Plaza de Ciudad Lineal - Mar de Cristal"
+          },
+          {
+            "value": "105",
+            "label": "105 · Plaza de Ciudad Lineal - Barajas"
+          },
+          {
+            "value": "106",
+            "label": "106 · Plaza de Manuel Becerra - Vicalvaro"
+          },
+          {
+            "value": "107",
+            "label": "107 · Plaza de Castilla - Hortaleza"
+          },
+          {
+            "value": "108",
+            "label": "108 · Oporto - Cementerio de Carabanchel"
+          },
+          {
+            "value": "109",
+            "label": "109 · Plaza de Ciudad Lineal - Castillo de Ucles"
+          },
+          {
+            "value": "110",
+            "label": "110 · Plaza de Manuel Becerra - Cementerio de la Almudena"
+          },
+          {
+            "value": "111",
+            "label": "111 · Puente Vallecas - Entrevias"
+          },
+          {
+            "value": "112",
+            "label": "112 · Mar de Cristal - Barrio del Aeropuerto"
+          },
+          {
+            "value": "113",
+            "label": "113 · Mendez Alvaro - Plaza de Ciudad Lineal"
+          },
+          {
+            "value": "114",
+            "label": "114 · Avenida de America - Barrio del Aeropuerto"
+          },
+          {
+            "value": "115",
+            "label": "115 · Avenida de America - Barajas"
+          },
+          {
+            "value": "116",
+            "label": "116 · Glorieta de Embajadores - Villaverde Cruce"
+          },
+          {
+            "value": "118",
+            "label": "118 · Glorieta de Embajadores - Avenida de la Peseta"
+          },
+          {
+            "value": "119",
+            "label": "119 · Atocha - Barrio de Goya"
+          },
+          {
+            "value": "120",
+            "label": "120 · Plaza de Lima - Hortaleza"
+          },
+          {
+            "value": "121",
+            "label": "121 · Campamento - Hospital 12 de Octubre"
+          },
+          {
+            "value": "122",
+            "label": "122 · Avenida de America - Feria de Madrid"
+          },
+          {
+            "value": "123",
+            "label": "123 · Plaza de Legazpi - Butarque"
+          },
+          {
+            "value": "124",
+            "label": "124 · Glorieta de Cuatro Caminos - Lacoma"
+          },
+          {
+            "value": "125",
+            "label": "125 · Mar de Cristal - Hospital Ramon y Cajal"
+          },
+          {
+            "value": "126",
+            "label": "126 · Nuevos Ministerios - Barrio del Pilar"
+          },
+          {
+            "value": "127",
+            "label": "127 · Glorieta de Cuatro Caminos - Ciudad de los Periodistas"
+          },
+          {
+            "value": "128",
+            "label": "128 · Glorieta de Cuatro Caminos - Barrio del Pilar"
+          },
+          {
+            "value": "129",
+            "label": "129 · Plaza de Castilla - Manoteras"
+          },
+          {
+            "value": "130",
+            "label": "130 · Villaverde Alto - Vicalvaro"
+          },
+          {
+            "value": "131",
+            "label": "131 · Campamento - Villaverde Alto"
+          },
+          {
+            "value": "132",
+            "label": "132 · Moncloa - Hospital la Paz"
+          },
+          {
+            "value": "133",
+            "label": "133 · Plaza del Callao - Mirasierra"
+          },
+          {
+            "value": "134",
+            "label": "134 · Plaza de Castilla|vaguada - Montecarmelo"
+          },
+          {
+            "value": "135",
+            "label": "135 · Plaza de Castilla - Hospital Ramon y Cajal"
+          },
+          {
+            "value": "136",
+            "label": "136 · Pacifico - Madrid Sur"
+          },
+          {
+            "value": "137",
+            "label": "137 · Ciudad Puerta de Hierro - Fuencarral"
+          },
+          {
+            "value": "138",
+            "label": "138 · Plaza de Cristo Rey - Colonia San Ignacio de Loyola"
+          },
+          {
+            "value": "139",
+            "label": "139 · Dehesa del Principe - Carabanchel Alto"
+          },
+          {
+            "value": "140",
+            "label": "140 · Pavones - Canillejas"
+          },
+          {
+            "value": "141",
+            "label": "141 · Estacion de Atocha - Buenos Aires"
+          },
+          {
+            "value": "142",
+            "label": "142 · Pavones - Ensanche de Vallecas"
+          },
+          {
+            "value": "143",
+            "label": "143 · Plaza de Manuel Becerra - Villa de Vallecas"
+          },
+          {
+            "value": "144",
+            "label": "144 · Pavones - Entrevias"
+          },
+          {
+            "value": "145",
+            "label": "145 · Plaza del Conde de Casal - Ensanche de Vallecas"
+          },
+          {
+            "value": "146",
+            "label": "146 · Plaza del Callao - los Molinos"
+          },
+          {
+            "value": "147",
+            "label": "147 · Plaza del Callao - Barrio del Pilar"
+          },
+          {
+            "value": "148",
+            "label": "148 · Plaza del Callao - Puente de Vallecas"
+          },
+          {
+            "value": "149",
+            "label": "149 · Tribunal - Plaza de Castilla"
+          },
+          {
+            "value": "150",
+            "label": "150 · Puerta del Sol/sevilla - Colonia Virgen del Cortijo"
+          },
+          {
+            "value": "151",
+            "label": "151 · Canillejas - Barajas"
+          },
+          {
+            "value": "152",
+            "label": "152 · Avenida de Felipe II - Mendez Alvaro"
+          },
+          {
+            "value": "153",
+            "label": "153 · las Rosas - Mar de Cristal"
+          },
+          {
+            "value": "155",
+            "label": "155 · Plaza Eliptica - Aluche"
+          },
+          {
+            "value": "156",
+            "label": "156 · Plaza de Manuel Becerra - Plaza de Legazpi"
+          },
+          {
+            "value": "158",
+            "label": "158 · Plaza de España - los Carmenes"
+          },
+          {
+            "value": "159",
+            "label": "159 · Alsacia - el Cañaveral"
+          },
+          {
+            "value": "160",
+            "label": "160 · Moncloa - Aravaca"
+          },
+          {
+            "value": "161",
+            "label": "161 · Moncloa - Aravaca Sur"
+          },
+          {
+            "value": "162",
+            "label": "162 · Moncloa - el Barrial"
+          },
+          {
+            "value": "163",
+            "label": "163 · Estacion de Aravaca - el Plantio"
+          },
+          {
+            "value": "164",
+            "label": "164 · Moncloa - el Pardo"
+          },
+          {
+            "value": "165",
+            "label": "165 · Alsacia - Hospital Ramon y Cajal"
+          },
+          {
+            "value": "166",
+            "label": "166 · Barajas - Hospital Ramon y Cajal"
+          },
+          {
+            "value": "167",
+            "label": "167 · Alsacia - Colonia Fin de Semana"
+          },
+          {
+            "value": "170",
+            "label": "170 · Arroyo del Fresno - Sanchinarro"
+          },
+          {
+            "value": "171",
+            "label": "171 · Mar de Cristal - Valdebebas"
+          },
+          {
+            "value": "172",
+            "label": "172 · Mar de Cristal - Telefonica"
+          },
+          {
+            "value": "173",
+            "label": "173 · Plaza de Castilla - Sanchinarro"
+          },
+          {
+            "value": "174",
+            "label": "174 · Plaza de Castilla - Valdebebas"
+          },
+          {
+            "value": "175",
+            "label": "175 · Plaza de Castilla - las Tablas Norte"
+          },
+          {
+            "value": "176",
+            "label": "176 · Plaza de Castilla - las Tablas Sur"
+          },
+          {
+            "value": "177",
+            "label": "177 · Plaza de Castilla - Marques de Viana"
+          },
+          {
+            "value": "178",
+            "label": "178 · Plaza de Castilla - Montecarmelo"
+          },
+          {
+            "value": "179",
+            "label": "179 · Plaza Castilla - el Pardo"
+          },
+          {
+            "value": "180",
+            "label": "180 · Plaza de Legazpi - Estacion el Pozo"
+          },
+          {
+            "value": "200",
+            "label": "200 · Avenida de America - Aeropuerto"
+          },
+          {
+            "value": "203",
+            "label": "203 · Estacion de Atocha - Aeropuerto"
+          },
+          {
+            "value": "210",
+            "label": "210 · Diego de Leon - la Elipa"
+          },
+          {
+            "value": "215",
+            "label": "215 · Avenida de Felipe II - Parque de Roma"
+          },
+          {
+            "value": "247",
+            "label": "247 · Atocha - Colonia San Jose Obrero"
+          },
+          {
+            "value": "310",
+            "label": "310 · Pacifico - Estacion el Pozo"
+          },
+          {
+            "value": "172SF",
+            "label": "172SF · Mar de Cristal - las Tablas"
+          },
+          {
+            "value": "A",
+            "label": "A · Moncloa - Campus Somosaguas"
+          },
+          {
+            "value": "BR1",
+            "label": "BR1 · Valdebebas - Hospital Ramon y Cajal"
+          },
+          {
+            "value": "C03",
+            "label": "C03 · Puerta de Toledo - Argüelles"
+          },
+          {
+            "value": "C1",
+            "label": "C1 · Circular 1 -"
+          },
+          {
+            "value": "C2",
+            "label": "C2 · Circular 2 -"
+          },
+          {
+            "value": "E",
+            "label": "E · Plaza del Conde de Casal - Sierra de Guadalupe"
+          },
+          {
+            "value": "E1",
+            "label": "E1 · Plaza de Cibeles - la Peseta"
+          },
+          {
+            "value": "E2",
+            "label": "E2 · Avenida de Felipe II - las Rosas"
+          },
+          {
+            "value": "E3",
+            "label": "E3 · Avenida de Felipe II - Valderrivas"
+          },
+          {
+            "value": "E4",
+            "label": "E4 · Avenida de Felipe II - Valdebernardo"
+          },
+          {
+            "value": "E5",
+            "label": "E5 · Manuel Becerra - el Cañaveral"
+          },
+          {
+            "value": "F",
+            "label": "F · Glorieta de Cuatro Caminos - Ciudad Universitaria"
+          },
+          {
+            "value": "G",
+            "label": "G · Moncloa - Ciudad Universitaria"
+          },
+          {
+            "value": "H",
+            "label": "H · Aluche - Campus de Somosaguas"
+          },
+          {
+            "value": "H1",
+            "label": "H1 · Sierra de Guadalupe - Hospital Infanta Leonor"
+          },
+          {
+            "value": "M1",
+            "label": "M1 · Puerta del Sol/sevilla - Glorieta de Embajadores"
+          },
+          {
+            "value": "M3",
+            "label": "M3 · Puerta del Sol/sevilla - Puerta Toledo"
+          },
+          {
+            "value": "N1",
+            "label": "N1 · Plaza de Cibeles - Sanchinarro"
+          },
+          {
+            "value": "N10",
+            "label": "N10 · Plaza de Cibeles - Palomeras"
+          },
+          {
+            "value": "N11",
+            "label": "N11 · Plaza de Cibeles - Madrid Sur"
+          },
+          {
+            "value": "N12",
+            "label": "N12 · Plaza de Cibeles - Butarque"
+          },
+          {
+            "value": "N13",
+            "label": "N13 · Plaza de Cibeles - Colonia San Cristobal de los Angeles"
+          },
+          {
+            "value": "N14",
+            "label": "N14 · Plaza de Cibeles - Villaverde Alto"
+          },
+          {
+            "value": "N15",
+            "label": "N15 · Plaza de Cibeles - Hospital 12 de Octubre"
+          },
+          {
+            "value": "N16",
+            "label": "N16 · Plaza de Cibeles - Avenida de la Peseta"
+          },
+          {
+            "value": "N17",
+            "label": "N17 · Plaza de Cibeles - Carabanchel Alto"
+          },
+          {
+            "value": "N18",
+            "label": "N18 · Plaza de Cibeles - las Águilas"
+          },
+          {
+            "value": "N19",
+            "label": "N19 · Plaza de Cibeles - Colonia San Ignacio de Loyola"
+          },
+          {
+            "value": "N2",
+            "label": "N2 · Plaza de Cibeles - Valdebebas"
+          },
+          {
+            "value": "N20",
+            "label": "N20 · Plaza de Cibeles - Pitis"
+          },
+          {
+            "value": "N21",
+            "label": "N21 · Plaza de Cibeles - Arroyo del Fresno"
+          },
+          {
+            "value": "N22",
+            "label": "N22 · Plaza de Cibeles - Barrio de la Paz"
+          },
+          {
+            "value": "N23",
+            "label": "N23 · Plaza de Cibeles - Montecarmelo"
+          },
+          {
+            "value": "N24",
+            "label": "N24 · Plaza de Cibeles - las Tablas"
+          },
+          {
+            "value": "N25",
+            "label": "N25 · Plaza de Alonso Martinez - Villa de Vallecas"
+          },
+          {
+            "value": "N26",
+            "label": "N26 · Plaza de Alonso Martinez - Aluche"
+          },
+          {
+            "value": "N27",
+            "label": "N27 · Plaza de Cibeles - Aeropuerto"
+          },
+          {
+            "value": "N28",
+            "label": "N28 · Moncloa - Aravaca"
+          },
+          {
+            "value": "N3",
+            "label": "N3 · Plaza de Cibeles - Feria de Madrid"
+          },
+          {
+            "value": "N31",
+            "label": "N31 · Moncloa - el Pardo"
+          },
+          {
+            "value": "N32",
+            "label": "N32 · Avenida de America - Aeropuerto"
+          },
+          {
+            "value": "N4",
+            "label": "N4 · Plaza de Cibeles - Barajas"
+          },
+          {
+            "value": "N5",
+            "label": "N5 · Plaza de Cibeles - Colonia Fin de Semana"
+          },
+          {
+            "value": "N6",
+            "label": "N6 · Plaza de Cibeles - el Cañaveral"
+          },
+          {
+            "value": "N7",
+            "label": "N7 · Plaza de Cibeles - Valderrivas"
+          },
+          {
+            "value": "N8",
+            "label": "N8 · Plaza de Cibeles - Pavones"
+          },
+          {
+            "value": "N9",
+            "label": "N9 · Plaza de Cibeles - Ensanche de Vallecas"
+          },
+          {
+            "value": "NC1",
+            "label": "NC1 · Cuatro Caminos - Estacion de Atocha"
+          },
+          {
+            "value": "NC2",
+            "label": "NC2 · Cuatro Caminos - Estacion de Atocha"
+          },
+          {
+            "value": "S10",
+            "label": "S10 · Plaza Castilla - N. Ministerios"
+          },
+          {
+            "value": "SC1",
+            "label": "SC1 · Cuatro Caminos - Legazpi"
+          },
+          {
+            "value": "SC2",
+            "label": "SC2 · Cuatro Caminos - Legazpi"
+          },
+          {
+            "value": "SE2",
+            "label": "SE2 · Plaza Eliptica - Cuatro Vientos"
+          },
+          {
+            "value": "SE3",
+            "label": "SE3 · Batan - Lucero"
+          },
+          {
+            "value": "SE702",
+            "label": "SE702 · Plaza Eliptica - Cementerio Sur"
+          },
+          {
+            "value": "SE704",
+            "label": "SE704 · Plaza de Castilla - Cementerio de Fuencarral"
+          },
+          {
+            "value": "SE709",
+            "label": "SE709 · Feria de Madrid - Hospital Enfermera Isabel Zendal"
+          },
+          {
+            "value": "SE718",
+            "label": "SE718 · Puerta de Arganda - Cañada Real"
+          },
+          {
+            "value": "SE721",
+            "label": "SE721 · Canillejas - Estadio Metropolitano"
+          },
+          {
+            "value": "SE832",
+            "label": "SE832 · Principe Pio - Hospital Fundacion San Jose"
+          },
+          {
+            "value": "SE833",
+            "label": "SE833 · Plaza Castilla - las Tablas"
+          },
+          {
+            "value": "T11",
+            "label": "T11 · Mar de Cristal - Parque Empresarial Cristalia"
+          },
+          {
+            "value": "T23",
+            "label": "T23 · Puerta de Arganda - Poligono Industrial de Vicalvaro"
+          },
+          {
+            "value": "T31",
+            "label": "T31 · Estacion el Pozo - Sierra de Guadalupe"
+          },
+          {
+            "value": "T32",
+            "label": "T32 · Plaza de Legazpi - Mercamadrid - C. T. M"
+          },
+          {
+            "value": "T41",
+            "label": "T41 · Villaverde Alto - Poligono Industrial la Resina"
+          },
+          {
+            "value": "T61",
+            "label": "T61 · Estacion de Cercanias de Fuencarral - las Tablas"
+          },
+          {
+            "value": "U",
+            "label": "U · Avenida de Seneca - Paraninfo"
+          }
+        ]
+      },
+      "lineColor": "#FB6107",
+      "lineWidth": 1
+    },
+    {
+      "id": "transport-emt-stops",
+      "group": "transport",
+      "kind": "transport-stop",
+      "label": "EMT stops",
+      "shortLabel": "EMT stops",
+      "description": "Stops appear only at useful zoom levels.",
+      "unit": "stop",
+      "referenceDate": "2026-07-26",
+      "geography": "Regional transport network",
+      "sourceIds": [
+        "emt-stops"
+      ],
+      "property": "stop_name",
+      "palette": [],
+      "breaks": [],
+      "format": "text",
+      "minzoom": 12,
+      "maxzoom": 16,
+      "opacity": 0.96,
+      "tooltip": [
+        {
+          "property": "stop_name",
+          "label": "Stop",
+          "format": "text"
+        },
+        {
+          "property": "route_short_name",
+          "label": "Line",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "transportMode": "emt",
+        "routeProperty": "route_short_name",
+        "routes": [
+          {
+            "value": "001",
+            "label": "001 · Estacion de Atocha - Moncloa"
+          },
+          {
+            "value": "1",
+            "label": "1 · Plaza de Cristo Rey - Prosperidad"
+          },
+          {
+            "value": "002",
+            "label": "002 · Puerta Toledo - Argüelles"
+          },
+          {
+            "value": "2",
+            "label": "2 · Plaza de Manuel Becerra - Avenida Reina Victoria"
+          },
+          {
+            "value": "3",
+            "label": "3 · Puerta de Toledo - Plaza de San Amaro"
+          },
+          {
+            "value": "4",
+            "label": "4 · Plaza de Ciudad Lineal - Puerta de Arganda"
+          },
+          {
+            "value": "5",
+            "label": "5 · Puerta del Sol/sevilla - Estacion de Chamartin"
+          },
+          {
+            "value": "6",
+            "label": "6 · Plaza Tirso de Molina - Orcasitas"
+          },
+          {
+            "value": "7",
+            "label": "7 · Plaza de Alonso Martinez - Manoteras"
+          },
+          {
+            "value": "8",
+            "label": "8 · Plaza de Legazpi - Valdebernardo"
+          },
+          {
+            "value": "9",
+            "label": "9 · Puerta del Sol/sevilla - Hortaleza"
+          },
+          {
+            "value": "10",
+            "label": "10 · Plaza de Cibeles - Palomeras"
+          },
+          {
+            "value": "11",
+            "label": "11 · Marques de Viana - Barrio Blanco"
+          },
+          {
+            "value": "12",
+            "label": "12 · Plaza de Cristo Rey - Paseo Marques de Zafra"
+          },
+          {
+            "value": "14",
+            "label": "14 · Plaza de Conde de Casal - Avenida de Pio XII"
+          },
+          {
+            "value": "15",
+            "label": "15 · Puerta del Sol/sevilla - la Elipa"
+          },
+          {
+            "value": "16",
+            "label": "16 · Moncloa - Avenida de Pio XII"
+          },
+          {
+            "value": "17",
+            "label": "17 · Plaza Mayor - Colonia Parque de Europa"
+          },
+          {
+            "value": "18",
+            "label": "18 · Plaza Mayor - Villaverde Cruce"
+          },
+          {
+            "value": "19",
+            "label": "19 · Plaza de Cataluña - Plaza de Legazpi"
+          },
+          {
+            "value": "20",
+            "label": "20 · Puerta del Sol/sevilla - Pavones"
+          },
+          {
+            "value": "21",
+            "label": "21 · Paseo del Pintor Rosales - Barrio el Salvador"
+          },
+          {
+            "value": "22",
+            "label": "22 · Plaza de Legazpi - Villaverde Alto"
+          },
+          {
+            "value": "23",
+            "label": "23 · Plaza Mayor - Villaverde Cruce"
+          },
+          {
+            "value": "24",
+            "label": "24 · Estacion de Atocha - Estacion el Pozo"
+          },
+          {
+            "value": "25",
+            "label": "25 · Plaza de España - Casa de Campo"
+          },
+          {
+            "value": "26",
+            "label": "26 · Plaza de Tirso de Molina - Diego de Leon"
+          },
+          {
+            "value": "27",
+            "label": "27 · Glorieta de Embajadores - Plaza de Castilla"
+          },
+          {
+            "value": "28",
+            "label": "28 · Puerta de Alcala - Barrio de Canillejas"
+          },
+          {
+            "value": "29",
+            "label": "29 · Avenida de Felipe II - Manoteras"
+          },
+          {
+            "value": "30",
+            "label": "30 · Avenida de Felipe II - Pavones"
+          },
+          {
+            "value": "31",
+            "label": "31 · Plaza Mayor - Aluche"
+          },
+          {
+            "value": "32",
+            "label": "32 · Plaza de Tirso de Molina - Pavones"
+          },
+          {
+            "value": "33",
+            "label": "33 · Principe Pio - Casa de Campo"
+          },
+          {
+            "value": "34",
+            "label": "34 · Plaza de Cibeles - las Aguilas"
+          },
+          {
+            "value": "35",
+            "label": "35 · Plaza Mayor - Carabanchel Alto"
+          },
+          {
+            "value": "36",
+            "label": "36 · Atocha - Campamento"
+          },
+          {
+            "value": "37",
+            "label": "37 · Glorieta de Cuatro Caminos - Puente de Vallecas"
+          },
+          {
+            "value": "38",
+            "label": "38 · Plaza de Manuel Becerra - las Rosas"
+          },
+          {
+            "value": "39",
+            "label": "39 · Plaza de España - Colonia San Ignacio de Loyola"
+          },
+          {
+            "value": "40",
+            "label": "40 · Tribunal - Alfonso XIII"
+          },
+          {
+            "value": "41",
+            "label": "41 · Atocha - Colonia Manzanares"
+          },
+          {
+            "value": "42",
+            "label": "42 · Plaza de Castilla - Barrio de Peñagrande"
+          },
+          {
+            "value": "43",
+            "label": "43 · Avenida de Felipe II - Estrecho"
+          },
+          {
+            "value": "44",
+            "label": "44 · Plaza del Callao - Marques de Viana"
+          },
+          {
+            "value": "45",
+            "label": "45 · Plaza de Legazpi - Avenida Reina Victoria"
+          },
+          {
+            "value": "46",
+            "label": "46 · Puerta del Sol/sevilla - Moncloa"
+          },
+          {
+            "value": "47",
+            "label": "47 · Atocha - Carabanchel Alto"
+          },
+          {
+            "value": "48",
+            "label": "48 · Plaza de Manuel Becerra - Barrio de Canillejas"
+          },
+          {
+            "value": "49",
+            "label": "49 · Plaza de Castilla - Pitis"
+          },
+          {
+            "value": "50",
+            "label": "50 · Plaza Mayor - Avenida del Manzanares"
+          },
+          {
+            "value": "51",
+            "label": "51 · Puerta del Sol/sevilla - Plaza del Peru"
+          },
+          {
+            "value": "52",
+            "label": "52 · Puerta del Sol/sevilla - Santamarca"
+          },
+          {
+            "value": "53",
+            "label": "53 · Puerta del Sol/sevilla - Arturo Soria"
+          },
+          {
+            "value": "54",
+            "label": "54 · Estacion de Atocha - Congosto"
+          },
+          {
+            "value": "55",
+            "label": "55 · Atocha - Batan"
+          },
+          {
+            "value": "56",
+            "label": "56 · Diego de Leon - Numancia"
+          },
+          {
+            "value": "57",
+            "label": "57 · Estacion de Atocha - Alto del Arenal"
+          },
+          {
+            "value": "58",
+            "label": "58 · Puente Vallecas - Barrio de Santa Eugenia"
+          },
+          {
+            "value": "59",
+            "label": "59 · Estacion de Atocha - Colonia San Cristobal de los Angeles"
+          },
+          {
+            "value": "60",
+            "label": "60 · Plaza de la Cebada - Orcasitas"
+          },
+          {
+            "value": "61",
+            "label": "61 · Moncloa - Narvaez"
+          },
+          {
+            "value": "62",
+            "label": "62 · Plaza de Cristo Rey - los Puertos"
+          },
+          {
+            "value": "63",
+            "label": "63 · Avenida de Felipe II - Barrio de Santa Eugenia"
+          },
+          {
+            "value": "64",
+            "label": "64 · Glorieta de Cuatro Caminos - Pitis"
+          },
+          {
+            "value": "65",
+            "label": "65 · Plaza de Jacinto Benavente - Colonia Gran Capitan"
+          },
+          {
+            "value": "66",
+            "label": "66 · Glorieta de Cuatro Caminos - Fuencarral"
+          },
+          {
+            "value": "67",
+            "label": "67 · Plaza de Castilla - Barrio de Peñagrande"
+          },
+          {
+            "value": "70",
+            "label": "70 · Plaza de Castilla - Alsacia"
+          },
+          {
+            "value": "71",
+            "label": "71 · Plaza de Manuel Becerra - Puerta de Arganda"
+          },
+          {
+            "value": "72",
+            "label": "72 · Diego de Leon - Hortaleza"
+          },
+          {
+            "value": "73",
+            "label": "73 · Diego de Leon - Feria de Madrid"
+          },
+          {
+            "value": "74",
+            "label": "74 · Paseo del Pintor Rosales - Parque de las Avenidas"
+          },
+          {
+            "value": "75",
+            "label": "75 · Plaza del Callao - Colonia Manzanares"
+          },
+          {
+            "value": "76",
+            "label": "76 · Plaza Beata Maria Ana de Jesus - Villaverde Alto"
+          },
+          {
+            "value": "77",
+            "label": "77 · Plaza de Ciudad Lineal - Colonia Fin de Semana"
+          },
+          {
+            "value": "78",
+            "label": "78 · Glorieta de Embajadores - Barrio de San Fermin"
+          },
+          {
+            "value": "79",
+            "label": "79 · Plaza de Legazpi - Villaverde Alto"
+          },
+          {
+            "value": "81",
+            "label": "81 · Oporto - Hospital 12 de Octubre"
+          },
+          {
+            "value": "82",
+            "label": "82 · Moncloa - Pitis"
+          },
+          {
+            "value": "83",
+            "label": "83 · Moncloa - Barrio de la Paz"
+          },
+          {
+            "value": "85",
+            "label": "85 · Estacion de Atocha - Butarque"
+          },
+          {
+            "value": "86",
+            "label": "86 · Estacion de Atocha - Villaverde Alto"
+          },
+          {
+            "value": "87",
+            "label": "87 · Plaza de la Republica Dominicana - las Carcavas"
+          },
+          {
+            "value": "88",
+            "label": "88 · Canillejas - Rejas"
+          },
+          {
+            "value": "100",
+            "label": "100 · Moratalaz - Valderrivas"
+          },
+          {
+            "value": "101",
+            "label": "101 · Canillejas - Aeropuerto - Barajas"
+          },
+          {
+            "value": "102",
+            "label": "102 · Estacion de Atocha - Estacion el Pozo"
+          },
+          {
+            "value": "103",
+            "label": "103 · Estacion el Pozo - Ecobulevar"
+          },
+          {
+            "value": "104",
+            "label": "104 · Plaza de Ciudad Lineal - Mar de Cristal"
+          },
+          {
+            "value": "105",
+            "label": "105 · Plaza de Ciudad Lineal - Barajas"
+          },
+          {
+            "value": "106",
+            "label": "106 · Plaza de Manuel Becerra - Vicalvaro"
+          },
+          {
+            "value": "107",
+            "label": "107 · Plaza de Castilla - Hortaleza"
+          },
+          {
+            "value": "108",
+            "label": "108 · Oporto - Cementerio de Carabanchel"
+          },
+          {
+            "value": "109",
+            "label": "109 · Plaza de Ciudad Lineal - Castillo de Ucles"
+          },
+          {
+            "value": "110",
+            "label": "110 · Plaza de Manuel Becerra - Cementerio de la Almudena"
+          },
+          {
+            "value": "111",
+            "label": "111 · Puente Vallecas - Entrevias"
+          },
+          {
+            "value": "112",
+            "label": "112 · Mar de Cristal - Barrio del Aeropuerto"
+          },
+          {
+            "value": "113",
+            "label": "113 · Mendez Alvaro - Plaza de Ciudad Lineal"
+          },
+          {
+            "value": "114",
+            "label": "114 · Avenida de America - Barrio del Aeropuerto"
+          },
+          {
+            "value": "115",
+            "label": "115 · Avenida de America - Barajas"
+          },
+          {
+            "value": "116",
+            "label": "116 · Glorieta de Embajadores - Villaverde Cruce"
+          },
+          {
+            "value": "118",
+            "label": "118 · Glorieta de Embajadores - Avenida de la Peseta"
+          },
+          {
+            "value": "119",
+            "label": "119 · Atocha - Barrio de Goya"
+          },
+          {
+            "value": "120",
+            "label": "120 · Plaza de Lima - Hortaleza"
+          },
+          {
+            "value": "121",
+            "label": "121 · Campamento - Hospital 12 de Octubre"
+          },
+          {
+            "value": "122",
+            "label": "122 · Avenida de America - Feria de Madrid"
+          },
+          {
+            "value": "123",
+            "label": "123 · Plaza de Legazpi - Butarque"
+          },
+          {
+            "value": "124",
+            "label": "124 · Glorieta de Cuatro Caminos - Lacoma"
+          },
+          {
+            "value": "125",
+            "label": "125 · Mar de Cristal - Hospital Ramon y Cajal"
+          },
+          {
+            "value": "126",
+            "label": "126 · Nuevos Ministerios - Barrio del Pilar"
+          },
+          {
+            "value": "127",
+            "label": "127 · Glorieta de Cuatro Caminos - Ciudad de los Periodistas"
+          },
+          {
+            "value": "128",
+            "label": "128 · Glorieta de Cuatro Caminos - Barrio del Pilar"
+          },
+          {
+            "value": "129",
+            "label": "129 · Plaza de Castilla - Manoteras"
+          },
+          {
+            "value": "130",
+            "label": "130 · Villaverde Alto - Vicalvaro"
+          },
+          {
+            "value": "131",
+            "label": "131 · Campamento - Villaverde Alto"
+          },
+          {
+            "value": "132",
+            "label": "132 · Moncloa - Hospital la Paz"
+          },
+          {
+            "value": "133",
+            "label": "133 · Plaza del Callao - Mirasierra"
+          },
+          {
+            "value": "134",
+            "label": "134 · Plaza de Castilla|vaguada - Montecarmelo"
+          },
+          {
+            "value": "135",
+            "label": "135 · Plaza de Castilla - Hospital Ramon y Cajal"
+          },
+          {
+            "value": "136",
+            "label": "136 · Pacifico - Madrid Sur"
+          },
+          {
+            "value": "137",
+            "label": "137 · Ciudad Puerta de Hierro - Fuencarral"
+          },
+          {
+            "value": "138",
+            "label": "138 · Plaza de Cristo Rey - Colonia San Ignacio de Loyola"
+          },
+          {
+            "value": "139",
+            "label": "139 · Dehesa del Principe - Carabanchel Alto"
+          },
+          {
+            "value": "140",
+            "label": "140 · Pavones - Canillejas"
+          },
+          {
+            "value": "141",
+            "label": "141 · Estacion de Atocha - Buenos Aires"
+          },
+          {
+            "value": "142",
+            "label": "142 · Pavones - Ensanche de Vallecas"
+          },
+          {
+            "value": "143",
+            "label": "143 · Plaza de Manuel Becerra - Villa de Vallecas"
+          },
+          {
+            "value": "144",
+            "label": "144 · Pavones - Entrevias"
+          },
+          {
+            "value": "145",
+            "label": "145 · Plaza del Conde de Casal - Ensanche de Vallecas"
+          },
+          {
+            "value": "146",
+            "label": "146 · Plaza del Callao - los Molinos"
+          },
+          {
+            "value": "147",
+            "label": "147 · Plaza del Callao - Barrio del Pilar"
+          },
+          {
+            "value": "148",
+            "label": "148 · Plaza del Callao - Puente de Vallecas"
+          },
+          {
+            "value": "149",
+            "label": "149 · Tribunal - Plaza de Castilla"
+          },
+          {
+            "value": "150",
+            "label": "150 · Puerta del Sol/sevilla - Colonia Virgen del Cortijo"
+          },
+          {
+            "value": "151",
+            "label": "151 · Canillejas - Barajas"
+          },
+          {
+            "value": "152",
+            "label": "152 · Avenida de Felipe II - Mendez Alvaro"
+          },
+          {
+            "value": "153",
+            "label": "153 · las Rosas - Mar de Cristal"
+          },
+          {
+            "value": "155",
+            "label": "155 · Plaza Eliptica - Aluche"
+          },
+          {
+            "value": "156",
+            "label": "156 · Plaza de Manuel Becerra - Plaza de Legazpi"
+          },
+          {
+            "value": "158",
+            "label": "158 · Plaza de España - los Carmenes"
+          },
+          {
+            "value": "159",
+            "label": "159 · Alsacia - el Cañaveral"
+          },
+          {
+            "value": "160",
+            "label": "160 · Moncloa - Aravaca"
+          },
+          {
+            "value": "161",
+            "label": "161 · Moncloa - Aravaca Sur"
+          },
+          {
+            "value": "162",
+            "label": "162 · Moncloa - el Barrial"
+          },
+          {
+            "value": "163",
+            "label": "163 · Estacion de Aravaca - el Plantio"
+          },
+          {
+            "value": "164",
+            "label": "164 · Moncloa - el Pardo"
+          },
+          {
+            "value": "165",
+            "label": "165 · Alsacia - Hospital Ramon y Cajal"
+          },
+          {
+            "value": "166",
+            "label": "166 · Barajas - Hospital Ramon y Cajal"
+          },
+          {
+            "value": "167",
+            "label": "167 · Alsacia - Colonia Fin de Semana"
+          },
+          {
+            "value": "170",
+            "label": "170 · Arroyo del Fresno - Sanchinarro"
+          },
+          {
+            "value": "171",
+            "label": "171 · Mar de Cristal - Valdebebas"
+          },
+          {
+            "value": "172",
+            "label": "172 · Mar de Cristal - Telefonica"
+          },
+          {
+            "value": "173",
+            "label": "173 · Plaza de Castilla - Sanchinarro"
+          },
+          {
+            "value": "174",
+            "label": "174 · Plaza de Castilla - Valdebebas"
+          },
+          {
+            "value": "175",
+            "label": "175 · Plaza de Castilla - las Tablas Norte"
+          },
+          {
+            "value": "176",
+            "label": "176 · Plaza de Castilla - las Tablas Sur"
+          },
+          {
+            "value": "177",
+            "label": "177 · Plaza de Castilla - Marques de Viana"
+          },
+          {
+            "value": "178",
+            "label": "178 · Plaza de Castilla - Montecarmelo"
+          },
+          {
+            "value": "179",
+            "label": "179 · Plaza Castilla - el Pardo"
+          },
+          {
+            "value": "180",
+            "label": "180 · Plaza de Legazpi - Estacion el Pozo"
+          },
+          {
+            "value": "200",
+            "label": "200 · Avenida de America - Aeropuerto"
+          },
+          {
+            "value": "203",
+            "label": "203 · Estacion de Atocha - Aeropuerto"
+          },
+          {
+            "value": "210",
+            "label": "210 · Diego de Leon - la Elipa"
+          },
+          {
+            "value": "215",
+            "label": "215 · Avenida de Felipe II - Parque de Roma"
+          },
+          {
+            "value": "247",
+            "label": "247 · Atocha - Colonia San Jose Obrero"
+          },
+          {
+            "value": "310",
+            "label": "310 · Pacifico - Estacion el Pozo"
+          },
+          {
+            "value": "172SF",
+            "label": "172SF · Mar de Cristal - las Tablas"
+          },
+          {
+            "value": "A",
+            "label": "A · Moncloa - Campus Somosaguas"
+          },
+          {
+            "value": "BR1",
+            "label": "BR1 · Valdebebas - Hospital Ramon y Cajal"
+          },
+          {
+            "value": "C03",
+            "label": "C03 · Puerta de Toledo - Argüelles"
+          },
+          {
+            "value": "C1",
+            "label": "C1 · Circular 1 -"
+          },
+          {
+            "value": "C2",
+            "label": "C2 · Circular 2 -"
+          },
+          {
+            "value": "E",
+            "label": "E · Plaza del Conde de Casal - Sierra de Guadalupe"
+          },
+          {
+            "value": "E1",
+            "label": "E1 · Plaza de Cibeles - la Peseta"
+          },
+          {
+            "value": "E2",
+            "label": "E2 · Avenida de Felipe II - las Rosas"
+          },
+          {
+            "value": "E3",
+            "label": "E3 · Avenida de Felipe II - Valderrivas"
+          },
+          {
+            "value": "E4",
+            "label": "E4 · Avenida de Felipe II - Valdebernardo"
+          },
+          {
+            "value": "E5",
+            "label": "E5 · Manuel Becerra - el Cañaveral"
+          },
+          {
+            "value": "F",
+            "label": "F · Glorieta de Cuatro Caminos - Ciudad Universitaria"
+          },
+          {
+            "value": "G",
+            "label": "G · Moncloa - Ciudad Universitaria"
+          },
+          {
+            "value": "H",
+            "label": "H · Aluche - Campus de Somosaguas"
+          },
+          {
+            "value": "H1",
+            "label": "H1 · Sierra de Guadalupe - Hospital Infanta Leonor"
+          },
+          {
+            "value": "M1",
+            "label": "M1 · Puerta del Sol/sevilla - Glorieta de Embajadores"
+          },
+          {
+            "value": "M3",
+            "label": "M3 · Puerta del Sol/sevilla - Puerta Toledo"
+          },
+          {
+            "value": "N1",
+            "label": "N1 · Plaza de Cibeles - Sanchinarro"
+          },
+          {
+            "value": "N10",
+            "label": "N10 · Plaza de Cibeles - Palomeras"
+          },
+          {
+            "value": "N11",
+            "label": "N11 · Plaza de Cibeles - Madrid Sur"
+          },
+          {
+            "value": "N12",
+            "label": "N12 · Plaza de Cibeles - Butarque"
+          },
+          {
+            "value": "N13",
+            "label": "N13 · Plaza de Cibeles - Colonia San Cristobal de los Angeles"
+          },
+          {
+            "value": "N14",
+            "label": "N14 · Plaza de Cibeles - Villaverde Alto"
+          },
+          {
+            "value": "N15",
+            "label": "N15 · Plaza de Cibeles - Hospital 12 de Octubre"
+          },
+          {
+            "value": "N16",
+            "label": "N16 · Plaza de Cibeles - Avenida de la Peseta"
+          },
+          {
+            "value": "N17",
+            "label": "N17 · Plaza de Cibeles - Carabanchel Alto"
+          },
+          {
+            "value": "N18",
+            "label": "N18 · Plaza de Cibeles - las Águilas"
+          },
+          {
+            "value": "N19",
+            "label": "N19 · Plaza de Cibeles - Colonia San Ignacio de Loyola"
+          },
+          {
+            "value": "N2",
+            "label": "N2 · Plaza de Cibeles - Valdebebas"
+          },
+          {
+            "value": "N20",
+            "label": "N20 · Plaza de Cibeles - Pitis"
+          },
+          {
+            "value": "N21",
+            "label": "N21 · Plaza de Cibeles - Arroyo del Fresno"
+          },
+          {
+            "value": "N22",
+            "label": "N22 · Plaza de Cibeles - Barrio de la Paz"
+          },
+          {
+            "value": "N23",
+            "label": "N23 · Plaza de Cibeles - Montecarmelo"
+          },
+          {
+            "value": "N24",
+            "label": "N24 · Plaza de Cibeles - las Tablas"
+          },
+          {
+            "value": "N25",
+            "label": "N25 · Plaza de Alonso Martinez - Villa de Vallecas"
+          },
+          {
+            "value": "N26",
+            "label": "N26 · Plaza de Alonso Martinez - Aluche"
+          },
+          {
+            "value": "N27",
+            "label": "N27 · Plaza de Cibeles - Aeropuerto"
+          },
+          {
+            "value": "N28",
+            "label": "N28 · Moncloa - Aravaca"
+          },
+          {
+            "value": "N3",
+            "label": "N3 · Plaza de Cibeles - Feria de Madrid"
+          },
+          {
+            "value": "N31",
+            "label": "N31 · Moncloa - el Pardo"
+          },
+          {
+            "value": "N32",
+            "label": "N32 · Avenida de America - Aeropuerto"
+          },
+          {
+            "value": "N4",
+            "label": "N4 · Plaza de Cibeles - Barajas"
+          },
+          {
+            "value": "N5",
+            "label": "N5 · Plaza de Cibeles - Colonia Fin de Semana"
+          },
+          {
+            "value": "N6",
+            "label": "N6 · Plaza de Cibeles - el Cañaveral"
+          },
+          {
+            "value": "N7",
+            "label": "N7 · Plaza de Cibeles - Valderrivas"
+          },
+          {
+            "value": "N8",
+            "label": "N8 · Plaza de Cibeles - Pavones"
+          },
+          {
+            "value": "N9",
+            "label": "N9 · Plaza de Cibeles - Ensanche de Vallecas"
+          },
+          {
+            "value": "NC1",
+            "label": "NC1 · Cuatro Caminos - Estacion de Atocha"
+          },
+          {
+            "value": "NC2",
+            "label": "NC2 · Cuatro Caminos - Estacion de Atocha"
+          },
+          {
+            "value": "S10",
+            "label": "S10 · Plaza Castilla - N. Ministerios"
+          },
+          {
+            "value": "SC1",
+            "label": "SC1 · Cuatro Caminos - Legazpi"
+          },
+          {
+            "value": "SC2",
+            "label": "SC2 · Cuatro Caminos - Legazpi"
+          },
+          {
+            "value": "SE2",
+            "label": "SE2 · Plaza Eliptica - Cuatro Vientos"
+          },
+          {
+            "value": "SE3",
+            "label": "SE3 · Batan - Lucero"
+          },
+          {
+            "value": "SE702",
+            "label": "SE702 · Plaza Eliptica - Cementerio Sur"
+          },
+          {
+            "value": "SE704",
+            "label": "SE704 · Plaza de Castilla - Cementerio de Fuencarral"
+          },
+          {
+            "value": "SE709",
+            "label": "SE709 · Feria de Madrid - Hospital Enfermera Isabel Zendal"
+          },
+          {
+            "value": "SE718",
+            "label": "SE718 · Puerta de Arganda - Cañada Real"
+          },
+          {
+            "value": "SE721",
+            "label": "SE721 · Canillejas - Estadio Metropolitano"
+          },
+          {
+            "value": "SE832",
+            "label": "SE832 · Principe Pio - Hospital Fundacion San Jose"
+          },
+          {
+            "value": "SE833",
+            "label": "SE833 · Plaza Castilla - las Tablas"
+          },
+          {
+            "value": "T11",
+            "label": "T11 · Mar de Cristal - Parque Empresarial Cristalia"
+          },
+          {
+            "value": "T23",
+            "label": "T23 · Puerta de Arganda - Poligono Industrial de Vicalvaro"
+          },
+          {
+            "value": "T31",
+            "label": "T31 · Estacion el Pozo - Sierra de Guadalupe"
+          },
+          {
+            "value": "T32",
+            "label": "T32 · Plaza de Legazpi - Mercamadrid - C. T. M"
+          },
+          {
+            "value": "T41",
+            "label": "T41 · Villaverde Alto - Poligono Industrial la Resina"
+          },
+          {
+            "value": "T61",
+            "label": "T61 · Estacion de Cercanias de Fuencarral - las Tablas"
+          },
+          {
+            "value": "U",
+            "label": "U · Avenida de Seneca - Paraninfo"
+          }
+        ]
+      },
+      "lineColor": "#FB6107"
+    },
+    {
+      "id": "transport-bicimad-stops",
+      "group": "transport",
+      "kind": "transport-stop",
+      "label": "BiciMAD stations",
+      "shortLabel": "BiciMAD stops",
+      "description": "Stops appear only at useful zoom levels.",
+      "unit": "stop",
+      "referenceDate": "2026-07-26",
+      "geography": "Regional transport network",
+      "sourceIds": [
+        "bicimad-stops"
+      ],
+      "property": "stop_name",
+      "palette": [],
+      "breaks": [],
+      "format": "text",
+      "minzoom": 12,
+      "maxzoom": 16,
+      "opacity": 0.96,
+      "tooltip": [
+        {
+          "property": "stop_name",
+          "label": "Station",
+          "format": "text"
+        },
+        {
+          "property": "route_short_name",
+          "label": "Line",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "transportMode": "bicimad"
+      },
+      "lineColor": "#43AA8B"
+    }
+  ],
+  "references": [
+    {
+      "title": "Padrón municipal de habitantes",
+      "organisation": "Ayuntamiento de Madrid",
+      "url": "https://datos.madrid.es/dataset/200076-0-padron/resource/200076-2-padron-csv/download/200076_20260714_062859.csv",
+      "licence": "Madrid open-data reuse terms",
+      "retrieved": "2026-07-26"
+    },
+    {
+      "title": "Censo anual de población",
+      "organisation": "Instituto Nacional de Estadística",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/69211.csv",
+      "licence": "INE standard reuse conditions",
+      "retrieved": "2026-07-26"
+    },
+    {
+      "title": "Catastro INSPIRE Buildings",
+      "organisation": "Dirección General del Catastro",
+      "url": "https://www.catastro.hacienda.gob.es/INSPIRE/Buildings/28/28900-MADRID/A.ES.SDGC.BU.28900.zip",
+      "licence": "Catastro data-access conditions",
+      "retrieved": "2026-07-26"
+    },
+    {
+      "title": "Alturas de edificios",
+      "organisation": "Ayuntamiento de Madrid",
+      "url": "https://geoportal.madrid.es/fsdescargas/IDEAM_WBGEOPORTAL/CARTOGRAFIA/CARTOGRAFIA_ACTUALIZADA/ALTURAS_EDIFICIOS/ALTURAS_EDIFICIOS.ZIP",
+      "licence": "Madrid open-data reuse terms",
+      "retrieved": "2026-07-26"
+    },
+    {
+      "title": "2023 election results by polling table",
+      "organisation": "Madrid City Council / Interior Ministry",
+      "url": "https://www.madrid.es/UnidadesDescentralizadas/UDCEstadistica/Nuevaweb/Elecciones%20y%20Participaci%C3%B3n%20Ciudadana/Elecciones/Resultados%20electorales/Congreso/Congreso%202023/Mesas/G1340123_prov.xlsx",
+      "licence": "Public-sector information reuse terms",
+      "retrieved": "2026-07-26"
+    },
+    {
+      "title": "Household Income Distribution Atlas",
+      "organisation": "Instituto Nacional de Estadística",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31097.csv",
+      "licence": "INE standard reuse conditions",
+      "retrieved": "2026-07-26"
+    },
+    {
+      "title": "CRTM open transport data",
+      "organisation": "Consorcio Regional de Transportes de Madrid",
+      "url": "https://transparencia.crtm.es/presupuestos-contratos-y-gastos/datos-abiertos/",
+      "licence": "CRTM open-data licence",
+      "retrieved": "2026-07-26"
+    },
+    {
+      "title": "BiciMAD stations",
+      "organisation": "EMT Madrid",
+      "url": "https://datos.emtmadrid.es/dataset/5fcc0945-2cbd-46c3-801a-6a83f4167c11/resource/105ce5df-793f-4e0a-a88e-5d3b3f024a5d/download/bikestationbicimad_geojson.json",
+      "licence": "Madrid open-data reuse terms",
+      "retrieved": "2026-07-26"
+    }
+  ],
+  "notes": [
+    "Population values are joined by official section identifiers; resident coverage must be at least 99.5%.",
+    "Election shares use valid votes including blank ballots as the denominator.",
+    "Election totals exclude non-geographic votes when they are absent from polling-table data.",
+    "Transport is a static network snapshot; live vehicles and bicycle availability are intentionally excluded.",
+    "Building archives are split by district and checked against a 95 MB per-file publication limit."
+  ]
+}
