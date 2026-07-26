@@ -16,6 +16,13 @@ export interface TooltipField {
   label: string;
   format: ValueFormat;
   suffix?: string;
+  percentileProperty?: string;
+}
+
+export interface ElectionResultField {
+  property: string;
+  label: string;
+  color: string;
 }
 
 export interface LayerControl {
@@ -24,6 +31,7 @@ export interface LayerControl {
   transportMode?: "metro" | "metro-ligero" | "cercanias" | "emt" | "bicimad";
   routeProperty?: string;
   routes?: Array<{ value: string; label: string }>;
+  results?: ElectionResultField[];
 }
 
 export interface LayerDefinition {

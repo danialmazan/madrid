@@ -36,20 +36,27 @@ sections_2026 <- readRDS(file.path(processed_dir, "sections-2026-population.rds"
   mutate(
     section_name = section_name(pick(everything())),
     across(
-      c(population_density_km2, under18_pct, age65plus_pct, foreign_citizenship_pct),
+      c(
+        population_density_km2, under18_pct, age65plus_pct, foreign_citizenship_pct,
+        population_density_percentile, under18_percentile, age65plus_percentile,
+        foreign_citizenship_percentile
+      ),
       ~round(.x, 2)
     )
   ) |>
   select(
     section_id, section_name, district, population_total, population_density_km2,
-    under18_pct, age65plus_pct, foreign_citizenship_pct, geometry
+    under18_pct, age65plus_pct, foreign_citizenship_pct,
+    population_density_percentile, under18_percentile, age65plus_percentile,
+    foreign_citizenship_percentile, geometry
   )
 sections_2025 <- readRDS(file.path(processed_dir, "sections-2025-foreign-born.rds")) |>
   mutate(
     section_name = section_name(pick(everything())),
-    foreign_born_pct = round(foreign_born_pct, 2)
+    foreign_born_pct = round(foreign_born_pct, 2),
+    foreign_born_percentile = round(foreign_born_percentile, 2)
   ) |>
-  select(section_id, section_name, district, foreign_born_pct, geometry)
+  select(section_id, section_name, district, foreign_born_pct, foreign_born_percentile, geometry)
 sections_2023 <- readRDS(file.path(processed_dir, "sections-2023-thematics.rds")) |>
   mutate(
     section_name = section_name(pick(everything())),
@@ -106,8 +113,7 @@ run_tippecanoe(
   file.path(public_data_dir, "transport.pmtiles"),
   transport_inputs,
   minimum_zoom = 8,
-  maximum_zoom = 16,
-  extra = c("--drop-densest-as-needed", "--extend-zooms-if-still-dropping")
+  maximum_zoom = 16
 )
 
 message_step("PMTiles archives ready")

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-26T14:36:47Z",
+  "generatedAt": "2026-07-26T19:14:14Z",
   "version": "1.0.0",
-  "defaultLayer": "population-total",
+  "defaultLayer": "population-density",
   "sources": [
     {
       "id": "sections-2026",
@@ -481,22 +481,26 @@
         {
           "property": "population_density_km2",
           "label": "Residents / km²",
-          "format": "integer"
+          "format": "integer",
+          "percentileProperty": "population_density_percentile"
         },
         {
           "property": "under18_pct",
           "label": "Under 18",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "under18_percentile"
         },
         {
           "property": "age65plus_pct",
           "label": "65 and older",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "age65plus_percentile"
         },
         {
           "property": "foreign_citizenship_pct",
           "label": "Foreign citizenship",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "foreign_citizenship_percentile"
         }
       ]
     },
@@ -544,22 +548,26 @@
         {
           "property": "population_density_km2",
           "label": "Residents / km²",
-          "format": "integer"
+          "format": "integer",
+          "percentileProperty": "population_density_percentile"
         },
         {
           "property": "under18_pct",
           "label": "Under 18",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "under18_percentile"
         },
         {
           "property": "age65plus_pct",
           "label": "65 and older",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "age65plus_percentile"
         },
         {
           "property": "foreign_citizenship_pct",
           "label": "Foreign citizenship",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "foreign_citizenship_percentile"
         }
       ]
     },
@@ -607,22 +615,26 @@
         {
           "property": "population_density_km2",
           "label": "Residents / km²",
-          "format": "integer"
+          "format": "integer",
+          "percentileProperty": "population_density_percentile"
         },
         {
           "property": "under18_pct",
           "label": "Under 18",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "under18_percentile"
         },
         {
           "property": "age65plus_pct",
           "label": "65 and older",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "age65plus_percentile"
         },
         {
           "property": "foreign_citizenship_pct",
           "label": "Foreign citizenship",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "foreign_citizenship_percentile"
         }
       ]
     },
@@ -670,22 +682,26 @@
         {
           "property": "population_density_km2",
           "label": "Residents / km²",
-          "format": "integer"
+          "format": "integer",
+          "percentileProperty": "population_density_percentile"
         },
         {
           "property": "under18_pct",
           "label": "Under 18",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "under18_percentile"
         },
         {
           "property": "age65plus_pct",
           "label": "65 and older",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "age65plus_percentile"
         },
         {
           "property": "foreign_citizenship_pct",
           "label": "Foreign citizenship",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "foreign_citizenship_percentile"
         }
       ]
     },
@@ -733,22 +749,26 @@
         {
           "property": "population_density_km2",
           "label": "Residents / km²",
-          "format": "integer"
+          "format": "integer",
+          "percentileProperty": "population_density_percentile"
         },
         {
           "property": "under18_pct",
           "label": "Under 18",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "under18_percentile"
         },
         {
           "property": "age65plus_pct",
           "label": "65 and older",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "age65plus_percentile"
         },
         {
           "property": "foreign_citizenship_pct",
           "label": "Foreign citizenship",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "foreign_citizenship_percentile"
         }
       ]
     },
@@ -758,7 +778,7 @@
       "kind": "choropleth",
       "label": "Foreign-born residents",
       "shortLabel": "Foreign-born",
-      "description": "Share of residents born outside Spain. This annual census measure has a separate reference date.",
+      "description": "Share of residents born outside Spain.",
       "unit": "%",
       "referenceDate": "2025",
       "geography": "2025 census sections",
@@ -791,7 +811,8 @@
         {
           "property": "foreign_born_pct",
           "label": "Foreign-born",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "foreign_born_percentile"
         },
         {
           "property": "section_id",
@@ -806,7 +827,7 @@
       "kind": "fill",
       "label": "Earliest construction year",
       "shortLabel": "Construction year",
-      "description": "Earliest year in Catastro’s recorded construction interval. The full interval is shown in details.",
+      "description": "Earliest recorded construction year; the full interval is shown in details.",
       "unit": "year",
       "referenceDate": "2026-02-20",
       "geography": "Building footprints",
@@ -857,6 +878,11 @@
       "opacity": 0.78,
       "tooltip": [
         {
+          "property": "building_id",
+          "label": "Building ID",
+          "format": "text"
+        },
+        {
           "property": "construction_start_year",
           "label": "Earliest year",
           "format": "year"
@@ -875,6 +901,16 @@
           "property": "use",
           "label": "Use",
           "format": "text"
+        },
+        {
+          "property": "building_units",
+          "label": "Building units",
+          "format": "integer"
+        },
+        {
+          "property": "dwellings",
+          "label": "Dwellings",
+          "format": "integer"
         }
       ]
     },
@@ -934,6 +970,11 @@
       "maxzoom": 16,
       "opacity": 0.84,
       "tooltip": [
+        {
+          "property": "height_id",
+          "label": "Height polygon ID",
+          "format": "text"
+        },
         {
           "property": "height_m",
           "label": "Height",
@@ -1024,8 +1065,8 @@
       "id": "election-general-leading",
       "group": "elections",
       "kind": "choropleth",
-      "label": "General election leading party",
-      "shortLabel": "Leading party",
+      "label": "General election results and leading party",
+      "shortLabel": "Results/Leading party",
       "description": "Candidacy receiving the most votes in each section.",
       "unit": "party",
       "referenceDate": "2023-07-23",
@@ -1085,7 +1126,29 @@
       ],
       "control": {
         "election": "general",
-        "party": "leading"
+        "party": "leading",
+        "results": [
+          {
+            "property": "share_pp_general",
+            "label": "PP",
+            "color": "#1D84CE"
+          },
+          {
+            "property": "share_psoe_general",
+            "label": "PSOE",
+            "color": "#E32322"
+          },
+          {
+            "property": "share_vox_general",
+            "label": "VOX",
+            "color": "#63A53A"
+          },
+          {
+            "property": "share_sumar_general",
+            "label": "SUMAR",
+            "color": "#E65A91"
+          }
+        ]
       }
     },
     {
@@ -1103,12 +1166,12 @@
       ],
       "property": "share_pp_general",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#F5F4EF",
+        "#C9DDE8",
+        "#9EC7E1",
+        "#73B0DB",
+        "#489AD4",
+        "#1D84CE"
       ],
       "breaks": [
         0,
@@ -1170,12 +1233,12 @@
       ],
       "property": "share_psoe_general",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#F5F4EF",
+        "#F1CAC6",
+        "#EDA09C",
+        "#EA7673",
+        "#E64C4A",
+        "#E32322"
       ],
       "breaks": [
         0,
@@ -1237,12 +1300,12 @@
       ],
       "property": "share_vox_general",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#F5F4EF",
+        "#D7E4CA",
+        "#BAD4A6",
+        "#9DC482",
+        "#80B45E",
+        "#63A53A"
       ],
       "breaks": [
         0,
@@ -1304,12 +1367,12 @@
       ],
       "property": "share_sumar_general",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#F5F4EF",
+        "#F2D5DC",
+        "#EFB6C9",
+        "#EC97B6",
+        "#E978A3",
+        "#E65A91"
       ],
       "breaks": [
         0,
@@ -1422,8 +1485,8 @@
       "id": "election-local-leading",
       "group": "elections",
       "kind": "choropleth",
-      "label": "Madrid local election leading party",
-      "shortLabel": "Leading party",
+      "label": "Madrid local election results and leading party",
+      "shortLabel": "Results/Leading party",
       "description": "Candidacy receiving the most votes in each section.",
       "unit": "party",
       "referenceDate": "2023-05-28",
@@ -1483,7 +1546,34 @@
       ],
       "control": {
         "election": "local",
-        "party": "leading"
+        "party": "leading",
+        "results": [
+          {
+            "property": "share_pp_local",
+            "label": "PP",
+            "color": "#1D84CE"
+          },
+          {
+            "property": "share_psoe_local",
+            "label": "PSOE",
+            "color": "#E32322"
+          },
+          {
+            "property": "share_vox_local",
+            "label": "VOX",
+            "color": "#63A53A"
+          },
+          {
+            "property": "share_mas_madrid_local",
+            "label": "Más Madrid",
+            "color": "#16A085"
+          },
+          {
+            "property": "share_podemos_iu_av_local",
+            "label": "Podemos-IU-AV",
+            "color": "#6B3FA0"
+          }
+        ]
       }
     },
     {
@@ -1501,12 +1591,12 @@
       ],
       "property": "share_pp_local",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#F5F4EF",
+        "#C9DDE8",
+        "#9EC7E1",
+        "#73B0DB",
+        "#489AD4",
+        "#1D84CE"
       ],
       "breaks": [
         0,
@@ -1568,12 +1658,12 @@
       ],
       "property": "share_psoe_local",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#F5F4EF",
+        "#F1CAC6",
+        "#EDA09C",
+        "#EA7673",
+        "#E64C4A",
+        "#E32322"
       ],
       "breaks": [
         0,
@@ -1635,12 +1725,12 @@
       ],
       "property": "share_vox_local",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#F5F4EF",
+        "#D7E4CA",
+        "#BAD4A6",
+        "#9DC482",
+        "#80B45E",
+        "#63A53A"
       ],
       "breaks": [
         0,
@@ -1702,12 +1792,12 @@
       ],
       "property": "share_mas_madrid_local",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#F5F4EF",
+        "#C8E3D9",
+        "#9BD2C4",
+        "#6FC1AF",
+        "#42B09A",
+        "#16A085"
       ],
       "breaks": [
         0,
@@ -1769,12 +1859,12 @@
       ],
       "property": "share_podemos_iu_av_local",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#F5F4EF",
+        "#D9CFDF",
+        "#BDABCF",
+        "#A287BF",
+        "#8663AF",
+        "#6B3FA0"
       ],
       "breaks": [
         0,
@@ -1887,8 +1977,8 @@
       "id": "election-assembly-leading",
       "group": "elections",
       "kind": "choropleth",
-      "label": "Madrid Assembly election leading party",
-      "shortLabel": "Leading party",
+      "label": "Madrid Assembly election results and leading party",
+      "shortLabel": "Results/Leading party",
       "description": "Candidacy receiving the most votes in each section.",
       "unit": "party",
       "referenceDate": "2023-05-28",
@@ -1948,7 +2038,34 @@
       ],
       "control": {
         "election": "assembly",
-        "party": "leading"
+        "party": "leading",
+        "results": [
+          {
+            "property": "share_pp_assembly",
+            "label": "PP",
+            "color": "#1D84CE"
+          },
+          {
+            "property": "share_psoe_assembly",
+            "label": "PSOE",
+            "color": "#E32322"
+          },
+          {
+            "property": "share_vox_assembly",
+            "label": "VOX",
+            "color": "#63A53A"
+          },
+          {
+            "property": "share_mas_madrid_assembly",
+            "label": "Más Madrid",
+            "color": "#16A085"
+          },
+          {
+            "property": "share_podemos_iu_av_assembly",
+            "label": "Podemos-IU-AV",
+            "color": "#6B3FA0"
+          }
+        ]
       }
     },
     {
@@ -1966,12 +2083,12 @@
       ],
       "property": "share_pp_assembly",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#F5F4EF",
+        "#C9DDE8",
+        "#9EC7E1",
+        "#73B0DB",
+        "#489AD4",
+        "#1D84CE"
       ],
       "breaks": [
         0,
@@ -2033,12 +2150,12 @@
       ],
       "property": "share_psoe_assembly",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#F5F4EF",
+        "#F1CAC6",
+        "#EDA09C",
+        "#EA7673",
+        "#E64C4A",
+        "#E32322"
       ],
       "breaks": [
         0,
@@ -2100,12 +2217,12 @@
       ],
       "property": "share_vox_assembly",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#F5F4EF",
+        "#D7E4CA",
+        "#BAD4A6",
+        "#9DC482",
+        "#80B45E",
+        "#63A53A"
       ],
       "breaks": [
         0,
@@ -2167,12 +2284,12 @@
       ],
       "property": "share_mas_madrid_assembly",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#F5F4EF",
+        "#C8E3D9",
+        "#9BD2C4",
+        "#6FC1AF",
+        "#42B09A",
+        "#16A085"
       ],
       "breaks": [
         0,
@@ -2234,12 +2351,12 @@
       ],
       "property": "share_podemos_iu_av_assembly",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#F5F4EF",
+        "#D9CFDF",
+        "#BDABCF",
+        "#A287BF",
+        "#8663AF",
+        "#6B3FA0"
       ],
       "breaks": [
         0,
@@ -2333,8 +2450,18 @@
           "format": "percent"
         },
         {
+          "property": "above_200_median_pct",
+          "label": "Above 200% median",
+          "format": "percent"
+        },
+        {
           "property": "gini",
           "label": "Gini coefficient",
+          "format": "decimal"
+        },
+        {
+          "property": "income_p80_p20",
+          "label": "P80/P20 ratio",
           "format": "decimal"
         }
       ]
@@ -2386,8 +2513,18 @@
           "format": "percent"
         },
         {
+          "property": "above_200_median_pct",
+          "label": "Above 200% median",
+          "format": "percent"
+        },
+        {
           "property": "gini",
           "label": "Gini coefficient",
+          "format": "decimal"
+        },
+        {
+          "property": "income_p80_p20",
+          "label": "P80/P20 ratio",
           "format": "decimal"
         }
       ]
@@ -2439,8 +2576,144 @@
           "format": "percent"
         },
         {
+          "property": "above_200_median_pct",
+          "label": "Above 200% median",
+          "format": "percent"
+        },
+        {
           "property": "gini",
           "label": "Gini coefficient",
+          "format": "decimal"
+        },
+        {
+          "property": "income_p80_p20",
+          "label": "P80/P20 ratio",
+          "format": "decimal"
+        }
+      ]
+    },
+    {
+      "id": "income-above-200-median",
+      "group": "income",
+      "kind": "choropleth",
+      "label": "Population above 200% of median",
+      "shortLabel": "Above 200% median",
+      "description": "Share of people above twice the national median equivalised income.",
+      "unit": "%",
+      "referenceDate": "2023",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "above_200_median_pct",
+      "palette": [
+        "#edf5ed",
+        "#cce6d9",
+        "#8dceb4",
+        "#43aa8b",
+        "#247a67",
+        "#135348"
+      ],
+      "breaks": [
+        0,
+        4,
+        10,
+        18,
+        28,
+        40,
+        60
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "income_per_person_eur",
+          "label": "Net income / person",
+          "format": "currency"
+        },
+        {
+          "property": "below_60_median_pct",
+          "label": "Below 60% median",
+          "format": "percent"
+        },
+        {
+          "property": "above_200_median_pct",
+          "label": "Above 200% median",
+          "format": "percent"
+        },
+        {
+          "property": "gini",
+          "label": "Gini coefficient",
+          "format": "decimal"
+        },
+        {
+          "property": "income_p80_p20",
+          "label": "P80/P20 ratio",
+          "format": "decimal"
+        }
+      ]
+    },
+    {
+      "id": "income-p80-p20",
+      "group": "income",
+      "kind": "choropleth",
+      "label": "P80/P20 income ratio",
+      "shortLabel": "P80/P20 ratio",
+      "description": "Income at the 80th percentile divided by income at the 20th percentile.",
+      "unit": "ratio",
+      "referenceDate": "2023",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "income_p80_p20",
+      "palette": [
+        "#fff2e8",
+        "#ffd2b6",
+        "#f8a56d",
+        "#fb7b2d",
+        "#d94c08",
+        "#963005"
+      ],
+      "breaks": [
+        1.8,
+        2.3,
+        2.5,
+        2.7,
+        2.9,
+        3.2,
+        4.1
+      ],
+      "format": "decimal",
+      "minzoom": 8,
+      "maxzoom": 16,
+      "opacity": 0.78,
+      "tooltip": [
+        {
+          "property": "income_per_person_eur",
+          "label": "Net income / person",
+          "format": "currency"
+        },
+        {
+          "property": "below_60_median_pct",
+          "label": "Below 60% median",
+          "format": "percent"
+        },
+        {
+          "property": "above_200_median_pct",
+          "label": "Above 200% median",
+          "format": "percent"
+        },
+        {
+          "property": "gini",
+          "label": "Gini coefficient",
+          "format": "decimal"
+        },
+        {
+          "property": "income_p80_p20",
+          "label": "P80/P20 ratio",
           "format": "decimal"
         }
       ]
@@ -2489,7 +2762,7 @@
       "kind": "transport-stop",
       "label": "Metro stops",
       "shortLabel": "Metro stops",
-      "description": "Stops appear only at useful zoom levels.",
+      "description": "All stops appear together at zoom 12.",
       "unit": "stop",
       "referenceDate": "2026-07-26",
       "geography": "Regional transport network",
@@ -2564,7 +2837,7 @@
       "kind": "transport-stop",
       "label": "Metro Ligero stops",
       "shortLabel": "Metro Ligero stops",
-      "description": "Stops appear only at useful zoom levels.",
+      "description": "All stops appear together at zoom 12.",
       "unit": "stop",
       "referenceDate": "2026-07-26",
       "geography": "Regional transport network",
@@ -2639,7 +2912,7 @@
       "kind": "transport-stop",
       "label": "Cercanías stops",
       "shortLabel": "Cercanías stops",
-      "description": "Stops appear only at useful zoom levels.",
+      "description": "All stops appear together at zoom 12.",
       "unit": "stop",
       "referenceDate": "2026-07-26",
       "geography": "Regional transport network",
@@ -3661,7 +3934,7 @@
       "kind": "transport-stop",
       "label": "EMT stops",
       "shortLabel": "EMT stops",
-      "description": "Stops appear only at useful zoom levels.",
+      "description": "All stops appear together at zoom 12.",
       "unit": "stop",
       "referenceDate": "2026-07-26",
       "geography": "Regional transport network",
@@ -4645,7 +4918,7 @@
       "kind": "transport-stop",
       "label": "BiciMAD stations",
       "shortLabel": "BiciMAD stops",
-      "description": "Stops appear only at useful zoom levels.",
+      "description": "All stops appear together at zoom 12.",
       "unit": "stop",
       "referenceDate": "2026-07-26",
       "geography": "Regional transport network",

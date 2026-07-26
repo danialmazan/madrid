@@ -23,6 +23,7 @@ const placesUrl = `${BASE_URL}data/places.json`;
 const panel = requireElement<HTMLElement>(".atlas-panel");
 const controls = requireElement<HTMLElement>("#layer-controls");
 const legend = requireElement<HTMLElement>("#legend");
+const legendPanel = requireElement<HTMLElement>(".legend-panel");
 const legendTitle = requireElement<HTMLElement>("#legend-title");
 const legendDate = requireElement<HTMLElement>("#legend-date");
 const featurePanel = requireElement<HTMLElement>("#feature-panel");
@@ -97,6 +98,14 @@ function normaliseInitialState(): void {
     );
     if (fallback) atlasState.layer = fallback.id;
   }
+  const normalisedLayer = getSelectedLayer();
+  if (
+    normalisedLayer.group !== "transport" &&
+    normalisedLayer.minzoom !== undefined &&
+    atlasState.camera.zoom < normalisedLayer.minzoom
+  ) {
+    atlasState.camera.zoom = normalisedLayer.minzoom;
+  }
 }
 
 function bindStaticControls(): void {
@@ -143,10 +152,10 @@ function bindStaticControls(): void {
     renderLegend();
     if (map) {
       map.jumpTo({
-        center: [incoming.camera.lng, incoming.camera.lat],
-        zoom: incoming.camera.zoom,
-        bearing: incoming.camera.bearing,
-        pitch: incoming.camera.pitch,
+        center: [atlasState.camera.lng, atlasState.camera.lat],
+        zoom: atlasState.camera.zoom,
+        bearing: atlasState.camera.bearing,
+        pitch: atlasState.camera.pitch,
       });
       void applyMapLayers();
     }
@@ -298,16 +307,16 @@ function addDefinitionToMap(definition: LayerDefinition, overlay: boolean): void
 
     if (definition.kind === "transport-line") {
       const filter = routeFilter(definition);
+      const lineColor: string | ExpressionSpecification =
+        definition.control?.transportMode === "metro"
+          ? ["coalesce", ["get", "route_color"], definition.lineColor || "#145c9e"]
+          : definition.lineColor || "#145c9e";
       map.addLayer(
         {
           ...common,
           type: "line",
           paint: {
-            "line-color": definition.lineColor || [
-              "coalesce",
-              ["get", "route_color"],
-              "#145c9e",
-            ],
+            "line-color": lineColor,
             "line-width": [
               "interpolate",
               ["linear"],
@@ -440,7 +449,11 @@ function selectGroup(group: LayerGroup): void {
   renderGroupTabs();
   renderControls();
   renderLegend();
-  if (map) void applyMapLayers();
+  clearFeaturePanel();
+  if (map) {
+    zoomToLayerMinimum(getSelectedLayer());
+    void applyMapLayers();
+  }
   setSheetOpen(window.matchMedia("(max-width: 860px)").matches);
   scheduleHashUpdate();
 }
@@ -455,9 +468,11 @@ function selectLayer(layerId: string): void {
   renderGroupTabs();
   renderControls();
   renderLegend();
-  featurePanel.innerHTML =
-    '<p class="feature-empty">Select a census section or map feature to see its details.</p>';
-  if (map) void applyMapLayers();
+  clearFeaturePanel();
+  if (map) {
+    zoomToLayerMinimum(layer);
+    void applyMapLayers();
+  }
   scheduleHashUpdate();
 }
 
@@ -547,12 +562,18 @@ function renderElectionControls(): void {
     }
     renderControls();
     renderLegend();
+    clearFeaturePanel();
     if (map) void applyMapLayers();
     scheduleHashUpdate();
   });
   controls.querySelector<HTMLSelectElement>("#party-select")?.addEventListener("change", (event) => {
     selectLayer((event.currentTarget as HTMLSelectElement).value);
   });
+}
+
+function clearFeaturePanel(): void {
+  featurePanel.innerHTML =
+    '<p class="feature-empty">Select a census section or map feature to see its details.</p>';
 }
 
 function renderTransportControls(): void {
@@ -567,6 +588,11 @@ function renderTransportControls(): void {
     manifest.layers.find((layer) => layer.control?.transportMode === "emt")?.control?.routes ?? [];
 
   controls.innerHTML = `
+    <div class="transport-list-heading">
+      <span>Overlays</span>
+      <button id="clear-transport" class="transport-clear" type="button"
+        ${atlasState.transport.length === 0 ? "disabled" : ""}>Clear all</button>
+    </div>
     <div class="transport-list" aria-label="Transport overlays">
       ${modes
         .map(
@@ -592,7 +618,15 @@ function renderTransportControls(): void {
           .join("")}
       </select>
     </label>
-    <p class="feature-empty">Stops appear as you zoom in. Select one EMT line to reduce clutter.</p>`;
+    <p class="feature-empty">All stops appear together at zoom 12. Select one EMT line to reduce clutter.</p>`;
+
+  controls.querySelector<HTMLButtonElement>("#clear-transport")?.addEventListener("click", () => {
+    atlasState.transport = [];
+    atlasState.route = "all";
+    renderControls();
+    if (map) void applyMapLayers();
+    scheduleHashUpdate();
+  });
 
   controls.querySelectorAll<HTMLInputElement>('input[name="transport-mode"]').forEach((input) => {
     input.addEventListener("change", () => {
@@ -613,6 +647,12 @@ function renderTransportControls(): void {
 
 function renderLegend(): void {
   const selected = getSelectedLayer();
+  const hideLegend = selected.control?.party === "leading";
+  legendPanel.classList.toggle("is-hidden", hideLegend);
+  if (hideLegend) {
+    legend.innerHTML = "";
+    return;
+  }
   legendTitle.textContent = selected.label;
   legendDate.textContent = shortDate(selected.referenceDate);
 
@@ -634,6 +674,9 @@ function renderLegend(): void {
 
   const low = selected.breaks[0] ?? 0;
   const high = selected.breaks.at(-1) ?? low;
+  const missingNote = /missing observations/i.test(selected.description)
+    ? selected.description
+    : `${selected.description} Missing observations are shown in grey.`;
   legend.innerHTML = `
     <div class="legend-ramp" style="grid-template-columns:repeat(${selected.palette.length},1fr)">
       ${selected.palette.map((color) => `<i style="background:${escapeHtml(color)}"></i>`).join("")}
@@ -642,7 +685,7 @@ function renderLegend(): void {
       <span>${formatValue(low, selected.format, selected.unit)}</span>
       <span>${formatValue(high, selected.format, selected.unit)}</span>
     </div>
-    <p class="legend-note">${escapeHtml(selected.description)} Missing observations are shown in grey.</p>`;
+    <p class="legend-note">${escapeHtml(missingNote)}</p>`;
 }
 
 function renderMethodology(): void {
@@ -706,20 +749,41 @@ function renderFeature(feature: MapGeoJSONFeature): void {
   );
   if (!definition) return;
   const properties = feature.properties ?? {};
-  const title =
-    properties.name ||
-    properties.stop_name ||
-    properties.route_long_name ||
-    properties.section_name ||
-    `Census section ${properties.section_id || "—"}`;
-  const context = [properties.neighbourhood, properties.district].filter(Boolean).join(" · ");
+  const isBuilding = definition.group === "buildings";
+  const buildingId = properties.building_id || properties.height_id;
+  const title = isBuilding
+    ? definition.id === "building-age"
+      ? "Catastro building"
+      : "Municipal height polygon"
+    : properties.name ||
+      properties.stop_name ||
+      properties.route_long_name ||
+      properties.section_name ||
+      `Census section ${properties.section_id || "—"}`;
+  const context = isBuilding
+    ? [properties.district, buildingId ? `ID ${buildingId}` : definition.geography]
+        .filter(Boolean)
+        .join(" · ")
+    : [properties.neighbourhood, properties.district].filter(Boolean).join(" · ");
+
+  if (definition.control?.party === "leading" && definition.control.results) {
+    renderElectionResultFeature(String(title), context || definition.geography, properties, definition);
+    return;
+  }
+
   const fields = definition.tooltip
     .map((field) => {
       const value = properties[field.property];
-      const shown =
+      let shown =
         value === null || value === undefined || value === ""
           ? "No data"
           : formatValue(Number.isNaN(Number(value)) ? String(value) : Number(value), field.format, field.suffix ?? "");
+      const percentile = field.percentileProperty
+        ? Number(properties[field.percentileProperty])
+        : Number.NaN;
+      if (shown !== "No data" && Number.isFinite(percentile)) {
+        shown += ` (${ordinal(Math.round(percentile))} perc.)`;
+      }
       return `
         <div class="feature-stat">
           <dt>${escapeHtml(field.label)}</dt>
@@ -734,6 +798,59 @@ function renderFeature(feature: MapGeoJSONFeature): void {
       <p>${escapeHtml(context || definition.geography)}</p>
     </div>
     <dl class="feature-grid">${fields}</dl>`;
+}
+
+function renderElectionResultFeature(
+  title: string,
+  context: string,
+  properties: Record<string, unknown>,
+  definition: LayerDefinition,
+): void {
+  const candidates = (definition.control?.results ?? [])
+    .map((result) => ({
+      ...result,
+      value: Number(properties[result.property]),
+    }))
+    .filter((result) => Number.isFinite(result.value) && result.value > 0)
+    .sort((left, right) => right.value - left.value);
+
+  const shown: typeof candidates = [];
+  let cumulative = 0;
+  for (const candidate of candidates) {
+    if (cumulative >= 90) break;
+    shown.push(candidate);
+    cumulative += candidate.value;
+  }
+
+  featurePanel.innerHTML = `
+    <div class="feature-header">
+      <h3>${escapeHtml(title)}</h3>
+      <p>${escapeHtml(context)}</p>
+    </div>
+    <table class="election-results">
+      <thead><tr><th>Party</th><th>Vote share</th></tr></thead>
+      <tbody>
+        ${shown
+          .map(
+            (result) => `
+              <tr>
+                <th><i style="background:${escapeHtml(result.color)}"></i>${escapeHtml(result.label)}</th>
+                <td>${escapeHtml(formatValue(result.value, "percent"))}</td>
+              </tr>`,
+          )
+          .join("")}
+      </tbody>
+    </table>
+    <p class="results-coverage">${escapeHtml(formatValue(cumulative, "percent"))} of valid votes shown</p>`;
+}
+
+function zoomToLayerMinimum(layer: LayerDefinition): void {
+  if (!map || layer.group === "transport" || layer.minzoom === undefined) return;
+  if (map.getZoom() >= layer.minzoom) return;
+  map.easeTo({
+    zoom: layer.minzoom,
+    duration: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 650,
+  });
 }
 
 function toggle3d(): void {
@@ -912,6 +1029,12 @@ function formatValue(value: number | string, format: ValueFormat, suffix = ""): 
     case "text":
       return String(value);
   }
+}
+
+function ordinal(value: number): string {
+  const remainder100 = value % 100;
+  if (remainder100 >= 11 && remainder100 <= 13) return `${value}th`;
+  return `${value}${value % 10 === 1 ? "st" : value % 10 === 2 ? "nd" : value % 10 === 3 ? "rd" : "th"}`;
 }
 
 function escapeHtml(value: string): string {

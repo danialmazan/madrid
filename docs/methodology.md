@@ -18,6 +18,10 @@ The foreign-born layer is deliberately separate. It comes from the latest INE an
 and divides residents born outside Spain by the total. Its date and boundary vintage are not
 silently mixed with the monthly padrón.
 
+The feature panel also reports each section’s rank across Madrid sections for density, under-18,
+65+, foreign-citizenship and foreign-born measures. Tied values receive their average percentile
+rank.
+
 ## Buildings
 
 The construction layer reads `beginning` and `end` from Catastro INSPIRE’s `dateOfConstruction`.
@@ -35,18 +39,20 @@ then joined to 2023 boundaries. Party share is:
 
 Turnout is ballots cast divided by the resident electoral census. Leading party is calculated
 across every candidacy in the official workbook, not only the parties exposed as selectable layers.
+For the results view, the feature panel ranks the selectable parties by vote share and shows rows
+until their cumulative share reaches at least 90%.
 The pipeline reconciles table totals against the published Madrid city totals; non-geographic votes
 are excluded when they are not represented by a polling table.
 
 ## Income and inequality
 
-Net income per person, the population below 60% of median equivalised income, and the Gini
-coefficient come from the 2023 INE Household Income Distribution Atlas. They are retained as
-separate measures and joined to 2023 sections.
+Net income per person; the population below 60% and above 200% of median equivalised income; the
+Gini coefficient; and the P80/P20 income ratio come from the 2023 INE Household Income Distribution
+Atlas. They are retained as separate measures and joined to 2023 sections.
 
 ## Transport
 
 Metro, Metro Ligero, Cercanías and EMT routes and stops are generated from CRTM GTFS snapshots.
-BiciMAD contains station locations only. Stops have higher minimum zoom levels than routes, and an
-EMT route selector prevents the complete network from obscuring other information. This release
-does not imply live vehicle positions, service status or bicycle availability.
+BiciMAD contains station locations only. Every stop layer appears in full at zoom 12, while an EMT
+route selector prevents the complete network from obscuring other information. This release does
+not imply live vehicle positions, service status or bicycle availability.
