@@ -1,9 +1,9 @@
 {
-  "validated_at": "2026-07-26T14:44:43Z",
+  "validated_at": "2026-07-26T19:14:23Z",
   "passed": true,
   "counts": {
     "manifest_sources": 54,
-    "manifest_layers": 40,
+    "manifest_layers": 42,
     "pmtiles_archives": 25,
     "building_footprints": 124329,
     "building_height_polygons": 490298
@@ -156,26 +156,26 @@
     },
     {
       "name": "sections-2023.pmtiles",
-      "bytes": 5199786,
+      "bytes": 5345888,
       "under_95_mb": true
     },
     {
       "name": "sections-2025.pmtiles",
-      "bytes": 1570654,
+      "bytes": 1731647,
       "under_95_mb": true
     },
     {
       "name": "sections-2026.pmtiles",
-      "bytes": 2039880,
+      "bytes": 2554271,
       "under_95_mb": true
     },
     {
       "name": "transport.pmtiles",
-      "bytes": 2870143,
+      "bytes": 2870470,
       "under_95_mb": true
     }
   ],
-  "public_artifact_bytes": 111467843,
+  "public_artifact_bytes": 112297125,
   "licences": [
     {
       "title": "Padrón municipal de habitantes",

@@ -10,7 +10,7 @@ export const MADRID_CAMERA: CameraState = {
 
 export const DEFAULT_STATE: AtlasState = {
   group: "population",
-  layer: "population-total",
+  layer: "population-density",
   election: "general",
   party: "PP",
   transport: [],

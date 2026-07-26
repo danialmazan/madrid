@@ -167,10 +167,22 @@ gini <- extract_ine_indicator(
   "indice_de_gini|gini",
   "gini"
 )
+income_p80_p20 <- extract_ine_indicator(
+  income_paths$gini,
+  "p80.*p20",
+  "income_p80_p20"
+)
+above_200_median <- extract_ine_indicator(
+  income_paths$income_risk,
+  "encima.*200.*mediana|200.*mediana",
+  "above_200_median_pct"
+)
 
 assert_true(nrow(income_person) > 2000, "Too few income-per-person sections")
 assert_true(nrow(income_risk) > 2000, "Too few income-risk sections")
 assert_true(nrow(gini) > 2000, "Too few Gini sections")
+assert_true(nrow(income_p80_p20) > 2000, "Too few P80/P20 sections")
+assert_true(nrow(above_200_median) > 2000, "Too few above-200%-median sections")
 
 sections_2023 <- readRDS(file.path(processed_dir, "sections-2023.rds"))
 for (election in names(elections)) {
@@ -182,11 +194,15 @@ for (election in names(elections)) {
 sections_2023 <- sections_2023 |>
   left_join(income_person, by = "section_id") |>
   left_join(income_risk, by = "section_id") |>
-  left_join(gini, by = "section_id")
+  left_join(gini, by = "section_id") |>
+  left_join(income_p80_p20, by = "section_id") |>
+  left_join(above_200_median, by = "section_id")
 
 assert_true(all(sections_2023$income_per_person_eur >= 0, na.rm = TRUE), "Negative income values")
 assert_true(all(dplyr::between(sections_2023$below_60_median_pct, 0, 100), na.rm = TRUE), "Income-risk percentage out of range")
 assert_true(all(dplyr::between(sections_2023$gini, 0, 100), na.rm = TRUE), "Gini values out of range")
+assert_true(all(sections_2023$income_p80_p20 >= 1, na.rm = TRUE), "P80/P20 values out of range")
+assert_true(all(dplyr::between(sections_2023$above_200_median_pct, 0, 100), na.rm = TRUE), "Above-200%-median percentage out of range")
 saveRDS(sections_2023, file.path(processed_dir, "sections-2023-thematics.rds"))
 save_metadata("income", list(
   reference_date = "2023",
@@ -194,7 +210,9 @@ save_metadata("income", list(
   matched = list(
     income_per_person = nrow(income_person),
     below_60_median = nrow(income_risk),
-    gini = nrow(gini)
+    gini = nrow(gini),
+    p80_p20 = nrow(income_p80_p20),
+    above_200_median = nrow(above_200_median)
   )
 ))
 

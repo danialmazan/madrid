@@ -35,6 +35,27 @@ assert_true(
     as.integer(substr(population$reference_date, 1, 4)) <= as.integer(format(Sys.Date(), "%Y")),
   "Population reference date is invalid"
 )
+population_sections <- readRDS(file.path(processed_dir, "sections-2026-population.rds"))
+population_percentiles <- sf::st_drop_geometry(population_sections)[
+  c(
+    "population_density_percentile", "under18_percentile",
+    "age65plus_percentile", "foreign_citizenship_percentile"
+  )
+]
+assert_true(
+  all(vapply(population_percentiles, function(x) all(dplyr::between(x, 0, 100), na.rm = TRUE), logical(1))),
+  "Population percentile values are out of range"
+)
+
+income_sections <- readRDS(file.path(processed_dir, "sections-2023-thematics.rds"))
+assert_true(
+  all(income_sections$income_p80_p20 >= 1, na.rm = TRUE),
+  "P80/P20 income values are out of range"
+)
+assert_true(
+  all(dplyr::between(income_sections$above_200_median_pct, 0, 100), na.rm = TRUE),
+  "Above-200%-median income values are out of range"
+)
 
 election_checks <- lapply(c("general", "local", "assembly"), function(election) {
   metadata <- readRDS(file.path(processed_dir, paste0("election-", election, "-metadata.rds")))

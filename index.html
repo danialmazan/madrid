@@ -18,49 +18,44 @@
   <body>
     <a class="skip-link" href="#atlas-map">Skip to map</a>
     <main id="app">
-      <aside class="atlas-panel" aria-label="Atlas controls">
-        <header class="masthead">
-          <a class="wordmark" href="https://danielalmazan.com" aria-label="Daniel Almazán home">
-            <span class="wordmark-mark" aria-hidden="true">DA</span>
-            <span>Daniel Almazán</span>
-          </a>
-          <p class="eyebrow">Civic atlas · Madrid</p>
-          <h1>Read the city,<br /><em>section by section.</em></h1>
-          <p class="dek">
-            Population, buildings, elections, income and the networks that bind Madrid together.
-          </p>
-        </header>
+      <aside id="mobile-sheet" class="atlas-panel" aria-label="Atlas controls">
+        <div class="panel-scroll">
+          <header class="masthead">
+            <p class="eyebrow">Civic atlas · Madrid</p>
+            <h1>Read the city, <em>section by section.</em></h1>
+          </header>
 
-        <nav class="group-tabs" aria-label="Layer groups">
-          <button class="group-tab is-active" data-group="population" type="button">Population</button>
-          <button class="group-tab" data-group="buildings" type="button">Buildings</button>
-          <button class="group-tab" data-group="elections" type="button">Elections</button>
-          <button class="group-tab" data-group="income" type="button">Income</button>
-          <button class="group-tab" data-group="transport" type="button">Transport</button>
-        </nav>
+          <nav class="group-tabs" aria-label="Layer groups">
+            <button class="group-tab is-active" data-group="population" type="button">Population</button>
+            <button class="group-tab" data-group="buildings" type="button">Buildings</button>
+            <button class="group-tab" data-group="elections" type="button">Elections</button>
+            <button class="group-tab" data-group="income" type="button">Income</button>
+            <button class="group-tab" data-group="transport" type="button">Transport</button>
+          </nav>
 
-        <section id="layer-controls" class="control-stack" aria-live="polite"></section>
+          <section id="layer-controls" class="control-stack" aria-live="polite"></section>
 
-        <section class="legend-panel" aria-label="Map legend">
-          <div class="section-heading">
-            <div>
-              <p class="kicker">Legend</p>
-              <h2 id="legend-title">Population</h2>
+          <section class="legend-panel" aria-label="Map legend">
+            <div class="section-heading">
+              <div>
+                <p class="kicker">Legend</p>
+                <h2 id="legend-title">Population density</h2>
+              </div>
+              <span id="legend-date" class="date-chip"></span>
             </div>
-            <span id="legend-date" class="date-chip"></span>
-          </div>
-          <div id="legend" class="legend"></div>
-        </section>
+            <div id="legend" class="legend"></div>
+          </section>
 
-        <section id="feature-panel" class="feature-panel" aria-live="polite">
-          <p class="feature-empty">
-            Select a census section or map feature to see its details.
-          </p>
-        </section>
+          <section id="feature-panel" class="feature-panel" aria-live="polite">
+            <p class="feature-empty">
+              Select a census section or map feature to see its details.
+            </p>
+          </section>
+        </div>
 
         <footer class="panel-footer">
           <button id="about-button" class="text-button" type="button">Sources &amp; methodology</button>
-          <a href="https://danielalmazan.com" class="text-link">Back to portfolio</a>
+          <a href="https://danielalmazan.com" class="text-link">danielalmazan.com</a>
         </footer>
       </aside>
 

@@ -34,7 +34,7 @@ spatial sources.
 its source archive and vector-layer name, property, unit, reference date, matching geography,
 palette, class breaks, tooltip fields, zoom range and source attribution.
 
-- May 2026 monthly padrón measures use Madrid’s current 2026 census sections.
+- July 2026 monthly padrón measures use Madrid’s current 2026 census sections.
 - The latest annual foreign-born measure uses its matching 2025 INE section vintage.
 - 2023 elections and income measures use 2023 INE census sections.
 - Catastro construction dates and municipal height polygons retain their own footprints.

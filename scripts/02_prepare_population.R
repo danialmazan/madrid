@@ -1,5 +1,17 @@
 source(file.path("scripts", "R", "common.R"))
 
+section_percentile <- function(x) {
+  output <- rep(NA_real_, length(x))
+  valid <- is.finite(x)
+  count <- sum(valid)
+  if (count == 1) {
+    output[valid] <- 100
+  } else if (count > 1) {
+    output[valid] <- 100 * (rank(x[valid], ties.method = "average") - 1) / (count - 1)
+  }
+  output
+}
+
 message_step("Resolving latest monthly Madrid padrón")
 population_resources <- package_resources(sources$madrid_population_package)
 population_url <- pick_resource_url(
@@ -40,6 +52,13 @@ sections_2026 <- sections_2026 |>
   left_join(population, by = "section_id")
 area_km2 <- as.numeric(sf::st_area(sf::st_transform(sections_2026, 25830))) / 1e6
 sections_2026$population_density_km2 <- sections_2026$population_total / area_km2
+sections_2026 <- sections_2026 |>
+  mutate(
+    population_density_percentile = section_percentile(population_density_km2),
+    under18_percentile = section_percentile(under18_pct),
+    age65plus_percentile = section_percentile(age65plus_pct),
+    foreign_citizenship_percentile = section_percentile(foreign_citizenship_pct)
+  )
 
 source_total <- sum(population$population_total, na.rm = TRUE)
 joined_total <- sum(sections_2026$population_total, na.rm = TRUE)
@@ -103,7 +122,8 @@ foreign_madrid <- foreign_raw |>
   mutate(foreign_born_pct = 100 * foreign / total)
 
 sections_2025 <- readRDS(file.path(processed_dir, "sections-2025.rds")) |>
-  left_join(foreign_madrid |> select(section_id, foreign_born_pct), by = "section_id")
+  left_join(foreign_madrid |> select(section_id, foreign_born_pct), by = "section_id") |>
+  mutate(foreign_born_percentile = section_percentile(foreign_born_pct))
 assert_true(all(dplyr::between(sections_2025$foreign_born_pct, 0, 100), na.rm = TRUE), "Foreign-born percentage out of range")
 saveRDS(sections_2025, file.path(processed_dir, "sections-2025-foreign-born.rds"))
 save_metadata("foreign-born", list(
