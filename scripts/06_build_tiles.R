@@ -95,8 +95,7 @@ for (code in names(district_names)) {
     file.path(public_data_dir, paste0("buildings-", code, ".pmtiles")),
     inputs,
     minimum_zoom = 12,
-    maximum_zoom = 16,
-    extra = c("--drop-densest-as-needed", "--extend-zooms-if-still-dropping")
+    maximum_zoom = 16
   )
 }
 

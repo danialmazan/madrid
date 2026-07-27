@@ -26,4 +26,14 @@ describe("URL state", () => {
     expect(state.group).toBe(DEFAULT_STATE.group);
     expect(state.election).toBe(DEFAULT_STATE.election);
   });
+
+  it("persists a transport-only view without a thematic layer", () => {
+    const state = {
+      ...DEFAULT_STATE,
+      group: "transport" as const,
+      dataLayerVisible: false,
+      transport: ["metro"],
+    };
+    expect(parseHash(serializeState(state))).toEqual(state);
+  });
 });

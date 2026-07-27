@@ -37,10 +37,11 @@
 
           <section class="legend-panel" aria-label="Map legend">
             <div class="section-heading">
-              <div>
-                <p class="kicker">Legend</p>
-                <h2 id="legend-title">Population density</h2>
-              </div>
+              <p class="legend-heading">
+                <span>Legend</span>
+                <span aria-hidden="true">·</span>
+                <span id="legend-title">Population density</span>
+              </p>
               <span id="legend-date" class="date-chip"></span>
             </div>
             <div id="legend" class="legend"></div>
@@ -62,7 +63,7 @@
       <section class="map-stage" aria-label="Interactive map region">
         <div class="map-topbar">
           <label class="search-control">
-            <span class="visually-hidden">Search districts and neighbourhoods</span>
+            <span class="visually-hidden">Search addresses, districts and neighbourhoods</span>
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" />
             </svg>
@@ -70,7 +71,7 @@
               id="place-search"
               type="search"
               autocomplete="off"
-              placeholder="Find a district or neighbourhood"
+              placeholder="Find an address or area"
               role="combobox"
               aria-autocomplete="list"
               aria-controls="search-results"

@@ -65,6 +65,7 @@ field <- function(property, label, format, suffix = NULL, percentile_property = 
 }
 
 blue_palette <- c("#edf4f8", "#c9e0eb", "#8dbfd3", "#4a91b5", "#145c9e", "#0b396e")
+viridis_palette <- c("#440154", "#414487", "#2a788e", "#22a884", "#7ad151", "#fde725")
 green_palette <- c("#edf5ed", "#cce6d9", "#8dceb4", "#43aa8b", "#247a67", "#135348")
 orange_palette <- c("#fff2e8", "#ffd2b6", "#f8a56d", "#fb7b2d", "#d94c08", "#963005")
 brown_palette <- c("#f5eee9", "#dfcdbf", "#bf9f8a", "#956e55", "#694a38", "#3f2b21")
@@ -73,7 +74,7 @@ diverging_palette <- c("#184e77", "#52b69a", "#d9ed92", "#f9c74f", "#f9844a", "#
 layer <- function(
   id, group, kind, label, short_label, description, unit, reference_date,
   geography, source_ids, property, palette, breaks, format,
-  tooltip_fields, minzoom = 8, maxzoom = 16, opacity = 0.78,
+  tooltip_fields, minzoom = 8, maxzoom = 24, opacity = 0.72,
   control = NULL, methodology = NULL, line_color = NULL, line_width = NULL
 ) {
   out <- list(
@@ -117,7 +118,7 @@ layers_out <- list(
     "population-density", "population", "choropleth", "Population density", "Density",
     "Registered residents per square kilometre of section area.", "residents / km²",
     population_meta$reference_date, "2026 census sections", "sections-2026",
-    "population_density_km2", blue_palette, c(0, 5000, 10000, 20000, 35000, 55000, 90000), "integer",
+    "population_density_km2", viridis_palette, c(0, 5000, 10000, 20000, 35000, 55000, 90000), "integer",
     section_context_2026
   ),
   layer(
@@ -168,7 +169,7 @@ layers_out <- list(
       field("building_units", "Building units", "integer"),
       field("dwellings", "Dwellings", "integer")
     ),
-    minzoom = 12
+    minzoom = 12, opacity = 0.78
   ),
   layer(
     "building-height", "buildings", "fill-extrusion", "Estimated building height", "Height",
@@ -410,6 +411,11 @@ references <- list(
     title = "BiciMAD stations", organisation = "EMT Madrid",
     url = sources$bicimad_geojson, licence = "Madrid open-data reuse terms",
     retrieved = format(Sys.Date(), "%Y-%m-%d")
+  ),
+  list(
+    title = "Official Madrid street directory", organisation = "Ayuntamiento de Madrid",
+    url = sources$madrid_street_addresses_csv, licence = "Madrid open-data reuse terms",
+    retrieved = format(Sys.Date(), "%Y-%m-%d")
   )
 )
 
@@ -424,6 +430,7 @@ manifest <- list(
     "Population values are joined by official section identifiers; resident coverage must be at least 99.5%.",
     "Election shares use valid votes including blank ballots as the denominator.",
     "Election totals exclude non-geographic votes when they are absent from polling-table data.",
+    "INE publishes no 2023 section values for the below-60% and above-200% median indicators in Carabanchel and Fuencarral-El Pardo; these remain No data.",
     "Transport is a static network snapshot; live vehicles and bicycle availability are intentionally excluded.",
     "Building archives are split by district and checked against a 95 MB per-file publication limit."
   )

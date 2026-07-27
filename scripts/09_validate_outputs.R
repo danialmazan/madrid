@@ -8,6 +8,20 @@ places <- jsonlite::fromJSON(file.path(public_data_dir, "places.json"), simplify
 place_bounds <- unlist(lapply(places, `[[`, "bbox"))
 assert_true(length(places) >= 150, "Place-search index is incomplete")
 assert_true(all(is.finite(place_bounds)), "Place-search index contains invalid bounds")
+addresses <- jsonlite::fromJSON(
+  file.path(public_data_dir, "addresses.json"),
+  simplifyVector = FALSE
+)
+assert_true(length(addresses$records) >= 150000, "Street-address search index is incomplete")
+address_coordinates <- unlist(lapply(addresses$records, function(record) record[c(4, 5)]))
+assert_true(
+  all(is.finite(address_coordinates)) &&
+    all(address_coordinates[c(TRUE, FALSE)] > -3.9) &&
+    all(address_coordinates[c(TRUE, FALSE)] < -3.4) &&
+    all(address_coordinates[c(FALSE, TRUE)] > 40.25) &&
+    all(address_coordinates[c(FALSE, TRUE)] < 40.65),
+  "Street-address index contains invalid Madrid coordinates"
+)
 
 source_ids <- vapply(manifest$sources, `[[`, character(1), "id")
 layer_ids <- vapply(manifest$layers, `[[`, character(1), "id")

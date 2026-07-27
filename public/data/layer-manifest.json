@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-26T19:14:14Z",
+  "generatedAt": "2026-07-27T09:55:55Z",
   "version": "1.0.0",
   "defaultLayer": "population-density",
   "sources": [
@@ -470,8 +470,8 @@
       ],
       "format": "integer",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "population_total",
@@ -519,12 +519,12 @@
       ],
       "property": "population_density_km2",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#440154",
+        "#414487",
+        "#2a788e",
+        "#22a884",
+        "#7ad151",
+        "#fde725"
       ],
       "breaks": [
         0,
@@ -537,8 +537,8 @@
       ],
       "format": "integer",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "population_total",
@@ -604,8 +604,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "population_total",
@@ -671,8 +671,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "population_total",
@@ -738,8 +738,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "population_total",
@@ -805,8 +805,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "foreign_born_pct",
@@ -874,7 +874,7 @@
       ],
       "format": "year",
       "minzoom": 12,
-      "maxzoom": 16,
+      "maxzoom": 24,
       "opacity": 0.78,
       "tooltip": [
         {
@@ -967,7 +967,7 @@
       ],
       "format": "decimal",
       "minzoom": 12,
-      "maxzoom": 16,
+      "maxzoom": 24,
       "opacity": 0.84,
       "tooltip": [
         {
@@ -1032,8 +1032,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_general",
@@ -1100,8 +1100,8 @@
       "breaks": [],
       "format": "text",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_general",
@@ -1184,8 +1184,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_general",
@@ -1251,8 +1251,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_general",
@@ -1318,8 +1318,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_general",
@@ -1385,8 +1385,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_general",
@@ -1452,8 +1452,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_local",
@@ -1520,8 +1520,8 @@
       "breaks": [],
       "format": "text",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_local",
@@ -1609,8 +1609,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_local",
@@ -1676,8 +1676,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_local",
@@ -1743,8 +1743,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_local",
@@ -1810,8 +1810,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_local",
@@ -1877,8 +1877,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_local",
@@ -1944,8 +1944,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_assembly",
@@ -2012,8 +2012,8 @@
       "breaks": [],
       "format": "text",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_assembly",
@@ -2101,8 +2101,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_assembly",
@@ -2168,8 +2168,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_assembly",
@@ -2235,8 +2235,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_assembly",
@@ -2302,8 +2302,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_assembly",
@@ -2369,8 +2369,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "turnout_pct_assembly",
@@ -2436,8 +2436,8 @@
       ],
       "format": "currency",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "income_per_person_eur",
@@ -2499,8 +2499,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "income_per_person_eur",
@@ -2562,8 +2562,8 @@
       ],
       "format": "decimal",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "income_per_person_eur",
@@ -2625,8 +2625,8 @@
       ],
       "format": "percent",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "income_per_person_eur",
@@ -2688,8 +2688,8 @@
       ],
       "format": "decimal",
       "minzoom": 8,
-      "maxzoom": 16,
-      "opacity": 0.78,
+      "maxzoom": 24,
+      "opacity": 0.72,
       "tooltip": [
         {
           "property": "income_per_person_eur",
@@ -2736,7 +2736,7 @@
       "breaks": [],
       "format": "text",
       "minzoom": 9,
-      "maxzoom": 16,
+      "maxzoom": 24,
       "opacity": 0.9,
       "tooltip": [
         {
@@ -2774,7 +2774,7 @@
       "breaks": [],
       "format": "text",
       "minzoom": 12,
-      "maxzoom": 16,
+      "maxzoom": 24,
       "opacity": 0.96,
       "tooltip": [
         {
@@ -2811,7 +2811,7 @@
       "breaks": [],
       "format": "text",
       "minzoom": 10,
-      "maxzoom": 16,
+      "maxzoom": 24,
       "opacity": 0.9,
       "tooltip": [
         {
@@ -2849,7 +2849,7 @@
       "breaks": [],
       "format": "text",
       "minzoom": 12,
-      "maxzoom": 16,
+      "maxzoom": 24,
       "opacity": 0.96,
       "tooltip": [
         {
@@ -2886,7 +2886,7 @@
       "breaks": [],
       "format": "text",
       "minzoom": 8,
-      "maxzoom": 16,
+      "maxzoom": 24,
       "opacity": 0.9,
       "tooltip": [
         {
@@ -2924,7 +2924,7 @@
       "breaks": [],
       "format": "text",
       "minzoom": 12,
-      "maxzoom": 16,
+      "maxzoom": 24,
       "opacity": 0.96,
       "tooltip": [
         {
@@ -2961,7 +2961,7 @@
       "breaks": [],
       "format": "text",
       "minzoom": 11,
-      "maxzoom": 16,
+      "maxzoom": 24,
       "opacity": 0.9,
       "tooltip": [
         {
@@ -3946,7 +3946,7 @@
       "breaks": [],
       "format": "text",
       "minzoom": 12,
-      "maxzoom": 16,
+      "maxzoom": 24,
       "opacity": 0.96,
       "tooltip": [
         {
@@ -4930,7 +4930,7 @@
       "breaks": [],
       "format": "text",
       "minzoom": 12,
-      "maxzoom": 16,
+      "maxzoom": 24,
       "opacity": 0.96,
       "tooltip": [
         {
@@ -4956,62 +4956,70 @@
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://datos.madrid.es/dataset/200076-0-padron/resource/200076-2-padron-csv/download/200076_20260714_062859.csv",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-07-26"
+      "retrieved": "2026-07-27"
     },
     {
       "title": "Censo anual de población",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/69211.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-07-26"
+      "retrieved": "2026-07-27"
     },
     {
       "title": "Catastro INSPIRE Buildings",
       "organisation": "Dirección General del Catastro",
       "url": "https://www.catastro.hacienda.gob.es/INSPIRE/Buildings/28/28900-MADRID/A.ES.SDGC.BU.28900.zip",
       "licence": "Catastro data-access conditions",
-      "retrieved": "2026-07-26"
+      "retrieved": "2026-07-27"
     },
     {
       "title": "Alturas de edificios",
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://geoportal.madrid.es/fsdescargas/IDEAM_WBGEOPORTAL/CARTOGRAFIA/CARTOGRAFIA_ACTUALIZADA/ALTURAS_EDIFICIOS/ALTURAS_EDIFICIOS.ZIP",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-07-26"
+      "retrieved": "2026-07-27"
     },
     {
       "title": "2023 election results by polling table",
       "organisation": "Madrid City Council / Interior Ministry",
       "url": "https://www.madrid.es/UnidadesDescentralizadas/UDCEstadistica/Nuevaweb/Elecciones%20y%20Participaci%C3%B3n%20Ciudadana/Elecciones/Resultados%20electorales/Congreso/Congreso%202023/Mesas/G1340123_prov.xlsx",
       "licence": "Public-sector information reuse terms",
-      "retrieved": "2026-07-26"
+      "retrieved": "2026-07-27"
     },
     {
       "title": "Household Income Distribution Atlas",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31097.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-07-26"
+      "retrieved": "2026-07-27"
     },
     {
       "title": "CRTM open transport data",
       "organisation": "Consorcio Regional de Transportes de Madrid",
       "url": "https://transparencia.crtm.es/presupuestos-contratos-y-gastos/datos-abiertos/",
       "licence": "CRTM open-data licence",
-      "retrieved": "2026-07-26"
+      "retrieved": "2026-07-27"
     },
     {
       "title": "BiciMAD stations",
       "organisation": "EMT Madrid",
       "url": "https://datos.emtmadrid.es/dataset/5fcc0945-2cbd-46c3-801a-6a83f4167c11/resource/105ce5df-793f-4e0a-a88e-5d3b3f024a5d/download/bikestationbicimad_geojson.json",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-07-26"
+      "retrieved": "2026-07-27"
+    },
+    {
+      "title": "Official Madrid street directory",
+      "organisation": "Ayuntamiento de Madrid",
+      "url": "https://datos.madrid.es/dataset/213605-0-callejero-oficial-madrid/resource/213605-4-callejero-oficial-madrid-csv/download/213605-4-callejero-oficial-madrid-csv.csv",
+      "licence": "Madrid open-data reuse terms",
+      "retrieved": "2026-07-27"
     }
   ],
   "notes": [
     "Population values are joined by official section identifiers; resident coverage must be at least 99.5%.",
     "Election shares use valid votes including blank ballots as the denominator.",
     "Election totals exclude non-geographic votes when they are absent from polling-table data.",
+    "INE publishes no 2023 section values for the below-60% and above-200% median indicators in Carabanchel and Fuencarral-El Pardo; these remain No data.",
     "Transport is a static network snapshot; live vehicles and bicycle availability are intentionally excluded.",
     "Building archives are split by district and checked against a 95 MB per-file publication limit."
   ]

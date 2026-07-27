@@ -8,6 +8,8 @@ import { Protocol } from "pmtiles";
 import "./styles.css";
 import { MADRID_CAMERA, parseHash, serializeState } from "./state";
 import type {
+  AddressIndex,
+  AddressRecord,
   AtlasState,
   LayerDefinition,
   LayerGroup,
@@ -19,6 +21,7 @@ import type {
 const BASE_URL = import.meta.env.BASE_URL;
 const manifestUrl = `${BASE_URL}data/layer-manifest.json`;
 const placesUrl = `${BASE_URL}data/places.json`;
+const addressesUrl = `${BASE_URL}data/addresses.json`;
 
 const panel = requireElement<HTMLElement>(".atlas-panel");
 const controls = requireElement<HTMLElement>("#layer-controls");
@@ -43,6 +46,10 @@ let atlasState: AtlasState = parseHash(window.location.hash);
 let manifest: LayerManifest;
 let map: MapLibreMap;
 let places: Place[] = [];
+let addresses: AddressRecord[] = [];
+let addressSearchText: string[] = [];
+let addressLoadPromise: Promise<void> | undefined;
+let searchMarker: maplibregl.Marker | undefined;
 let activeMapLayerIds: string[] = [];
 let hashTimer: number | undefined;
 let toastTimer: number | undefined;
@@ -127,6 +134,9 @@ function bindStaticControls(): void {
   });
 
   searchInput.addEventListener("input", renderSearchResults);
+  searchInput.addEventListener("focus", () => {
+    void loadAddressIndex();
+  });
   searchInput.addEventListener("keydown", handleSearchKeys);
   document.addEventListener("keydown", (event) => {
     if (
@@ -150,6 +160,7 @@ function bindStaticControls(): void {
     renderGroupTabs();
     renderControls();
     renderLegend();
+    clearFeaturePanel();
     if (map) {
       map.jumpTo({
         center: [atlasState.camera.lng, atlasState.camera.lat],
@@ -278,8 +289,9 @@ async function applyMapLayers(): Promise<void> {
   }
   activeMapLayerIds = [];
 
-  const thematic = getSelectedLayer();
-  addDefinitionToMap(thematic, false);
+  if (atlasState.dataLayerVisible) {
+    addDefinitionToMap(getSelectedLayer(), false);
+  }
 
   const overlays = manifest.layers.filter(
     (layer) =>
@@ -446,6 +458,7 @@ function selectGroup(group: LayerGroup): void {
     const first = manifest.layers.find((layer) => layer.group === group);
     if (first) atlasState.layer = first.id;
   }
+  if (group !== "transport") atlasState.dataLayerVisible = true;
   renderGroupTabs();
   renderControls();
   renderLegend();
@@ -462,6 +475,7 @@ function selectLayer(layerId: string): void {
   const layer = manifest.layers.find((candidate) => candidate.id === layerId);
   if (!layer || layer.group === "transport") return;
   atlasState.layer = layer.id;
+  atlasState.dataLayerVisible = true;
   atlasState.group = layer.group;
   if (layer.control?.election) atlasState.election = layer.control.election;
   if (layer.control?.party) atlasState.party = layer.control.party;
@@ -505,7 +519,6 @@ function renderControls(): void {
               <input type="radio" name="thematic-layer" value="${escapeHtml(layer.id)}"
                 ${layer.id === atlasState.layer ? "checked" : ""} />
               <span class="choice-label">${escapeHtml(layer.shortLabel || layer.label)}</span>
-              <span class="choice-date">${escapeHtml(shortDate(layer.referenceDate))}</span>
             </label>`,
         )
         .join("")}
@@ -558,6 +571,7 @@ function renderElectionControls(): void {
     );
     if (first) {
       atlasState.layer = first.id;
+      atlasState.dataLayerVisible = true;
       atlasState.party = first.control?.party || "turnout";
     }
     renderControls();
@@ -588,6 +602,13 @@ function renderTransportControls(): void {
     manifest.layers.find((layer) => layer.control?.transportMode === "emt")?.control?.routes ?? [];
 
   controls.innerHTML = `
+    <div class="transport-list-heading transport-data-heading">
+      <span>Data layer</span>
+      <button id="clear-data-layer" class="transport-clear" type="button"
+        ${atlasState.dataLayerVisible ? "" : "disabled"}>
+        ${atlasState.dataLayerVisible ? "Clear data layer" : "No data layer"}
+      </button>
+    </div>
     <div class="transport-list-heading">
       <span>Overlays</span>
       <button id="clear-transport" class="transport-clear" type="button"
@@ -601,7 +622,7 @@ function renderTransportControls(): void {
             <input type="checkbox" name="transport-mode" value="${value}"
               ${atlasState.transport.includes(value) ? "checked" : ""} />
             <span class="choice-label">${label}</span>
-            <span class="choice-date">${note}</span>
+            <span class="visually-hidden">${note}</span>
           </label>`,
         )
         .join("")}
@@ -619,6 +640,15 @@ function renderTransportControls(): void {
       </select>
     </label>
     <p class="feature-empty">All stops appear together at zoom 12. Select one EMT line to reduce clutter.</p>`;
+
+  controls.querySelector<HTMLButtonElement>("#clear-data-layer")?.addEventListener("click", () => {
+    atlasState.dataLayerVisible = false;
+    clearFeaturePanel();
+    renderControls();
+    renderLegend();
+    if (map) void applyMapLayers();
+    scheduleHashUpdate();
+  });
 
   controls.querySelector<HTMLButtonElement>("#clear-transport")?.addEventListener("click", () => {
     atlasState.transport = [];
@@ -647,7 +677,7 @@ function renderTransportControls(): void {
 
 function renderLegend(): void {
   const selected = getSelectedLayer();
-  const hideLegend = selected.control?.party === "leading";
+  const hideLegend = !atlasState.dataLayerVisible || selected.control?.party === "leading";
   legendPanel.classList.toggle("is-hidden", hideLegend);
   if (hideLegend) {
     legend.innerHTML = "";
@@ -777,7 +807,16 @@ function renderFeature(feature: MapGeoJSONFeature): void {
       let shown =
         value === null || value === undefined || value === ""
           ? "No data"
-          : formatValue(Number.isNaN(Number(value)) ? String(value) : Number(value), field.format, field.suffix ?? "");
+          : formatValue(
+              Number.isNaN(Number(value)) ? String(value) : Number(value),
+              field.format,
+              field.suffix ?? "",
+              definition.group === "elections" &&
+                field.format === "percent" &&
+                /share/i.test(field.label)
+                ? 1
+                : 0,
+            );
       const percentile = field.percentileProperty
         ? Number(properties[field.percentileProperty])
         : Number.NaN;
@@ -835,13 +874,13 @@ function renderElectionResultFeature(
             (result) => `
               <tr>
                 <th><i style="background:${escapeHtml(result.color)}"></i>${escapeHtml(result.label)}</th>
-                <td>${escapeHtml(formatValue(result.value, "percent"))}</td>
+                <td>${escapeHtml(formatValue(result.value, "percent", "", 1))}</td>
               </tr>`,
           )
           .join("")}
       </tbody>
     </table>
-    <p class="results-coverage">${escapeHtml(formatValue(cumulative, "percent"))} of valid votes shown</p>`;
+    <p class="results-coverage">${escapeHtml(formatValue(cumulative, "percent", "", 1))} of valid votes shown</p>`;
 }
 
 function zoomToLayerMinimum(layer: LayerDefinition): void {
@@ -870,6 +909,8 @@ function toggle3d(): void {
 function resetView(): void {
   if (!map) return;
   atlasState.is3d = false;
+  searchMarker?.remove();
+  searchMarker = undefined;
   map.easeTo({
     center: [MADRID_CAMERA.lng, MADRID_CAMERA.lat],
     zoom: MADRID_CAMERA.zoom,
@@ -891,28 +932,61 @@ async function shareView(): Promise<void> {
 }
 
 function renderSearchResults(): void {
-  const query = searchInput.value.trim().toLocaleLowerCase("en");
+  void renderSearchResultsAsync();
+}
+
+async function renderSearchResultsAsync(): Promise<void> {
+  const query = normaliseSearchText(searchInput.value);
   if (query.length < 2) {
     hideSearchResults();
     return;
   }
-  const matches = places
-    .filter((place) => `${place.name} ${place.district ?? ""}`.toLocaleLowerCase("en").includes(query))
+  const placeMatches = places
+    .filter((place) => normaliseSearchText(`${place.name} ${place.district ?? ""}`).includes(query))
     .slice(0, 8);
-  if (matches.length === 0) {
+
+  if (query.length >= 3) await loadAddressIndex();
+  if (normaliseSearchText(searchInput.value) !== query) return;
+
+  const addressMatches: Array<{ record: AddressRecord; index: number }> = [];
+  if (query.length >= 3) {
+    for (let index = 0; index < addressSearchText.length && addressMatches.length < 8; index += 1) {
+      if (addressSearchText[index]?.includes(query)) {
+        addressMatches.push({ record: addresses[index]!, index });
+      }
+    }
+  }
+
+  const shownAddresses = addressMatches.slice(0, Math.max(0, 8 - placeMatches.length));
+  if (placeMatches.length === 0 && shownAddresses.length === 0) {
     searchResults.innerHTML = '<p class="feature-empty" style="padding:8px">No place found.</p>';
   } else {
-    searchResults.innerHTML = matches
-      .map(
-        (place) => `
+    searchResults.innerHTML =
+      placeMatches
+        .map(
+          (place) => `
         <button class="search-result" type="button" role="option" data-place="${escapeHtml(place.id)}">
           <span>${escapeHtml(place.name)}</span>
           <small>${escapeHtml(place.kind)}</small>
         </button>`,
-      )
-      .join("");
+        )
+        .join("") +
+      shownAddresses
+        .map(
+          ({ record, index }) => `
+        <button class="search-result" type="button" role="option" data-address="${index}">
+          <span>${escapeHtml(record[1])}</span>
+          <small>Address · ${escapeHtml(record[2])}</small>
+        </button>`,
+        )
+        .join("");
     searchResults.querySelectorAll<HTMLButtonElement>(".search-result").forEach((button) => {
       button.addEventListener("click", () => {
+        if (button.dataset.address !== undefined) {
+          const address = addresses[Number(button.dataset.address)];
+          if (address) selectAddress(address);
+          return;
+        }
         const place = places.find((item) => item.id === button.dataset.place);
         if (place) selectPlace(place);
       });
@@ -920,6 +994,31 @@ function renderSearchResults(): void {
   }
   searchResults.hidden = false;
   searchInput.setAttribute("aria-expanded", "true");
+}
+
+async function loadAddressIndex(): Promise<void> {
+  if (addresses.length > 0) return;
+  if (addressLoadPromise) return addressLoadPromise;
+  addressLoadPromise = fetchJson<AddressIndex>(addressesUrl)
+    .then((index) => {
+      addresses = index.records;
+      addressSearchText = addresses.map((record) =>
+        normaliseSearchText(`${record[1]} ${record[2]}`),
+      );
+    })
+    .catch((error) => {
+      console.warn("Street-address index could not be loaded", error);
+    });
+  return addressLoadPromise;
+}
+
+function normaliseSearchText(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLocaleLowerCase("es")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function handleSearchKeys(event: KeyboardEvent): void {
@@ -951,6 +1050,27 @@ function selectPlace(place: Place): void {
     },
   );
   searchInput.value = place.name;
+  searchMarker?.remove();
+  searchMarker = undefined;
+  hideSearchResults();
+}
+
+function selectAddress(address: AddressRecord): void {
+  const [, name, , longitude, latitude] = address;
+  if (![longitude, latitude].every(Number.isFinite)) {
+    showToast("This address does not have valid coordinates");
+    return;
+  }
+  map.easeTo({
+    center: [longitude, latitude],
+    zoom: 17,
+    duration: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 750,
+  });
+  searchMarker?.remove();
+  searchMarker = new maplibregl.Marker({ color: "#fb6107" })
+    .setLngLat([longitude, latitude])
+    .addTo(map);
+  searchInput.value = name;
   hideSearchResults();
 }
 
@@ -1006,7 +1126,12 @@ function shortDate(value: string): string {
   return value;
 }
 
-function formatValue(value: number | string, format: ValueFormat, suffix = ""): string {
+function formatValue(
+  value: number | string,
+  format: ValueFormat,
+  suffix = "",
+  minimumFractionDigits = 0,
+): string {
   if (typeof value === "string") return value;
   if (!Number.isFinite(value)) return "No data";
   const locale = "en-GB";
@@ -1017,7 +1142,10 @@ function formatValue(value: number | string, format: ValueFormat, suffix = ""): 
     case "decimal":
       return `${new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(value)}${spacedSuffix}`;
     case "percent":
-      return `${new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(value)}%`;
+      return `${new Intl.NumberFormat(locale, {
+        minimumFractionDigits,
+        maximumFractionDigits: 1,
+      }).format(value)}%`;
     case "currency":
       return new Intl.NumberFormat(locale, {
         style: "currency",

@@ -11,6 +11,7 @@ export const MADRID_CAMERA: CameraState = {
 export const DEFAULT_STATE: AtlasState = {
   group: "population",
   layer: "population-density",
+  dataLayerVisible: true,
   election: "general",
   party: "PP",
   transport: [],
@@ -45,6 +46,7 @@ export function parseHash(hash: string): AtlasState {
   return {
     group,
     layer: params.get("layer") || DEFAULT_STATE.layer,
+    dataLayerVisible: params.get("data") !== "0",
     election,
     party: params.get("party") || DEFAULT_STATE.party,
     transport: (params.get("transport") || "")
@@ -69,6 +71,7 @@ export function serializeState(state: AtlasState): string {
   const params = new URLSearchParams();
   params.set("group", state.group);
   params.set("layer", state.layer);
+  if (!state.dataLayerVisible) params.set("data", "0");
   if (state.group === "elections") {
     params.set("election", state.election);
     params.set("party", state.party);

@@ -85,6 +85,19 @@ export interface Place {
   bbox: [number, number, number, number];
 }
 
+export type AddressRecord = [
+  id: string,
+  name: string,
+  district: string,
+  longitude: number,
+  latitude: number,
+];
+
+export interface AddressIndex {
+  referenceDate: string;
+  records: AddressRecord[];
+}
+
 export interface CameraState {
   lng: number;
   lat: number;
@@ -96,6 +109,7 @@ export interface CameraState {
 export interface AtlasState {
   group: LayerGroup;
   layer: string;
+  dataLayerVisible: boolean;
   election: "general" | "local" | "assembly";
   party: string;
   transport: string[];

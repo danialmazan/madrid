@@ -180,8 +180,8 @@ select:focus-visible,
 
 .control-stack {
   display: grid;
-  gap: 8px;
-  padding: 13px 0;
+  gap: 6px;
+  padding: 9px 0;
   border-bottom: 1px solid var(--line);
 }
 
@@ -218,18 +218,19 @@ select:focus-visible,
 .radio-grid,
 .transport-list {
   display: grid;
-  gap: 7px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
 }
 
 .layer-choice,
 .transport-choice {
   position: relative;
   display: grid;
-  grid-template-columns: 17px 1fr auto;
-  gap: 9px;
+  grid-template-columns: 15px minmax(0, 1fr);
+  gap: 7px;
   align-items: center;
-  min-height: 39px;
-  padding: 8px 10px;
+  min-height: 35px;
+  padding: 6px 8px;
   background: rgb(255 255 255 / 0.68);
   border: 1px solid var(--line);
   border-radius: 9px;
@@ -257,8 +258,12 @@ select:focus-visible,
 }
 
 .choice-label {
-  font-size: 0.73rem;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 0.68rem;
   font-weight: 600;
+  line-height: 1.18;
+  text-overflow: ellipsis;
 }
 
 .choice-date {
@@ -280,6 +285,10 @@ select:focus-visible,
   font-size: 0.6rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
+}
+
+.transport-data-heading {
+  padding-bottom: 1px;
 }
 
 .transport-clear {
@@ -306,7 +315,7 @@ select:focus-visible,
 }
 
 .legend-panel {
-  padding: 13px 0 11px;
+  padding: 9px 0;
   border-bottom: 1px solid var(--line);
 }
 
@@ -316,16 +325,32 @@ select:focus-visible,
 
 .section-heading {
   display: flex;
-  align-items: start;
+  align-items: center;
   justify-content: space-between;
-  gap: 15px;
+  gap: 10px;
 }
 
-.section-heading h2 {
+.legend-heading {
+  display: flex;
+  min-width: 0;
+  gap: 5px;
+  align-items: baseline;
   margin: 0;
-  font-family: "Frances", Georgia, serif;
-  font-size: 1.16rem;
-  letter-spacing: -0.02em;
+  overflow: hidden;
+  color: var(--blue);
+  font-family: "Geist Mono", monospace;
+  font-size: 0.63rem;
+  font-weight: 550;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.legend-heading #legend-title {
+  overflow: hidden;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  text-overflow: ellipsis;
 }
 
 .date-chip {
@@ -343,7 +368,7 @@ select:focus-visible,
 }
 
 .legend {
-  margin-top: 9px;
+  margin-top: 7px;
 }
 
 .legend-ramp {
@@ -357,7 +382,7 @@ select:focus-visible,
 .legend-labels {
   display: flex;
   justify-content: space-between;
-  margin-top: 6px;
+  margin-top: 4px;
   color: var(--muted);
   font-family: "Geist Mono", monospace;
   font-size: 0.56rem;
@@ -365,7 +390,7 @@ select:focus-visible,
 
 .legend-note {
   display: -webkit-box;
-  margin: 7px 0 0;
+  margin: 5px 0 0;
   overflow: hidden;
   color: var(--muted);
   font-size: 0.66rem;
@@ -395,7 +420,7 @@ select:focus-visible,
 
 .feature-panel {
   min-height: 72px;
-  padding: 12px 0 3px;
+  padding: 9px 0 3px;
 }
 
 .feature-empty {
