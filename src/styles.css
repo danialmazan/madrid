@@ -104,6 +104,11 @@ select:focus-visible,
   border-right: 1px solid var(--line-dark);
 }
 
+.mobile-sheet-header,
+.mobile-panel-button {
+  display: none;
+}
+
 .panel-scroll {
   min-height: 0;
   flex: 1 1 auto;
@@ -709,6 +714,10 @@ select:focus-visible,
   backdrop-filter: blur(9px);
 }
 
+.icon-button.mobile-panel-button {
+  display: none;
+}
+
 .icon-button:hover,
 .icon-button[aria-pressed="true"] {
   color: var(--blue);
@@ -935,7 +944,7 @@ select:focus-visible,
     right: 0;
     bottom: 0;
     left: 0;
-    display: block;
+    display: flex;
     width: auto;
     max-height: min(72vh, 660px);
     border: 1px solid var(--line-dark);
@@ -947,8 +956,66 @@ select:focus-visible,
   }
 
   .atlas-panel.is-open {
-    display: flex;
     transform: translateY(0);
+  }
+
+  .atlas-panel[data-mobile-view="legend"] {
+    max-height: min(42vh, 360px);
+  }
+
+  .atlas-panel[data-mobile-view="details"] {
+    max-height: min(54vh, 460px);
+  }
+
+  .mobile-sheet-header {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 48px;
+    padding: 8px 18px 8px 20px;
+    background: rgb(250 250 247 / 0.98);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .mobile-sheet-header > div {
+    display: grid;
+    min-width: 0;
+    gap: 1px;
+  }
+
+  .mobile-sheet-kicker {
+    color: var(--blue);
+    font-family: "Geist Mono", monospace;
+    font-size: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  #mobile-sheet-title {
+    overflow: hidden;
+    font-family: "Frances", Georgia, serif;
+    font-size: 0.92rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .sheet-close {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    flex: none;
+    place-items: center;
+    padding: 0;
+    color: var(--muted);
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.25rem;
+    line-height: 1;
   }
 
   .panel-scroll {
@@ -960,7 +1027,34 @@ select:focus-visible,
   }
 
   .panel-footer {
+    display: none;
     padding: 10px 18px max(13px, env(safe-area-inset-bottom));
+  }
+
+  .atlas-panel[data-mobile-view="layers"] .panel-footer {
+    display: flex;
+  }
+
+  .atlas-panel[data-mobile-view="layers"] .legend-panel,
+  .atlas-panel[data-mobile-view="layers"] .feature-panel,
+  .atlas-panel[data-mobile-view="legend"] .group-tabs,
+  .atlas-panel[data-mobile-view="legend"] .control-stack,
+  .atlas-panel[data-mobile-view="legend"] .feature-panel,
+  .atlas-panel[data-mobile-view="details"] .group-tabs,
+  .atlas-panel[data-mobile-view="details"] .control-stack,
+  .atlas-panel[data-mobile-view="details"] .legend-panel {
+    display: none;
+  }
+
+  .atlas-panel[data-mobile-view="legend"] .legend-panel {
+    display: block;
+    border-bottom: 0;
+  }
+
+  .atlas-panel[data-mobile-view="details"] .feature-panel {
+    display: block;
+    min-height: 0;
+    padding-top: 0;
   }
 
   .map-stage {
@@ -986,9 +1080,20 @@ select:focus-visible,
     display: none;
   }
 
-  .map-actions #share-button {
+  .map-actions {
+    flex-direction: column;
+  }
+
+  .map-actions #share-button,
+  .map-actions .mobile-panel-button {
     display: grid;
     min-width: 48px;
+  }
+
+  .map-actions .mobile-panel-button:disabled {
+    color: var(--muted);
+    cursor: default;
+    opacity: 0.55;
   }
 
   .sheet-toggle {
@@ -1053,8 +1158,12 @@ select:focus-visible,
   }
 
   .search-control kbd,
-  .button-label {
+  .map-actions #share-button .button-label {
     display: none;
+  }
+
+  .map-actions .mobile-panel-button .button-label {
+    display: block;
   }
 
   .feature-grid {

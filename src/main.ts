@@ -38,6 +38,10 @@ const resetButton = requireElement<HTMLButtonElement>("#reset-button");
 const shareButton = requireElement<HTMLButtonElement>("#share-button");
 const sheetToggle = requireElement<HTMLButtonElement>("#sheet-toggle");
 const sheetToggleLabel = requireElement<HTMLElement>("#sheet-toggle-label");
+const sheetClose = requireElement<HTMLButtonElement>("#sheet-close");
+const mobileSheetTitle = requireElement<HTMLElement>("#mobile-sheet-title");
+const mobileLayersButton = requireElement<HTMLButtonElement>("#mobile-layers-button");
+const mobileLegendButton = requireElement<HTMLButtonElement>("#mobile-legend-button");
 const aboutDialog = requireElement<HTMLDialogElement>("#about-dialog");
 const methodologyContent = requireElement<HTMLElement>("#methodology-content");
 const toast = requireElement<HTMLElement>("#toast");
@@ -53,6 +57,9 @@ let searchMarker: maplibregl.Marker | undefined;
 let activeMapLayerIds: string[] = [];
 let hashTimer: number | undefined;
 let toastTimer: number | undefined;
+let currentFeatureTitle = "";
+
+type MobilePanelView = "layers" | "legend" | "details";
 
 void initialise();
 
@@ -126,12 +133,17 @@ function bindStaticControls(): void {
   pitchButton.addEventListener("click", () => toggle3d());
   resetButton.addEventListener("click", () => resetView());
   shareButton.addEventListener("click", () => void shareView());
-  sheetToggle.addEventListener("click", () => setSheetOpen(true));
+  sheetToggle.addEventListener("click", () => toggleMobilePanel("details"));
+  sheetClose.addEventListener("click", () => setSheetOpen(false));
+  mobileLayersButton.addEventListener("click", () => toggleMobilePanel("layers"));
+  mobileLegendButton.addEventListener("click", () => toggleMobilePanel("legend"));
   document.querySelector("#about-button")?.addEventListener("click", () => aboutDialog.showModal());
   document.querySelector("#close-about")?.addEventListener("click", () => aboutDialog.close());
   aboutDialog.addEventListener("click", (event) => {
     if (event.target === aboutDialog) aboutDialog.close();
   });
+  if (isMobileViewport()) setSheetOpen(false);
+  window.addEventListener("resize", syncPanelAccessibility);
 
   searchInput.addEventListener("input", renderSearchResults);
   searchInput.addEventListener("focus", () => {
@@ -189,7 +201,7 @@ function createMap(): void {
       maxZoom: 19,
       hash: false,
       attributionControl: false,
-      cooperativeGestures: true,
+      cooperativeGestures: false,
       fadeDuration: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 300,
     });
   } catch (error) {
@@ -467,7 +479,7 @@ function selectGroup(group: LayerGroup): void {
     zoomToLayerMinimum(getSelectedLayer());
     void applyMapLayers();
   }
-  setSheetOpen(window.matchMedia("(max-width: 860px)").matches);
+  if (isMobileViewport()) setMobilePanel(true, "layers");
   scheduleHashUpdate();
 }
 
@@ -487,6 +499,7 @@ function selectLayer(layerId: string): void {
     zoomToLayerMinimum(layer);
     void applyMapLayers();
   }
+  if (isMobileViewport()) setSheetOpen(false);
   scheduleHashUpdate();
 }
 
@@ -496,7 +509,7 @@ function renderGroupTabs(): void {
     button.classList.toggle("is-active", active);
     button.setAttribute("aria-current", active ? "page" : "false");
   });
-  sheetToggleLabel.textContent = groupLabel(atlasState.group);
+  updateDetailsToggleLabel();
 }
 
 function renderControls(): void {
@@ -586,8 +599,10 @@ function renderElectionControls(): void {
 }
 
 function clearFeaturePanel(): void {
+  currentFeatureTitle = "";
   featurePanel.innerHTML =
     '<p class="feature-empty">Select a census section or map feature to see its details.</p>';
+  updateDetailsToggleLabel();
 }
 
 function renderTransportControls(): void {
@@ -679,8 +694,10 @@ function renderLegend(): void {
   const selected = getSelectedLayer();
   const hideLegend = !atlasState.dataLayerVisible || selected.control?.party === "leading";
   legendPanel.classList.toggle("is-hidden", hideLegend);
+  mobileLegendButton.disabled = hideLegend;
   if (hideLegend) {
     legend.innerHTML = "";
+    if (panel.dataset.mobileView === "legend") setSheetOpen(false);
     return;
   }
   legendTitle.textContent = selected.label;
@@ -757,8 +774,7 @@ function handleMapClick(event: MapMouseEvent): void {
     .filter((feature) => activeMapLayerIds.includes(feature.layer.id));
   const feature = features[0];
   if (!feature) {
-    featurePanel.innerHTML =
-      '<p class="feature-empty">Select a census section or map feature to see its details.</p>';
+    clearFeaturePanel();
     return;
   }
   renderFeature(feature);
@@ -796,8 +812,12 @@ function renderFeature(feature: MapGeoJSONFeature): void {
         .join(" · ")
     : [properties.neighbourhood, properties.district].filter(Boolean).join(" · ");
 
+  currentFeatureTitle = String(title);
+  updateDetailsToggleLabel();
+
   if (definition.control?.party === "leading" && definition.control.results) {
     renderElectionResultFeature(String(title), context || definition.geography, properties, definition);
+    if (isMobileViewport()) setMobilePanel(true, "details");
     return;
   }
 
@@ -837,6 +857,7 @@ function renderFeature(feature: MapGeoJSONFeature): void {
       <p>${escapeHtml(context || definition.geography)}</p>
     </div>
     <dl class="feature-grid">${fields}</dl>`;
+  if (isMobileViewport()) setMobilePanel(true, "details");
 }
 
 function renderElectionResultFeature(
@@ -1079,9 +1100,47 @@ function hideSearchResults(): void {
   searchInput.setAttribute("aria-expanded", "false");
 }
 
+function isMobileViewport(): boolean {
+  return window.matchMedia("(max-width: 860px)").matches;
+}
+
+function toggleMobilePanel(view: MobilePanelView): void {
+  const isSameOpenView = panel.classList.contains("is-open") && panel.dataset.mobileView === view;
+  if (isSameOpenView) {
+    setSheetOpen(false);
+    return;
+  }
+  setMobilePanel(true, view);
+}
+
+function setMobilePanel(open: boolean, view: MobilePanelView): void {
+  panel.dataset.mobileView = view;
+  mobileSheetTitle.textContent = {
+    layers: "Choose map layers",
+    legend: "Map legend",
+    details: currentFeatureTitle || "Map details",
+  }[view];
+  setSheetOpen(open);
+}
+
 function setSheetOpen(open: boolean): void {
   panel.classList.toggle("is-open", open);
+  syncPanelAccessibility();
   sheetToggle.setAttribute("aria-expanded", String(open));
+  const activeView = panel.dataset.mobileView as MobilePanelView;
+  mobileLayersButton.setAttribute("aria-expanded", String(open && activeView === "layers"));
+  mobileLayersButton.setAttribute("aria-pressed", String(open && activeView === "layers"));
+  mobileLegendButton.setAttribute("aria-expanded", String(open && activeView === "legend"));
+  mobileLegendButton.setAttribute("aria-pressed", String(open && activeView === "legend"));
+}
+
+function syncPanelAccessibility(): void {
+  panel.inert = isMobileViewport() && !panel.classList.contains("is-open");
+}
+
+function updateDetailsToggleLabel(): void {
+  const fallback = `${groupLabel(atlasState.group)} details`;
+  sheetToggleLabel.textContent = currentFeatureTitle ? `Details · ${currentFeatureTitle}` : fallback;
 }
 
 function scheduleHashUpdate(immediate = false): void {
