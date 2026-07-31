@@ -40,6 +40,46 @@ describe("published atlas data", () => {
     expect(sectionBuildingTotal).toBe(reports.cityBuildings.buildingCount);
   });
 
+  it("publishes equal-width histograms that reconcile with every percentile", () => {
+    const reports = readJson<SectionReportIndex>("public/data/section-reports.json");
+    for (const [metric, distribution] of Object.entries(reports.distributions)) {
+      expect(distribution.counts.length, metric).toBeGreaterThanOrEqual(10);
+      expect(distribution.breaks, metric).toHaveLength(distribution.counts.length + 1);
+      expect(distribution.counts.reduce((total, count) => total + count, 0), metric).toBe(
+        distribution.observationCount,
+      );
+      const widths = distribution.breaks.slice(1).map((edge, index) => edge - distribution.breaks[index]!);
+      const firstWidth = widths[0]!;
+      expect(widths.every((width) => Math.abs(width - firstWidth) < 1e-7), metric).toBe(true);
+      expect(distribution.breaks[0]!, metric).toBeLessThanOrEqual(distribution.minimum!);
+      expect(distribution.breaks.at(-1)!, metric).toBeGreaterThanOrEqual(distribution.maximum!);
+    }
+
+    const metricGroups = ["population", "income"] as const;
+    const mismatches: string[] = [];
+    for (const report of Object.values(reports.sections)) {
+      for (const group of metricGroups) {
+        for (const [metric, item] of Object.entries(report[group])) {
+          if (item.value === null || item.percentile === null) continue;
+          const distribution = reports.distributions[metric]!;
+          const bin = distribution.counts.findIndex((_, index) => {
+            const upper = distribution.breaks[index + 1]!;
+            return index === distribution.counts.length - 1 ? item.value! <= upper : item.value! < upper;
+          });
+          const countBefore = distribution.counts
+            .slice(0, bin)
+            .reduce((total, count) => total + count, 0);
+          const zeroBasedRank = (item.percentile / 100) * (distribution.observationCount - 1);
+          const lastRankInBin = countBefore + distribution.counts[bin]! - 1;
+          if (bin < 0 || zeroBasedRank < countBefore - 1e-7 || zeroBasedRank > lastRankInBin + 1e-7) {
+            mismatches.push(`${report.id}:${metric}`);
+          }
+        }
+      }
+    }
+    expect(mismatches).toEqual([]);
+  });
+
   it("preserves known income suppression without hiding other measures", () => {
     const reports = readJson<SectionReportIndex>("public/data/section-reports.json");
     const carabanchel = Object.values(reports.sections).filter(

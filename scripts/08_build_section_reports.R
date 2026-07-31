@@ -150,34 +150,60 @@ for (column in era_columns) {
 }
 
 metric_specs <- list(
-  population_total = list(label = "Residents", format = "integer", unit = "residents", breaks = c(0, 500, 1000, 1500, 2200, 3500, 6000), percentile = "population_total_percentile"),
-  population_density_km2 = list(label = "Population density", format = "integer", unit = "residents / km²", breaks = c(0, 5000, 10000, 20000, 35000, 55000, 90000), percentile = "population_density_percentile"),
-  under18_pct = list(label = "Under 18", format = "percent", unit = "%", breaks = c(0, 10, 14, 18, 22, 27, 40), percentile = "under18_percentile"),
-  age65plus_pct = list(label = "65 and older", format = "percent", unit = "%", breaks = c(0, 10, 15, 20, 25, 32, 50), percentile = "age65plus_percentile"),
-  foreign_citizenship_pct = list(label = "Foreign citizenship", format = "percent", unit = "%", breaks = c(0, 5, 10, 15, 22, 32, 55), percentile = "foreign_citizenship_percentile"),
-  foreign_born_pct = list(label = "Foreign-born", format = "percent", unit = "%", breaks = c(0, 8, 15, 22, 30, 40, 65), percentile = "foreign_born_percentile"),
-  income_per_person_eur = list(label = "Net income / person", format = "currency", unit = "€ / person", breaks = c(5000, 10000, 14000, 18000, 24000, 34000, 70000), percentile = "income_per_person_percentile"),
-  below_60_median_pct = list(label = "Below 60% median", format = "percent", unit = "%", breaks = c(0, 8, 14, 20, 28, 38, 65), percentile = "below_60_median_percentile"),
-  above_200_median_pct = list(label = "Above 200% median", format = "percent", unit = "%", breaks = c(0, 4, 10, 18, 28, 40, 60), percentile = "above_200_median_percentile"),
-  gini = list(label = "Gini coefficient", format = "decimal", unit = "index", breaks = c(15, 22, 27, 32, 38, 45, 65), percentile = "gini_percentile"),
-  income_p80_p20 = list(label = "P80/P20 ratio", format = "decimal", unit = "ratio", breaks = c(1.8, 2.3, 2.5, 2.7, 2.9, 3.2, 4.1), percentile = "income_p80_p20_percentile")
+  population_total = list(label = "Residents", format = "integer", unit = "residents", percentile = "population_total_percentile"),
+  population_density_km2 = list(label = "Population density", format = "integer", unit = "residents / km²", percentile = "population_density_percentile"),
+  under18_pct = list(label = "Under 18", format = "percent", unit = "%", percentile = "under18_percentile"),
+  age65plus_pct = list(label = "65 and older", format = "percent", unit = "%", percentile = "age65plus_percentile"),
+  foreign_citizenship_pct = list(label = "Foreign citizenship", format = "percent", unit = "%", percentile = "foreign_citizenship_percentile"),
+  foreign_born_pct = list(label = "Foreign-born", format = "percent", unit = "%", percentile = "foreign_born_percentile"),
+  income_per_person_eur = list(label = "Net income / person", format = "currency", unit = "€ / person", percentile = "income_per_person_percentile"),
+  below_60_median_pct = list(label = "Below 60% median", format = "percent", unit = "%", percentile = "below_60_median_percentile"),
+  above_200_median_pct = list(label = "Above 200% median", format = "percent", unit = "%", percentile = "above_200_median_percentile"),
+  gini = list(label = "Gini coefficient", format = "decimal", unit = "index", percentile = "gini_percentile"),
+  income_p80_p20 = list(label = "P80/P20 ratio", format = "decimal", unit = "ratio", percentile = "income_p80_p20_percentile")
 )
 
 distribution_for <- function(values, spec) {
   valid <- values[is.finite(values)]
-  bins <- findInterval(valid, spec$breaks, all.inside = TRUE, rightmost.closed = TRUE)
+  assert_true(length(valid) > 1, paste("Not enough values for", spec$label, "distribution"))
+  chart_breaks <- pretty(range(valid), n = 20, min.n = 12)
+  if (length(chart_breaks) - 1 < 12) {
+    chart_breaks <- seq(min(valid), max(valid), length.out = 13)
+  }
+  # Stabilise decimal boundaries before both binning and JSON serialization.
+  # `pretty()` can return e.g. 3.9000000000000008, which is written as 3.9;
+  # using the serialized boundary for the counts keeps markers on bin edges
+  # consistent in the browser.
+  chart_breaks <- unique(signif(chart_breaks, 12))
+  bins <- findInterval(valid, chart_breaks, all.inside = TRUE, rightmost.closed = TRUE)
   list(
     label = spec$label,
     format = spec$format,
     unit = spec$unit,
-    breaks = unname(as.list(spec$breaks)),
-    counts = unname(as.list(tabulate(bins, nbins = length(spec$breaks) - 1))),
+    breaks = unname(as.list(chart_breaks)),
+    counts = unname(as.list(tabulate(bins, nbins = length(chart_breaks) - 1))),
     observationCount = length(valid),
     minimum = if (length(valid)) min(valid) else NA_real_,
     maximum = if (length(valid)) max(valid) else NA_real_
   )
 }
-distributions <- lapply(names(metric_specs), function(metric) distribution_for(report_rows[[metric]], metric_specs[[metric]]))
+distribution_values <- list(
+  population_total = current$population_total,
+  population_density_km2 = current$population_density_km2,
+  under18_pct = current$under18_pct,
+  age65plus_pct = current$age65plus_pct,
+  foreign_citizenship_pct = current$foreign_citizenship_pct,
+  foreign_born_pct = foreign$foreign_born_pct,
+  income_per_person_eur = historic$income_per_person_eur,
+  below_60_median_pct = historic$below_60_median_pct,
+  above_200_median_pct = historic$above_200_median_pct,
+  gini = historic$gini,
+  income_p80_p20 = historic$income_p80_p20
+)
+distributions <- lapply(
+  names(metric_specs),
+  function(metric) distribution_for(distribution_values[[metric]], metric_specs[[metric]])
+)
 names(distributions) <- names(metric_specs)
 
 party_labels <- list(

@@ -145,7 +145,7 @@ export function renderSectionReport(
       </section>
       <footer class="report-sources">
         <h3>Sources &amp; interpretation</h3>
-        <p>Percentiles compare valid Madrid census-section observations. A higher percentile means a higher raw value, not necessarily a better outcome. Suppressed observations remain No data.</p>
+        <p>Percentiles compare valid Madrid census-section observations. A higher percentile means a higher raw value, not necessarily a better outcome. Histograms use equal-width value buckets, so each bar’s area represents its number of sections. Suppressed observations remain No data.</p>
         <p><strong>Geography.</strong> Current ${escapeHtml(index.geographyVintages.canonical)} sections are canonical. Foreign-born measures use ${escapeHtml(index.geographyVintages.foreignBorn)} sections; income and elections use ${escapeHtml(index.geographyVintages.incomeAndElections)} sections, matched by greatest polygon overlap without area-weighting or imputation. Catastro footprints are assigned by point-on-surface.</p>
         <p><a href="${escapeHtml(index.methodologyUrl)}">Read the full methodology</a></p>
         <ul>${index.references
@@ -199,7 +199,7 @@ function renderDistributionChart(
   const low = distribution.breaks[0] ?? distribution.minimum ?? 0;
   const high = distribution.breaks.at(-1) ?? distribution.maximum ?? low + 1;
   const markerX = Math.max(4, Math.min(width - 4, ((value - low) / Math.max(1e-9, high - low)) * width));
-  const label = `${distribution.label}: ${formatValue(value, distribution.format)}, ${percentile === null ? "percentile unavailable" : `${ordinal(Math.round(percentile))} percentile`}. Distribution across ${distribution.observationCount} Madrid sections.`;
+  const label = `${distribution.label}: ${formatValue(value, distribution.format)}, ${percentile === null ? "percentile unavailable" : `${ordinal(Math.round(percentile))} percentile`}. Distribution across ${distribution.observationCount} Madrid sections in ${distribution.counts.length} equal-width value buckets.`;
   return `<svg class="distribution-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(label)}">
       <g class="distribution-bars">${bars}</g>
       <line class="distribution-marker" x1="${markerX.toFixed(1)}" x2="${markerX.toFixed(1)}" y1="5" y2="57" />
