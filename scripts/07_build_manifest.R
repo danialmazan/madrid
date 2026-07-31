@@ -19,15 +19,18 @@ source_definition <- function(id, url, source_layer, attribution, minzoom = 0, m
 sources_out <- list(
   source_definition(
     "sections-2026", "data/sections-2026.pmtiles", "sections_2026",
-    "Madrid City Council padrón · Madrid current census sections"
+    "Madrid City Council padrón · Madrid current census sections",
+    tile_zooms$sections[["min"]], tile_zooms$sections[["max"]]
   ),
   source_definition(
     "sections-2025", "data/sections-2025.pmtiles", "sections_2025",
-    "INE Population and Housing Census · INE census sections"
+    "INE Population and Housing Census · INE census sections",
+    tile_zooms$sections[["min"]], tile_zooms$sections[["max"]]
   ),
   source_definition(
     "sections-2023", "data/sections-2023.pmtiles", "sections_2023",
-    "INE ADRH · Madrid/Interior election results · INE census sections"
+    "INE ADRH · Madrid/Interior election results · INE census sections",
+    tile_zooms$sections[["min"]], tile_zooms$sections[["max"]]
   )
 )
 
@@ -40,13 +43,22 @@ for (code in names(district_names)) {
   building_age_sources <- c(building_age_sources, age_id)
   building_height_sources <- c(building_height_sources, height_id)
   sources_out <- append(sources_out, list(
-    source_definition(age_id, archive, "building_age", "Catastro INSPIRE Buildings", 12, 16),
-    source_definition(height_id, archive, "building_height", "Ayuntamiento de Madrid · estimated building heights", 12, 16)
+    source_definition(
+      age_id, archive, "building_age", "Catastro INSPIRE Buildings",
+      tile_zooms$buildings[["min"]], tile_zooms$buildings[["max"]]
+    ),
+    source_definition(
+      height_id, archive, "building_height", "Ayuntamiento de Madrid · estimated building heights",
+      tile_zooms$buildings[["min"]], tile_zooms$buildings[["max"]]
+    )
   ))
 }
 
 transport_source <- function(id, layer) {
-  source_definition(id, "data/transport.pmtiles", layer, "CRTM open data · EMT Madrid · BiciMAD", 8, 16)
+  source_definition(
+    id, "data/transport.pmtiles", layer, "CRTM open data · EMT Madrid · BiciMAD",
+    tile_zooms$transport[["min"]], tile_zooms$transport[["max"]]
+  )
 }
 for (mode in c("metro", "metro_ligero", "cercanias", "emt")) {
   sources_out <- append(sources_out, list(
@@ -233,14 +245,6 @@ for (election in names(election_definitions)) {
   )
   layers_out <- append(layers_out, list(
     layer(
-      paste0("election-", election, "-turnout"), "elections", "choropleth",
-      paste(spec$label, "turnout"), "Turnout",
-      "Ballots cast as a share of the resident electoral census.", "%",
-      spec$date, "2023 census sections", "sections-2023",
-      paste0("turnout_pct_", election), green_palette, c(0, 45, 55, 65, 72, 80, 100), "percent",
-      election_tooltip, control = list(election = election, party = "turnout")
-    ),
-    layer(
       paste0("election-", election, "-leading"), "elections", "choropleth",
       paste(spec$label, "results and leading party"), "Results/Leading party",
       "Candidacy receiving the most votes in each section.", "party",
@@ -248,6 +252,14 @@ for (election in names(election_definitions)) {
       paste0("leading_party_", election), as.vector(rbind(names(party_colours), party_colours)),
       numeric(), "text", election_tooltip,
       control = list(election = election, party = "leading", results = result_fields)
+    ),
+    layer(
+      paste0("election-", election, "-turnout"), "elections", "choropleth",
+      paste(spec$label, "turnout"), "Turnout",
+      "Ballots cast as a share of the resident electoral census.", "%",
+      spec$date, "2023 census sections", "sections-2023",
+      paste0("turnout_pct_", election), green_palette, c(0, 45, 55, 65, 72, 80, 100), "percent",
+      election_tooltip, control = list(election = election, party = "turnout")
     )
   ))
   for (party_key in names(spec$parties)) {
@@ -272,11 +284,23 @@ for (election in names(election_definitions)) {
 }
 
 income_tooltip <- tooltip(
-  field("income_per_person_eur", "Net income / person", "currency"),
-  field("below_60_median_pct", "Below 60% median", "percent"),
-  field("above_200_median_pct", "Above 200% median", "percent"),
-  field("gini", "Gini coefficient", "decimal"),
-  field("income_p80_p20", "P80/P20 ratio", "decimal")
+  field(
+    "income_per_person_eur", "Net income / person", "currency",
+    percentile_property = "income_per_person_percentile"
+  ),
+  field(
+    "below_60_median_pct", "Below 60% median", "percent",
+    percentile_property = "below_60_median_percentile"
+  ),
+  field(
+    "above_200_median_pct", "Above 200% median", "percent",
+    percentile_property = "above_200_median_percentile"
+  ),
+  field("gini", "Gini coefficient", "decimal", percentile_property = "gini_percentile"),
+  field(
+    "income_p80_p20", "P80/P20 ratio", "decimal",
+    percentile_property = "income_p80_p20_percentile"
+  )
 )
 layers_out <- append(layers_out, list(
   layer(
@@ -431,6 +455,7 @@ manifest <- list(
     "Election shares use valid votes including blank ballots as the denominator.",
     "Election totals exclude non-geographic votes when they are absent from polling-table data.",
     "INE publishes no 2023 section values for the below-60% and above-200% median indicators in Carabanchel and Fuencarral-El Pardo; these remain No data.",
+    "Percentiles compare valid Madrid census-section observations; a higher percentile means a higher raw value, not necessarily a better outcome.",
     "Transport is a static network snapshot; live vehicles and bicycle availability are intentionally excluded.",
     "Building archives are split by district and checked against a 95 MB per-file publication limit."
   )

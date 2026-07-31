@@ -63,6 +63,7 @@ prepare_election <- function(election, spec) {
     ) |>
     mutate(turnout_pct = if_else(census > 0, 100 * votes_cast / census, NA_real_))
 
+  city_party_votes <- list()
   for (target in names(spec$parties)) {
     pattern <- spec$parties[[target]]
     matched <- party_columns[grepl(pattern, party_columns, ignore.case = TRUE, perl = TRUE)]
@@ -73,6 +74,7 @@ prepare_election <- function(election, spec) {
       100 * section_results[[matched[[1]]]] / section_results$valid_votes,
       NA_real_
     )
+    city_party_votes[[target]] <- sum(tables[[matched[[1]]]], na.rm = TRUE)
   }
 
   party_matrix <- as.matrix(section_results[party_columns])
@@ -88,6 +90,14 @@ prepare_election <- function(election, spec) {
     all(abs(difference) <= pmax(2, official * 0.001), na.rm = TRUE),
     paste(election, "section totals do not reconcile with official Madrid total")
   )
+  city_results <- lapply(names(city_party_votes), function(key) {
+    votes <- unname(city_party_votes[[key]])
+    list(
+      key = key,
+      votes = votes,
+      share = if (official[["valid_votes"]] > 0) 100 * votes / official[["valid_votes"]] else NA_real_
+    )
+  })
 
   selected_columns <- c(
     "section_id", "census", "votes_cast", "valid_votes", "blank_votes",
@@ -101,7 +111,8 @@ prepare_election <- function(election, spec) {
     table_total = as.list(reconciled),
     difference = as.list(difference),
     sections = nrow(section_results),
-    ballot_labels = as.list(party_labels)
+    ballot_labels = as.list(party_labels),
+    city_results = city_results
   ))
   section_results[selected_columns]
 }
@@ -196,7 +207,14 @@ sections_2023 <- sections_2023 |>
   left_join(income_risk, by = "section_id") |>
   left_join(gini, by = "section_id") |>
   left_join(income_p80_p20, by = "section_id") |>
-  left_join(above_200_median, by = "section_id")
+  left_join(above_200_median, by = "section_id") |>
+  mutate(
+    income_per_person_percentile = section_percentile(income_per_person_eur),
+    below_60_median_percentile = section_percentile(below_60_median_pct),
+    above_200_median_percentile = section_percentile(above_200_median_pct),
+    gini_percentile = section_percentile(gini),
+    income_p80_p20_percentile = section_percentile(income_p80_p20)
+  )
 
 assert_true(all(sections_2023$income_per_person_eur >= 0, na.rm = TRUE), "Negative income values")
 assert_true(all(dplyr::between(sections_2023$below_60_median_pct, 0, 100), na.rm = TRUE), "Income-risk percentage out of range")

@@ -7,6 +7,8 @@ import maplibregl, {
 import { Protocol } from "pmtiles";
 import "./styles.css";
 import { MADRID_CAMERA, parseHash, serializeState } from "./state";
+import { renderMadridElectionCard, renderSectionReport, sectionProperties } from "./report";
+import { shareOrCopy } from "./share";
 import type {
   AddressIndex,
   AddressRecord,
@@ -15,6 +17,7 @@ import type {
   LayerGroup,
   LayerManifest,
   Place,
+  SectionReportIndex,
   ValueFormat,
 } from "./types";
 
@@ -22,6 +25,9 @@ const BASE_URL = import.meta.env.BASE_URL;
 const manifestUrl = `${BASE_URL}data/layer-manifest.json`;
 const placesUrl = `${BASE_URL}data/places.json`;
 const addressesUrl = `${BASE_URL}data/addresses.json`;
+const sectionReportsUrl = `${BASE_URL}data/section-reports.json`;
+const SECTION_HIT_LAYER = "atlas-current-section-hit";
+const SECTION_OUTLINE_LAYER = "atlas-current-section-outline";
 
 const panel = requireElement<HTMLElement>(".atlas-panel");
 const controls = requireElement<HTMLElement>("#layer-controls");
@@ -42,8 +48,17 @@ const sheetClose = requireElement<HTMLButtonElement>("#sheet-close");
 const mobileSheetTitle = requireElement<HTMLElement>("#mobile-sheet-title");
 const mobileLayersButton = requireElement<HTMLButtonElement>("#mobile-layers-button");
 const mobileLegendButton = requireElement<HTMLButtonElement>("#mobile-legend-button");
+const mobileInfoButton = requireElement<HTMLButtonElement>("#mobile-info-button");
+const infoStatusText = requireElement<HTMLElement>("#info-status-text");
 const aboutDialog = requireElement<HTMLDialogElement>("#about-dialog");
 const methodologyContent = requireElement<HTMLElement>("#methodology-content");
+const shareDialog = requireElement<HTMLDialogElement>("#share-dialog");
+const shareDialogTitle = requireElement<HTMLElement>("#share-dialog-title");
+const shareViewAction = requireElement<HTMLButtonElement>("#share-view-action");
+const shareReportAction = requireElement<HTMLButtonElement>("#share-report-action");
+const reportDialog = requireElement<HTMLDialogElement>("#report-dialog");
+const reportDialogTitle = requireElement<HTMLElement>("#report-dialog-title");
+const reportContent = requireElement<HTMLElement>("#report-content");
 const toast = requireElement<HTMLElement>("#toast");
 
 let atlasState: AtlasState = parseHash(window.location.hash);
@@ -53,13 +68,15 @@ let places: Place[] = [];
 let addresses: AddressRecord[] = [];
 let addressSearchText: string[] = [];
 let addressLoadPromise: Promise<void> | undefined;
+let sectionReportIndex: SectionReportIndex | undefined;
+let sectionReportLoadPromise: Promise<SectionReportIndex> | undefined;
 let searchMarker: maplibregl.Marker | undefined;
 let activeMapLayerIds: string[] = [];
 let hashTimer: number | undefined;
 let toastTimer: number | undefined;
 let currentFeatureTitle = "";
 
-type MobilePanelView = "layers" | "legend" | "details";
+type MobilePanelView = "layers" | "legend" | "details" | "info";
 
 void initialise();
 
@@ -77,6 +94,9 @@ async function initialise(): Promise<void> {
     renderGroupTabs();
     renderControls();
     renderLegend();
+    void renderFeaturePanelForState().then(() => {
+      if (atlasState.reportOpen) void openSelectedSectionReport(false);
+    });
     createMap();
   } catch (error) {
     console.error(error);
@@ -132,15 +152,37 @@ function bindStaticControls(): void {
 
   pitchButton.addEventListener("click", () => toggle3d());
   resetButton.addEventListener("click", () => resetView());
-  shareButton.addEventListener("click", () => void shareView());
+  shareButton.addEventListener("click", openShareDialog);
   sheetToggle.addEventListener("click", () => toggleMobilePanel("details"));
   sheetClose.addEventListener("click", () => setSheetOpen(false));
   mobileLayersButton.addEventListener("click", () => toggleMobilePanel("layers"));
   mobileLegendButton.addEventListener("click", () => toggleMobilePanel("legend"));
-  document.querySelector("#about-button")?.addEventListener("click", () => aboutDialog.showModal());
+  mobileInfoButton.addEventListener("click", () => toggleMobilePanel("info"));
+  document.querySelector("#about-button")?.addEventListener("click", openMethodology);
+  document.querySelector("#info-methodology-button")?.addEventListener("click", openMethodology);
   document.querySelector("#close-about")?.addEventListener("click", () => aboutDialog.close());
+  document.querySelector("#close-share")?.addEventListener("click", () => shareDialog.close());
+  document.querySelector("#close-report")?.addEventListener("click", () => reportDialog.close());
+  shareViewAction.addEventListener("click", () => void shareCurrentView());
+  shareReportAction.addEventListener("click", () => {
+    shareDialog.close();
+    void openSelectedSectionReport();
+  });
+  document.querySelector("#copy-report-link")?.addEventListener("click", () => void copyReportLink());
+  document.querySelector("#print-report")?.addEventListener("click", () => window.print());
   aboutDialog.addEventListener("click", (event) => {
     if (event.target === aboutDialog) aboutDialog.close();
+  });
+  shareDialog.addEventListener("click", (event) => {
+    if (event.target === shareDialog) shareDialog.close();
+  });
+  reportDialog.addEventListener("click", (event) => {
+    if (event.target === reportDialog) reportDialog.close();
+  });
+  reportDialog.addEventListener("close", () => {
+    if (!atlasState.reportOpen) return;
+    atlasState.reportOpen = false;
+    scheduleHashUpdate(true);
   });
   if (isMobileViewport()) setSheetOpen(false);
   window.addEventListener("resize", syncPanelAccessibility);
@@ -161,6 +203,9 @@ function bindStaticControls(): void {
     }
     if (event.key === "Escape") {
       hideSearchResults();
+      if (reportDialog.open) reportDialog.close();
+      else if (shareDialog.open) shareDialog.close();
+      else if (aboutDialog.open) aboutDialog.close();
       setSheetOpen(false);
     }
   });
@@ -172,7 +217,6 @@ function bindStaticControls(): void {
     renderGroupTabs();
     renderControls();
     renderLegend();
-    clearFeaturePanel();
     if (map) {
       map.jumpTo({
         center: [atlasState.camera.lng, atlasState.camera.lat],
@@ -180,9 +224,17 @@ function bindStaticControls(): void {
         bearing: atlasState.camera.bearing,
         pitch: atlasState.camera.pitch,
       });
-      void applyMapLayers();
+      if (map.isStyleLoaded()) void applyMapLayers();
     }
+    void renderFeaturePanelForState();
+    if (atlasState.reportOpen) void openSelectedSectionReport(false);
+    else if (reportDialog.open) reportDialog.close();
   });
+}
+
+function openMethodology(): void {
+  setSheetOpen(false);
+  aboutDialog.showModal();
 }
 
 function createMap(): void {
@@ -226,7 +278,8 @@ function createMap(): void {
   map.on("load", () => {
     tuneBasemap();
     addManifestSources();
-    void applyMapLayers();
+    addCanonicalSectionHitLayer();
+    void applyMapLayers().then(() => void renderFeaturePanelForState());
     setStatus(`Ready · ${manifest.generatedAt.slice(0, 10)}`);
   });
   map.on("moveend", () => {
@@ -289,6 +342,23 @@ function addManifestSources(): void {
   }
 }
 
+function addCanonicalSectionHitLayer(): void {
+  const source = manifest.sources.find((candidate) => candidate.id === "sections-2026");
+  if (!source || map.getLayer(SECTION_HIT_LAYER)) return;
+  map.addLayer(
+    {
+      id: SECTION_HIT_LAYER,
+      type: "fill",
+      source: source.id,
+      "source-layer": source.sourceLayer,
+      minzoom: 8,
+      maxzoom: 24,
+      paint: { "fill-color": "#000000", "fill-opacity": 0 },
+    },
+    firstLabelLayerId(),
+  );
+}
+
 function resolveAssetUrl(url: string): string {
   if (/^https?:\/\//.test(url)) return url;
   return new URL(url.replace(/^\//, ""), new URL(BASE_URL, window.location.origin)).toString();
@@ -296,6 +366,7 @@ function resolveAssetUrl(url: string): string {
 
 async function applyMapLayers(): Promise<void> {
   if (!map) return;
+  if (map.getLayer(SECTION_OUTLINE_LAYER)) map.removeLayer(SECTION_OUTLINE_LAYER);
   for (const layerId of activeMapLayerIds) {
     if (map.getLayer(layerId)) map.removeLayer(layerId);
   }
@@ -312,7 +383,31 @@ async function applyMapLayers(): Promise<void> {
       atlasState.transport.includes(layer.control.transportMode),
   );
   for (const overlay of overlays) addDefinitionToMap(overlay, true);
+  addSelectedSectionOutline();
   pitchButton.setAttribute("aria-pressed", String(atlasState.is3d));
+}
+
+function addSelectedSectionOutline(): void {
+  if (!map || !atlasState.selectedSection) return;
+  const source = manifest.sources.find((candidate) => candidate.id === "sections-2026");
+  if (!source) return;
+  map.addLayer(
+    {
+      id: SECTION_OUTLINE_LAYER,
+      type: "line",
+      source: source.id,
+      "source-layer": source.sourceLayer,
+      minzoom: 8,
+      maxzoom: 24,
+      filter: ["==", ["get", "section_id"], atlasState.selectedSection],
+      paint: {
+        "line-color": "#11110f",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 8, 2, 16, 4],
+        "line-opacity": 0.96,
+      },
+    },
+    firstLabelLayerId(),
+  );
 }
 
 function addDefinitionToMap(definition: LayerDefinition, overlay: boolean): void {
@@ -471,13 +566,15 @@ function selectGroup(group: LayerGroup): void {
     if (first) atlasState.layer = first.id;
   }
   if (group !== "transport") atlasState.dataLayerVisible = true;
+  if (!isCensusSectionLayer(getSelectedLayer())) clearSelectedSection(false);
   renderGroupTabs();
   renderControls();
   renderLegend();
-  clearFeaturePanel();
   if (map) {
     zoomToLayerMinimum(getSelectedLayer());
-    void applyMapLayers();
+    void applyMapLayers().then(() => void renderFeaturePanelForState());
+  } else {
+    void renderFeaturePanelForState();
   }
   if (isMobileViewport()) setMobilePanel(true, "layers");
   scheduleHashUpdate();
@@ -491,13 +588,15 @@ function selectLayer(layerId: string): void {
   atlasState.group = layer.group;
   if (layer.control?.election) atlasState.election = layer.control.election;
   if (layer.control?.party) atlasState.party = layer.control.party;
+  if (!isCensusSectionLayer(layer)) clearSelectedSection(false);
   renderGroupTabs();
   renderControls();
   renderLegend();
-  clearFeaturePanel();
   if (map) {
     zoomToLayerMinimum(layer);
-    void applyMapLayers();
+    void applyMapLayers().then(() => void renderFeaturePanelForState());
+  } else {
+    void renderFeaturePanelForState();
   }
   if (isMobileViewport()) setSheetOpen(false);
   scheduleHashUpdate();
@@ -585,12 +684,12 @@ function renderElectionControls(): void {
     if (first) {
       atlasState.layer = first.id;
       atlasState.dataLayerVisible = true;
-      atlasState.party = first.control?.party || "turnout";
+      atlasState.party = first.control?.party || "leading";
     }
     renderControls();
     renderLegend();
-    clearFeaturePanel();
-    if (map) void applyMapLayers();
+    if (map) void applyMapLayers().then(() => void renderFeaturePanelForState());
+    else void renderFeaturePanelForState();
     scheduleHashUpdate();
   });
   controls.querySelector<HTMLSelectElement>("#party-select")?.addEventListener("change", (event) => {
@@ -598,11 +697,23 @@ function renderElectionControls(): void {
   });
 }
 
-function clearFeaturePanel(): void {
+function renderEmptyFeaturePanel(): void {
   currentFeatureTitle = "";
   featurePanel.innerHTML =
     '<p class="feature-empty">Select a census section or map feature to see its details.</p>';
   updateDetailsToggleLabel();
+}
+
+function clearSelectedSection(updateHash = true): void {
+  atlasState.selectedSection = null;
+  atlasState.reportOpen = false;
+  currentFeatureTitle = "";
+  if (map?.getLayer(SECTION_OUTLINE_LAYER)) map.removeLayer(SECTION_OUTLINE_LAYER);
+  if (updateHash) scheduleHashUpdate();
+}
+
+function isCensusSectionLayer(layer: LayerDefinition): boolean {
+  return layer.group === "population" || layer.group === "income" || layer.group === "elections";
 }
 
 function renderTransportControls(): void {
@@ -658,7 +769,8 @@ function renderTransportControls(): void {
 
   controls.querySelector<HTMLButtonElement>("#clear-data-layer")?.addEventListener("click", () => {
     atlasState.dataLayerVisible = false;
-    clearFeaturePanel();
+    clearSelectedSection(false);
+    renderEmptyFeaturePanel();
     renderControls();
     renderLegend();
     if (map) void applyMapLayers();
@@ -768,16 +880,133 @@ function getSelectedLayer(): LayerDefinition {
   );
 }
 
+async function loadSectionReports(): Promise<SectionReportIndex> {
+  if (sectionReportIndex) return sectionReportIndex;
+  if (!sectionReportLoadPromise) {
+    sectionReportLoadPromise = fetchJson<SectionReportIndex>(sectionReportsUrl).then((index) => {
+      sectionReportIndex = index;
+      return index;
+    });
+  }
+  return sectionReportLoadPromise;
+}
+
+async function renderFeaturePanelForState(): Promise<void> {
+  const selected = getSelectedLayer();
+  if (atlasState.selectedSection && isCensusSectionLayer(selected)) {
+    await renderSelectedSection(atlasState.selectedSection);
+    return;
+  }
+  if (atlasState.group === "elections") {
+    await renderMadridElectionPanel();
+    return;
+  }
+  renderEmptyFeaturePanel();
+}
+
+async function renderSelectedSection(sectionId: string): Promise<void> {
+  featurePanel.innerHTML = '<p class="feature-empty">Loading section details…</p>';
+  try {
+    const index = await loadSectionReports();
+    const report = index.sections[sectionId];
+    if (!report) {
+      clearSelectedSection(false);
+      renderEmptyFeaturePanel();
+      scheduleHashUpdate(true);
+      showToast("That census section is not available");
+      return;
+    }
+    const definition = getSelectedLayer();
+    renderFeatureDetails(
+      definition,
+      sectionProperties(report, definition),
+      report.name,
+      report.district,
+      true,
+    );
+  } catch (error) {
+    console.warn("Section report index could not be loaded", error);
+    featurePanel.innerHTML = '<p class="feature-empty">Section details are temporarily unavailable.</p>';
+  }
+}
+
+async function renderMadridElectionPanel(): Promise<void> {
+  currentFeatureTitle = "Madrid results";
+  updateDetailsToggleLabel();
+  featurePanel.innerHTML = '<p class="feature-empty">Loading Madrid results…</p>';
+  try {
+    const index = await loadSectionReports();
+    featurePanel.innerHTML = renderMadridElectionCard(index.cityElections[atlasState.election]);
+  } catch (error) {
+    console.warn("Madrid election results could not be loaded", error);
+    featurePanel.innerHTML = '<p class="feature-empty">Madrid election results are temporarily unavailable.</p>';
+  }
+}
+
+async function openSelectedSectionReport(updateState = true): Promise<void> {
+  const sectionId = atlasState.selectedSection;
+  if (!sectionId) return;
+  reportContent.innerHTML = '<p class="report-loading">Preparing the census-section report…</p>';
+  if (!reportDialog.open) reportDialog.showModal();
+  try {
+    const index = await loadSectionReports();
+    const report = index.sections[sectionId];
+    if (!report) throw new Error(`Unknown report section ${sectionId}`);
+    reportDialogTitle.textContent = report.name;
+    reportContent.innerHTML = renderSectionReport(index, report);
+    atlasState.reportOpen = true;
+    if (updateState) scheduleHashUpdate(true);
+  } catch (error) {
+    console.warn("Census-section report could not be rendered", error);
+    reportContent.innerHTML = '<p class="report-loading">This report is temporarily unavailable.</p>';
+  }
+}
+
+async function copyReportLink(): Promise<void> {
+  if (!atlasState.selectedSection) return;
+  const reportState: AtlasState = { ...atlasState, reportOpen: true };
+  await copyUrl(stateUrl(reportState), "Report link copied");
+}
+
+function bindSectionCardActions(): void {
+  featurePanel.querySelector<HTMLButtonElement>(".open-section-report")?.addEventListener("click", () => {
+    void openSelectedSectionReport();
+  });
+  featurePanel.querySelector<HTMLButtonElement>(".back-to-madrid")?.addEventListener("click", () => {
+    clearSelectedSection();
+    void renderMadridElectionPanel();
+  });
+}
+
 function handleMapClick(event: MapMouseEvent): void {
   const features = map
     .queryRenderedFeatures(event.point)
     .filter((feature) => activeMapLayerIds.includes(feature.layer.id));
   const feature = features[0];
   if (!feature) {
-    clearFeaturePanel();
+    clearSelectedSection();
+    void renderFeaturePanelForState();
     return;
   }
+  const definition = manifest.layers.find((candidate) =>
+    feature.layer.id.startsWith(`atlas-${candidate.id}-`),
+  );
+  if (definition && isCensusSectionLayer(definition)) {
+    const canonical = map.queryRenderedFeatures(event.point, { layers: [SECTION_HIT_LAYER] })[0];
+    const sectionId = canonical?.properties?.section_id;
+    if (typeof sectionId === "string" && /^28079[0-9]{5}$/.test(sectionId)) {
+      atlasState.selectedSection = sectionId;
+      atlasState.reportOpen = false;
+      if (map.getLayer(SECTION_OUTLINE_LAYER)) map.removeLayer(SECTION_OUTLINE_LAYER);
+      addSelectedSectionOutline();
+      scheduleHashUpdate();
+      void renderSelectedSection(sectionId);
+      return;
+    }
+  }
+  clearSelectedSection(false);
   renderFeature(feature);
+  scheduleHashUpdate();
 }
 
 function handleMapHover(event: MapMouseEvent): void {
@@ -812,11 +1041,22 @@ function renderFeature(feature: MapGeoJSONFeature): void {
         .join(" · ")
     : [properties.neighbourhood, properties.district].filter(Boolean).join(" · ");
 
-  currentFeatureTitle = String(title);
+  renderFeatureDetails(definition, properties, String(title), context || definition.geography, false);
+}
+
+function renderFeatureDetails(
+  definition: LayerDefinition,
+  properties: Record<string, unknown>,
+  title: string,
+  context: string,
+  isSection: boolean,
+): void {
+
+  currentFeatureTitle = title;
   updateDetailsToggleLabel();
 
   if (definition.control?.party === "leading" && definition.control.results) {
-    renderElectionResultFeature(String(title), context || definition.geography, properties, definition);
+    renderElectionResultFeature(title, context, properties, definition, isSection);
     if (isMobileViewport()) setMobilePanel(true, "details");
     return;
   }
@@ -853,11 +1093,34 @@ function renderFeature(feature: MapGeoJSONFeature): void {
 
   featurePanel.innerHTML = `
     <div class="feature-header">
-      <h3>${escapeHtml(String(title))}</h3>
-      <p>${escapeHtml(context || definition.geography)}</p>
+      <h3>${escapeHtml(title)}</h3>
+      <p>${escapeHtml(context)}</p>
     </div>
-    <dl class="feature-grid">${fields}</dl>`;
+    <dl class="feature-grid">${fields}</dl>
+    ${renderIncomeSuppressionNote(definition, properties)}
+    ${renderSectionActions(definition, isSection)}`;
+  if (isSection) bindSectionCardActions();
   if (isMobileViewport()) setMobilePanel(true, "details");
+}
+
+function renderIncomeSuppressionNote(
+  definition: LayerDefinition,
+  properties: Record<string, unknown>,
+): string {
+  if (definition.group !== "income") return "";
+  const district = String(properties.district ?? "");
+  const affected = district === "Carabanchel" || district === "Fuencarral-El Pardo";
+  const missing = properties.below_60_median_pct == null && properties.above_200_median_pct == null;
+  if (!affected || !missing) return "";
+  return `<aside class="feature-data-note"><strong>Official source suppression</strong><p>INE publishes no section values for the below-60% or above-200% median indicators in ${escapeHtml(district)}. The other income measures remain available.</p></aside>`;
+}
+
+function renderSectionActions(definition: LayerDefinition, isSection: boolean): string {
+  if (!isSection) return "";
+  return `<div class="feature-actions">
+    <button class="open-section-report report-link-button" type="button">See full report</button>
+    ${definition.group === "elections" ? '<button class="back-to-madrid quiet-link-button" type="button">Back to Madrid results</button>' : ""}
+  </div>`;
 }
 
 function renderElectionResultFeature(
@@ -865,6 +1128,7 @@ function renderElectionResultFeature(
   context: string,
   properties: Record<string, unknown>,
   definition: LayerDefinition,
+  isSection = false,
 ): void {
   const candidates = (definition.control?.results ?? [])
     .map((result) => ({
@@ -901,7 +1165,9 @@ function renderElectionResultFeature(
           .join("")}
       </tbody>
     </table>
-    <p class="results-coverage">${escapeHtml(formatValue(cumulative, "percent", "", 1))} of valid votes shown</p>`;
+    <p class="results-coverage">${escapeHtml(formatValue(cumulative, "percent", "", 1))} of valid votes shown</p>
+    ${renderSectionActions(definition, isSection)}`;
+  if (isSection) bindSectionCardActions();
 }
 
 function zoomToLayerMinimum(layer: LayerDefinition): void {
@@ -942,13 +1208,51 @@ function resetView(): void {
   void applyMapLayers();
 }
 
-async function shareView(): Promise<void> {
+function openShareDialog(): void {
   scheduleHashUpdate(true);
+  const hasSection = atlasState.selectedSection !== null;
+  shareDialogTitle.textContent = hasSection ? "Share this census section" : "Share this map view";
+  shareViewAction.querySelector("strong")!.textContent = hasSection ? "Share section + layer" : "Share map view";
+  shareViewAction.querySelector("small")!.textContent = hasSection
+    ? "Reopens this section on the active layer"
+    : "Includes the active layer and map position";
+  shareReportAction.hidden = !hasSection;
+  shareDialog.showModal();
+}
+
+async function shareCurrentView(): Promise<void> {
+  const shareState: AtlasState = { ...atlasState, reportOpen: false };
+  const url = stateUrl(shareState);
+  const title = atlasState.selectedSection ? "Madrid census section" : "Madrid Interactive Atlas";
   try {
-    await navigator.clipboard.writeText(window.location.href);
-    showToast("View link copied");
+    const outcome = await shareOrCopy(
+      { title, url },
+      {
+        share: navigator.share?.bind(navigator),
+        copy: (value) => navigator.clipboard.writeText(value),
+      },
+    );
+    if (outcome === "copied") {
+      showToast(atlasState.selectedSection ? "Section + layer link copied" : "View link copied");
+    }
+    if (outcome !== "aborted") shareDialog.close();
   } catch {
-    showToast("Copy the URL to share this view");
+    showToast("Copy the URL from the address bar to share it");
+  }
+}
+
+function stateUrl(state: AtlasState): string {
+  const url = new URL(window.location.href);
+  url.hash = serializeState(state);
+  return url.toString();
+}
+
+async function copyUrl(url: string, successMessage: string): Promise<void> {
+  try {
+    await navigator.clipboard.writeText(url);
+    showToast(successMessage);
+  } catch {
+    showToast("Copy the URL from the address bar to share it");
   }
 }
 
@@ -1118,7 +1422,8 @@ function setMobilePanel(open: boolean, view: MobilePanelView): void {
   mobileSheetTitle.textContent = {
     layers: "Choose map layers",
     legend: "Map legend",
-    details: currentFeatureTitle || "Map details",
+    details: atlasState.selectedSection ? "Section details" : "Map details",
+    info: "Map information",
   }[view];
   setSheetOpen(open);
 }
@@ -1132,6 +1437,8 @@ function setSheetOpen(open: boolean): void {
   mobileLayersButton.setAttribute("aria-pressed", String(open && activeView === "layers"));
   mobileLegendButton.setAttribute("aria-expanded", String(open && activeView === "legend"));
   mobileLegendButton.setAttribute("aria-pressed", String(open && activeView === "legend"));
+  mobileInfoButton.setAttribute("aria-expanded", String(open && activeView === "info"));
+  mobileInfoButton.setAttribute("aria-pressed", String(open && activeView === "info"));
 }
 
 function syncPanelAccessibility(): void {
@@ -1155,6 +1462,7 @@ function scheduleHashUpdate(immediate = false): void {
 
 function setStatus(message: string, isError = false): void {
   status.querySelector("span:last-child")!.textContent = message;
+  infoStatusText.textContent = message;
   status.classList.toggle("is-ready", !isError && message.startsWith("Ready"));
   status.classList.toggle("is-error", isError);
 }

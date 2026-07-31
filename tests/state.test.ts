@@ -36,4 +36,25 @@ describe("URL state", () => {
     };
     expect(parseHash(serializeState(state))).toEqual(state);
   });
+
+  it("round-trips a canonical section and open report", () => {
+    const state = {
+      ...DEFAULT_STATE,
+      group: "income" as const,
+      layer: "income-per-person",
+      selectedSection: "2807911001",
+      reportOpen: true,
+    };
+    const hash = serializeState(state);
+    expect(hash).toBe(
+      "#group=income&layer=income-per-person&lng=-3.70380&lat=40.41680&z=10.65&section=2807911001&report=1",
+    );
+    expect(parseHash(hash)).toEqual(state);
+  });
+
+  it("rejects invalid section identifiers and orphan report state", () => {
+    const state = parseHash("#section=not-a-section&report=1");
+    expect(state.selectedSection).toBeNull();
+    expect(state.reportOpen).toBe(false);
+  });
 });

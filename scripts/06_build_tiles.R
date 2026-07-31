@@ -78,8 +78,8 @@ for (year in c("2026", "2025", "2023")) {
   run_tippecanoe(
     file.path(public_data_dir, paste0("sections-", year, ".pmtiles")),
     setNames(section_inputs[[layer]], layer),
-    minimum_zoom = 8,
-    maximum_zoom = 15
+    minimum_zoom = tile_zooms$sections[["min"]],
+    maximum_zoom = tile_zooms$sections[["max"]]
   )
 }
 
@@ -94,8 +94,8 @@ for (code in names(district_names)) {
   run_tippecanoe(
     file.path(public_data_dir, paste0("buildings-", code, ".pmtiles")),
     inputs,
-    minimum_zoom = 12,
-    maximum_zoom = 16
+    minimum_zoom = tile_zooms$buildings[["min"]],
+    maximum_zoom = tile_zooms$buildings[["max"]]
   )
 }
 
@@ -111,8 +111,8 @@ assert_true(all(file.exists(transport_inputs)), "Missing one or more transport t
 run_tippecanoe(
   file.path(public_data_dir, "transport.pmtiles"),
   transport_inputs,
-  minimum_zoom = 8,
-  maximum_zoom = 16
+  minimum_zoom = tile_zooms$transport[["min"]],
+  maximum_zoom = tile_zooms$transport[["max"]]
 )
 
 message_step("PMTiles archives ready")

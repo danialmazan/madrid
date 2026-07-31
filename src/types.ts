@@ -1,6 +1,7 @@
 export type LayerGroup = "population" | "buildings" | "elections" | "income" | "transport";
 export type LayerKind = "choropleth" | "fill" | "fill-extrusion" | "transport-line" | "transport-stop";
 export type ValueFormat = "integer" | "decimal" | "percent" | "currency" | "year" | "text";
+export type ElectionKey = "general" | "local" | "assembly";
 
 export interface SourceDefinition {
   id: string;
@@ -26,7 +27,7 @@ export interface ElectionResultField {
 }
 
 export interface LayerControl {
-  election?: "general" | "local" | "assembly";
+  election?: ElectionKey;
   party?: string;
   transportMode?: "metro" | "metro-ligero" | "cercanias" | "emt" | "bicimad";
   routeProperty?: string;
@@ -110,10 +111,104 @@ export interface AtlasState {
   group: LayerGroup;
   layer: string;
   dataLayerVisible: boolean;
-  election: "general" | "local" | "assembly";
+  election: ElectionKey;
   party: string;
   transport: string[];
   route: string;
   camera: CameraState;
   is3d: boolean;
+  selectedSection: string | null;
+  reportOpen: boolean;
+}
+
+export interface ReportMetricValue {
+  value: number | null;
+  percentile: number | null;
+}
+
+export interface ReportDistribution {
+  label: string;
+  format: ValueFormat;
+  unit: string;
+  breaks: number[];
+  counts: number[];
+  observationCount: number;
+  minimum: number | null;
+  maximum: number | null;
+}
+
+export interface ReportVintageMatch {
+  sectionId: string;
+  overlapShare: number;
+  boundaryChanged: boolean;
+}
+
+export interface ReportElectionResult {
+  key: string;
+  label: string;
+  color: string;
+  share: number | null;
+  votes?: number;
+}
+
+export interface SectionElectionReport {
+  turnoutPct: number | null;
+  validVotes: number | null;
+  blankVotes: number | null;
+  leadingParty: string | null;
+  results: ReportElectionResult[];
+}
+
+export interface CityElectionReport {
+  label: string;
+  referenceDate: string;
+  census: number;
+  votesCast: number;
+  validVotes: number;
+  blankVotes: number;
+  turnoutPct: number;
+  shownCoveragePct: number;
+  results: ReportElectionResult[];
+}
+
+export interface BuildingReport {
+  buildingCount: number;
+  dwellings: number;
+  medianConstructionYear: number | null;
+  constructionEras: number[];
+}
+
+export interface SectionReport {
+  id: string;
+  name: string;
+  district: string;
+  matches: Record<"2023" | "2025", ReportVintageMatch>;
+  population: Record<string, ReportMetricValue>;
+  income: Record<string, ReportMetricValue>;
+  elections: Record<ElectionKey, SectionElectionReport>;
+  buildings: BuildingReport;
+}
+
+export interface SectionReportIndex {
+  generatedAt: string;
+  version: string;
+  canonicalVintage: "2026";
+  geographyVintages: {
+    canonical: string;
+    foreignBorn: string;
+    incomeAndElections: string;
+  };
+  dataDates: {
+    population: string;
+    foreignBorn: string;
+    income: string;
+    buildings: string;
+  };
+  methodologyUrl: string;
+  distributions: Record<string, ReportDistribution>;
+  constructionEras: string[];
+  cityBuildings: BuildingReport;
+  cityElections: Record<ElectionKey, CityElectionReport>;
+  references: SourceReference[];
+  sections: Record<string, SectionReport>;
 }

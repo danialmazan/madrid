@@ -13,11 +13,13 @@ export const DEFAULT_STATE: AtlasState = {
   layer: "population-density",
   dataLayerVisible: true,
   election: "general",
-  party: "PP",
+  party: "leading",
   transport: [],
   route: "all",
   camera: { ...MADRID_CAMERA },
   is3d: false,
+  selectedSection: null,
+  reportOpen: false,
 };
 
 const groups: LayerGroup[] = ["population", "buildings", "elections", "income", "transport"];
@@ -42,6 +44,8 @@ export function parseHash(hash: string): AtlasState {
   const election = elections.includes(rawElection as (typeof elections)[number])
     ? (rawElection as AtlasState["election"])
     : DEFAULT_STATE.election;
+  const rawSection = params.get("section");
+  const selectedSection = rawSection && /^28079[0-9]{5}$/.test(rawSection) ? rawSection : null;
 
   return {
     group,
@@ -62,6 +66,8 @@ export function parseHash(hash: string): AtlasState {
       pitch: bounded(finiteNumber(params.get("pitch"), 0), 0, 85),
     },
     is3d: params.get("3d") === "1",
+    selectedSection,
+    reportOpen: selectedSection !== null && params.get("report") === "1",
   };
 }
 
@@ -84,5 +90,9 @@ export function serializeState(state: AtlasState): string {
   if (Math.abs(state.camera.bearing) > 0.05) params.set("bearing", round(state.camera.bearing, 1));
   if (state.camera.pitch > 0.05) params.set("pitch", round(state.camera.pitch, 1));
   if (state.is3d) params.set("3d", "1");
+  if (state.selectedSection) {
+    params.set("section", state.selectedSection);
+    if (state.reportOpen) params.set("report", "1");
+  }
   return `#${params.toString()}`;
 }

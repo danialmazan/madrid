@@ -8,6 +8,7 @@ steps <- c(
   "scripts/05_prepare_transport.R",
   "scripts/06_build_tiles.R",
   "scripts/07_build_manifest.R",
+  "scripts/08_build_section_reports.R",
   "scripts/09_validate_outputs.R"
 )
 

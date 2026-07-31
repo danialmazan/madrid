@@ -71,6 +71,27 @@
               Select a census section or map feature to see its details.
             </p>
           </section>
+
+          <section id="mobile-info-panel" class="mobile-info-panel" aria-label="Map information">
+            <div class="info-ready">
+              <span class="status-dot" aria-hidden="true"></span>
+              <div><strong id="info-status-text">Loading atlas…</strong><span>Current data and map status</span></div>
+            </div>
+            <div class="info-block">
+              <span class="feature-kicker">Project</span>
+              <strong>Madrid Interactive Atlas</strong>
+              <p>Designed and built by Daniel Almazán.</p>
+              <a href="https://danielalmazan.com">danielalmazan.com ↗</a>
+            </div>
+            <div class="info-block">
+              <span class="feature-kicker">Map attribution</span>
+              <p>
+                Basemap by <a href="https://openfreemap.org/">OpenFreeMap</a>.
+                Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>.
+              </p>
+            </div>
+            <button id="info-methodology-button" class="report-link-button" type="button">Sources &amp; methodology</button>
+          </section>
         </div>
 
         <footer class="panel-footer">
@@ -150,6 +171,18 @@
               </svg>
               <span class="button-label">Legend</span>
             </button>
+            <button
+              id="mobile-info-button"
+              class="icon-button mobile-panel-button"
+              type="button"
+              aria-controls="mobile-sheet"
+              aria-expanded="false"
+              aria-pressed="false"
+              aria-label="Show map information"
+            >
+              <span class="button-icon info-icon" aria-hidden="true">i</span>
+              <span class="button-label">Info</span>
+            </button>
           </div>
         </div>
 
@@ -180,6 +213,37 @@
         <button id="close-about" class="close-button" type="button" aria-label="Close">×</button>
       </div>
       <div id="methodology-content" class="methodology-content"></div>
+    </dialog>
+
+    <dialog id="share-dialog" class="action-dialog">
+      <div class="action-dialog-heading">
+        <div><p class="eyebrow">Share the atlas</p><h2 id="share-dialog-title">Share this view</h2></div>
+        <button id="close-share" class="close-button" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="share-actions">
+        <button id="share-view-action" class="share-action" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12h8M13 7l5 5-5 5" /><path d="M18 4h2v16h-2M6 6H4v12h2" /></svg>
+          <span><strong>Share map view</strong><small>Includes the active layer and map position</small></span>
+        </button>
+        <button id="share-report-action" class="share-action" type="button" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z" /><path d="M15 3v5h5M9 13h7M9 17h5" /></svg>
+          <span><strong>Open full section report</strong><small>Review, copy its link, or save it as PDF</small></span>
+        </button>
+      </div>
+    </dialog>
+
+    <dialog id="report-dialog" class="report-dialog">
+      <div class="report-dialog-shell">
+        <header class="report-dialog-toolbar">
+          <div><p class="eyebrow">Madrid Atlas</p><strong id="report-dialog-title">Census-section report</strong></div>
+          <div class="report-dialog-actions">
+            <button id="copy-report-link" class="text-button" type="button">Copy report link</button>
+            <button id="print-report" class="report-print-button" type="button">Print / Save as PDF</button>
+            <button id="close-report" class="close-button" type="button" aria-label="Close report">×</button>
+          </div>
+        </header>
+        <div id="report-content" class="report-content" aria-live="polite"></div>
+      </div>
     </dialog>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>

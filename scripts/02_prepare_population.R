@@ -1,17 +1,5 @@
 source(file.path("scripts", "R", "common.R"))
 
-section_percentile <- function(x) {
-  output <- rep(NA_real_, length(x))
-  valid <- is.finite(x)
-  count <- sum(valid)
-  if (count == 1) {
-    output[valid] <- 100
-  } else if (count > 1) {
-    output[valid] <- 100 * (rank(x[valid], ties.method = "average") - 1) / (count - 1)
-  }
-  output
-}
-
 message_step("Resolving latest monthly Madrid padrón")
 population_resources <- package_resources(sources$madrid_population_package)
 population_url <- pick_resource_url(

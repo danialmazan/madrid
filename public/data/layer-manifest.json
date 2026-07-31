@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-27T09:55:55Z",
+  "generatedAt": "2026-07-31T12:10:18Z",
   "version": "1.0.0",
   "defaultLayer": "population-density",
   "sources": [
@@ -8,24 +8,24 @@
       "url": "data/sections-2026.pmtiles",
       "sourceLayer": "sections_2026",
       "attribution": "Madrid City Council padrón · Madrid current census sections",
-      "minzoom": 0,
-      "maxzoom": 16
+      "minzoom": 8,
+      "maxzoom": 15
     },
     {
       "id": "sections-2025",
       "url": "data/sections-2025.pmtiles",
       "sourceLayer": "sections_2025",
       "attribution": "INE Population and Housing Census · INE census sections",
-      "minzoom": 0,
-      "maxzoom": 16
+      "minzoom": 8,
+      "maxzoom": 15
     },
     {
       "id": "sections-2023",
       "url": "data/sections-2023.pmtiles",
       "sourceLayer": "sections_2023",
       "attribution": "INE ADRH · Madrid/Interior election results · INE census sections",
-      "minzoom": 0,
-      "maxzoom": 16
+      "minzoom": 8,
+      "maxzoom": 15
     },
     {
       "id": "building-age-01",
@@ -1000,68 +1000,6 @@
       ]
     },
     {
-      "id": "election-general-turnout",
-      "group": "elections",
-      "kind": "choropleth",
-      "label": "General election turnout",
-      "shortLabel": "Turnout",
-      "description": "Ballots cast as a share of the resident electoral census.",
-      "unit": "%",
-      "referenceDate": "2023-07-23",
-      "geography": "2023 census sections",
-      "sourceIds": [
-        "sections-2023"
-      ],
-      "property": "turnout_pct_general",
-      "palette": [
-        "#edf5ed",
-        "#cce6d9",
-        "#8dceb4",
-        "#43aa8b",
-        "#247a67",
-        "#135348"
-      ],
-      "breaks": [
-        0,
-        45,
-        55,
-        65,
-        72,
-        80,
-        100
-      ],
-      "format": "percent",
-      "minzoom": 8,
-      "maxzoom": 24,
-      "opacity": 0.72,
-      "tooltip": [
-        {
-          "property": "turnout_pct_general",
-          "label": "Turnout",
-          "format": "percent"
-        },
-        {
-          "property": "valid_votes_general",
-          "label": "Valid votes",
-          "format": "integer"
-        },
-        {
-          "property": "blank_votes_general",
-          "label": "Blank ballots",
-          "format": "integer"
-        },
-        {
-          "property": "leading_party_general",
-          "label": "Leading party",
-          "format": "text"
-        }
-      ],
-      "control": {
-        "election": "general",
-        "party": "turnout"
-      }
-    },
-    {
       "id": "election-general-leading",
       "group": "elections",
       "kind": "choropleth",
@@ -1149,6 +1087,68 @@
             "color": "#E65A91"
           }
         ]
+      }
+    },
+    {
+      "id": "election-general-turnout",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "General election turnout",
+      "shortLabel": "Turnout",
+      "description": "Ballots cast as a share of the resident electoral census.",
+      "unit": "%",
+      "referenceDate": "2023-07-23",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "turnout_pct_general",
+      "palette": [
+        "#edf5ed",
+        "#cce6d9",
+        "#8dceb4",
+        "#43aa8b",
+        "#247a67",
+        "#135348"
+      ],
+      "breaks": [
+        0,
+        45,
+        55,
+        65,
+        72,
+        80,
+        100
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "opacity": 0.72,
+      "tooltip": [
+        {
+          "property": "turnout_pct_general",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_general",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_general",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_general",
+          "label": "Leading party",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "election": "general",
+        "party": "turnout"
       }
     },
     {
@@ -1420,68 +1420,6 @@
       }
     },
     {
-      "id": "election-local-turnout",
-      "group": "elections",
-      "kind": "choropleth",
-      "label": "Madrid local election turnout",
-      "shortLabel": "Turnout",
-      "description": "Ballots cast as a share of the resident electoral census.",
-      "unit": "%",
-      "referenceDate": "2023-05-28",
-      "geography": "2023 census sections",
-      "sourceIds": [
-        "sections-2023"
-      ],
-      "property": "turnout_pct_local",
-      "palette": [
-        "#edf5ed",
-        "#cce6d9",
-        "#8dceb4",
-        "#43aa8b",
-        "#247a67",
-        "#135348"
-      ],
-      "breaks": [
-        0,
-        45,
-        55,
-        65,
-        72,
-        80,
-        100
-      ],
-      "format": "percent",
-      "minzoom": 8,
-      "maxzoom": 24,
-      "opacity": 0.72,
-      "tooltip": [
-        {
-          "property": "turnout_pct_local",
-          "label": "Turnout",
-          "format": "percent"
-        },
-        {
-          "property": "valid_votes_local",
-          "label": "Valid votes",
-          "format": "integer"
-        },
-        {
-          "property": "blank_votes_local",
-          "label": "Blank ballots",
-          "format": "integer"
-        },
-        {
-          "property": "leading_party_local",
-          "label": "Leading party",
-          "format": "text"
-        }
-      ],
-      "control": {
-        "election": "local",
-        "party": "turnout"
-      }
-    },
-    {
       "id": "election-local-leading",
       "group": "elections",
       "kind": "choropleth",
@@ -1574,6 +1512,68 @@
             "color": "#6B3FA0"
           }
         ]
+      }
+    },
+    {
+      "id": "election-local-turnout",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid local election turnout",
+      "shortLabel": "Turnout",
+      "description": "Ballots cast as a share of the resident electoral census.",
+      "unit": "%",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "turnout_pct_local",
+      "palette": [
+        "#edf5ed",
+        "#cce6d9",
+        "#8dceb4",
+        "#43aa8b",
+        "#247a67",
+        "#135348"
+      ],
+      "breaks": [
+        0,
+        45,
+        55,
+        65,
+        72,
+        80,
+        100
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "opacity": 0.72,
+      "tooltip": [
+        {
+          "property": "turnout_pct_local",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_local",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_local",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_local",
+          "label": "Leading party",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "election": "local",
+        "party": "turnout"
       }
     },
     {
@@ -1912,68 +1912,6 @@
       }
     },
     {
-      "id": "election-assembly-turnout",
-      "group": "elections",
-      "kind": "choropleth",
-      "label": "Madrid Assembly election turnout",
-      "shortLabel": "Turnout",
-      "description": "Ballots cast as a share of the resident electoral census.",
-      "unit": "%",
-      "referenceDate": "2023-05-28",
-      "geography": "2023 census sections",
-      "sourceIds": [
-        "sections-2023"
-      ],
-      "property": "turnout_pct_assembly",
-      "palette": [
-        "#edf5ed",
-        "#cce6d9",
-        "#8dceb4",
-        "#43aa8b",
-        "#247a67",
-        "#135348"
-      ],
-      "breaks": [
-        0,
-        45,
-        55,
-        65,
-        72,
-        80,
-        100
-      ],
-      "format": "percent",
-      "minzoom": 8,
-      "maxzoom": 24,
-      "opacity": 0.72,
-      "tooltip": [
-        {
-          "property": "turnout_pct_assembly",
-          "label": "Turnout",
-          "format": "percent"
-        },
-        {
-          "property": "valid_votes_assembly",
-          "label": "Valid votes",
-          "format": "integer"
-        },
-        {
-          "property": "blank_votes_assembly",
-          "label": "Blank ballots",
-          "format": "integer"
-        },
-        {
-          "property": "leading_party_assembly",
-          "label": "Leading party",
-          "format": "text"
-        }
-      ],
-      "control": {
-        "election": "assembly",
-        "party": "turnout"
-      }
-    },
-    {
       "id": "election-assembly-leading",
       "group": "elections",
       "kind": "choropleth",
@@ -2066,6 +2004,68 @@
             "color": "#6B3FA0"
           }
         ]
+      }
+    },
+    {
+      "id": "election-assembly-turnout",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid Assembly election turnout",
+      "shortLabel": "Turnout",
+      "description": "Ballots cast as a share of the resident electoral census.",
+      "unit": "%",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "turnout_pct_assembly",
+      "palette": [
+        "#edf5ed",
+        "#cce6d9",
+        "#8dceb4",
+        "#43aa8b",
+        "#247a67",
+        "#135348"
+      ],
+      "breaks": [
+        0,
+        45,
+        55,
+        65,
+        72,
+        80,
+        100
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "opacity": 0.72,
+      "tooltip": [
+        {
+          "property": "turnout_pct_assembly",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_assembly",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_assembly",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_assembly",
+          "label": "Leading party",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "election": "assembly",
+        "party": "turnout"
       }
     },
     {
@@ -2442,27 +2442,32 @@
         {
           "property": "income_per_person_eur",
           "label": "Net income / person",
-          "format": "currency"
+          "format": "currency",
+          "percentileProperty": "income_per_person_percentile"
         },
         {
           "property": "below_60_median_pct",
           "label": "Below 60% median",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "below_60_median_percentile"
         },
         {
           "property": "above_200_median_pct",
           "label": "Above 200% median",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "above_200_median_percentile"
         },
         {
           "property": "gini",
           "label": "Gini coefficient",
-          "format": "decimal"
+          "format": "decimal",
+          "percentileProperty": "gini_percentile"
         },
         {
           "property": "income_p80_p20",
           "label": "P80/P20 ratio",
-          "format": "decimal"
+          "format": "decimal",
+          "percentileProperty": "income_p80_p20_percentile"
         }
       ]
     },
@@ -2505,27 +2510,32 @@
         {
           "property": "income_per_person_eur",
           "label": "Net income / person",
-          "format": "currency"
+          "format": "currency",
+          "percentileProperty": "income_per_person_percentile"
         },
         {
           "property": "below_60_median_pct",
           "label": "Below 60% median",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "below_60_median_percentile"
         },
         {
           "property": "above_200_median_pct",
           "label": "Above 200% median",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "above_200_median_percentile"
         },
         {
           "property": "gini",
           "label": "Gini coefficient",
-          "format": "decimal"
+          "format": "decimal",
+          "percentileProperty": "gini_percentile"
         },
         {
           "property": "income_p80_p20",
           "label": "P80/P20 ratio",
-          "format": "decimal"
+          "format": "decimal",
+          "percentileProperty": "income_p80_p20_percentile"
         }
       ]
     },
@@ -2568,27 +2578,32 @@
         {
           "property": "income_per_person_eur",
           "label": "Net income / person",
-          "format": "currency"
+          "format": "currency",
+          "percentileProperty": "income_per_person_percentile"
         },
         {
           "property": "below_60_median_pct",
           "label": "Below 60% median",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "below_60_median_percentile"
         },
         {
           "property": "above_200_median_pct",
           "label": "Above 200% median",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "above_200_median_percentile"
         },
         {
           "property": "gini",
           "label": "Gini coefficient",
-          "format": "decimal"
+          "format": "decimal",
+          "percentileProperty": "gini_percentile"
         },
         {
           "property": "income_p80_p20",
           "label": "P80/P20 ratio",
-          "format": "decimal"
+          "format": "decimal",
+          "percentileProperty": "income_p80_p20_percentile"
         }
       ]
     },
@@ -2631,27 +2646,32 @@
         {
           "property": "income_per_person_eur",
           "label": "Net income / person",
-          "format": "currency"
+          "format": "currency",
+          "percentileProperty": "income_per_person_percentile"
         },
         {
           "property": "below_60_median_pct",
           "label": "Below 60% median",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "below_60_median_percentile"
         },
         {
           "property": "above_200_median_pct",
           "label": "Above 200% median",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "above_200_median_percentile"
         },
         {
           "property": "gini",
           "label": "Gini coefficient",
-          "format": "decimal"
+          "format": "decimal",
+          "percentileProperty": "gini_percentile"
         },
         {
           "property": "income_p80_p20",
           "label": "P80/P20 ratio",
-          "format": "decimal"
+          "format": "decimal",
+          "percentileProperty": "income_p80_p20_percentile"
         }
       ]
     },
@@ -2694,27 +2714,32 @@
         {
           "property": "income_per_person_eur",
           "label": "Net income / person",
-          "format": "currency"
+          "format": "currency",
+          "percentileProperty": "income_per_person_percentile"
         },
         {
           "property": "below_60_median_pct",
           "label": "Below 60% median",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "below_60_median_percentile"
         },
         {
           "property": "above_200_median_pct",
           "label": "Above 200% median",
-          "format": "percent"
+          "format": "percent",
+          "percentileProperty": "above_200_median_percentile"
         },
         {
           "property": "gini",
           "label": "Gini coefficient",
-          "format": "decimal"
+          "format": "decimal",
+          "percentileProperty": "gini_percentile"
         },
         {
           "property": "income_p80_p20",
           "label": "P80/P20 ratio",
-          "format": "decimal"
+          "format": "decimal",
+          "percentileProperty": "income_p80_p20_percentile"
         }
       ]
     },
@@ -4956,63 +4981,63 @@
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://datos.madrid.es/dataset/200076-0-padron/resource/200076-2-padron-csv/download/200076_20260714_062859.csv",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-07-27"
+      "retrieved": "2026-07-31"
     },
     {
       "title": "Censo anual de población",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/69211.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-07-27"
+      "retrieved": "2026-07-31"
     },
     {
       "title": "Catastro INSPIRE Buildings",
       "organisation": "Dirección General del Catastro",
       "url": "https://www.catastro.hacienda.gob.es/INSPIRE/Buildings/28/28900-MADRID/A.ES.SDGC.BU.28900.zip",
       "licence": "Catastro data-access conditions",
-      "retrieved": "2026-07-27"
+      "retrieved": "2026-07-31"
     },
     {
       "title": "Alturas de edificios",
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://geoportal.madrid.es/fsdescargas/IDEAM_WBGEOPORTAL/CARTOGRAFIA/CARTOGRAFIA_ACTUALIZADA/ALTURAS_EDIFICIOS/ALTURAS_EDIFICIOS.ZIP",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-07-27"
+      "retrieved": "2026-07-31"
     },
     {
       "title": "2023 election results by polling table",
       "organisation": "Madrid City Council / Interior Ministry",
       "url": "https://www.madrid.es/UnidadesDescentralizadas/UDCEstadistica/Nuevaweb/Elecciones%20y%20Participaci%C3%B3n%20Ciudadana/Elecciones/Resultados%20electorales/Congreso/Congreso%202023/Mesas/G1340123_prov.xlsx",
       "licence": "Public-sector information reuse terms",
-      "retrieved": "2026-07-27"
+      "retrieved": "2026-07-31"
     },
     {
       "title": "Household Income Distribution Atlas",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31097.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-07-27"
+      "retrieved": "2026-07-31"
     },
     {
       "title": "CRTM open transport data",
       "organisation": "Consorcio Regional de Transportes de Madrid",
       "url": "https://transparencia.crtm.es/presupuestos-contratos-y-gastos/datos-abiertos/",
       "licence": "CRTM open-data licence",
-      "retrieved": "2026-07-27"
+      "retrieved": "2026-07-31"
     },
     {
       "title": "BiciMAD stations",
       "organisation": "EMT Madrid",
       "url": "https://datos.emtmadrid.es/dataset/5fcc0945-2cbd-46c3-801a-6a83f4167c11/resource/105ce5df-793f-4e0a-a88e-5d3b3f024a5d/download/bikestationbicimad_geojson.json",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-07-27"
+      "retrieved": "2026-07-31"
     },
     {
       "title": "Official Madrid street directory",
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://datos.madrid.es/dataset/213605-0-callejero-oficial-madrid/resource/213605-4-callejero-oficial-madrid-csv/download/213605-4-callejero-oficial-madrid-csv.csv",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-07-27"
+      "retrieved": "2026-07-31"
     }
   ],
   "notes": [
@@ -5020,6 +5045,7 @@
     "Election shares use valid votes including blank ballots as the denominator.",
     "Election totals exclude non-geographic votes when they are absent from polling-table data.",
     "INE publishes no 2023 section values for the below-60% and above-200% median indicators in Carabanchel and Fuencarral-El Pardo; these remain No data.",
+    "Percentiles compare valid Madrid census-section observations; a higher percentile means a higher raw value, not necessarily a better outcome.",
     "Transport is a static network snapshot; live vehicles and bicycle availability are intentionally excluded.",
     "Building archives are split by district and checked against a 95 MB per-file publication limit."
   ]

@@ -16,6 +16,12 @@ dir.create(public_data_dir, recursive = TRUE, showWarnings = FALSE)
 
 sources <- yaml::read_yaml(file.path(project_root, "config", "sources.yml"))
 
+tile_zooms <- list(
+  sections = c(min = 8L, max = 15L),
+  buildings = c(min = 12L, max = 16L),
+  transport = c(min = 8L, max = 16L)
+)
+
 message_step <- function(...) {
   message(sprintf("[%s] %s", format(Sys.time(), "%H:%M:%S"), paste0(..., collapse = "")))
 }
@@ -64,6 +70,18 @@ parse_es_number <- function(x) {
     locale = readr::locale(decimal_mark = ",", grouping_mark = "."),
     na = c("", ".", "..", "...", "NA", "N/A")
   )
+}
+
+section_percentile <- function(x) {
+  output <- rep(NA_real_, length(x))
+  valid <- is.finite(x)
+  count <- sum(valid)
+  if (count == 1) {
+    output[valid] <- 100
+  } else if (count > 1) {
+    output[valid] <- 100 * (rank(x[valid], ties.method = "average") - 1) / (count - 1)
+  }
+  output
 }
 
 read_semicolon <- function(path) {

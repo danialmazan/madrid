@@ -3,7 +3,10 @@ source(file.path("scripts", "R", "common.R"))
 message_step("Validating publication outputs")
 manifest_path <- file.path(public_data_dir, "layer-manifest.json")
 assert_true(file.exists(manifest_path), "Missing layer-manifest.json")
+section_report_path <- file.path(public_data_dir, "section-reports.json")
+assert_true(file.exists(section_report_path), "Missing section-reports.json")
 manifest <- jsonlite::fromJSON(manifest_path, simplifyVector = FALSE)
+section_reports <- jsonlite::fromJSON(section_report_path, simplifyVector = FALSE)
 places <- jsonlite::fromJSON(file.path(public_data_dir, "places.json"), simplifyVector = FALSE)
 place_bounds <- unlist(lapply(places, `[[`, "bbox"))
 assert_true(length(places) >= 150, "Place-search index is incomplete")
@@ -31,6 +34,29 @@ assert_true(manifest$defaultLayer %in% layer_ids, "Manifest default layer does n
 
 source_layer_ids <- unique(unlist(lapply(manifest$layers, `[[`, "sourceIds")))
 assert_true(all(source_layer_ids %in% source_ids), "A layer references a missing PMTiles source")
+
+unique_source_urls <- unique(vapply(manifest$sources, `[[`, character(1), "url"))
+for (source_url in unique_source_urls) {
+  archive_path <- file.path(public_data_dir, sub("^data/", "", source_url))
+  assert_true(file.exists(archive_path), paste("Missing PMTiles archive", source_url))
+  connection <- file(archive_path, "rb")
+  header <- readBin(connection, what = "raw", n = 127)
+  close(connection)
+  assert_true(length(header) == 127, paste("Incomplete PMTiles header", source_url))
+  header_minzoom <- as.integer(header[[101]])
+  header_maxzoom <- as.integer(header[[102]])
+  matching_sources <- Filter(function(source) identical(source$url, source_url), manifest$sources)
+  for (source in matching_sources) {
+    assert_true(
+      identical(as.integer(source$minzoom), header_minzoom) &&
+        identical(as.integer(source$maxzoom), header_maxzoom),
+      paste(
+        "Manifest zoom does not match PMTiles header for", source$id,
+        sprintf("(manifest %s-%s, archive %s-%s)", source$minzoom, source$maxzoom, header_minzoom, header_maxzoom)
+      )
+    )
+  }
+}
 
 archive_paths <- list.files(public_data_dir, pattern = "\\.pmtiles$", full.names = TRUE)
 assert_true(length(archive_paths) >= 25, "Expected section, building and transport PMTiles archives")
@@ -70,6 +96,65 @@ assert_true(
   all(dplyr::between(income_sections$above_200_median_pct, 0, 100), na.rm = TRUE),
   "Above-200%-median income values are out of range"
 )
+income_percentile_columns <- c(
+  "income_per_person_percentile", "below_60_median_percentile",
+  "above_200_median_percentile", "gini_percentile", "income_p80_p20_percentile"
+)
+assert_true(
+  all(vapply(
+    sf::st_drop_geometry(income_sections)[income_percentile_columns],
+    function(x) all(dplyr::between(x, 0, 100), na.rm = TRUE),
+    logical(1)
+  )),
+  "Income percentile values are out of range"
+)
+suppressed_districts <- c("Carabanchel", "Fuencarral-El Pardo")
+suppressed_income <- income_sections |> filter(district %in% suppressed_districts)
+assert_true(
+  all(is.na(suppressed_income$below_60_median_pct)) &&
+    all(is.na(suppressed_income$above_200_median_pct)),
+  "Known INE-suppressed income indicators unexpectedly contain section values"
+)
+assert_true(
+  all(is.finite(suppressed_income$income_per_person_eur)) &&
+    all(is.finite(suppressed_income$gini)) &&
+    all(is.finite(suppressed_income$income_p80_p20)),
+  "Non-suppressed Carabanchel/Fuencarral income measures are incomplete"
+)
+
+report_ids <- names(section_reports$sections)
+assert_true(length(report_ids) == 2462, "Section report index must cover all 2,462 current sections")
+assert_unique(report_ids, "Section report IDs")
+assert_true(
+  identical(sort(report_ids), sort(as.character(population_sections$section_id))),
+  "Section report IDs do not match current section boundaries"
+)
+for (report in section_reports$sections) {
+  assert_true(
+    !is.null(report$matches[["2023"]]$sectionId) && !is.null(report$matches[["2025"]]$sectionId),
+    paste("Section report is missing a historical match:", report$id)
+  )
+}
+report_building_count <- sum(vapply(
+  section_reports$sections,
+  function(report) as.numeric(report$buildings$buildingCount),
+  numeric(1)
+))
+assert_true(
+  identical(report_building_count, as.numeric(section_reports$cityBuildings$buildingCount)),
+  "Section building counts do not reconcile with the city report total"
+)
+
+for (election in c("general", "local", "assembly")) {
+  election_layers <- Filter(
+    function(layer) identical(layer$group, "elections") && identical(layer$control$election, election),
+    manifest$layers
+  )
+  assert_true(
+    identical(election_layers[[1]]$control$party, "leading"),
+    paste("Results/Leading party is not first for", election)
+  )
+}
 
 election_checks <- lapply(c("general", "local", "assembly"), function(election) {
   metadata <- readRDS(file.path(processed_dir, paste0("election-", election, "-metadata.rds")))

@@ -548,6 +548,80 @@ select:focus-visible,
   text-align: right;
 }
 
+.feature-kicker {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--blue);
+  font-family: "Geist Mono", monospace;
+  font-size: 0.54rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.feature-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.report-link-button,
+.quiet-link-button,
+.report-print-button {
+  padding: 8px 10px;
+  color: white;
+  background: var(--blue);
+  border: 1px solid var(--blue);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.64rem;
+  font-weight: 650;
+}
+
+.quiet-link-button {
+  padding-inline: 2px;
+  color: var(--blue);
+  background: transparent;
+  border-color: transparent;
+  text-decoration: underline;
+  text-decoration-color: rgb(20 92 158 / 0.28);
+  text-underline-offset: 3px;
+}
+
+.feature-data-note,
+.report-data-note,
+.report-boundary-note {
+  margin: 8px 0 0;
+  padding: 9px 10px;
+  color: var(--brown);
+  background: color-mix(in srgb, var(--orange) 8%, white);
+  border: 1px solid color-mix(in srgb, var(--orange) 24%, white);
+  border-radius: 8px;
+}
+
+.feature-data-note strong,
+.report-data-note strong,
+.report-boundary-note strong {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.feature-data-note p,
+.report-data-note p,
+.report-boundary-note p {
+  margin: 4px 0 0;
+  font-size: 0.65rem;
+  line-height: 1.45;
+}
+
+.mobile-info-panel {
+  display: none;
+}
+
 .panel-footer {
   position: relative;
   z-index: 2;
@@ -817,6 +891,547 @@ select:focus-visible,
   box-shadow: var(--shadow);
 }
 
+.action-dialog {
+  width: min(430px, calc(100% - 32px));
+  padding: 0;
+  color: var(--ink);
+  background: var(--ivory);
+  border: 1px solid var(--line-dark);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.action-dialog::backdrop,
+.report-dialog::backdrop {
+  background: rgb(20 24 20 / 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.action-dialog-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  padding: 21px 21px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.action-dialog-heading h2 {
+  margin: 0;
+  font-family: "Frances", Georgia, serif;
+  font-size: 1.45rem;
+}
+
+.share-actions {
+  display: grid;
+  gap: 9px;
+  padding: 16px;
+}
+
+.share-action {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 13px;
+  color: var(--ink);
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.share-action:hover {
+  border-color: color-mix(in srgb, var(--blue) 40%, var(--line));
+  box-shadow: 0 8px 20px rgb(20 92 158 / 0.08);
+}
+
+.share-action svg {
+  width: 28px;
+  fill: none;
+  stroke: var(--blue);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+.share-action span {
+  display: grid;
+  gap: 3px;
+}
+
+.share-action strong {
+  font-size: 0.76rem;
+}
+
+.share-action small {
+  color: var(--muted);
+  font-size: 0.64rem;
+}
+
+.report-dialog {
+  width: min(1120px, calc(100% - 38px));
+  height: min(900px, calc(100% - 38px));
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  overflow: hidden;
+  color: var(--ink);
+  background: #f2f1eb;
+  border: 1px solid var(--line-dark);
+  border-radius: 18px;
+  box-shadow: 0 30px 90px rgb(20 24 20 / 0.28);
+}
+
+.report-dialog-shell {
+  display: grid;
+  height: 100%;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.report-dialog-toolbar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 12px 16px 12px 20px;
+  background: rgb(250 250 247 / 0.97);
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.report-dialog-toolbar .eyebrow {
+  margin-bottom: 2px;
+  font-size: 0.55rem;
+}
+
+#report-dialog-title {
+  font-family: "Frances", Georgia, serif;
+  font-size: 1rem;
+}
+
+.report-dialog-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.report-dialog-actions .text-button {
+  font-size: 0.65rem;
+}
+
+.report-print-button {
+  padding: 9px 12px;
+}
+
+.report-content {
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.report-loading {
+  margin: 80px auto;
+  color: var(--muted);
+  font-family: "Geist Mono", monospace;
+  font-size: 0.72rem;
+  text-align: center;
+}
+
+.section-report-document {
+  width: min(940px, calc(100% - 42px));
+  margin: 24px auto 60px;
+  background:
+    linear-gradient(90deg, rgb(20 92 158 / 0.035) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(rgb(20 92 158 / 0.035) 1px, transparent 1px) 0 0 / 32px 32px,
+    var(--paper);
+  border: 1px solid var(--line-dark);
+  box-shadow: 0 20px 55px rgb(31 35 29 / 0.12);
+}
+
+.report-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 30px;
+  align-items: end;
+  padding: 42px 46px 32px;
+  color: white;
+  background: var(--blue);
+}
+
+.report-overline,
+.report-id {
+  margin: 0;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.report-overline {
+  color: rgb(255 255 255 / 0.72);
+}
+
+.report-hero h2 {
+  max-width: 650px;
+  margin: 10px 0 12px;
+  font-family: "Frances", Georgia, serif;
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
+  letter-spacing: -0.045em;
+  line-height: 0.94;
+}
+
+.report-id {
+  color: rgb(255 255 255 / 0.78);
+  letter-spacing: 0.03em;
+  text-transform: none;
+}
+
+.report-stamp {
+  display: grid;
+  gap: 5px;
+  min-width: 122px;
+  padding: 12px;
+  border: 1px solid rgb(255 255 255 / 0.5);
+  font-family: "Geist Mono", monospace;
+  font-size: 0.58rem;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.report-stamp strong {
+  font-size: 0.68rem;
+}
+
+.report-boundary-note,
+.report-data-note {
+  margin: 24px 46px 0;
+}
+
+.report-chapter {
+  padding: 38px 46px;
+  border-bottom: 1px solid var(--line);
+}
+
+.report-chapter-heading {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 22px;
+}
+
+.report-chapter-heading > p {
+  margin: 3px 0 0;
+  color: var(--orange);
+  font-family: "Geist Mono", monospace;
+  font-size: 0.66rem;
+}
+
+.report-chapter-heading h3 {
+  margin: 0;
+  font-family: "Frances", Georgia, serif;
+  font-size: 1.9rem;
+  letter-spacing: -0.025em;
+}
+
+.report-chapter-heading span {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.report-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.report-metric {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.72fr) minmax(180px, 1.28fr);
+  gap: 13px;
+  align-items: end;
+  min-width: 0;
+  padding: 15px;
+  background: rgb(250 250 247 / 0.84);
+  border: 1px solid var(--line);
+  border-radius: 11px;
+}
+
+.report-metric.is-missing {
+  background: #f1f1ed;
+}
+
+.report-metric-value {
+  display: grid;
+  align-content: end;
+  gap: 4px;
+}
+
+.report-metric h4 {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.64rem;
+  font-weight: 550;
+}
+
+.report-metric strong {
+  font-family: "Geist Mono", monospace;
+  font-size: 1.02rem;
+}
+
+.report-metric-value span {
+  color: var(--blue);
+  font-size: 0.56rem;
+}
+
+.distribution-chart {
+  width: 100%;
+  min-width: 0;
+  overflow: visible;
+}
+
+.distribution-bars rect {
+  fill: color-mix(in srgb, var(--blue) 24%, white);
+}
+
+.distribution-marker {
+  stroke: var(--orange);
+  stroke-width: 2;
+}
+
+.distribution-dot {
+  fill: var(--orange);
+}
+
+.distribution-chart text {
+  fill: var(--muted);
+  font-family: "Geist Mono", monospace;
+  font-size: 7px;
+}
+
+.distribution-empty {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 7px;
+  align-items: center;
+  min-height: 55px;
+  color: var(--muted);
+  font-size: 0.56rem;
+  text-align: center;
+}
+
+.distribution-empty span {
+  border-top: 1px dashed var(--line-dark);
+}
+
+.report-election-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.report-election {
+  min-width: 0;
+  padding: 15px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+}
+
+.report-election > header {
+  min-height: 48px;
+  border-bottom: 1px solid var(--line);
+}
+
+.report-election h4 {
+  margin: 0;
+  font-family: "Frances", Georgia, serif;
+  font-size: 1rem;
+}
+
+.report-election header span,
+.election-turnout small,
+.election-comparison small {
+  color: var(--muted);
+  font-size: 0.54rem;
+}
+
+.election-turnout {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3px 8px;
+  padding: 10px 0;
+}
+
+.election-turnout span {
+  color: var(--muted);
+  font-size: 0.62rem;
+}
+
+.election-turnout strong {
+  font-family: "Geist Mono", monospace;
+  font-size: 0.75rem;
+}
+
+.election-turnout small {
+  grid-column: 1 / -1;
+  text-align: right;
+}
+
+.election-comparisons {
+  display: grid;
+  gap: 10px;
+}
+
+.election-comparison > div:first-child {
+  display: grid;
+  grid-template-columns: 8px 1fr auto;
+  gap: 6px;
+  align-items: center;
+  font-size: 0.59rem;
+}
+
+.election-comparison > div:first-child i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.election-comparison > div:first-child span {
+  font-family: "Geist Mono", monospace;
+}
+
+.comparison-track,
+.era-track {
+  height: 5px;
+  margin-top: 4px;
+  overflow: hidden;
+  background: #ecece6;
+  border-radius: 5px;
+}
+
+.comparison-track i,
+.era-track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.comparison-track.is-city {
+  height: 2px;
+  margin-top: 3px;
+}
+
+.election-comparison small {
+  display: block;
+  margin-top: 2px;
+  text-align: right;
+}
+
+.building-summary {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.65fr) minmax(0, 1.35fr);
+  gap: 24px;
+}
+
+.building-summary dl {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  overflow: hidden;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.building-summary dl div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 13px;
+  background: white;
+}
+
+.building-summary dt {
+  color: var(--muted);
+  font-size: 0.62rem;
+}
+
+.building-summary dd {
+  margin: 0;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.building-era-chart {
+  display: grid;
+  gap: 8px;
+}
+
+.building-era-row {
+  display: grid;
+  grid-template-columns: 82px minmax(80px, 1fr) 42px 76px;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.58rem;
+}
+
+.building-era-row .era-track {
+  margin: 0;
+}
+
+.building-era-row .era-track i {
+  background: var(--brown);
+}
+
+.building-era-row strong {
+  font-family: "Geist Mono", monospace;
+  text-align: right;
+}
+
+.building-era-row small {
+  color: var(--muted);
+  text-align: right;
+}
+
+.report-sources {
+  padding: 34px 46px 42px;
+  background: #f3f2ec;
+}
+
+.report-sources h3 {
+  margin: 0 0 8px;
+  font-family: "Frances", Georgia, serif;
+  font-size: 1.3rem;
+}
+
+.report-sources p,
+.report-sources li {
+  color: var(--muted);
+  font-size: 0.62rem;
+  line-height: 1.55;
+}
+
+.report-sources ul {
+  columns: 2;
+  padding-left: 17px;
+}
+
+.report-sources a {
+  color: var(--blue);
+}
+
+.report-sources li span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.52rem;
+}
+
 .about-dialog::backdrop {
   background: rgb(20 24 20 / 0.48);
   backdrop-filter: blur(3px);
@@ -967,6 +1582,10 @@ select:focus-visible,
     max-height: min(54vh, 460px);
   }
 
+  .atlas-panel[data-mobile-view="info"] {
+    max-height: min(58vh, 520px);
+  }
+
   .mobile-sheet-header {
     display: flex;
     flex: none;
@@ -1031,10 +1650,6 @@ select:focus-visible,
     padding: 10px 18px max(13px, env(safe-area-inset-bottom));
   }
 
-  .atlas-panel[data-mobile-view="layers"] .panel-footer {
-    display: flex;
-  }
-
   .atlas-panel[data-mobile-view="layers"] .legend-panel,
   .atlas-panel[data-mobile-view="layers"] .feature-panel,
   .atlas-panel[data-mobile-view="legend"] .group-tabs,
@@ -1042,7 +1657,11 @@ select:focus-visible,
   .atlas-panel[data-mobile-view="legend"] .feature-panel,
   .atlas-panel[data-mobile-view="details"] .group-tabs,
   .atlas-panel[data-mobile-view="details"] .control-stack,
-  .atlas-panel[data-mobile-view="details"] .legend-panel {
+  .atlas-panel[data-mobile-view="details"] .legend-panel,
+  .atlas-panel[data-mobile-view="info"] .group-tabs,
+  .atlas-panel[data-mobile-view="info"] .control-stack,
+  .atlas-panel[data-mobile-view="info"] .legend-panel,
+  .atlas-panel[data-mobile-view="info"] .feature-panel {
     display: none;
   }
 
@@ -1055,6 +1674,61 @@ select:focus-visible,
     display: block;
     min-height: 0;
     padding-top: 0;
+  }
+
+  .atlas-panel[data-mobile-view="info"] .mobile-info-panel {
+    display: grid;
+    gap: 11px;
+  }
+
+  .info-ready,
+  .info-block {
+    padding: 12px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+
+  .info-ready {
+    display: grid;
+    grid-template-columns: 9px 1fr;
+    gap: 9px;
+    align-items: center;
+  }
+
+  .info-ready > div {
+    display: grid;
+    gap: 2px;
+  }
+
+  .info-ready strong {
+    font-family: "Geist Mono", monospace;
+    font-size: 0.65rem;
+  }
+
+  .info-ready span:last-child,
+  .info-block p,
+  .info-block a {
+    color: var(--muted);
+    font-size: 0.62rem;
+    line-height: 1.5;
+  }
+
+  .info-block > strong {
+    font-family: "Frances", Georgia, serif;
+    font-size: 1rem;
+  }
+
+  .info-block p {
+    margin: 4px 0;
+  }
+
+  .info-block a {
+    color: var(--blue);
+  }
+
+  .mobile-info-panel .report-link-button {
+    justify-self: start;
   }
 
   .map-stage {
@@ -1096,6 +1770,18 @@ select:focus-visible,
     opacity: 0.55;
   }
 
+  .info-icon {
+    display: grid;
+    width: 18px;
+    height: 18px;
+    place-items: center;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+    font-family: Georgia, serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
   .sheet-toggle {
     position: absolute;
     z-index: 9;
@@ -1130,10 +1816,9 @@ select:focus-visible,
     pointer-events: none;
   }
 
-  .map-status {
-    right: auto;
-    bottom: 81px;
-    left: 14px;
+  .map-status,
+  .maplibregl-ctrl-attrib {
+    display: none;
   }
 
   .maplibregl-ctrl-bottom-left,
@@ -1144,6 +1829,76 @@ select:focus-visible,
   .maplibregl-ctrl-group button {
     width: 34px;
     height: 34px;
+  }
+
+  .report-dialog {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .report-dialog-toolbar {
+    align-items: start;
+    padding: max(12px, env(safe-area-inset-top)) 12px 10px;
+  }
+
+  .report-dialog-actions {
+    gap: 5px;
+  }
+
+  .report-dialog-actions .text-button {
+    padding-inline: 7px;
+    font-size: 0.54rem;
+  }
+
+  .report-print-button {
+    padding: 8px;
+    font-size: 0.58rem;
+  }
+
+  .section-report-document {
+    width: 100%;
+    margin: 0;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .report-hero {
+    grid-template-columns: 1fr;
+    padding: 30px 20px 24px;
+  }
+
+  .report-stamp {
+    justify-self: start;
+    text-align: left;
+  }
+
+  .report-boundary-note,
+  .report-data-note {
+    margin: 18px 18px 0;
+  }
+
+  .report-chapter {
+    padding: 30px 18px;
+  }
+
+  .report-metric-grid,
+  .report-election-grid,
+  .building-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .report-metric {
+    grid-template-columns: minmax(105px, 0.72fr) minmax(155px, 1.28fr);
+  }
+
+  .report-sources {
+    padding: 28px 18px 36px;
+  }
+
+  .report-sources ul {
+    columns: 1;
   }
 }
 
@@ -1157,8 +1912,7 @@ select:focus-visible,
     font-size: 0.56rem;
   }
 
-  .search-control kbd,
-  .map-actions #share-button .button-label {
+  .search-control kbd {
     display: none;
   }
 
@@ -1179,5 +1933,103 @@ select:focus-visible,
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+@media print {
+  html,
+  body {
+    width: auto;
+    height: auto;
+    overflow: visible;
+    background: white;
+  }
+
+  #app,
+  .about-dialog,
+  .action-dialog,
+  .toast,
+  .report-dialog-toolbar {
+    display: none !important;
+  }
+
+  .report-dialog,
+  .report-dialog[open] {
+    position: static;
+    display: block !important;
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    overflow: visible;
+    background: white;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .report-dialog::backdrop {
+    display: none;
+  }
+
+  .report-dialog-shell,
+  .report-content {
+    display: block;
+    height: auto;
+    overflow: visible;
+  }
+
+  .section-report-document {
+    width: auto;
+    margin: 0;
+    border: 0;
+    box-shadow: none;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .report-hero {
+    padding: 24px 26px;
+  }
+
+  .report-hero h2 {
+    font-size: 2.7rem;
+  }
+
+  .report-boundary-note,
+  .report-data-note {
+    margin-inline: 26px;
+  }
+
+  .report-chapter {
+    padding: 25px 26px;
+    break-inside: avoid;
+  }
+
+  .report-chapter-heading {
+    margin-bottom: 14px;
+  }
+
+  .report-metric,
+  .report-election,
+  .building-summary,
+  .report-sources li {
+    break-inside: avoid;
+  }
+
+  .report-sources {
+    padding: 24px 26px;
+    break-before: page;
+  }
+
+  a {
+    color: inherit !important;
+    text-decoration: none;
   }
 }
