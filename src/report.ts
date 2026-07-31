@@ -98,6 +98,11 @@ export function renderSectionReport(
 
   return `
     <article class="section-report-document">
+      <div class="report-print-watermarks" aria-hidden="true">
+        ${Array.from({ length: 24 }, () => "<span>danielalmazan.com</span>").join("")}
+      </div>
+      <div class="report-print-running-header" aria-hidden="true">danielalmazan.com · Madrid Atlas</div>
+      <div class="report-print-running-footer" aria-hidden="true">danielalmazan.com · ${escapeHtml(section.name)} · ${escapeHtml(section.id)}</div>
       <header class="report-hero">
         <div>
           <p class="report-overline">Madrid census-section report · current 2026 geography</p>
@@ -107,6 +112,7 @@ export function renderSectionReport(
         <div class="report-stamp" aria-label="Report generated ${escapeHtml(index.generatedAt.slice(0, 10))}">
           <span>Madrid Atlas</span>
           <strong>${escapeHtml(index.generatedAt.slice(0, 10))}</strong>
+          <small>danielalmazan.com</small>
         </div>
       </header>
       ${changedNote}
@@ -155,6 +161,7 @@ export function renderSectionReport(
               `<li><a href="${escapeHtml(reference.url)}">${escapeHtml(reference.title)}</a> · ${escapeHtml(reference.organisation)}<span>Retrieved ${escapeHtml(formatDate(reference.retrieved))} · ${escapeHtml(reference.licence)}</span></li>`,
           )
           .join("")}</ul>
+        <p class="report-credit"><strong>danielalmazan.com</strong> · Madrid Atlas</p>
       </footer>
     </article>`;
 }
@@ -176,7 +183,7 @@ function renderMetric(
         <strong>${value === null ? "No data" : escapeHtml(formatValue(value, distribution.format))}</strong>
         <span>${escapeHtml(percentileText)} · n=${distribution.observationCount.toLocaleString("en-GB")}</span>
       </div>
-      ${value === null ? renderNoDataChart(distribution) : renderDistributionChart(distribution, value, percentile)}
+      ${value === null ? renderNoDataChart(distribution) : renderDistributionChart(distribution, value, percentile, metric)}
     </article>`;
 }
 
@@ -184,6 +191,7 @@ function renderDistributionChart(
   distribution: ReportDistribution,
   value: number,
   percentile: number | null,
+  metric: string,
 ): string {
   const width = 260;
   const height = 68;
@@ -200,13 +208,19 @@ function renderDistributionChart(
   const high = distribution.breaks.at(-1) ?? distribution.maximum ?? low + 1;
   const markerX = Math.max(4, Math.min(width - 4, ((value - low) / Math.max(1e-9, high - low)) * width));
   const label = `${distribution.label}: ${formatValue(value, distribution.format)}, ${percentile === null ? "percentile unavailable" : `${ordinal(Math.round(percentile))} percentile`}. Distribution across ${distribution.observationCount} Madrid sections in ${distribution.counts.length} equal-width value buckets.`;
-  return `<svg class="distribution-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(label)}">
+  const previewId = `distribution-preview-${metric}`;
+  const valueText = formatValue(value, distribution.format);
+  return `<div class="distribution-chart-shell">
+    <svg class="distribution-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(label)}" data-metric="${escapeHtml(metric)}" data-low="${low}" data-high="${high}" data-original-x="${markerX.toFixed(2)}" data-original-value="${value}">
       <g class="distribution-bars">${bars}</g>
       <line class="distribution-marker" x1="${markerX.toFixed(1)}" x2="${markerX.toFixed(1)}" y1="5" y2="57" />
       <circle class="distribution-dot" cx="${markerX.toFixed(1)}" cy="7" r="4" />
+      <rect class="distribution-hit-target" x="${(markerX - 29).toFixed(1)}" y="0" width="58" height="59" rx="8" tabindex="0" role="slider" aria-label="Explore ${escapeHtml(distribution.label)} distribution. Hold and drag, or hold the arrow keys." aria-valuemin="${low}" aria-valuemax="${high}" aria-valuenow="${value}" aria-valuetext="${escapeHtml(`${percentile === null ? "Unknown" : ordinal(Math.round(percentile))} percentile · ${valueText}`)}" aria-describedby="${previewId}" />
       <text x="0" y="66">${escapeHtml(formatValue(low, distribution.format))}</text>
       <text x="${width}" y="66" text-anchor="end">${escapeHtml(formatValue(high, distribution.format))}</text>
-    </svg>`;
+    </svg>
+    <output id="${previewId}" class="distribution-preview" hidden></output>
+  </div>`;
 }
 
 function renderNoDataChart(distribution: ReportDistribution): string {
@@ -293,7 +307,7 @@ function renderElectionTable(results: ReportElectionResult[]): string {
     .join("")}</tbody></table>`;
 }
 
-function formatValue(value: number, format: ValueFormat, minimumFractionDigits = 0): string {
+export function formatValue(value: number, format: ValueFormat, minimumFractionDigits = 0): string {
   if (!Number.isFinite(value)) return "No data";
   switch (format) {
     case "integer":
@@ -318,7 +332,7 @@ function formatDate(value: string): string {
   );
 }
 
-function ordinal(value: number): string {
+export function ordinal(value: number): string {
   const remainder100 = value % 100;
   if (remainder100 >= 11 && remainder100 <= 13) return `${value}th`;
   return `${value}${value % 10 === 1 ? "st" : value % 10 === 2 ? "nd" : value % 10 === 3 ? "rd" : "th"}`;

@@ -40,6 +40,24 @@
   box-sizing: border-box;
 }
 
+.icon-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.close-icon {
+  display: block;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-width: 1.7;
+  vector-effect: non-scaling-stroke;
+}
+
 html,
 body,
 #app {
@@ -1039,6 +1057,7 @@ select:focus-visible,
 }
 
 .section-report-document {
+  position: relative;
   width: min(940px, calc(100% - 42px));
   margin: 24px auto 60px;
   background:
@@ -1101,6 +1120,19 @@ select:focus-visible,
 
 .report-stamp strong {
   font-size: 0.68rem;
+}
+
+.report-stamp small {
+  color: rgb(255 255 255 / 0.72);
+  font-size: 0.5rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.report-print-watermarks,
+.report-print-running-header,
+.report-print-running-footer {
+  display: none;
 }
 
 .report-boundary-note,
@@ -1187,7 +1219,13 @@ select:focus-visible,
   font-size: 0.56rem;
 }
 
+.distribution-chart-shell {
+  position: relative;
+  min-width: 0;
+}
+
 .distribution-chart {
+  display: block;
   width: 100%;
   min-width: 0;
   overflow: visible;
@@ -1204,6 +1242,70 @@ select:focus-visible,
 
 .distribution-dot {
   fill: var(--orange);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.distribution-marker,
+.distribution-dot {
+  pointer-events: none;
+}
+
+.distribution-hit-target {
+  fill: transparent;
+  stroke: transparent;
+  cursor: ew-resize;
+  pointer-events: all;
+  touch-action: pan-y;
+}
+
+.distribution-hit-target:focus-visible {
+  stroke: color-mix(in srgb, var(--blue) 76%, white);
+  stroke-dasharray: 3 2;
+  stroke-width: 1.5;
+  outline: none;
+}
+
+.distribution-chart.is-exploring .distribution-marker {
+  stroke-width: 2.7;
+}
+
+.distribution-chart.is-exploring .distribution-dot {
+  transform: scale(1.25);
+}
+
+.distribution-preview {
+  position: absolute;
+  z-index: 2;
+  top: 3px;
+  left: 50%;
+  padding: 5px 7px;
+  color: white;
+  background: var(--ink);
+  border: 1px solid rgb(255 255 255 / 0.24);
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgb(17 17 15 / 0.18);
+  font-family: "Geist Mono", monospace;
+  font-size: 0.52rem;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+}
+
+.distribution-preview[hidden] {
+  display: none;
+}
+
+.distribution-preview::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  content: "";
+  background: var(--ink);
+  transform: translate(-50%, -50%) rotate(45deg);
 }
 
 .distribution-chart text {
@@ -1432,6 +1534,14 @@ select:focus-visible,
   font-size: 0.52rem;
 }
 
+.report-credit {
+  margin: 18px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-dark);
+  font-family: "Geist Mono", monospace;
+  letter-spacing: 0.025em;
+}
+
 .about-dialog::backdrop {
   background: rgb(20 24 20 / 0.48);
   backdrop-filter: blur(3px);
@@ -1456,8 +1566,12 @@ select:focus-visible,
 }
 
 .close-button {
+  position: relative;
+  display: grid;
   width: 34px;
   height: 34px;
+  place-items: center;
+  padding: 0;
   color: var(--muted);
   background: white;
   border: 1px solid var(--line);
@@ -1465,6 +1579,14 @@ select:focus-visible,
   cursor: pointer;
   font-size: 1.4rem;
   line-height: 1;
+}
+
+.close-button::after,
+.sheet-close::after {
+  position: absolute;
+  inset: -5px;
+  content: "";
+  border-radius: 50%;
 }
 
 .methodology-content {
@@ -1622,6 +1744,7 @@ select:focus-visible,
   }
 
   .sheet-close {
+    position: relative;
     display: grid;
     width: 32px;
     height: 32px;
@@ -1633,8 +1756,11 @@ select:focus-visible,
     border: 1px solid var(--line);
     border-radius: 50%;
     cursor: pointer;
-    font-size: 1.25rem;
-    line-height: 1;
+  }
+
+  .sheet-close .close-icon {
+    width: 13px;
+    height: 13px;
   }
 
   .panel-scroll {
@@ -1994,6 +2120,61 @@ select:focus-visible,
     -webkit-print-color-adjust: exact;
   }
 
+  .report-print-watermarks {
+    position: fixed;
+    z-index: 20;
+    inset: 2mm -7mm;
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    justify-items: center;
+    overflow: hidden;
+    color: rgb(20 92 158 / 0.075);
+    pointer-events: none;
+  }
+
+  .report-print-watermarks span {
+    font-family: "Geist Mono", monospace;
+    font-size: 9pt;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    transform: rotate(-29deg);
+  }
+
+  .report-print-running-header,
+  .report-print-running-footer {
+    position: fixed;
+    z-index: 21;
+    right: 0;
+    left: 0;
+    display: block;
+    color: #52524d;
+    font-family: "Geist Mono", monospace;
+    font-size: 6.5pt;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  .report-print-running-header {
+    top: -8.5mm;
+    padding-bottom: 2mm;
+    border-bottom: 0.25pt solid #c7c7bf;
+  }
+
+  .report-print-running-footer {
+    bottom: -8.5mm;
+    padding-top: 2mm;
+    border-top: 0.25pt solid #c7c7bf;
+    text-align: right;
+  }
+
+  .distribution-hit-target,
+  .distribution-preview {
+    display: none !important;
+  }
+
   .report-hero {
     padding: 24px 26px;
   }
@@ -2009,11 +2190,12 @@ select:focus-visible,
 
   .report-chapter {
     padding: 25px 26px;
-    break-inside: avoid;
+    break-inside: auto;
   }
 
   .report-chapter-heading {
     margin-bottom: 14px;
+    break-after: avoid;
   }
 
   .report-metric,
@@ -2021,6 +2203,15 @@ select:focus-visible,
   .building-summary,
   .report-sources li {
     break-inside: avoid;
+  }
+
+  .report-metric-grid {
+    display: block;
+  }
+
+  .report-metric {
+    margin-bottom: 12px;
+    break-inside: avoid-page;
   }
 
   .report-sources {

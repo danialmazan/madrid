@@ -16,6 +16,11 @@
     <title>Madrid Interactive Atlas — Daniel Almazán</title>
   </head>
   <body>
+    <svg class="icon-sprite" aria-hidden="true">
+      <symbol id="icon-close" viewBox="0 0 16 16">
+        <path d="M3.5 3.5 12.5 12.5M12.5 3.5 3.5 12.5" />
+      </symbol>
+    </svg>
     <a class="skip-link" href="#atlas-map">Skip to map</a>
     <main id="app">
       <aside
@@ -35,7 +40,7 @@
             type="button"
             aria-label="Collapse map panel"
           >
-            <span aria-hidden="true">×</span>
+            <svg class="close-icon" viewBox="0 0 16 16" aria-hidden="true"><use href="#icon-close" /></svg>
           </button>
         </div>
         <div class="panel-scroll">
@@ -210,7 +215,7 @@
           <p class="eyebrow">About this project</p>
           <h2>Sources &amp; methodology</h2>
         </div>
-        <button id="close-about" class="close-button" type="button" aria-label="Close">×</button>
+        <button id="close-about" class="close-button" type="button" aria-label="Close"><svg class="close-icon" viewBox="0 0 16 16" aria-hidden="true"><use href="#icon-close" /></svg></button>
       </div>
       <div id="methodology-content" class="methodology-content"></div>
     </dialog>
@@ -218,7 +223,7 @@
     <dialog id="share-dialog" class="action-dialog">
       <div class="action-dialog-heading">
         <div><p class="eyebrow">Share the atlas</p><h2 id="share-dialog-title">Share this view</h2></div>
-        <button id="close-share" class="close-button" type="button" aria-label="Close">×</button>
+        <button id="close-share" class="close-button" type="button" aria-label="Close"><svg class="close-icon" viewBox="0 0 16 16" aria-hidden="true"><use href="#icon-close" /></svg></button>
       </div>
       <div class="share-actions">
         <button id="share-view-action" class="share-action" type="button">
@@ -239,7 +244,7 @@
           <div class="report-dialog-actions">
             <button id="copy-report-link" class="text-button" type="button">Copy report link</button>
             <button id="print-report" class="report-print-button" type="button">Print / Save as PDF</button>
-            <button id="close-report" class="close-button" type="button" aria-label="Close report">×</button>
+            <button id="close-report" class="close-button" type="button" aria-label="Close report"><svg class="close-icon" viewBox="0 0 16 16" aria-hidden="true"><use href="#icon-close" /></svg></button>
           </div>
         </header>
         <div id="report-content" class="report-content" aria-live="polite"></div>

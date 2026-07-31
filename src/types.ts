@@ -135,6 +135,8 @@ export interface ReportDistribution {
   observationCount: number;
   minimum: number | null;
   maximum: number | null;
+  percentileValues: number[];
+  percentileRanks: number[];
 }
 
 export interface ReportVintageMatch {

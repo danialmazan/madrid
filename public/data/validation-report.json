@@ -1,5 +1,5 @@
 {
-  "validated_at": "2026-07-31T14:25:12Z",
+  "validated_at": "2026-07-31T17:45:12Z",
   "passed": true,
   "counts": {
     "manifest_sources": 54,
@@ -175,7 +175,7 @@
       "under_95_mb": true
     }
   ],
-  "public_artifact_bytes": 140432248,
+  "public_artifact_bytes": 141170339,
   "licences": [
     {
       "title": "Padrón municipal de habitantes",

@@ -166,6 +166,11 @@ metric_specs <- list(
 distribution_for <- function(values, spec) {
   valid <- values[is.finite(values)]
   assert_true(length(valid) > 1, paste("Not enough values for", spec$label, "distribution"))
+  valid_percentiles <- section_percentile(valid)
+  percentile_curve <- tibble::tibble(value = valid, percentile = valid_percentiles) |>
+    dplyr::group_by(value) |>
+    dplyr::summarise(percentile = dplyr::first(percentile), .groups = "drop") |>
+    dplyr::arrange(value)
   chart_breaks <- pretty(range(valid), n = 20, min.n = 12)
   if (length(chart_breaks) - 1 < 12) {
     chart_breaks <- seq(min(valid), max(valid), length.out = 13)
@@ -184,7 +189,9 @@ distribution_for <- function(values, spec) {
     counts = unname(as.list(tabulate(bins, nbins = length(chart_breaks) - 1))),
     observationCount = length(valid),
     minimum = if (length(valid)) min(valid) else NA_real_,
-    maximum = if (length(valid)) max(valid) else NA_real_
+    maximum = if (length(valid)) max(valid) else NA_real_,
+    percentileValues = unname(as.list(percentile_curve$value)),
+    percentileRanks = unname(as.list(percentile_curve$percentile))
   )
 }
 distribution_values <- list(

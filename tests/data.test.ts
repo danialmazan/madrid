@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { bytesToHeader } from "pmtiles";
 import { describe, expect, it } from "vitest";
+import { percentileAtValue } from "../src/report-interaction";
 import type { LayerManifest, SectionReportIndex } from "../src/types";
 
 const projectRoot = resolve(import.meta.dirname, "..");
@@ -53,6 +54,18 @@ describe("published atlas data", () => {
       expect(widths.every((width) => Math.abs(width - firstWidth) < 1e-7), metric).toBe(true);
       expect(distribution.breaks[0]!, metric).toBeLessThanOrEqual(distribution.minimum!);
       expect(distribution.breaks.at(-1)!, metric).toBeGreaterThanOrEqual(distribution.maximum!);
+      expect(distribution.percentileValues, metric).toHaveLength(distribution.percentileRanks.length);
+      expect(distribution.percentileValues.length, metric).toBeGreaterThan(1);
+      expect(
+        distribution.percentileValues.every((value, index, values) => index === 0 || value > values[index - 1]!),
+        metric,
+      ).toBe(true);
+      expect(
+        distribution.percentileRanks.every((rank, index, ranks) =>
+          rank >= 0 && rank <= 100 && (index === 0 || rank >= ranks[index - 1]!),
+        ),
+        metric,
+      ).toBe(true);
     }
 
     const metricGroups = ["population", "income"] as const;
@@ -62,6 +75,10 @@ describe("published atlas data", () => {
         for (const [metric, item] of Object.entries(report[group])) {
           if (item.value === null || item.percentile === null) continue;
           const distribution = reports.distributions[metric]!;
+          expect(percentileAtValue(distribution, item.value), `${report.id}:${metric}:curve`).toBeCloseTo(
+            item.percentile,
+            7,
+          );
           const bin = distribution.counts.findIndex((_, index) => {
             const upper = distribution.breaks[index + 1]!;
             return index === distribution.counts.length - 1 ? item.value! <= upper : item.value! < upper;

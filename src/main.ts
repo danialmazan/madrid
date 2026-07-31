@@ -8,6 +8,7 @@ import { Protocol } from "pmtiles";
 import "./styles.css";
 import { MADRID_CAMERA, parseHash, serializeState } from "./state";
 import { renderMadridElectionCard, renderSectionReport, sectionProperties } from "./report";
+import { bindDistributionCharts } from "./report-interaction";
 import { shareOrCopy } from "./share";
 import type {
   AddressIndex,
@@ -75,6 +76,8 @@ let activeMapLayerIds: string[] = [];
 let hashTimer: number | undefined;
 let toastTimer: number | undefined;
 let currentFeatureTitle = "";
+let reportChartCleanup: (() => void) | undefined;
+let titleBeforePrint: string | undefined;
 
 type MobilePanelView = "layers" | "legend" | "details" | "info";
 
@@ -170,6 +173,8 @@ function bindStaticControls(): void {
   });
   document.querySelector("#copy-report-link")?.addEventListener("click", () => void copyReportLink());
   document.querySelector("#print-report")?.addEventListener("click", () => window.print());
+  window.addEventListener("beforeprint", prepareReportPrintTitle);
+  window.addEventListener("afterprint", restoreDocumentTitle);
   aboutDialog.addEventListener("click", (event) => {
     if (event.target === aboutDialog) aboutDialog.close();
   });
@@ -180,6 +185,9 @@ function bindStaticControls(): void {
     if (event.target === reportDialog) reportDialog.close();
   });
   reportDialog.addEventListener("close", () => {
+    reportChartCleanup?.();
+    reportChartCleanup = undefined;
+    restoreDocumentTitle();
     if (!atlasState.reportOpen) return;
     atlasState.reportOpen = false;
     scheduleHashUpdate(true);
@@ -946,6 +954,8 @@ async function renderMadridElectionPanel(): Promise<void> {
 async function openSelectedSectionReport(updateState = true): Promise<void> {
   const sectionId = atlasState.selectedSection;
   if (!sectionId) return;
+  reportChartCleanup?.();
+  reportChartCleanup = undefined;
   reportContent.innerHTML = '<p class="report-loading">Preparing the census-section report…</p>';
   if (!reportDialog.open) reportDialog.showModal();
   try {
@@ -954,12 +964,26 @@ async function openSelectedSectionReport(updateState = true): Promise<void> {
     if (!report) throw new Error(`Unknown report section ${sectionId}`);
     reportDialogTitle.textContent = report.name;
     reportContent.innerHTML = renderSectionReport(index, report);
+    reportChartCleanup = bindDistributionCharts(reportContent, index);
     atlasState.reportOpen = true;
     if (updateState) scheduleHashUpdate(true);
   } catch (error) {
     console.warn("Census-section report could not be rendered", error);
     reportContent.innerHTML = '<p class="report-loading">This report is temporarily unavailable.</p>';
   }
+}
+
+function prepareReportPrintTitle(): void {
+  if (!reportDialog.open) return;
+  titleBeforePrint ??= document.title;
+  const reportName = reportDialogTitle.textContent?.trim() || "Census-section report";
+  document.title = `${reportName} · Madrid Atlas · danielalmazan.com`;
+}
+
+function restoreDocumentTitle(): void {
+  if (titleBeforePrint === undefined) return;
+  document.title = titleBeforePrint;
+  titleBeforePrint = undefined;
 }
 
 async function copyReportLink(): Promise<void> {
