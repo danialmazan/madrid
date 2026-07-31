@@ -2,8 +2,6 @@ import { formatValue, ordinal } from "./report";
 import type { ReportDistribution, SectionReportIndex } from "./types";
 
 export const DISTRIBUTION_CHART_WIDTH = 260;
-const TOUCH_HOLD_MS = 200;
-const TOUCH_CANCEL_DISTANCE = 8;
 const SNAP_DURATION_MS = 160;
 
 export function clampChartX(value: number): number {
@@ -58,7 +56,7 @@ interface ChartController {
   chart: SVGSVGElement;
   line: SVGLineElement;
   dot: SVGCircleElement;
-  hit: SVGRectElement;
+  hit: HTMLButtonElement;
   preview: HTMLOutputElement;
   distribution: ReportDistribution;
   low: number;
@@ -68,10 +66,7 @@ interface ChartController {
   currentX: number;
   active: boolean;
   pointerId: number | null;
-  pointerType: string;
   startClientX: number;
-  startClientY: number;
-  holdTimer: number | undefined;
   animationFrame: number | undefined;
 }
 
@@ -82,9 +77,9 @@ export function bindDistributionCharts(container: HTMLElement, index: SectionRep
     .filter((controller): controller is ChartController => controller !== null);
 
   for (const controller of controllers) {
-    const on = <K extends keyof SVGElementEventMap>(
+    const on = <K extends keyof HTMLElementEventMap>(
       type: K,
-      listener: (event: SVGElementEventMap[K]) => void,
+      listener: (event: HTMLElementEventMap[K]) => void,
     ) => {
       controller.hit.addEventListener(type, listener as EventListener);
       cleanups.push(() => controller.hit.removeEventListener(type, listener as EventListener));
@@ -98,7 +93,6 @@ export function bindDistributionCharts(container: HTMLElement, index: SectionRep
       if (controller.pointerId === null) return;
       restoreController(controller);
       controller.pointerId = null;
-      controller.pointerType = "";
     });
     on("keydown", (event) => handlePreviewKeyDown(controller, event));
     on("keyup", (event) => handlePreviewKeyUp(controller, event));
@@ -108,7 +102,6 @@ export function bindDistributionCharts(container: HTMLElement, index: SectionRep
   return () => {
     for (const cleanup of cleanups) cleanup();
     for (const controller of controllers) {
-      clearHoldTimer(controller);
       if (controller.animationFrame !== undefined) cancelAnimationFrame(controller.animationFrame);
     }
   };
@@ -118,8 +111,8 @@ function createController(chart: SVGSVGElement, index: SectionReportIndex): Char
   const metric = chart.dataset.metric;
   const line = chart.querySelector<SVGLineElement>(".distribution-marker");
   const dot = chart.querySelector<SVGCircleElement>(".distribution-dot");
-  const hit = chart.querySelector<SVGRectElement>(".distribution-hit-target");
   const shell = chart.closest<HTMLElement>(".distribution-chart-shell");
+  const hit = shell?.querySelector<HTMLButtonElement>(".distribution-drag-handle");
   const preview = shell?.querySelector<HTMLOutputElement>(".distribution-preview");
   const distribution = metric ? index.distributions[metric] : undefined;
   const low = Number(chart.dataset.low);
@@ -143,10 +136,7 @@ function createController(chart: SVGSVGElement, index: SectionReportIndex): Char
     currentX: originalX,
     active: false,
     pointerId: null,
-    pointerType: "",
     startClientX: 0,
-    startClientY: 0,
-    holdTimer: undefined,
     animationFrame: undefined,
   };
 }
@@ -155,53 +145,32 @@ function beginPointerPreview(controller: ChartController, event: PointerEvent): 
   if (event.button !== 0 && event.pointerType === "mouse") return;
   stopSnapAnimation(controller);
   controller.pointerId = event.pointerId;
-  controller.pointerType = event.pointerType;
   controller.startClientX = event.clientX;
-  controller.startClientY = event.clientY;
+  activateController(controller);
+  updateController(controller, controller.originalX, controller.originalValue);
+  event.preventDefault();
   try {
     controller.hit.setPointerCapture(event.pointerId);
   } catch {
     // Pointer capture is an enhancement; document-level pointer routing still works without it.
   }
-  if (event.pointerType === "mouse") {
-    activateController(controller);
-    updateController(controller, controller.originalX, controller.originalValue);
-    event.preventDefault();
-    return;
-  }
-  controller.holdTimer = window.setTimeout(() => {
-    controller.holdTimer = undefined;
-    if (controller.pointerId === event.pointerId) {
-      activateController(controller);
-      updateController(controller, controller.originalX, controller.originalValue);
-    }
-  }, TOUCH_HOLD_MS);
 }
 
 function movePointerPreview(controller: ChartController, event: PointerEvent): void {
   if (event.pointerId !== controller.pointerId) return;
-  if (!controller.active) {
-    const distance = Math.hypot(event.clientX - controller.startClientX, event.clientY - controller.startClientY);
-    if (distance > TOUCH_CANCEL_DISTANCE) {
-      clearHoldTimer(controller);
-      releasePointer(controller, event.pointerId);
-    }
-    return;
-  }
+  if (!controller.active) return;
   event.preventDefault();
   updateFromDrag(controller, event.clientX);
 }
 
 function finishPointerPreview(controller: ChartController, event: PointerEvent): void {
   if (event.pointerId !== controller.pointerId) return;
-  clearHoldTimer(controller);
   restoreController(controller);
   releasePointer(controller, event.pointerId);
 }
 
 function releasePointer(controller: ChartController, pointerId: number): void {
   controller.pointerId = null;
-  controller.pointerType = "";
   try {
     if (controller.hit.hasPointerCapture(pointerId)) controller.hit.releasePointerCapture(pointerId);
   } catch {
@@ -263,11 +232,10 @@ function setMarkerX(controller: ChartController, x: number): void {
   controller.line.setAttribute("x1", coordinate);
   controller.line.setAttribute("x2", coordinate);
   controller.dot.setAttribute("cx", coordinate);
-  controller.hit.setAttribute("x", (x - 29).toFixed(2));
+  controller.hit.style.left = `${(clampChartX(x) / DISTRIBUTION_CHART_WIDTH) * 100}%`;
 }
 
 function restoreController(controller: ChartController): void {
-  clearHoldTimer(controller);
   controller.active = false;
   controller.chart.classList.remove("is-exploring");
   controller.preview.hidden = true;
@@ -310,11 +278,4 @@ function stopSnapAnimation(controller: ChartController): void {
     controller.animationFrame = undefined;
   }
   controller.chart.classList.remove("is-snapping");
-}
-
-function clearHoldTimer(controller: ChartController): void {
-  if (controller.holdTimer !== undefined) {
-    window.clearTimeout(controller.holdTimer);
-    controller.holdTimer = undefined;
-  }
 }

@@ -1251,19 +1251,25 @@ select:focus-visible,
   pointer-events: none;
 }
 
-.distribution-hit-target {
-  fill: transparent;
-  stroke: transparent;
+.distribution-drag-handle {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  width: 44px;
+  height: min(56px, 100%);
+  padding: 0;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 9px;
   cursor: ew-resize;
-  pointer-events: all;
-  touch-action: pan-y;
+  touch-action: none;
+  transform: translateX(-50%);
 }
 
-.distribution-hit-target:focus-visible {
-  stroke: color-mix(in srgb, var(--blue) 76%, white);
-  stroke-dasharray: 3 2;
-  stroke-width: 1.5;
-  outline: none;
+.distribution-drag-handle:focus-visible {
+  outline: 2px dashed color-mix(in srgb, var(--blue) 76%, white);
+  outline-offset: -2px;
 }
 
 .distribution-chart.is-exploring .distribution-marker {
@@ -1671,6 +1677,11 @@ select:focus-visible,
 }
 
 @media (max-width: 860px) {
+  .distribution-drag-handle {
+    width: 60px;
+    height: 56px;
+  }
+
   #app {
     display: block;
   }
@@ -2170,7 +2181,7 @@ select:focus-visible,
     text-align: right;
   }
 
-  .distribution-hit-target,
+  .distribution-drag-handle,
   .distribution-preview {
     display: none !important;
   }

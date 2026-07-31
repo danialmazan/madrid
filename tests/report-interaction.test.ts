@@ -43,7 +43,6 @@ describe("distribution exploration calculations", () => {
 
 describe("distribution pointer interactions", () => {
   beforeEach(() => {
-    vi.useFakeTimers();
     Object.defineProperty(window, "matchMedia", {
       configurable: true,
       value: () => ({ matches: true }),
@@ -51,17 +50,12 @@ describe("distribution pointer interactions", () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
     document.body.innerHTML = "";
   });
 
-  it("waits for touch hold, updates while dragging, and restores on release", () => {
+  it("activates touch immediately, updates while dragging, and restores on release", () => {
     const { container, hit, line, preview, cleanup } = setupChart();
     hit.dispatchEvent(pointerEvent("pointerdown", { pointerId: 7, pointerType: "touch", clientX: 130 }));
-    expect(preview.hidden).toBe(true);
-    vi.advanceTimersByTime(199);
-    expect(preview.hidden).toBe(true);
-    vi.advanceTimersByTime(1);
     expect(preview.hidden).toBe(false);
 
     hit.dispatchEvent(pointerEvent("pointermove", { pointerId: 7, pointerType: "touch", clientX: 195 }));
@@ -75,12 +69,16 @@ describe("distribution pointer interactions", () => {
     container.remove();
   });
 
-  it("cancels touch activation when movement indicates scrolling", () => {
-    const { hit, preview, cleanup } = setupChart();
+  it("keeps touch exploration active through diagonal finger movement", () => {
+    const { hit, line, preview, cleanup } = setupChart();
     hit.dispatchEvent(pointerEvent("pointerdown", { pointerId: 8, pointerType: "touch", clientX: 130, clientY: 20 }));
-    hit.dispatchEvent(pointerEvent("pointermove", { pointerId: 8, pointerType: "touch", clientX: 131, clientY: 31 }));
-    vi.advanceTimersByTime(250);
+    hit.dispatchEvent(pointerEvent("pointermove", { pointerId: 8, pointerType: "touch", clientX: 156, clientY: 34 }));
+    expect(preview.hidden).toBe(false);
+    expect(line.getAttribute("x1")).toBe("156.00");
+
+    hit.dispatchEvent(pointerEvent("pointercancel", { pointerId: 8, pointerType: "touch", clientX: 156, clientY: 34 }));
     expect(preview.hidden).toBe(true);
+    expect(line.getAttribute("x1")).toBe("130.00");
     cleanup();
   });
 
@@ -103,13 +101,13 @@ function setupChart() {
     <svg class="distribution-chart" data-metric="test" data-low="0" data-high="40" data-original-x="130" data-original-value="20">
       <line class="distribution-marker" x1="130" x2="130"></line>
       <circle class="distribution-dot" cx="130"></circle>
-      <rect class="distribution-hit-target" x="101" width="58" tabindex="0"></rect>
     </svg>
+    <button class="distribution-drag-handle" type="button" role="slider"></button>
     <output class="distribution-preview" hidden></output>
   </div>`;
   const container = document.body.firstElementChild as HTMLElement;
   const chart = container.querySelector("svg")!;
-  const hit = container.querySelector("rect")!;
+  const hit = container.querySelector("button")!;
   const line = container.querySelector("line")!;
   const preview = container.querySelector("output")!;
   vi.spyOn(chart, "getBoundingClientRect").mockReturnValue({

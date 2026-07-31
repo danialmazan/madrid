@@ -215,10 +215,10 @@ function renderDistributionChart(
       <g class="distribution-bars">${bars}</g>
       <line class="distribution-marker" x1="${markerX.toFixed(1)}" x2="${markerX.toFixed(1)}" y1="5" y2="57" />
       <circle class="distribution-dot" cx="${markerX.toFixed(1)}" cy="7" r="4" />
-      <rect class="distribution-hit-target" x="${(markerX - 29).toFixed(1)}" y="0" width="58" height="59" rx="8" tabindex="0" role="slider" aria-label="Explore ${escapeHtml(distribution.label)} distribution. Hold and drag, or hold the arrow keys." aria-valuemin="${low}" aria-valuemax="${high}" aria-valuenow="${value}" aria-valuetext="${escapeHtml(`${percentile === null ? "Unknown" : ordinal(Math.round(percentile))} percentile · ${valueText}`)}" aria-describedby="${previewId}" />
       <text x="0" y="66">${escapeHtml(formatValue(low, distribution.format))}</text>
       <text x="${width}" y="66" text-anchor="end">${escapeHtml(formatValue(high, distribution.format))}</text>
     </svg>
+    <button class="distribution-drag-handle" type="button" role="slider" style="left:${((markerX / width) * 100).toFixed(4)}%" aria-label="Explore ${escapeHtml(distribution.label)} distribution. Hold and drag, or hold the arrow keys." aria-valuemin="${low}" aria-valuemax="${high}" aria-valuenow="${value}" aria-valuetext="${escapeHtml(`${percentile === null ? "Unknown" : ordinal(Math.round(percentile))} percentile · ${valueText}`)}" aria-describedby="${previewId}"></button>
     <output id="${previewId}" class="distribution-preview" hidden></output>
   </div>`;
 }
