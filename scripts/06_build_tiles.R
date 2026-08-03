@@ -37,26 +37,31 @@ sections_2026 <- readRDS(file.path(processed_dir, "sections-2026-population.rds"
     section_name = section_name(pick(everything())),
     across(
       c(
-        population_density_km2, under18_pct, age65plus_pct, foreign_citizenship_pct,
+        population_density_km2, under18_pct, age65plus_pct, population_change_5y_pct,
         population_density_percentile, under18_percentile, age65plus_percentile,
-        foreign_citizenship_percentile
+        population_change_5y_percentile
       ),
       ~round(.x, 2)
     )
   ) |>
   select(
     section_id, section_name, district, population_total, population_density_km2,
-    under18_pct, age65plus_pct, foreign_citizenship_pct,
+    under18_pct, age65plus_pct, population_change_5y_pct,
     population_density_percentile, under18_percentile, age65plus_percentile,
-    foreign_citizenship_percentile, geometry
+    population_change_5y_percentile, geometry
   )
-sections_2025 <- readRDS(file.path(processed_dir, "sections-2025-foreign-born.rds")) |>
+sections_2025 <- readRDS(file.path(processed_dir, "sections-2025-migration.rds")) |>
   mutate(
     section_name = section_name(pick(everything())),
-    foreign_born_pct = round(foreign_born_pct, 2),
-    foreign_born_percentile = round(foreign_born_percentile, 2)
+    across(where(is.numeric), ~round(.x, 2))
   ) |>
-  select(section_id, section_name, district, foreign_born_pct, foreign_born_percentile, geometry)
+  select(section_id, section_name, district, starts_with("foreign_"), geometry)
+sections_2024 <- readRDS(file.path(processed_dir, "sections-2024-education-work.rds")) |>
+  mutate(
+    section_name = section_name(pick(everything())),
+    across(where(is.numeric), ~round(.x, 2))
+  ) |>
+  select(section_id, section_name, district, ends_with("_pct"), ends_with("_percentile"), geometry)
 sections_2023 <- readRDS(file.path(processed_dir, "sections-2023-thematics.rds")) |>
   mutate(
     section_name = section_name(pick(everything())),
@@ -67,13 +72,15 @@ sections_2023 <- readRDS(file.path(processed_dir, "sections-2023-thematics.rds")
 section_inputs <- c(
   "sections_2026" = file.path(tile_input_dir, "sections-2026.geojson"),
   "sections_2025" = file.path(tile_input_dir, "sections-2025.geojson"),
+  "sections_2024" = file.path(tile_input_dir, "sections-2024.geojson"),
   "sections_2023" = file.path(tile_input_dir, "sections-2023.geojson")
 )
 write_geojson(sections_2026, section_inputs[["sections_2026"]])
 write_geojson(sections_2025, section_inputs[["sections_2025"]])
+write_geojson(sections_2024, section_inputs[["sections_2024"]])
 write_geojson(sections_2023, section_inputs[["sections_2023"]])
 
-for (year in c("2026", "2025", "2023")) {
+for (year in c("2026", "2025", "2024", "2023")) {
   layer <- paste0("sections_", year)
   run_tippecanoe(
     file.path(public_data_dir, paste0("sections-", year, ".pmtiles")),

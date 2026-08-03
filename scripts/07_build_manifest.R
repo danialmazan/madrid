@@ -1,7 +1,8 @@
 source(file.path("scripts", "R", "common.R"))
 
 population_meta <- readRDS(file.path(processed_dir, "population-metadata.rds"))
-foreign_meta <- readRDS(file.path(processed_dir, "foreign-born-metadata.rds"))
+migration_meta <- readRDS(file.path(processed_dir, "migration-metadata.rds"))
+education_meta <- readRDS(file.path(processed_dir, "education-work-metadata.rds"))
 building_meta <- readRDS(file.path(processed_dir, "buildings-metadata.rds"))
 transport_meta <- readRDS(file.path(processed_dir, "transport-metadata.rds"))
 
@@ -20,6 +21,11 @@ sources_out <- list(
   source_definition(
     "sections-2026", "data/sections-2026.pmtiles", "sections_2026",
     "Madrid City Council padrón · Madrid current census sections",
+    tile_zooms$sections[["min"]], tile_zooms$sections[["max"]]
+  ),
+  source_definition(
+    "sections-2024", "data/sections-2024.pmtiles", "sections_2024",
+    "INE Annual Population Census · 2024 census sections",
     tile_zooms$sections[["min"]], tile_zooms$sections[["max"]]
   ),
   source_definition(
@@ -81,13 +87,25 @@ viridis_palette <- c("#440154", "#414487", "#2a788e", "#22a884", "#7ad151", "#fd
 green_palette <- c("#edf5ed", "#cce6d9", "#8dceb4", "#43aa8b", "#247a67", "#135348")
 orange_palette <- c("#fff2e8", "#ffd2b6", "#f8a56d", "#fb7b2d", "#d94c08", "#963005")
 brown_palette <- c("#f5eee9", "#dfcdbf", "#bf9f8a", "#956e55", "#694a38", "#3f2b21")
-diverging_palette <- c("#184e77", "#52b69a", "#d9ed92", "#f9c74f", "#f9844a", "#c1121f")
+building_age_palette <- c("#184e77", "#52b69a", "#d9ed92", "#f9c74f", "#f9844a", "#c1121f")
+diverging_palette <- c("#b2182b", "#ffffff", "#2166ac")
+
+six_quantile_breaks <- function(values) {
+  valid <- values[is.finite(values)]
+  unname(as.numeric(stats::quantile(valid, probs = seq(0, 1, length.out = 7), names = FALSE, type = 7)))
+}
+
+symmetric_limit <- function(values) {
+  valid <- abs(values[is.finite(values)])
+  max(0.01, unname(as.numeric(stats::quantile(valid, 0.95, names = FALSE, type = 7))))
+}
 
 layer <- function(
   id, group, kind, label, short_label, description, unit, reference_date,
   geography, source_ids, property, palette, breaks, format,
   tooltip_fields, minzoom = 8, maxzoom = 24, opacity = 0.72,
-  control = NULL, methodology = NULL, line_color = NULL, line_width = NULL
+  control = NULL, methodology = NULL, line_color = NULL, line_width = NULL,
+  scale = NULL
 ) {
   out <- list(
     id = id, group = group, kind = kind, label = label, shortLabel = short_label,
@@ -101,7 +119,28 @@ layer <- function(
   if (!is.null(methodology)) out$methodology <- methodology
   if (!is.null(line_color)) out$lineColor <- line_color
   if (!is.null(line_width)) out$lineWidth <- line_width
+  if (!is.null(scale)) out$scale <- scale
   out
+}
+
+population_values <- readRDS(file.path(processed_dir, "sections-2026-population.rds"))
+migration_values <- readRDS(file.path(processed_dir, "sections-2025-migration.rds"))
+education_values <- readRDS(file.path(processed_dir, "sections-2024-education-work.rds"))
+election_income_values <- readRDS(file.path(processed_dir, "sections-2023-thematics.rds"))
+
+country_labels <- c(
+  total = "Total", venezuela = "Venezuela", colombia = "Colombia", peru = "Perú",
+  ecuador = "Ecuador", republica_dominicana = "República Dominicana",
+  argentina = "Argentina", china = "China", marruecos = "Marruecos"
+)
+country_control <- function(property_prefix, percentile_prefix) {
+  options <- lapply(names(country_labels), function(slug) list(
+    value = slug,
+    label = unname(country_labels[[slug]]),
+    property = paste0(property_prefix, slug),
+    percentileProperty = paste0(percentile_prefix, slug)
+  ))
+  list(country = list(defaultValue = "total", options = options))
 }
 
 section_context_2026 <- tooltip(
@@ -113,10 +152,13 @@ section_context_2026 <- tooltip(
   field("under18_pct", "Under 18", "percent", percentile_property = "under18_percentile"),
   field("age65plus_pct", "65 and older", "percent", percentile_property = "age65plus_percentile"),
   field(
-    "foreign_citizenship_pct", "Foreign citizenship", "percent",
-    percentile_property = "foreign_citizenship_percentile"
+    "population_change_5y_pct", "Five-year population change", "percent",
+    percentile_property = "population_change_5y_percentile"
   )
 )
+
+population_change_limit <- symmetric_limit(population_values$population_change_5y_pct)
+migration_change_limit <- symmetric_limit(migration_values$foreign_born_change_pp_total)
 
 layers_out <- list(
   layer(
@@ -148,30 +190,96 @@ layers_out <- list(
     section_context_2026
   ),
   layer(
-    "population-foreign-citizenship", "population", "choropleth", "Foreign citizenship", "Foreign citizenship",
-    "Share of padrón residents without Spanish citizenship.", "%",
-    population_meta$reference_date, "2026 census sections", "sections-2026",
-    "foreign_citizenship_pct", brown_palette, c(0, 5, 10, 15, 22, 32, 55), "percent",
-    section_context_2026
+    "population-change-5y", "population", "choropleth", "Five-year population change", "5-year change",
+    "Change in registered residents from the same month of 2021 to the current month. Only reciprocal one-to-one boundary matches covering at least 95% of both sections are shown.", "%",
+    population_meta$reference_date, "2026 census sections matched to 2021", "sections-2026",
+    "population_change_5y_pct", diverging_palette, c(-population_change_limit, 0, population_change_limit), "percent",
+    section_context_2026,
+    scale = list(type = "continuous-diverging", center = 0, clamp = TRUE)
   ),
   layer(
     "population-foreign-born", "population", "choropleth", "Foreign-born residents", "Foreign-born",
-    "Share of residents born outside Spain.", "%",
-    as.character(foreign_meta$reference_date), "2025 census sections", "sections-2025",
-    "foreign_born_pct", brown_palette, c(0, 8, 15, 22, 30, 40, 65), "percent",
+    "Selected-country residents born abroad divided by all residents. Total means all residents born outside Spain.", "%",
+    "2025", "2025 census sections", "sections-2025",
+    "foreign_born_pct_total", brown_palette, six_quantile_breaks(migration_values$foreign_born_pct_total), "percent",
     tooltip(
       field(
-        "foreign_born_pct", "Foreign-born", "percent",
-        percentile_property = "foreign_born_percentile"
+        "foreign_born_pct_total", "Foreign-born · Total", "percent",
+        percentile_property = "foreign_born_percentile_total"
       ),
       field("section_id", "Section ID", "text")
-    )
+    ),
+    control = country_control("foreign_born_pct_", "foreign_born_percentile_")
+  ),
+  layer(
+    "population-foreign-citizenship", "population", "choropleth", "Foreign citizenship", "Foreign citizenship",
+    "Selected-country residents with foreign citizenship divided by all residents. Total means all non-Spanish citizenships.", "%",
+    "2025", "2025 census sections", "sections-2025",
+    "foreign_citizenship_pct_total", brown_palette, six_quantile_breaks(migration_values$foreign_citizenship_pct_total), "percent",
+    tooltip(
+      field(
+        "foreign_citizenship_pct_total", "Foreign citizenship · Total", "percent",
+        percentile_property = "foreign_citizenship_percentile_total"
+      ),
+      field("section_id", "Section ID", "text")
+    ),
+    control = country_control("foreign_citizenship_pct_", "foreign_citizenship_percentile_")
+  ),
+  layer(
+    "population-foreign-born-change", "population", "choropleth", "2021–2025 foreign-born-share change (4 years)", "Foreign-born change",
+    "Percentage-point change in the selected country's share of all residents. Only reciprocal one-to-one boundary matches covering at least 95% of both sections are shown.", "pp",
+    "2021–2025", "2025 census sections matched to 2021", "sections-2025",
+    "foreign_born_change_pp_total", diverging_palette, c(-migration_change_limit, 0, migration_change_limit), "decimal",
+    tooltip(
+      field(
+        "foreign_born_change_pp_total", "2021–2025 change · Total", "decimal", " pp",
+        percentile_property = "foreign_born_change_percentile_total"
+      ),
+      field("section_id", "Section ID", "text")
+    ),
+    control = country_control("foreign_born_change_pp_", "foreign_born_change_percentile_"),
+    scale = list(type = "continuous-diverging", center = 0, clamp = TRUE)
+  ),
+  layer(
+    "education-work-activity", "education-work", "choropleth", "Activity rate", "Activity rate",
+    "Active population divided by the population aged 16 and over.", "%", "2024",
+    "2024 census sections", "sections-2024", "activity_rate_pct", blue_palette,
+    six_quantile_breaks(education_values$activity_rate_pct), "percent",
+    tooltip(field("activity_rate_pct", "Activity rate", "percent", percentile_property = "activity_rate_percentile"), field("section_id", "Section ID", "text"))
+  ),
+  layer(
+    "education-work-employment", "education-work", "choropleth", "Employment rate", "Employment rate",
+    "Employed population divided by the population aged 16 and over.", "%", "2024",
+    "2024 census sections", "sections-2024", "employment_rate_pct", green_palette,
+    six_quantile_breaks(education_values$employment_rate_pct), "percent",
+    tooltip(field("employment_rate_pct", "Employment rate", "percent", percentile_property = "employment_rate_percentile"), field("section_id", "Section ID", "text"))
+  ),
+  layer(
+    "education-work-unemployment", "education-work", "choropleth", "Unemployment rate", "Unemployment rate",
+    "Unemployed population divided by the active population.", "%", "2024",
+    "2024 census sections", "sections-2024", "unemployment_rate_pct", orange_palette,
+    six_quantile_breaks(education_values$unemployment_rate_pct), "percent",
+    tooltip(field("unemployment_rate_pct", "Unemployment rate", "percent", percentile_property = "unemployment_rate_percentile"), field("section_id", "Section ID", "text"))
+  ),
+  layer(
+    "education-work-higher-education", "education-work", "choropleth", "Higher education attainment", "Higher education",
+    "Residents with Educación superior divided by the population aged 15 and over.", "%", "2024",
+    "2024 census sections", "sections-2024", "higher_education_pct", viridis_palette,
+    six_quantile_breaks(education_values$higher_education_pct), "percent",
+    tooltip(field("higher_education_pct", "Higher education", "percent", percentile_property = "higher_education_percentile"), field("section_id", "Section ID", "text"))
+  ),
+  layer(
+    "education-work-low-education", "education-work", "choropleth", "Low educational attainment", "Primary or lower",
+    "Residents with Educación primaria e inferior divided by the population aged 15 and over.", "%", "2024",
+    "2024 census sections", "sections-2024", "low_education_pct", orange_palette,
+    six_quantile_breaks(education_values$low_education_pct), "percent",
+    tooltip(field("low_education_pct", "Primary or lower", "percent", percentile_property = "low_education_percentile"), field("section_id", "Section ID", "text"))
   ),
   layer(
     "building-age", "buildings", "fill", "Earliest construction year", "Construction year",
     "Earliest recorded construction year; the full interval is shown in details.", "year",
     building_meta$reference_date_catastro, "Building footprints", building_age_sources,
-    "construction_start_year", diverging_palette, c(1700, 1900, 1940, 1960, 1980, 2000, 2027), "year",
+    "construction_start_year", building_age_palette, c(1700, 1900, 1940, 1960, 1980, 2000, 2027), "year",
     tooltip(
       field("building_id", "Building ID", "text"),
       field("construction_start_year", "Earliest year", "year"),
@@ -243,6 +351,8 @@ for (election in names(election_definitions)) {
     field(paste0("blank_votes_", election), "Blank ballots", "integer"),
     field(paste0("leading_party_", election), "Leading party", "text")
   )
+  margin_property <- paste0("left_right_margin_pp_", election)
+  margin_limit <- symmetric_limit(election_income_values[[margin_property]])
   layers_out <- append(layers_out, list(
     layer(
       paste0("election-", election, "-leading"), "elections", "choropleth",
@@ -260,6 +370,20 @@ for (election in names(election_definitions)) {
       spec$date, "2023 census sections", "sections-2023",
       paste0("turnout_pct_", election), green_palette, c(0, 45, 55, 65, 72, 80, 100), "percent",
       election_tooltip, control = list(election = election, party = "turnout")
+    ),
+    layer(
+      paste0("election-", election, "-left-right"), "elections", "choropleth",
+      paste(spec$label, "· Left vs Right"), "Left vs Right",
+      "Right-bloc share minus left-bloc share of valid votes. Smaller candidacies are excluded from both blocs.", "pp",
+      spec$date, "2023 census sections", "sections-2023",
+      margin_property, diverging_palette, c(-margin_limit, 0, margin_limit), "decimal",
+      c(election_tooltip, tooltip(
+        field(paste0("left_share_", election), "Left share", "percent"),
+        field(paste0("right_share_", election), "Right share", "percent"),
+        field(margin_property, "Right − Left margin", "decimal", " pp")
+      )),
+      control = list(election = election, party = "Left vs Right"),
+      scale = list(type = "continuous-diverging", center = 0, clamp = TRUE)
     )
   ))
   for (party_key in names(spec$parties)) {
@@ -289,6 +413,14 @@ income_tooltip <- tooltip(
     percentile_property = "income_per_person_percentile"
   ),
   field(
+    "income_per_household_eur", "Net income / household", "currency",
+    percentile_property = "income_per_household_percentile"
+  ),
+  field(
+    "pension_income_pct", "Income from pensions", "percent",
+    percentile_property = "pension_income_percentile"
+  ),
+  field(
     "below_60_median_pct", "Below 60% median", "percent",
     percentile_property = "below_60_median_percentile"
   ),
@@ -308,6 +440,18 @@ layers_out <- append(layers_out, list(
     "Mean annual net income per resident.", "€ / person", "2023",
     "2023 census sections", "sections-2023", "income_per_person_eur",
     blue_palette, c(5000, 10000, 14000, 18000, 24000, 34000, 70000), "currency", income_tooltip
+  ),
+  layer(
+    "income-per-household", "income", "choropleth", "Net income per household", "Income per household",
+    "Mean annual net income per household.", "€ / household", "2023",
+    "2023 census sections", "sections-2023", "income_per_household_eur",
+    blue_palette, six_quantile_breaks(election_income_values$income_per_household_eur), "currency", income_tooltip
+  ),
+  layer(
+    "income-pensions", "income", "choropleth", "Income from pensions", "Pension income share",
+    "Percentage of total section income coming from pensions; this is not a euro amount.", "% of total income", "2023",
+    "2023 census sections", "sections-2023", "pension_income_pct",
+    orange_palette, six_quantile_breaks(election_income_values$pension_income_pct), "percent", income_tooltip
   ),
   layer(
     "income-below-median", "income", "choropleth", "Population below 60% of median", "Below 60% median",
@@ -402,8 +546,13 @@ references <- list(
     retrieved = format(Sys.Date(), "%Y-%m-%d")
   ),
   list(
-    title = "Censo anual de población", organisation = "Instituto Nacional de Estadística",
-    url = sources$ine_foreign_born_csv, licence = "INE standard reuse conditions",
+    title = "Population by country of birth and nationality", organisation = "Instituto Nacional de Estadística",
+    url = sources$ine_birth_country_csv, licence = "INE standard reuse conditions",
+    retrieved = format(Sys.Date(), "%Y-%m-%d")
+  ),
+  list(
+    title = "Education and economic activity by census section", organisation = "Instituto Nacional de Estadística",
+    url = sources$ine_education_csv, licence = "INE standard reuse conditions",
     retrieved = format(Sys.Date(), "%Y-%m-%d")
   ),
   list(
@@ -427,6 +576,11 @@ references <- list(
     retrieved = format(Sys.Date(), "%Y-%m-%d")
   ),
   list(
+    title = "Income distribution by source", organisation = "Instituto Nacional de Estadística",
+    url = sources$ine_income_sources_csv, licence = "INE standard reuse conditions",
+    retrieved = format(Sys.Date(), "%Y-%m-%d")
+  ),
+  list(
     title = "CRTM open transport data", organisation = "Consorcio Regional de Transportes de Madrid",
     url = "https://transparencia.crtm.es/presupuestos-contratos-y-gastos/datos-abiertos/",
     licence = "CRTM open-data licence", retrieved = format(Sys.Date(), "%Y-%m-%d")
@@ -445,13 +599,16 @@ references <- list(
 
 manifest <- list(
   generatedAt = paste0(format(Sys.time(), "%Y-%m-%dT%H:%M:%S"), "Z"),
-  version = "1.0.0",
+  version = "1.1.0",
   defaultLayer = "population-density",
   sources = sources_out,
   layers = layers_out,
   references = references,
   notes = list(
     "Population values are joined by official section identifiers; resident coverage must be at least 99.5%.",
+    "Longitudinal change is shown only for reciprocal one-to-one section matches covering at least 95% of both vintages; split and merged sections remain No data.",
+    "Country controls use 2025 INE sections for both birthplace and citizenship. Honduras and Paraguay are in Madrid's 2026 top ten but cannot be shown because INE groups them under Other countries of America.",
+    "The foreign-born comparison is explicitly four years (2021–2025) and is expressed in percentage points.",
     "Election shares use valid votes including blank ballots as the denominator.",
     "Election totals exclude non-geographic votes when they are absent from polling-table data.",
     "INE publishes no 2023 section values for the below-60% and above-200% median indicators in Carabanchel and Fuencarral-El Pardo; these remain No data.",

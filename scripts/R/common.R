@@ -84,6 +84,38 @@ section_percentile <- function(x) {
   output
 }
 
+mutual_overlap_crosswalk <- function(target, source, source_vintage, threshold = 0.95) {
+  target_projected <- sf::st_transform(target |> select(target_id = section_id), 25830)
+  source_projected <- sf::st_transform(source |> select(source_id = section_id), 25830)
+  target_projected$target_area <- as.numeric(sf::st_area(target_projected))
+  source_projected$source_area <- as.numeric(sf::st_area(source_projected))
+  overlaps <- suppressWarnings(sf::st_intersection(target_projected, source_projected))
+  overlaps$overlap_area <- as.numeric(sf::st_area(overlaps))
+  overlaps <- overlaps |>
+    sf::st_drop_geometry() |>
+    filter(overlap_area > 0)
+  target_best <- overlaps |>
+    group_by(target_id) |>
+    slice_max(overlap_area, n = 1, with_ties = FALSE) |>
+    ungroup() |>
+    select(target_id, source_id, overlap_area, target_area, source_area)
+  source_best <- overlaps |>
+    group_by(source_id) |>
+    slice_max(overlap_area, n = 1, with_ties = FALSE) |>
+    ungroup() |>
+    select(source_id, reciprocal_target_id = target_id)
+  target_best |>
+    left_join(source_best, by = "source_id") |>
+    transmute(
+      section_id = target_id,
+      matched_section_id = source_id,
+      vintage = as.character(source_vintage),
+      target_share = overlap_area / target_area,
+      source_share = overlap_area / source_area,
+      comparable = reciprocal_target_id == target_id & target_share >= threshold & source_share >= threshold
+    )
+}
+
 read_semicolon <- function(path) {
   first_line <- readr::read_lines(path, n_max = 1, progress = FALSE)
   delimiter <- if (grepl("\t", first_line, fixed = TRUE)) "\t" else ";"

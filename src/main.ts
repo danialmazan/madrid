@@ -548,6 +548,25 @@ function colorExpression(definition: LayerDefinition): ExpressionSpecification {
     return matches as ExpressionSpecification;
   }
 
+  if (definition.scale?.type === "continuous-diverging") {
+    return [
+      "case",
+      ["!", ["has", definition.property]],
+      "#d3d3cc",
+      [
+        "interpolate",
+        ["linear"],
+        ["to-number", ["get", definition.property]],
+        definition.breaks[0] ?? -1,
+        definition.palette[0] ?? "#b2182b",
+        definition.scale.center,
+        definition.palette[1] ?? "#ffffff",
+        definition.breaks.at(-1) ?? 1,
+        definition.palette[2] ?? "#2166ac",
+      ],
+    ] as ExpressionSpecification;
+  }
+
   const palette = definition.palette;
   const steps: unknown[] = [
     "case",
@@ -630,6 +649,8 @@ function renderControls(): void {
   }
 
   const layers = manifest.layers.filter((layer) => layer.group === atlasState.group);
+  const selectedLayer = getSelectedLayer();
+  const countryControl = selectedLayer.control?.country;
   controls.innerHTML = `
     <div class="radio-grid" role="radiogroup" aria-label="${escapeHtml(groupLabel(atlasState.group))} layers">
       ${layers
@@ -642,9 +663,28 @@ function renderControls(): void {
             </label>`,
         )
         .join("")}
-    </div>`;
+    </div>
+    ${countryControl ? `
+      <label class="select-label">
+        Country
+        <select id="country-select" class="atlas-select">
+          ${countryControl.options.map((option) => `
+            <option value="${escapeHtml(option.value)}" ${option.value === atlasState.country ? "selected" : ""}>
+              ${escapeHtml(option.label)}
+            </option>`).join("")}
+        </select>
+      </label>
+      <p class="control-note">Honduras and Paraguay are unavailable because INE publishes them only within “Other countries of America”.</p>` : ""}`;
   controls.querySelectorAll<HTMLInputElement>('input[name="thematic-layer"]').forEach((input) => {
     input.addEventListener("change", () => selectLayer(input.value));
+  });
+  controls.querySelector<HTMLSelectElement>("#country-select")?.addEventListener("change", (event) => {
+    atlasState.country = (event.currentTarget as HTMLSelectElement).value;
+    renderControls();
+    renderLegend();
+    if (map) void applyMapLayers().then(() => void renderFeaturePanelForState());
+    else void renderFeaturePanelForState();
+    scheduleHashUpdate();
   });
 }
 
@@ -721,7 +761,7 @@ function clearSelectedSection(updateHash = true): void {
 }
 
 function isCensusSectionLayer(layer: LayerDefinition): boolean {
-  return layer.group === "population" || layer.group === "income" || layer.group === "elections";
+  return layer.group === "population" || layer.group === "education-work" || layer.group === "income" || layer.group === "elections";
 }
 
 function renderTransportControls(): void {
@@ -848,8 +888,9 @@ function renderLegend(): void {
     <div class="legend-ramp" style="grid-template-columns:repeat(${selected.palette.length},1fr)">
       ${selected.palette.map((color) => `<i style="background:${escapeHtml(color)}"></i>`).join("")}
     </div>
-    <div class="legend-labels">
+    <div class="legend-labels ${selected.scale?.type === "continuous-diverging" ? "has-centre" : ""}">
       <span>${formatValue(low, selected.format, selected.unit)}</span>
+      ${selected.scale?.type === "continuous-diverging" ? `<span>${formatValue(selected.scale.center, selected.format, selected.unit)}</span>` : ""}
       <span>${formatValue(high, selected.format, selected.unit)}</span>
     </div>
     <p class="legend-note">${escapeHtml(missingNote)}</p>`;
@@ -881,11 +922,36 @@ function renderMethodology(): void {
 }
 
 function getSelectedLayer(): LayerDefinition {
-  return (
+  return effectiveDefinition(
     manifest.layers.find((layer) => layer.id === atlasState.layer) ??
-    manifest.layers.find((layer) => layer.id === manifest.defaultLayer) ??
-    manifest.layers[0]!
+      manifest.layers.find((layer) => layer.id === manifest.defaultLayer) ??
+      manifest.layers[0]!,
   );
+}
+
+function effectiveDefinition(definition: LayerDefinition): LayerDefinition {
+  const country = definition.control?.country;
+  if (!country) return definition;
+  const option = country.options.find((candidate) => candidate.value === atlasState.country) ??
+    country.options.find((candidate) => candidate.value === country.defaultValue) ??
+    country.options[0];
+  if (!option) return definition;
+  const baseProperty = definition.property;
+  return {
+    ...definition,
+    property: option.property,
+    label: `${definition.label.replace(/ · .*$/, "")} · ${option.label}`,
+    tooltip: definition.tooltip.map((field) =>
+      field.property === baseProperty
+        ? {
+            ...field,
+            property: option.property,
+            percentileProperty: option.percentileProperty,
+            label: `${field.label.replace(/ · .*$/, "")} · ${option.label}`,
+          }
+        : field,
+    ),
+  };
 }
 
 async function loadSectionReports(): Promise<SectionReportIndex> {
@@ -963,7 +1029,7 @@ async function openSelectedSectionReport(updateState = true): Promise<void> {
     const report = index.sections[sectionId];
     if (!report) throw new Error(`Unknown report section ${sectionId}`);
     reportDialogTitle.textContent = report.name;
-    reportContent.innerHTML = renderSectionReport(index, report);
+    reportContent.innerHTML = renderSectionReport(index, report, atlasState.country);
     reportChartCleanup = bindDistributionCharts(reportContent, index);
     atlasState.reportOpen = true;
     if (updateState) scheduleHashUpdate(true);
@@ -1043,10 +1109,11 @@ function handleMapHover(event: MapMouseEvent): void {
 
 function renderFeature(feature: MapGeoJSONFeature): void {
   const layerId = feature.layer.id;
-  const definition = manifest.layers.find((candidate) =>
+  const rawDefinition = manifest.layers.find((candidate) =>
     layerId.startsWith(`atlas-${candidate.id}-`),
   );
-  if (!definition) return;
+  if (!rawDefinition) return;
+  const definition = effectiveDefinition(rawDefinition);
   const properties = feature.properties ?? {};
   const isBuilding = definition.group === "buildings";
   const buildingId = properties.building_id || properties.height_id;
@@ -1501,6 +1568,7 @@ function showToast(message: string): void {
 function groupLabel(group: LayerGroup): string {
   return {
     population: "Population",
+    "education-work": "Education & Work",
     buildings: "Buildings",
     elections: "Elections",
     income: "Income & inequality",
@@ -1537,6 +1605,11 @@ function formatValue(
         minimumFractionDigits,
         maximumFractionDigits: 1,
       }).format(value)}%`;
+    case "pp":
+      return `${new Intl.NumberFormat(locale, {
+        minimumFractionDigits,
+        maximumFractionDigits: 1,
+      }).format(value)} pp`;
     case "currency":
       return new Intl.NumberFormat(locale, {
         style: "currency",

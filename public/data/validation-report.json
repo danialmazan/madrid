@@ -1,10 +1,10 @@
 {
-  "validated_at": "2026-07-31T17:45:12Z",
+  "validated_at": "2026-08-03T21:03:09Z",
   "passed": true,
   "counts": {
-    "manifest_sources": 54,
-    "manifest_layers": 42,
-    "pmtiles_archives": 25,
+    "manifest_sources": 55,
+    "manifest_layers": 54,
+    "pmtiles_archives": 26,
     "building_footprints": 124329,
     "building_height_polygons": 490298
   },
@@ -156,17 +156,22 @@
     },
     {
       "name": "sections-2023.pmtiles",
-      "bytes": 5819707,
+      "bytes": 7434824,
+      "under_95_mb": true
+    },
+    {
+      "name": "sections-2024.pmtiles",
+      "bytes": 2696770,
       "under_95_mb": true
     },
     {
       "name": "sections-2025.pmtiles",
-      "bytes": 1731647,
+      "bytes": 6720831,
       "under_95_mb": true
     },
     {
       "name": "sections-2026.pmtiles",
-      "bytes": 2554271,
+      "bytes": 2521069,
       "under_95_mb": true
     },
     {
@@ -175,7 +180,7 @@
       "under_95_mb": true
     }
   ],
-  "public_artifact_bytes": 141170339,
+  "public_artifact_bytes": 165647194,
   "licences": [
     {
       "title": "Padrón municipal de habitantes",
@@ -183,9 +188,14 @@
       "url": "https://datos.madrid.es/dataset/200076-0-padron/resource/200076-2-padron-csv/download/200076_20260714_062859.csv"
     },
     {
-      "title": "Censo anual de población",
+      "title": "Population by country of birth and nationality",
       "licence": "INE standard reuse conditions",
-      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/69211.csv"
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66428.csv"
+    },
+    {
+      "title": "Education and economic activity by census section",
+      "licence": "INE standard reuse conditions",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66753.csv"
     },
     {
       "title": "Catastro INSPIRE Buildings",
@@ -206,6 +216,11 @@
       "title": "Household Income Distribution Atlas",
       "licence": "INE standard reuse conditions",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31097.csv"
+    },
+    {
+      "title": "Income distribution by source",
+      "licence": "INE standard reuse conditions",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31098.csv"
     },
     {
       "title": "CRTM open transport data",

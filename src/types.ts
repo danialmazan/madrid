@@ -1,6 +1,6 @@
-export type LayerGroup = "population" | "buildings" | "elections" | "income" | "transport";
+export type LayerGroup = "population" | "education-work" | "buildings" | "elections" | "income" | "transport";
 export type LayerKind = "choropleth" | "fill" | "fill-extrusion" | "transport-line" | "transport-stop";
-export type ValueFormat = "integer" | "decimal" | "percent" | "currency" | "year" | "text";
+export type ValueFormat = "integer" | "decimal" | "percent" | "pp" | "currency" | "year" | "text";
 export type ElectionKey = "general" | "local" | "assembly";
 
 export interface SourceDefinition {
@@ -33,6 +33,21 @@ export interface LayerControl {
   routeProperty?: string;
   routes?: Array<{ value: string; label: string }>;
   results?: ElectionResultField[];
+  country?: {
+    defaultValue: string;
+    options: Array<{
+      value: string;
+      label: string;
+      property: string;
+      percentileProperty: string;
+    }>;
+  };
+}
+
+export interface LayerScale {
+  type: "continuous-diverging";
+  center: number;
+  clamp: boolean;
 }
 
 export interface LayerDefinition {
@@ -58,6 +73,7 @@ export interface LayerDefinition {
   lineWidth?: number;
   tooltip: TooltipField[];
   control?: LayerControl;
+  scale?: LayerScale;
 }
 
 export interface SourceReference {
@@ -115,6 +131,7 @@ export interface AtlasState {
   party: string;
   transport: string[];
   route: string;
+  country: string;
   camera: CameraState;
   is3d: boolean;
   selectedSection: string | null;
@@ -158,6 +175,9 @@ export interface SectionElectionReport {
   validVotes: number | null;
   blankVotes: number | null;
   leadingParty: string | null;
+  leftShare: number | null;
+  rightShare: number | null;
+  margin: number | null;
   results: ReportElectionResult[];
 }
 
@@ -170,6 +190,9 @@ export interface CityElectionReport {
   blankVotes: number;
   turnoutPct: number;
   shownCoveragePct: number;
+  leftShare: number;
+  rightShare: number;
+  margin: number;
   results: ReportElectionResult[];
 }
 
@@ -184,8 +207,14 @@ export interface SectionReport {
   id: string;
   name: string;
   district: string;
-  matches: Record<"2023" | "2025", ReportVintageMatch>;
+  matches: Record<"2021" | "2023" | "2024" | "2025", ReportVintageMatch>;
   population: Record<string, ReportMetricValue>;
+  migration: Record<string, {
+    foreignBorn: ReportMetricValue;
+    foreignCitizenship: ReportMetricValue;
+    foreignBornChange: ReportMetricValue;
+  }>;
+  educationWork: Record<string, ReportMetricValue>;
   income: Record<string, ReportMetricValue>;
   elections: Record<ElectionKey, SectionElectionReport>;
   buildings: BuildingReport;
@@ -197,16 +226,20 @@ export interface SectionReportIndex {
   canonicalVintage: "2026";
   geographyVintages: {
     canonical: string;
-    foreignBorn: string;
+    populationChange: string;
     incomeAndElections: string;
+    educationWork: string;
+    migration: string;
   };
   dataDates: {
     population: string;
-    foreignBorn: string;
+    migration: string;
+    educationWork: string;
     income: string;
     buildings: string;
   };
   methodologyUrl: string;
+  countries: Record<string, string>;
   distributions: Record<string, ReportDistribution>;
   constructionEras: string[];
   cityBuildings: BuildingReport;

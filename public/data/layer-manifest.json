@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-31T12:10:18Z",
-  "version": "1.0.0",
+  "generatedAt": "2026-08-03T17:56:06Z",
+  "version": "1.1.0",
   "defaultLayer": "population-density",
   "sources": [
     {
@@ -8,6 +8,14 @@
       "url": "data/sections-2026.pmtiles",
       "sourceLayer": "sections_2026",
       "attribution": "Madrid City Council padrón · Madrid current census sections",
+      "minzoom": 8,
+      "maxzoom": 15
+    },
+    {
+      "id": "sections-2024",
+      "url": "data/sections-2024.pmtiles",
+      "sourceLayer": "sections_2024",
+      "attribution": "INE Annual Population Census · 2024 census sections",
       "minzoom": 8,
       "maxzoom": 15
     },
@@ -497,10 +505,10 @@
           "percentileProperty": "age65plus_percentile"
         },
         {
-          "property": "foreign_citizenship_pct",
-          "label": "Foreign citizenship",
+          "property": "population_change_5y_pct",
+          "label": "Five-year population change",
           "format": "percent",
-          "percentileProperty": "foreign_citizenship_percentile"
+          "percentileProperty": "population_change_5y_percentile"
         }
       ]
     },
@@ -564,10 +572,10 @@
           "percentileProperty": "age65plus_percentile"
         },
         {
-          "property": "foreign_citizenship_pct",
-          "label": "Foreign citizenship",
+          "property": "population_change_5y_pct",
+          "label": "Five-year population change",
           "format": "percent",
-          "percentileProperty": "foreign_citizenship_percentile"
+          "percentileProperty": "population_change_5y_percentile"
         }
       ]
     },
@@ -631,10 +639,10 @@
           "percentileProperty": "age65plus_percentile"
         },
         {
-          "property": "foreign_citizenship_pct",
-          "label": "Foreign citizenship",
+          "property": "population_change_5y_pct",
+          "label": "Five-year population change",
           "format": "percent",
-          "percentileProperty": "foreign_citizenship_percentile"
+          "percentileProperty": "population_change_5y_percentile"
         }
       ]
     },
@@ -698,43 +706,36 @@
           "percentileProperty": "age65plus_percentile"
         },
         {
-          "property": "foreign_citizenship_pct",
-          "label": "Foreign citizenship",
+          "property": "population_change_5y_pct",
+          "label": "Five-year population change",
           "format": "percent",
-          "percentileProperty": "foreign_citizenship_percentile"
+          "percentileProperty": "population_change_5y_percentile"
         }
       ]
     },
     {
-      "id": "population-foreign-citizenship",
+      "id": "population-change-5y",
       "group": "population",
       "kind": "choropleth",
-      "label": "Foreign citizenship",
-      "shortLabel": "Foreign citizenship",
-      "description": "Share of padrón residents without Spanish citizenship.",
+      "label": "Five-year population change",
+      "shortLabel": "5-year change",
+      "description": "Change in registered residents from the same month of 2021 to the current month. Only reciprocal one-to-one boundary matches covering at least 95% of both sections are shown.",
       "unit": "%",
       "referenceDate": "2026-07-01",
-      "geography": "2026 census sections",
+      "geography": "2026 census sections matched to 2021",
       "sourceIds": [
         "sections-2026"
       ],
-      "property": "foreign_citizenship_pct",
+      "property": "population_change_5y_pct",
       "palette": [
-        "#f5eee9",
-        "#dfcdbf",
-        "#bf9f8a",
-        "#956e55",
-        "#694a38",
-        "#3f2b21"
+        "#b2182b",
+        "#ffffff",
+        "#2166ac"
       ],
       "breaks": [
+        -17.1442090025,
         0,
-        5,
-        10,
-        15,
-        22,
-        32,
-        55
+        17.1442090025
       ],
       "format": "percent",
       "minzoom": 8,
@@ -765,12 +766,17 @@
           "percentileProperty": "age65plus_percentile"
         },
         {
-          "property": "foreign_citizenship_pct",
-          "label": "Foreign citizenship",
+          "property": "population_change_5y_pct",
+          "label": "Five-year population change",
           "format": "percent",
-          "percentileProperty": "foreign_citizenship_percentile"
+          "percentileProperty": "population_change_5y_percentile"
         }
-      ]
+      ],
+      "scale": {
+        "type": "continuous-diverging",
+        "center": 0,
+        "clamp": true
+      }
     },
     {
       "id": "population-foreign-born",
@@ -778,14 +784,14 @@
       "kind": "choropleth",
       "label": "Foreign-born residents",
       "shortLabel": "Foreign-born",
-      "description": "Share of residents born outside Spain.",
+      "description": "Selected-country residents born abroad divided by all residents. Total means all residents born outside Spain.",
       "unit": "%",
       "referenceDate": "2025",
       "geography": "2025 census sections",
       "sourceIds": [
         "sections-2025"
       ],
-      "property": "foreign_born_pct",
+      "property": "foreign_born_pct_total",
       "palette": [
         "#f5eee9",
         "#dfcdbf",
@@ -795,13 +801,13 @@
         "#3f2b21"
       ],
       "breaks": [
-        0,
-        8,
-        15,
-        22,
-        30,
-        40,
-        65
+        4.4059795437,
+        14.9137709663,
+        20.9700650039,
+        27.3095919303,
+        34.4987400426,
+        43.7824309286,
+        66.3513513514
       ],
       "format": "percent",
       "minzoom": 8,
@@ -809,10 +815,535 @@
       "opacity": 0.72,
       "tooltip": [
         {
-          "property": "foreign_born_pct",
-          "label": "Foreign-born",
+          "property": "foreign_born_pct_total",
+          "label": "Foreign-born · Total",
           "format": "percent",
-          "percentileProperty": "foreign_born_percentile"
+          "percentileProperty": "foreign_born_percentile_total"
+        },
+        {
+          "property": "section_id",
+          "label": "Section ID",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "country": {
+          "defaultValue": "total",
+          "options": [
+            {
+              "value": "total",
+              "label": "Total",
+              "property": "foreign_born_pct_total",
+              "percentileProperty": "foreign_born_percentile_total"
+            },
+            {
+              "value": "venezuela",
+              "label": "Venezuela",
+              "property": "foreign_born_pct_venezuela",
+              "percentileProperty": "foreign_born_percentile_venezuela"
+            },
+            {
+              "value": "colombia",
+              "label": "Colombia",
+              "property": "foreign_born_pct_colombia",
+              "percentileProperty": "foreign_born_percentile_colombia"
+            },
+            {
+              "value": "peru",
+              "label": "Perú",
+              "property": "foreign_born_pct_peru",
+              "percentileProperty": "foreign_born_percentile_peru"
+            },
+            {
+              "value": "ecuador",
+              "label": "Ecuador",
+              "property": "foreign_born_pct_ecuador",
+              "percentileProperty": "foreign_born_percentile_ecuador"
+            },
+            {
+              "value": "republica_dominicana",
+              "label": "República Dominicana",
+              "property": "foreign_born_pct_republica_dominicana",
+              "percentileProperty": "foreign_born_percentile_republica_dominicana"
+            },
+            {
+              "value": "argentina",
+              "label": "Argentina",
+              "property": "foreign_born_pct_argentina",
+              "percentileProperty": "foreign_born_percentile_argentina"
+            },
+            {
+              "value": "china",
+              "label": "China",
+              "property": "foreign_born_pct_china",
+              "percentileProperty": "foreign_born_percentile_china"
+            },
+            {
+              "value": "marruecos",
+              "label": "Marruecos",
+              "property": "foreign_born_pct_marruecos",
+              "percentileProperty": "foreign_born_percentile_marruecos"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "population-foreign-citizenship",
+      "group": "population",
+      "kind": "choropleth",
+      "label": "Foreign citizenship",
+      "shortLabel": "Foreign citizenship",
+      "description": "Selected-country residents with foreign citizenship divided by all residents. Total means all non-Spanish citizenships.",
+      "unit": "%",
+      "referenceDate": "2025",
+      "geography": "2025 census sections",
+      "sourceIds": [
+        "sections-2025"
+      ],
+      "property": "foreign_citizenship_pct_total",
+      "palette": [
+        "#f5eee9",
+        "#dfcdbf",
+        "#bf9f8a",
+        "#956e55",
+        "#694a38",
+        "#3f2b21"
+      ],
+      "breaks": [
+        2.2079116835,
+        8.6753098809,
+        12.8614902026,
+        17.3771358174,
+        22.1175545785,
+        29.0587440206,
+        50.8444962143
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "opacity": 0.72,
+      "tooltip": [
+        {
+          "property": "foreign_citizenship_pct_total",
+          "label": "Foreign citizenship · Total",
+          "format": "percent",
+          "percentileProperty": "foreign_citizenship_percentile_total"
+        },
+        {
+          "property": "section_id",
+          "label": "Section ID",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "country": {
+          "defaultValue": "total",
+          "options": [
+            {
+              "value": "total",
+              "label": "Total",
+              "property": "foreign_citizenship_pct_total",
+              "percentileProperty": "foreign_citizenship_percentile_total"
+            },
+            {
+              "value": "venezuela",
+              "label": "Venezuela",
+              "property": "foreign_citizenship_pct_venezuela",
+              "percentileProperty": "foreign_citizenship_percentile_venezuela"
+            },
+            {
+              "value": "colombia",
+              "label": "Colombia",
+              "property": "foreign_citizenship_pct_colombia",
+              "percentileProperty": "foreign_citizenship_percentile_colombia"
+            },
+            {
+              "value": "peru",
+              "label": "Perú",
+              "property": "foreign_citizenship_pct_peru",
+              "percentileProperty": "foreign_citizenship_percentile_peru"
+            },
+            {
+              "value": "ecuador",
+              "label": "Ecuador",
+              "property": "foreign_citizenship_pct_ecuador",
+              "percentileProperty": "foreign_citizenship_percentile_ecuador"
+            },
+            {
+              "value": "republica_dominicana",
+              "label": "República Dominicana",
+              "property": "foreign_citizenship_pct_republica_dominicana",
+              "percentileProperty": "foreign_citizenship_percentile_republica_dominicana"
+            },
+            {
+              "value": "argentina",
+              "label": "Argentina",
+              "property": "foreign_citizenship_pct_argentina",
+              "percentileProperty": "foreign_citizenship_percentile_argentina"
+            },
+            {
+              "value": "china",
+              "label": "China",
+              "property": "foreign_citizenship_pct_china",
+              "percentileProperty": "foreign_citizenship_percentile_china"
+            },
+            {
+              "value": "marruecos",
+              "label": "Marruecos",
+              "property": "foreign_citizenship_pct_marruecos",
+              "percentileProperty": "foreign_citizenship_percentile_marruecos"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "population-foreign-born-change",
+      "group": "population",
+      "kind": "choropleth",
+      "label": "2021–2025 foreign-born-share change (4 years)",
+      "shortLabel": "Foreign-born change",
+      "description": "Percentage-point change in the selected country's share of all residents. Only reciprocal one-to-one boundary matches covering at least 95% of both sections are shown.",
+      "unit": "pp",
+      "referenceDate": "2021–2025",
+      "geography": "2025 census sections matched to 2021",
+      "sourceIds": [
+        "sections-2025"
+      ],
+      "property": "foreign_born_change_pp_total",
+      "palette": [
+        "#b2182b",
+        "#ffffff",
+        "#2166ac"
+      ],
+      "breaks": [
+        -10.7846645421,
+        0,
+        10.7846645421
+      ],
+      "format": "decimal",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "opacity": 0.72,
+      "tooltip": [
+        {
+          "property": "foreign_born_change_pp_total",
+          "label": "2021–2025 change · Total",
+          "format": "decimal",
+          "suffix": " pp",
+          "percentileProperty": "foreign_born_change_percentile_total"
+        },
+        {
+          "property": "section_id",
+          "label": "Section ID",
+          "format": "text"
+        }
+      ],
+      "control": {
+        "country": {
+          "defaultValue": "total",
+          "options": [
+            {
+              "value": "total",
+              "label": "Total",
+              "property": "foreign_born_change_pp_total",
+              "percentileProperty": "foreign_born_change_percentile_total"
+            },
+            {
+              "value": "venezuela",
+              "label": "Venezuela",
+              "property": "foreign_born_change_pp_venezuela",
+              "percentileProperty": "foreign_born_change_percentile_venezuela"
+            },
+            {
+              "value": "colombia",
+              "label": "Colombia",
+              "property": "foreign_born_change_pp_colombia",
+              "percentileProperty": "foreign_born_change_percentile_colombia"
+            },
+            {
+              "value": "peru",
+              "label": "Perú",
+              "property": "foreign_born_change_pp_peru",
+              "percentileProperty": "foreign_born_change_percentile_peru"
+            },
+            {
+              "value": "ecuador",
+              "label": "Ecuador",
+              "property": "foreign_born_change_pp_ecuador",
+              "percentileProperty": "foreign_born_change_percentile_ecuador"
+            },
+            {
+              "value": "republica_dominicana",
+              "label": "República Dominicana",
+              "property": "foreign_born_change_pp_republica_dominicana",
+              "percentileProperty": "foreign_born_change_percentile_republica_dominicana"
+            },
+            {
+              "value": "argentina",
+              "label": "Argentina",
+              "property": "foreign_born_change_pp_argentina",
+              "percentileProperty": "foreign_born_change_percentile_argentina"
+            },
+            {
+              "value": "china",
+              "label": "China",
+              "property": "foreign_born_change_pp_china",
+              "percentileProperty": "foreign_born_change_percentile_china"
+            },
+            {
+              "value": "marruecos",
+              "label": "Marruecos",
+              "property": "foreign_born_change_pp_marruecos",
+              "percentileProperty": "foreign_born_change_percentile_marruecos"
+            }
+          ]
+        }
+      },
+      "scale": {
+        "type": "continuous-diverging",
+        "center": 0,
+        "clamp": true
+      }
+    },
+    {
+      "id": "education-work-activity",
+      "group": "education-work",
+      "kind": "choropleth",
+      "label": "Activity rate",
+      "shortLabel": "Activity rate",
+      "description": "Active population divided by the population aged 16 and over.",
+      "unit": "%",
+      "referenceDate": "2024",
+      "geography": "2024 census sections",
+      "sourceIds": [
+        "sections-2024"
+      ],
+      "property": "activity_rate_pct",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        24.5867768595,
+        50.9617441822,
+        53.9941387363,
+        55.8269052829,
+        57.8434421252,
+        60.9213399751,
+        87.5888463641
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "opacity": 0.72,
+      "tooltip": [
+        {
+          "property": "activity_rate_pct",
+          "label": "Activity rate",
+          "format": "percent",
+          "percentileProperty": "activity_rate_percentile"
+        },
+        {
+          "property": "section_id",
+          "label": "Section ID",
+          "format": "text"
+        }
+      ]
+    },
+    {
+      "id": "education-work-employment",
+      "group": "education-work",
+      "kind": "choropleth",
+      "label": "Employment rate",
+      "shortLabel": "Employment rate",
+      "description": "Employed population divided by the population aged 16 and over.",
+      "unit": "%",
+      "referenceDate": "2024",
+      "geography": "2024 census sections",
+      "sourceIds": [
+        "sections-2024"
+      ],
+      "property": "employment_rate_pct",
+      "palette": [
+        "#edf5ed",
+        "#cce6d9",
+        "#8dceb4",
+        "#43aa8b",
+        "#247a67",
+        "#135348"
+      ],
+      "breaks": [
+        20.9176122348,
+        46.2962962963,
+        49.1448840721,
+        51.2639029323,
+        53.3758477579,
+        56.672744955,
+        84.7457627119
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "opacity": 0.72,
+      "tooltip": [
+        {
+          "property": "employment_rate_pct",
+          "label": "Employment rate",
+          "format": "percent",
+          "percentileProperty": "employment_rate_percentile"
+        },
+        {
+          "property": "section_id",
+          "label": "Section ID",
+          "format": "text"
+        }
+      ]
+    },
+    {
+      "id": "education-work-unemployment",
+      "group": "education-work",
+      "kind": "choropleth",
+      "label": "Unemployment rate",
+      "shortLabel": "Unemployment rate",
+      "description": "Unemployed population divided by the active population.",
+      "unit": "%",
+      "referenceDate": "2024",
+      "geography": "2024 census sections",
+      "sourceIds": [
+        "sections-2024"
+      ],
+      "property": "unemployment_rate_pct",
+      "palette": [
+        "#fff2e8",
+        "#ffd2b6",
+        "#f8a56d",
+        "#fb7b2d",
+        "#d94c08",
+        "#963005"
+      ],
+      "breaks": [
+        1.7208413002,
+        4.8356456195,
+        6.0960123887,
+        7.413190258,
+        8.8348297929,
+        10.7710969283,
+        57.4297188755
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "opacity": 0.72,
+      "tooltip": [
+        {
+          "property": "unemployment_rate_pct",
+          "label": "Unemployment rate",
+          "format": "percent",
+          "percentileProperty": "unemployment_rate_percentile"
+        },
+        {
+          "property": "section_id",
+          "label": "Section ID",
+          "format": "text"
+        }
+      ]
+    },
+    {
+      "id": "education-work-higher-education",
+      "group": "education-work",
+      "kind": "choropleth",
+      "label": "Higher education attainment",
+      "shortLabel": "Higher education",
+      "description": "Residents with Educación superior divided by the population aged 15 and over.",
+      "unit": "%",
+      "referenceDate": "2024",
+      "geography": "2024 census sections",
+      "sourceIds": [
+        "sections-2024"
+      ],
+      "property": "higher_education_pct",
+      "palette": [
+        "#440154",
+        "#414487",
+        "#2a788e",
+        "#22a884",
+        "#7ad151",
+        "#fde725"
+      ],
+      "breaks": [
+        3.0563514804,
+        25.6959383375,
+        35.1901792555,
+        46.5119835954,
+        59.7002406941,
+        67.8040342398,
+        80.6740614334
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "opacity": 0.72,
+      "tooltip": [
+        {
+          "property": "higher_education_pct",
+          "label": "Higher education",
+          "format": "percent",
+          "percentileProperty": "higher_education_percentile"
+        },
+        {
+          "property": "section_id",
+          "label": "Section ID",
+          "format": "text"
+        }
+      ]
+    },
+    {
+      "id": "education-work-low-education",
+      "group": "education-work",
+      "kind": "choropleth",
+      "label": "Low educational attainment",
+      "shortLabel": "Primary or lower",
+      "description": "Residents with Educación primaria e inferior divided by the population aged 15 and over.",
+      "unit": "%",
+      "referenceDate": "2024",
+      "geography": "2024 census sections",
+      "sourceIds": [
+        "sections-2024"
+      ],
+      "property": "low_education_pct",
+      "palette": [
+        "#fff2e8",
+        "#ffd2b6",
+        "#f8a56d",
+        "#fb7b2d",
+        "#d94c08",
+        "#963005"
+      ],
+      "breaks": [
+        0.76544559869,
+        4.5964214639,
+        6.6898991499,
+        10.6641340764,
+        14.9549856512,
+        18.338804321,
+        45.4632282713
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "opacity": 0.72,
+      "tooltip": [
+        {
+          "property": "low_education_pct",
+          "label": "Primary or lower",
+          "format": "percent",
+          "percentileProperty": "low_education_percentile"
         },
         {
           "property": "section_id",
@@ -1149,6 +1680,82 @@
       "control": {
         "election": "general",
         "party": "turnout"
+      }
+    },
+    {
+      "id": "election-general-left-right",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "General election · Left vs Right",
+      "shortLabel": "Left vs Right",
+      "description": "Right-bloc share minus left-bloc share of valid votes. Smaller candidacies are excluded from both blocs.",
+      "unit": "pp",
+      "referenceDate": "2023-07-23",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "left_right_margin_pp_general",
+      "palette": [
+        "#b2182b",
+        "#ffffff",
+        "#2166ac"
+      ],
+      "breaks": [
+        -66.139242576,
+        0,
+        66.139242576
+      ],
+      "format": "decimal",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "opacity": 0.72,
+      "tooltip": [
+        {
+          "property": "turnout_pct_general",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_general",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_general",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_general",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "left_share_general",
+          "label": "Left share",
+          "format": "percent"
+        },
+        {
+          "property": "right_share_general",
+          "label": "Right share",
+          "format": "percent"
+        },
+        {
+          "property": "left_right_margin_pp_general",
+          "label": "Right − Left margin",
+          "format": "decimal",
+          "suffix": " pp"
+        }
+      ],
+      "control": {
+        "election": "general",
+        "party": "Left vs Right"
+      },
+      "scale": {
+        "type": "continuous-diverging",
+        "center": 0,
+        "clamp": true
       }
     },
     {
@@ -1574,6 +2181,82 @@
       "control": {
         "election": "local",
         "party": "turnout"
+      }
+    },
+    {
+      "id": "election-local-left-right",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid local election · Left vs Right",
+      "shortLabel": "Left vs Right",
+      "description": "Right-bloc share minus left-bloc share of valid votes. Smaller candidacies are excluded from both blocs.",
+      "unit": "pp",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "left_right_margin_pp_local",
+      "palette": [
+        "#b2182b",
+        "#ffffff",
+        "#2166ac"
+      ],
+      "breaks": [
+        -65.7208538588,
+        0,
+        65.7208538588
+      ],
+      "format": "decimal",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "opacity": 0.72,
+      "tooltip": [
+        {
+          "property": "turnout_pct_local",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_local",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_local",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_local",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "left_share_local",
+          "label": "Left share",
+          "format": "percent"
+        },
+        {
+          "property": "right_share_local",
+          "label": "Right share",
+          "format": "percent"
+        },
+        {
+          "property": "left_right_margin_pp_local",
+          "label": "Right − Left margin",
+          "format": "decimal",
+          "suffix": " pp"
+        }
+      ],
+      "control": {
+        "election": "local",
+        "party": "Left vs Right"
+      },
+      "scale": {
+        "type": "continuous-diverging",
+        "center": 0,
+        "clamp": true
       }
     },
     {
@@ -2069,6 +2752,82 @@
       }
     },
     {
+      "id": "election-assembly-left-right",
+      "group": "elections",
+      "kind": "choropleth",
+      "label": "Madrid Assembly election · Left vs Right",
+      "shortLabel": "Left vs Right",
+      "description": "Right-bloc share minus left-bloc share of valid votes. Smaller candidacies are excluded from both blocs.",
+      "unit": "pp",
+      "referenceDate": "2023-05-28",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "left_right_margin_pp_assembly",
+      "palette": [
+        "#b2182b",
+        "#ffffff",
+        "#2166ac"
+      ],
+      "breaks": [
+        -66.452729394,
+        0,
+        66.452729394
+      ],
+      "format": "decimal",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "opacity": 0.72,
+      "tooltip": [
+        {
+          "property": "turnout_pct_assembly",
+          "label": "Turnout",
+          "format": "percent"
+        },
+        {
+          "property": "valid_votes_assembly",
+          "label": "Valid votes",
+          "format": "integer"
+        },
+        {
+          "property": "blank_votes_assembly",
+          "label": "Blank ballots",
+          "format": "integer"
+        },
+        {
+          "property": "leading_party_assembly",
+          "label": "Leading party",
+          "format": "text"
+        },
+        {
+          "property": "left_share_assembly",
+          "label": "Left share",
+          "format": "percent"
+        },
+        {
+          "property": "right_share_assembly",
+          "label": "Right share",
+          "format": "percent"
+        },
+        {
+          "property": "left_right_margin_pp_assembly",
+          "label": "Right − Left margin",
+          "format": "decimal",
+          "suffix": " pp"
+        }
+      ],
+      "control": {
+        "election": "assembly",
+        "party": "Left vs Right"
+      },
+      "scale": {
+        "type": "continuous-diverging",
+        "center": 0,
+        "clamp": true
+      }
+    },
+    {
       "id": "election-assembly-pp",
       "group": "elections",
       "kind": "choropleth",
@@ -2446,6 +3205,178 @@
           "percentileProperty": "income_per_person_percentile"
         },
         {
+          "property": "income_per_household_eur",
+          "label": "Net income / household",
+          "format": "currency",
+          "percentileProperty": "income_per_household_percentile"
+        },
+        {
+          "property": "pension_income_pct",
+          "label": "Income from pensions",
+          "format": "percent",
+          "percentileProperty": "pension_income_percentile"
+        },
+        {
+          "property": "below_60_median_pct",
+          "label": "Below 60% median",
+          "format": "percent",
+          "percentileProperty": "below_60_median_percentile"
+        },
+        {
+          "property": "above_200_median_pct",
+          "label": "Above 200% median",
+          "format": "percent",
+          "percentileProperty": "above_200_median_percentile"
+        },
+        {
+          "property": "gini",
+          "label": "Gini coefficient",
+          "format": "decimal",
+          "percentileProperty": "gini_percentile"
+        },
+        {
+          "property": "income_p80_p20",
+          "label": "P80/P20 ratio",
+          "format": "decimal",
+          "percentileProperty": "income_p80_p20_percentile"
+        }
+      ]
+    },
+    {
+      "id": "income-per-household",
+      "group": "income",
+      "kind": "choropleth",
+      "label": "Net income per household",
+      "shortLabel": "Income per household",
+      "description": "Mean annual net income per household.",
+      "unit": "€ / household",
+      "referenceDate": "2023",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "income_per_household_eur",
+      "palette": [
+        "#edf4f8",
+        "#c9e0eb",
+        "#8dbfd3",
+        "#4a91b5",
+        "#145c9e",
+        "#0b396e"
+      ],
+      "breaks": [
+        17450,
+        31930.1666666667,
+        36164.6666666667,
+        42608,
+        51280.6666666667,
+        66352.8333333333,
+        104774
+      ],
+      "format": "currency",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "opacity": 0.72,
+      "tooltip": [
+        {
+          "property": "income_per_person_eur",
+          "label": "Net income / person",
+          "format": "currency",
+          "percentileProperty": "income_per_person_percentile"
+        },
+        {
+          "property": "income_per_household_eur",
+          "label": "Net income / household",
+          "format": "currency",
+          "percentileProperty": "income_per_household_percentile"
+        },
+        {
+          "property": "pension_income_pct",
+          "label": "Income from pensions",
+          "format": "percent",
+          "percentileProperty": "pension_income_percentile"
+        },
+        {
+          "property": "below_60_median_pct",
+          "label": "Below 60% median",
+          "format": "percent",
+          "percentileProperty": "below_60_median_percentile"
+        },
+        {
+          "property": "above_200_median_pct",
+          "label": "Above 200% median",
+          "format": "percent",
+          "percentileProperty": "above_200_median_percentile"
+        },
+        {
+          "property": "gini",
+          "label": "Gini coefficient",
+          "format": "decimal",
+          "percentileProperty": "gini_percentile"
+        },
+        {
+          "property": "income_p80_p20",
+          "label": "P80/P20 ratio",
+          "format": "decimal",
+          "percentileProperty": "income_p80_p20_percentile"
+        }
+      ]
+    },
+    {
+      "id": "income-pensions",
+      "group": "income",
+      "kind": "choropleth",
+      "label": "Income from pensions",
+      "shortLabel": "Pension income share",
+      "description": "Percentage of total section income coming from pensions; this is not a euro amount.",
+      "unit": "% of total income",
+      "referenceDate": "2023",
+      "geography": "2023 census sections",
+      "sourceIds": [
+        "sections-2023"
+      ],
+      "property": "pension_income_pct",
+      "palette": [
+        "#fff2e8",
+        "#ffd2b6",
+        "#f8a56d",
+        "#fb7b2d",
+        "#d94c08",
+        "#963005"
+      ],
+      "breaks": [
+        1.5,
+        12.4,
+        16.8,
+        19.6,
+        22.1,
+        26.2,
+        48.1
+      ],
+      "format": "percent",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "opacity": 0.72,
+      "tooltip": [
+        {
+          "property": "income_per_person_eur",
+          "label": "Net income / person",
+          "format": "currency",
+          "percentileProperty": "income_per_person_percentile"
+        },
+        {
+          "property": "income_per_household_eur",
+          "label": "Net income / household",
+          "format": "currency",
+          "percentileProperty": "income_per_household_percentile"
+        },
+        {
+          "property": "pension_income_pct",
+          "label": "Income from pensions",
+          "format": "percent",
+          "percentileProperty": "pension_income_percentile"
+        },
+        {
           "property": "below_60_median_pct",
           "label": "Below 60% median",
           "format": "percent",
@@ -2512,6 +3443,18 @@
           "label": "Net income / person",
           "format": "currency",
           "percentileProperty": "income_per_person_percentile"
+        },
+        {
+          "property": "income_per_household_eur",
+          "label": "Net income / household",
+          "format": "currency",
+          "percentileProperty": "income_per_household_percentile"
+        },
+        {
+          "property": "pension_income_pct",
+          "label": "Income from pensions",
+          "format": "percent",
+          "percentileProperty": "pension_income_percentile"
         },
         {
           "property": "below_60_median_pct",
@@ -2582,6 +3525,18 @@
           "percentileProperty": "income_per_person_percentile"
         },
         {
+          "property": "income_per_household_eur",
+          "label": "Net income / household",
+          "format": "currency",
+          "percentileProperty": "income_per_household_percentile"
+        },
+        {
+          "property": "pension_income_pct",
+          "label": "Income from pensions",
+          "format": "percent",
+          "percentileProperty": "pension_income_percentile"
+        },
+        {
           "property": "below_60_median_pct",
           "label": "Below 60% median",
           "format": "percent",
@@ -2648,6 +3603,18 @@
           "label": "Net income / person",
           "format": "currency",
           "percentileProperty": "income_per_person_percentile"
+        },
+        {
+          "property": "income_per_household_eur",
+          "label": "Net income / household",
+          "format": "currency",
+          "percentileProperty": "income_per_household_percentile"
+        },
+        {
+          "property": "pension_income_pct",
+          "label": "Income from pensions",
+          "format": "percent",
+          "percentileProperty": "pension_income_percentile"
         },
         {
           "property": "below_60_median_pct",
@@ -2718,6 +3685,18 @@
           "percentileProperty": "income_per_person_percentile"
         },
         {
+          "property": "income_per_household_eur",
+          "label": "Net income / household",
+          "format": "currency",
+          "percentileProperty": "income_per_household_percentile"
+        },
+        {
+          "property": "pension_income_pct",
+          "label": "Income from pensions",
+          "format": "percent",
+          "percentileProperty": "pension_income_percentile"
+        },
+        {
           "property": "below_60_median_pct",
           "label": "Below 60% median",
           "format": "percent",
@@ -2751,7 +3730,7 @@
       "shortLabel": "Metro lines",
       "description": "Static network snapshot.",
       "unit": "route",
-      "referenceDate": "2026-07-26",
+      "referenceDate": "2026-08-03",
       "geography": "Regional transport network",
       "sourceIds": [
         "metro-lines"
@@ -2789,7 +3768,7 @@
       "shortLabel": "Metro stops",
       "description": "All stops appear together at zoom 12.",
       "unit": "stop",
-      "referenceDate": "2026-07-26",
+      "referenceDate": "2026-08-03",
       "geography": "Regional transport network",
       "sourceIds": [
         "metro-stops"
@@ -2826,7 +3805,7 @@
       "shortLabel": "Metro Ligero lines",
       "description": "Static network snapshot.",
       "unit": "route",
-      "referenceDate": "2026-07-26",
+      "referenceDate": "2026-08-03",
       "geography": "Regional transport network",
       "sourceIds": [
         "metro_ligero-lines"
@@ -2864,7 +3843,7 @@
       "shortLabel": "Metro Ligero stops",
       "description": "All stops appear together at zoom 12.",
       "unit": "stop",
-      "referenceDate": "2026-07-26",
+      "referenceDate": "2026-08-03",
       "geography": "Regional transport network",
       "sourceIds": [
         "metro_ligero-stops"
@@ -2901,7 +3880,7 @@
       "shortLabel": "Cercanías lines",
       "description": "Static network snapshot.",
       "unit": "route",
-      "referenceDate": "2026-07-26",
+      "referenceDate": "2026-08-03",
       "geography": "Regional transport network",
       "sourceIds": [
         "cercanias-lines"
@@ -2939,7 +3918,7 @@
       "shortLabel": "Cercanías stops",
       "description": "All stops appear together at zoom 12.",
       "unit": "stop",
-      "referenceDate": "2026-07-26",
+      "referenceDate": "2026-08-03",
       "geography": "Regional transport network",
       "sourceIds": [
         "cercanias-stops"
@@ -2976,7 +3955,7 @@
       "shortLabel": "EMT lines",
       "description": "Static network snapshot.",
       "unit": "route",
-      "referenceDate": "2026-07-26",
+      "referenceDate": "2026-08-03",
       "geography": "Regional transport network",
       "sourceIds": [
         "emt-lines"
@@ -3961,7 +4940,7 @@
       "shortLabel": "EMT stops",
       "description": "All stops appear together at zoom 12.",
       "unit": "stop",
-      "referenceDate": "2026-07-26",
+      "referenceDate": "2026-08-03",
       "geography": "Regional transport network",
       "sourceIds": [
         "emt-stops"
@@ -4945,7 +5924,7 @@
       "shortLabel": "BiciMAD stops",
       "description": "All stops appear together at zoom 12.",
       "unit": "stop",
-      "referenceDate": "2026-07-26",
+      "referenceDate": "2026-08-03",
       "geography": "Regional transport network",
       "sourceIds": [
         "bicimad-stops"
@@ -4981,67 +5960,84 @@
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://datos.madrid.es/dataset/200076-0-padron/resource/200076-2-padron-csv/download/200076_20260714_062859.csv",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-07-31"
+      "retrieved": "2026-08-03"
     },
     {
-      "title": "Censo anual de población",
+      "title": "Population by country of birth and nationality",
       "organisation": "Instituto Nacional de Estadística",
-      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/69211.csv",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66428.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-07-31"
+      "retrieved": "2026-08-03"
+    },
+    {
+      "title": "Education and economic activity by census section",
+      "organisation": "Instituto Nacional de Estadística",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66753.csv",
+      "licence": "INE standard reuse conditions",
+      "retrieved": "2026-08-03"
     },
     {
       "title": "Catastro INSPIRE Buildings",
       "organisation": "Dirección General del Catastro",
       "url": "https://www.catastro.hacienda.gob.es/INSPIRE/Buildings/28/28900-MADRID/A.ES.SDGC.BU.28900.zip",
       "licence": "Catastro data-access conditions",
-      "retrieved": "2026-07-31"
+      "retrieved": "2026-08-03"
     },
     {
       "title": "Alturas de edificios",
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://geoportal.madrid.es/fsdescargas/IDEAM_WBGEOPORTAL/CARTOGRAFIA/CARTOGRAFIA_ACTUALIZADA/ALTURAS_EDIFICIOS/ALTURAS_EDIFICIOS.ZIP",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-07-31"
+      "retrieved": "2026-08-03"
     },
     {
       "title": "2023 election results by polling table",
       "organisation": "Madrid City Council / Interior Ministry",
       "url": "https://www.madrid.es/UnidadesDescentralizadas/UDCEstadistica/Nuevaweb/Elecciones%20y%20Participaci%C3%B3n%20Ciudadana/Elecciones/Resultados%20electorales/Congreso/Congreso%202023/Mesas/G1340123_prov.xlsx",
       "licence": "Public-sector information reuse terms",
-      "retrieved": "2026-07-31"
+      "retrieved": "2026-08-03"
     },
     {
       "title": "Household Income Distribution Atlas",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31097.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-07-31"
+      "retrieved": "2026-08-03"
+    },
+    {
+      "title": "Income distribution by source",
+      "organisation": "Instituto Nacional de Estadística",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31098.csv",
+      "licence": "INE standard reuse conditions",
+      "retrieved": "2026-08-03"
     },
     {
       "title": "CRTM open transport data",
       "organisation": "Consorcio Regional de Transportes de Madrid",
       "url": "https://transparencia.crtm.es/presupuestos-contratos-y-gastos/datos-abiertos/",
       "licence": "CRTM open-data licence",
-      "retrieved": "2026-07-31"
+      "retrieved": "2026-08-03"
     },
     {
       "title": "BiciMAD stations",
       "organisation": "EMT Madrid",
       "url": "https://datos.emtmadrid.es/dataset/5fcc0945-2cbd-46c3-801a-6a83f4167c11/resource/105ce5df-793f-4e0a-a88e-5d3b3f024a5d/download/bikestationbicimad_geojson.json",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-07-31"
+      "retrieved": "2026-08-03"
     },
     {
       "title": "Official Madrid street directory",
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://datos.madrid.es/dataset/213605-0-callejero-oficial-madrid/resource/213605-4-callejero-oficial-madrid-csv/download/213605-4-callejero-oficial-madrid-csv.csv",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-07-31"
+      "retrieved": "2026-08-03"
     }
   ],
   "notes": [
     "Population values are joined by official section identifiers; resident coverage must be at least 99.5%.",
+    "Longitudinal change is shown only for reciprocal one-to-one section matches covering at least 95% of both vintages; split and merged sections remain No data.",
+    "Country controls use 2025 INE sections for both birthplace and citizenship. Honduras and Paraguay are in Madrid's 2026 top ten but cannot be shown because INE groups them under Other countries of America.",
+    "The foreign-born comparison is explicitly four years (2021–2025) and is expressed in percentage points.",
     "Election shares use valid votes including blank ballots as the denominator.",
     "Election totals exclude non-geographic votes when they are absent from polling-table data.",
     "INE publishes no 2023 section values for the below-60% and above-200% median indicators in Carabanchel and Fuencarral-El Pardo; these remain No data.",

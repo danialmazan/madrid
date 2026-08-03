@@ -35,7 +35,9 @@ its source archive and vector-layer name, property, unit, reference date, matchi
 palette, class breaks, tooltip fields, zoom range and source attribution.
 
 - July 2026 monthly padrón measures use Madrid’s current 2026 census sections.
-- The latest annual foreign-born measure uses its matching 2025 INE section vintage.
+- 2025 foreign-born and foreign-citizenship measures use country-controlled INE section data.
+- 2024 Education & Work measures use their matching INE section vintage.
+- Longitudinal change uses reciprocal ≥95% one-to-one matches to 2021 sections.
 - 2023 elections and income measures use 2023 INE census sections.
 - Catastro construction dates and municipal height polygons retain their own footprints.
 - Transport is a static GTFS/BiciMAD network snapshot.

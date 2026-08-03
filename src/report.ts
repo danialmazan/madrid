@@ -15,12 +15,21 @@ const populationMetrics = [
   "population_density_km2",
   "under18_pct",
   "age65plus_pct",
-  "foreign_citizenship_pct",
-  "foreign_born_pct",
+  "population_change_5y_pct",
+];
+
+const educationWorkMetrics = [
+  "activity_rate_pct",
+  "employment_rate_pct",
+  "unemployment_rate_pct",
+  "higher_education_pct",
+  "low_education_pct",
 ];
 
 const incomeMetrics = [
   "income_per_person_eur",
+  "income_per_household_eur",
+  "pension_income_pct",
   "below_60_median_pct",
   "above_200_median_pct",
   "gini",
@@ -41,17 +50,26 @@ export function sectionProperties(
     population_density_km2: "population_density_percentile",
     under18_pct: "under18_percentile",
     age65plus_pct: "age65plus_percentile",
-    foreign_citizenship_pct: "foreign_citizenship_percentile",
-    foreign_born_pct: "foreign_born_percentile",
+    population_change_5y_pct: "population_change_5y_percentile",
     income_per_person_eur: "income_per_person_percentile",
+    income_per_household_eur: "income_per_household_percentile",
+    pension_income_pct: "pension_income_percentile",
     below_60_median_pct: "below_60_median_percentile",
     above_200_median_pct: "above_200_median_percentile",
     gini: "gini_percentile",
     income_p80_p20: "income_p80_p20_percentile",
   };
-  for (const [metric, item] of Object.entries({ ...report.population, ...report.income })) {
+  for (const [metric, item] of Object.entries({ ...report.population, ...report.educationWork, ...report.income })) {
     properties[metric] = item.value;
     properties[percentileProperties[metric] ?? `${metric}_percentile`] = item.percentile;
+  }
+  for (const [country, values] of Object.entries(report.migration)) {
+    properties[`foreign_born_pct_${country}`] = values.foreignBorn.value;
+    properties[`foreign_born_percentile_${country}`] = values.foreignBorn.percentile;
+    properties[`foreign_citizenship_pct_${country}`] = values.foreignCitizenship.value;
+    properties[`foreign_citizenship_percentile_${country}`] = values.foreignCitizenship.percentile;
+    properties[`foreign_born_change_pp_${country}`] = values.foreignBornChange.value;
+    properties[`foreign_born_change_percentile_${country}`] = values.foreignBornChange.percentile;
   }
 
   const election = definition.control?.election;
@@ -61,6 +79,9 @@ export function sectionProperties(
     properties[`valid_votes_${election}`] = result.validVotes;
     properties[`blank_votes_${election}`] = result.blankVotes;
     properties[`leading_party_${election}`] = result.leadingParty;
+    properties[`left_share_${election}`] = result.leftShare;
+    properties[`right_share_${election}`] = result.rightShare;
+    properties[`left_right_margin_pp_${election}`] = result.margin;
     for (const party of result.results) {
       properties[`share_${party.key.toLowerCase()}_${election}`] = party.share;
     }
@@ -75,6 +96,11 @@ export function renderMadridElectionCard(city: CityElectionReport): string {
       <h3>${escapeHtml(city.label)}</h3>
       <p>${escapeHtml(formatDate(city.referenceDate))} · ${formatValue(city.turnoutPct, "percent")} turnout</p>
     </div>
+    <dl class="election-bloc-summary">
+      <div><dt>Left</dt><dd>${formatValue(city.leftShare, "percent", 1)}</dd></div>
+      <div><dt>Right</dt><dd>${formatValue(city.rightShare, "percent", 1)}</dd></div>
+      <div><dt>Right − Left</dt><dd>${formatSigned(city.margin, " pp")}</dd></div>
+    </dl>
     ${renderElectionTable(city.results)}
     <p class="results-coverage">${formatValue(city.shownCoveragePct, "percent", 1)} of valid votes shown</p>`;
 }
@@ -82,7 +108,11 @@ export function renderMadridElectionCard(city: CityElectionReport): string {
 export function renderSectionReport(
   index: SectionReportIndex,
   section: SectionReport,
+  country = "total",
 ): string {
+  const selectedCountry = section.migration[country] ? country : "total";
+  const selectedCountryLabel = index.countries[selectedCountry] ?? "Total";
+  const migration = section.migration[selectedCountry] ?? section.migration.total!;
   const changed = Object.entries(section.matches).filter(([, match]) => match.boundaryChanged);
   const changedNote = changed.length
     ? `<aside class="report-boundary-note">
@@ -118,15 +148,29 @@ export function renderSectionReport(
       ${changedNote}
       <section class="report-chapter" aria-labelledby="report-population-heading">
         <div class="report-chapter-heading">
-          <p>01</p><div><h3 id="report-population-heading">Population</h3><span>Padrón ${escapeHtml(formatDate(index.dataDates.population))} · foreign-born ${escapeHtml(formatDate(index.dataDates.foreignBorn))}</span></div>
+          <p>01</p><div><h3 id="report-population-heading">Population &amp; migration</h3><span>Padrón ${escapeHtml(formatDate(index.dataDates.population))} · INE migration ${escapeHtml(formatDate(index.dataDates.migration))}</span></div>
         </div>
         <div class="report-metric-grid">
           ${populationMetrics.map((metric) => renderMetric(index, section.population[metric], metric)).join("")}
         </div>
+        <div class="report-subsection-heading"><h4>Migration · ${escapeHtml(selectedCountryLabel)}</h4><p>Country shares use all residents as the denominator. Change is 2021–2025 (4 years), in percentage points.</p></div>
+        <div class="report-metric-grid is-compact">
+          ${renderMetric(index, migration.foreignBorn, `foreign_born_pct_${selectedCountry}`)}
+          ${renderMetric(index, migration.foreignCitizenship, `foreign_citizenship_pct_${selectedCountry}`)}
+          ${renderMetric(index, migration.foreignBornChange, `foreign_born_change_pp_${selectedCountry}`)}
+        </div>
+      </section>
+      <section class="report-chapter" aria-labelledby="report-education-heading">
+        <div class="report-chapter-heading">
+          <p>02</p><div><h3 id="report-education-heading">Education &amp; Work</h3><span>INE Annual Population Census · ${escapeHtml(formatDate(index.dataDates.educationWork))}</span></div>
+        </div>
+        <div class="report-metric-grid">
+          ${educationWorkMetrics.map((metric) => renderMetric(index, section.educationWork[metric], metric)).join("")}
+        </div>
       </section>
       <section class="report-chapter" aria-labelledby="report-income-heading">
         <div class="report-chapter-heading">
-          <p>02</p><div><h3 id="report-income-heading">Income &amp; inequality</h3><span>INE Household Income Distribution Atlas · ${escapeHtml(formatDate(index.dataDates.income))}</span></div>
+          <p>03</p><div><h3 id="report-income-heading">Income &amp; inequality</h3><span>INE Household Income Distribution Atlas · ${escapeHtml(formatDate(index.dataDates.income))}</span></div>
         </div>
         ${renderIncomeSuppression(section)}
         <div class="report-metric-grid">
@@ -135,7 +179,7 @@ export function renderSectionReport(
       </section>
       <section class="report-chapter report-elections" aria-labelledby="report-elections-heading">
         <div class="report-chapter-heading">
-          <p>03</p><div><h3 id="report-elections-heading">Elections</h3><span>Section result compared with the full city</span></div>
+          <p>04</p><div><h3 id="report-elections-heading">Elections</h3><span>Section result compared with the full city</span></div>
         </div>
         <div class="report-election-grid">
           ${(["general", "local", "assembly"] as ElectionKey[])
@@ -145,14 +189,15 @@ export function renderSectionReport(
       </section>
       <section class="report-chapter" aria-labelledby="report-buildings-heading">
         <div class="report-chapter-heading">
-          <p>04</p><div><h3 id="report-buildings-heading">Buildings</h3><span>Catastro ${escapeHtml(formatDate(index.dataDates.buildings))} · current section assignment</span></div>
+          <p>05</p><div><h3 id="report-buildings-heading">Buildings</h3><span>Catastro ${escapeHtml(formatDate(index.dataDates.buildings))} · current section assignment</span></div>
         </div>
         ${renderBuildings(index, section)}
       </section>
       <footer class="report-sources">
         <h3>Sources &amp; interpretation</h3>
         <p>Percentiles compare valid Madrid census-section observations. A higher percentile means a higher raw value, not necessarily a better outcome. Histograms use equal-width value buckets, so each bar’s area represents its number of sections. Suppressed observations remain No data.</p>
-        <p><strong>Geography.</strong> Current ${escapeHtml(index.geographyVintages.canonical)} sections are canonical. Foreign-born measures use ${escapeHtml(index.geographyVintages.foreignBorn)} sections; income and elections use ${escapeHtml(index.geographyVintages.incomeAndElections)} sections, matched by greatest polygon overlap without area-weighting or imputation. Catastro footprints are assigned by point-on-surface.</p>
+        <p><strong>Geography.</strong> Current ${escapeHtml(index.geographyVintages.canonical)} sections are canonical. Population change compares ${escapeHtml(index.geographyVintages.populationChange)}; income and elections use ${escapeHtml(index.geographyVintages.incomeAndElections)}, Education &amp; Work uses ${escapeHtml(index.geographyVintages.educationWork)}, and migration uses ${escapeHtml(index.geographyVintages.migration)} sections. Longitudinal values appear only for reciprocal one-to-one matches covering at least 95% of both boundaries; split and merged sections remain No data. Snapshot chapters use greatest overlap for report display without area-weighting or imputation.</p>
+        <p><strong>Country availability.</strong> Honduras and Paraguay are among Madrid's current top ten birth countries, but INE groups them under Other countries of America at section level, so the Atlas provides the eight individually published countries.</p>
         <p><a href="${escapeHtml(index.methodologyUrl)}">Read the full methodology</a></p>
         <ul>${index.references
           .slice(0, 6)
@@ -233,7 +278,7 @@ function renderIncomeSuppression(section: SectionReport): string {
   const affected = ["Carabanchel", "Fuencarral-El Pardo"].includes(section.district);
   const missing = section.income.below_60_median_pct?.value === null;
   if (!affected || !missing) return "";
-  return `<aside class="report-data-note"><strong>Official source suppression</strong><p>INE publishes no section values for the below-60% or above-200% median indicators in ${escapeHtml(section.district)}. Income per person, Gini and P80/P20 remain available.</p></aside>`;
+  return `<aside class="report-data-note"><strong>Official source suppression</strong><p>INE publishes no section values for the below-60% or above-200% median indicators in ${escapeHtml(section.district)}. The other income measures remain available.</p></aside>`;
 }
 
 function renderElectionComparison(
@@ -255,6 +300,11 @@ function renderElectionComparison(
   return `<article class="report-election">
     <header><h4>${escapeHtml(city.label)}</h4><span>${escapeHtml(formatDate(city.referenceDate))}</span></header>
     <div class="election-turnout"><span>Turnout</span><strong>${formatValue(local.turnoutPct ?? Number.NaN, "percent")}</strong><small>Madrid ${formatValue(city.turnoutPct, "percent")}</small></div>
+    <dl class="election-bloc-summary">
+      <div><dt>Left</dt><dd>${formatValue(local.leftShare ?? Number.NaN, "percent", 1)}</dd></div>
+      <div><dt>Right</dt><dd>${formatValue(local.rightShare ?? Number.NaN, "percent", 1)}</dd></div>
+      <div><dt>Right − Left</dt><dd>${local.margin === null ? "No data" : formatSigned(local.margin, " pp")}</dd></div>
+    </dl>
     <div class="election-comparisons">${rows}</div>
   </article>`;
 }
@@ -316,6 +366,8 @@ export function formatValue(value: number, format: ValueFormat, minimumFractionD
       return new Intl.NumberFormat("en-GB", { maximumFractionDigits: 1 }).format(value);
     case "percent":
       return `${new Intl.NumberFormat("en-GB", { minimumFractionDigits, maximumFractionDigits: 1 }).format(value)}%`;
+    case "pp":
+      return `${new Intl.NumberFormat("en-GB", { minimumFractionDigits, maximumFractionDigits: 1 }).format(value)} pp`;
     case "currency":
       return new Intl.NumberFormat("en-GB", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(value);
     case "year":
@@ -323,6 +375,12 @@ export function formatValue(value: number, format: ValueFormat, minimumFractionD
     case "text":
       return String(value);
   }
+}
+
+function formatSigned(value: number, suffix: string): string {
+  if (!Number.isFinite(value)) return "No data";
+  const shown = new Intl.NumberFormat("en-GB", { maximumFractionDigits: 1, signDisplay: "always" }).format(value);
+  return `${shown}${suffix}`;
 }
 
 function formatDate(value: string): string {

@@ -28,11 +28,14 @@ describe("published atlas data", () => {
     const reports = readJson<SectionReportIndex>("public/data/section-reports.json");
     const sectionEntries = Object.entries(reports.sections);
     expect(reports.canonicalVintage).toBe("2026");
+    expect(reports.version).toBe("1.1.0");
     expect(sectionEntries).toHaveLength(2462);
     for (const [id, report] of sectionEntries) {
       expect(report.id).toBe(id);
       expect(report.matches["2023"].sectionId).toMatch(/^28079\d{5}$/);
+      expect(report.matches["2024"].sectionId).toMatch(/^28079\d{5}$/);
       expect(report.matches["2025"].sectionId).toMatch(/^28079\d{5}$/);
+      expect(report.matches["2021"].sectionId).toMatch(/^28079\d{5}$/);
     }
     const sectionBuildingTotal = sectionEntries.reduce(
       (total, [, report]) => total + report.buildings.buildingCount,
@@ -68,7 +71,7 @@ describe("published atlas data", () => {
       ).toBe(true);
     }
 
-    const metricGroups = ["population", "income"] as const;
+    const metricGroups = ["population", "educationWork", "income"] as const;
     const mismatches: string[] = [];
     for (const report of Object.values(reports.sections)) {
       for (const group of metricGroups) {
@@ -91,6 +94,20 @@ describe("published atlas data", () => {
           if (bin < 0 || zeroBasedRank < countBefore - 1e-7 || zeroBasedRank > lastRankInBin + 1e-7) {
             mismatches.push(`${report.id}:${metric}`);
           }
+        }
+      }
+    }
+    for (const report of Object.values(reports.sections)) {
+      for (const [country, migration] of Object.entries(report.migration)) {
+        const metricNames = {
+          foreignBorn: `foreign_born_pct_${country}`,
+          foreignCitizenship: `foreign_citizenship_pct_${country}`,
+          foreignBornChange: `foreign_born_change_pp_${country}`,
+        } as const;
+        for (const [key, metric] of Object.entries(metricNames)) {
+          const item = migration[key as keyof typeof migration];
+          if (item.value === null || item.percentile === null) continue;
+          expect(percentileAtValue(reports.distributions[metric]!, item.value), `${report.id}:${metric}`).toBeCloseTo(item.percentile, 7);
         }
       }
     }
@@ -119,6 +136,21 @@ describe("published atlas data", () => {
         (layer) => layer.group === "elections" && layer.control?.election === election,
       );
       expect(first?.control?.party).toBe("leading");
+      const margin = manifest.layers.find((layer) => layer.id === `election-${election}-left-right`);
+      expect(margin?.scale).toMatchObject({ type: "continuous-diverging", center: 0, clamp: true });
+      expect(margin?.palette).toEqual(["#b2182b", "#ffffff", "#2166ac"]);
+    }
+  });
+
+  it("publishes country-controlled migration variants and the new theme", () => {
+    const manifest = readJson<LayerManifest>("public/data/layer-manifest.json");
+    expect(manifest.version).toBe("1.1.0");
+    expect(manifest.layers.filter((layer) => layer.group === "education-work")).toHaveLength(5);
+    for (const id of ["population-foreign-born", "population-foreign-citizenship", "population-foreign-born-change"]) {
+      const options = manifest.layers.find((layer) => layer.id === id)?.control?.country?.options;
+      expect(options?.map((option) => option.value)).toEqual([
+        "total", "venezuela", "colombia", "peru", "ecuador", "republica_dominicana", "argentina", "china", "marruecos",
+      ]);
     }
   });
 });

@@ -16,14 +16,19 @@ export const DEFAULT_STATE: AtlasState = {
   party: "leading",
   transport: [],
   route: "all",
+  country: "total",
   camera: { ...MADRID_CAMERA },
   is3d: false,
   selectedSection: null,
   reportOpen: false,
 };
 
-const groups: LayerGroup[] = ["population", "buildings", "elections", "income", "transport"];
+const groups: LayerGroup[] = ["population", "education-work", "buildings", "elections", "income", "transport"];
 const elections = ["general", "local", "assembly"] as const;
+const countries = [
+  "total", "venezuela", "colombia", "peru", "ecuador", "republica_dominicana",
+  "argentina", "china", "marruecos",
+] as const;
 
 const finiteNumber = (value: string | null, fallback: number): number => {
   if (value === null || value.trim() === "") return fallback;
@@ -58,6 +63,9 @@ export function parseHash(hash: string): AtlasState {
       .map((item) => item.trim())
       .filter(Boolean),
     route: params.get("route") || DEFAULT_STATE.route,
+    country: countries.includes(params.get("country") as (typeof countries)[number])
+      ? (params.get("country") as string)
+      : DEFAULT_STATE.country,
     camera: {
       lng: bounded(finiteNumber(params.get("lng"), DEFAULT_STATE.camera.lng), -180, 180),
       lat: bounded(finiteNumber(params.get("lat"), DEFAULT_STATE.camera.lat), -85, 85),
@@ -84,6 +92,7 @@ export function serializeState(state: AtlasState): string {
   }
   if (state.transport.length > 0) params.set("transport", state.transport.join(","));
   if (state.route !== "all") params.set("route", state.route);
+  if (state.country !== "total") params.set("country", state.country);
   params.set("lng", round(state.camera.lng, 5));
   params.set("lat", round(state.camera.lat, 5));
   params.set("z", round(state.camera.zoom, 2));

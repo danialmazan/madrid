@@ -5,7 +5,9 @@ election_specs <- list(
   general = list(
     url = sources$election_general_xlsx,
     file = "election-general-2023.xlsx",
-    parties = list(PP = "^pp$", PSOE = "^psoe$", VOX = "^vox$", SUMAR = "^sumar$")
+    parties = list(PP = "^pp$", PSOE = "^psoe$", VOX = "^vox$", SUMAR = "^sumar$"),
+    left = c("PSOE", "SUMAR"),
+    right = c("PP", "VOX")
   ),
   local = list(
     url = sources$election_local_xlsx,
@@ -14,7 +16,9 @@ election_specs <- list(
       PP = "^pp$", PSOE = "^psoe$", VOX = "^vox$",
       MAS_MADRID = "mas_madrid|^mm$|^mm_vq$",
       PODEMOS_IU_AV = "podemos.*iu.*av|podemos"
-    )
+    ),
+    left = c("PSOE", "MAS_MADRID", "PODEMOS_IU_AV"),
+    right = c("PP", "VOX")
   ),
   assembly = list(
     url = sources$election_assembly_xlsx,
@@ -23,7 +27,9 @@ election_specs <- list(
       PP = "^pp$", PSOE = "^psoe$", VOX = "^vox$",
       MAS_MADRID = "mas_madrid|^mm$|^mm_vq$",
       PODEMOS_IU_AV = "podemos.*iu.*av|podemos"
-    )
+    ),
+    left = c("PSOE", "MAS_MADRID", "PODEMOS_IU_AV"),
+    right = c("PP", "VOX")
   )
 )
 
@@ -64,10 +70,13 @@ prepare_election <- function(election, spec) {
     mutate(turnout_pct = if_else(census > 0, 100 * votes_cast / census, NA_real_))
 
   city_party_votes <- list()
+  party_vote_columns <- list()
   for (target in names(spec$parties)) {
     pattern <- spec$parties[[target]]
     matched <- party_columns[grepl(pattern, party_columns, ignore.case = TRUE, perl = TRUE)]
     assert_true(length(matched) >= 1, paste("Could not find", target, "in", election, "ballot columns"))
+    assert_true(length(matched) == 1, paste("Ambiguous", target, "ballot columns in", election))
+    party_vote_columns[[target]] <- matched[[1]]
     property <- paste0("share_", tolower(target))
     section_results[[property]] <- ifelse(
       section_results$valid_votes > 0,
@@ -76,6 +85,19 @@ prepare_election <- function(election, spec) {
     )
     city_party_votes[[target]] <- sum(tables[[matched[[1]]]], na.rm = TRUE)
   }
+
+  left_columns <- unname(unlist(party_vote_columns[spec$left]))
+  right_columns <- unname(unlist(party_vote_columns[spec$right]))
+  assert_true(!any(left_columns %in% right_columns), paste(election, "bloc definitions overlap"))
+  left_votes <- rowSums(section_results[left_columns], na.rm = TRUE)
+  right_votes <- rowSums(section_results[right_columns], na.rm = TRUE)
+  section_results$left_share <- ifelse(section_results$valid_votes > 0, 100 * left_votes / section_results$valid_votes, NA_real_)
+  section_results$right_share <- ifelse(section_results$valid_votes > 0, 100 * right_votes / section_results$valid_votes, NA_real_)
+  section_results$left_right_margin_pp <- section_results$right_share - section_results$left_share
+  assert_true(
+    all(abs(section_results$left_right_margin_pp - (section_results$right_share - section_results$left_share)) < 1e-10, na.rm = TRUE),
+    paste(election, "Left–Right margin identity failed")
+  )
 
   party_matrix <- as.matrix(section_results[party_columns])
   leading_index <- max.col(party_matrix, ties.method = "first")
@@ -101,7 +123,8 @@ prepare_election <- function(election, spec) {
 
   selected_columns <- c(
     "section_id", "census", "votes_cast", "valid_votes", "blank_votes",
-    "turnout_pct", "leading_party", grep("^share_", names(section_results), value = TRUE)
+    "turnout_pct", "leading_party", "left_share", "right_share", "left_right_margin_pp",
+    grep("^share_", names(section_results), value = TRUE)
   )
   saveRDS(section_results[selected_columns], file.path(processed_dir, paste0("election-", election, ".rds")))
   save_metadata(paste0("election-", election), list(
@@ -125,7 +148,8 @@ message_step("Downloading INE income and inequality tables")
 income_downloads <- list(
   income_person = c(sources$ine_income_person_csv, "ine-income-person-31097.csv"),
   income_risk = c(sources$ine_income_risk_csv, "ine-income-risk-31102.csv"),
-  gini = c(sources$ine_gini_csv, "ine-gini-37727.csv")
+  gini = c(sources$ine_gini_csv, "ine-gini-37727.csv"),
+  income_sources = c(sources$ine_income_sources_csv, "ine-income-sources-31098.csv")
 )
 income_paths <- lapply(income_downloads, function(item) {
   download_cached(item[[1]], file.path(raw_dir, item[[2]]))
@@ -136,7 +160,7 @@ extract_ine_indicator <- function(path, metric_pattern, value_name) {
   section_col <- intersect(c("secciones", "seccion"), names(data))[[1]]
   period_col <- intersect(c("periodo", "ano"), names(data))[[1]]
   value_col <- intersect(c("total", "valor"), names(data))[[1]]
-  indicator_candidates <- grep("indicador|renta|porcentaje|indice", names(data), value = TRUE)
+  indicator_candidates <- grep("indicador|renta|porcentaje|indice|fuente|distribuci", names(data), value = TRUE)
   indicator_candidates <- setdiff(indicator_candidates, c(value_name, value_col))
   assert_true(length(indicator_candidates) > 0, paste("Could not find indicator column in", basename(path)))
   indicator_col <- indicator_candidates[[1]]
@@ -168,6 +192,16 @@ income_person <- extract_ine_indicator(
   "renta_neta_media_por_persona",
   "income_per_person_eur"
 )
+income_household <- extract_ine_indicator(
+  income_paths$income_person,
+  "renta_neta_media_por_hogar",
+  "income_per_household_eur"
+)
+pension_income <- extract_ine_indicator(
+  income_paths$income_sources,
+  "fuente_de_ingreso_pensiones|pensiones",
+  "pension_income_pct"
+)
 income_risk <- extract_ine_indicator(
   income_paths$income_risk,
   "debajo.*60.*mediana|60.*mediana",
@@ -190,6 +224,8 @@ above_200_median <- extract_ine_indicator(
 )
 
 assert_true(nrow(income_person) > 2000, "Too few income-per-person sections")
+assert_true(nrow(income_household) > 2000, "Too few income-per-household sections")
+assert_true(nrow(pension_income) > 2000, "Too few pension-income sections")
 assert_true(nrow(income_risk) > 2000, "Too few income-risk sections")
 assert_true(nrow(gini) > 2000, "Too few Gini sections")
 assert_true(nrow(income_p80_p20) > 2000, "Too few P80/P20 sections")
@@ -204,12 +240,16 @@ for (election in names(elections)) {
 }
 sections_2023 <- sections_2023 |>
   left_join(income_person, by = "section_id") |>
+  left_join(income_household, by = "section_id") |>
+  left_join(pension_income, by = "section_id") |>
   left_join(income_risk, by = "section_id") |>
   left_join(gini, by = "section_id") |>
   left_join(income_p80_p20, by = "section_id") |>
   left_join(above_200_median, by = "section_id") |>
   mutate(
     income_per_person_percentile = section_percentile(income_per_person_eur),
+    income_per_household_percentile = section_percentile(income_per_household_eur),
+    pension_income_percentile = section_percentile(pension_income_pct),
     below_60_median_percentile = section_percentile(below_60_median_pct),
     above_200_median_percentile = section_percentile(above_200_median_pct),
     gini_percentile = section_percentile(gini),
@@ -217,6 +257,8 @@ sections_2023 <- sections_2023 |>
   )
 
 assert_true(all(sections_2023$income_per_person_eur >= 0, na.rm = TRUE), "Negative income values")
+assert_true(all(sections_2023$income_per_household_eur >= 0, na.rm = TRUE), "Negative household income values")
+assert_true(all(dplyr::between(sections_2023$pension_income_pct, 0, 100), na.rm = TRUE), "Pension-income percentage out of range")
 assert_true(all(dplyr::between(sections_2023$below_60_median_pct, 0, 100), na.rm = TRUE), "Income-risk percentage out of range")
 assert_true(all(dplyr::between(sections_2023$gini, 0, 100), na.rm = TRUE), "Gini values out of range")
 assert_true(all(sections_2023$income_p80_p20 >= 1, na.rm = TRUE), "P80/P20 values out of range")
@@ -227,6 +269,8 @@ save_metadata("income", list(
   source_urls = lapply(income_downloads, `[[`, 1),
   matched = list(
     income_per_person = nrow(income_person),
+    income_per_household = nrow(income_household),
+    pension_income = nrow(pension_income),
     below_60_median = nrow(income_risk),
     gini = nrow(gini),
     p80_p20 = nrow(income_p80_p20),

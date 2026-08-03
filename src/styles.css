@@ -167,7 +167,7 @@ select:focus-visible,
 
 .group-tabs {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 4px;
   flex: none;
   padding: 4px;
@@ -236,6 +236,13 @@ select:focus-visible,
   font-size: 0.76rem;
   letter-spacing: 0;
   text-transform: none;
+}
+
+.control-note {
+  margin: 0 2px;
+  color: var(--muted);
+  font-size: 0.61rem;
+  line-height: 1.4;
 }
 
 .radio-grid,
@@ -1180,6 +1187,26 @@ select:focus-visible,
   gap: 12px;
 }
 
+.report-subsection-heading {
+  margin: 26px 0 12px;
+}
+
+.report-subsection-heading h4 {
+  margin: 0;
+  font-family: "Frances", Georgia, serif;
+  font-size: 1.15rem;
+}
+
+.report-subsection-heading p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 0.65rem;
+}
+
+.report-metric-grid.is-compact {
+  grid-template-columns: 1fr;
+}
+
 .report-metric {
   display: grid;
   grid-template-columns: minmax(120px, 0.72fr) minmax(180px, 1.28fr);
@@ -1387,6 +1414,32 @@ select:focus-visible,
 .election-turnout small {
   grid-column: 1 / -1;
   text-align: right;
+}
+
+.election-bloc-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+  margin: 0 0 12px;
+}
+
+.election-bloc-summary div {
+  min-width: 0;
+  padding: 6px;
+  background: var(--ivory);
+  border-radius: 6px;
+  text-align: center;
+}
+
+.election-bloc-summary dt {
+  color: var(--muted);
+  font-size: 0.5rem;
+}
+
+.election-bloc-summary dd {
+  margin: 2px 0 0;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.62rem;
 }
 
 .election-comparisons {

@@ -56,8 +56,8 @@ prepare_ine_boundary <- function(year) {
 }
 
 message_step("Preparing matching INE census-section vintages")
-boundaries <- lapply(c(2023, 2025, 2026), prepare_ine_boundary)
-names(boundaries) <- c("2023", "2025", "2026")
+boundaries <- lapply(c(2021, 2023, 2024, 2025, 2026), prepare_ine_boundary)
+names(boundaries) <- c("2021", "2023", "2024", "2025", "2026")
 
 message_step("Preparing place-search index")
 districts <- boundaries[["2026"]] |>

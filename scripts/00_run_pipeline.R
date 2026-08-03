@@ -3,6 +3,8 @@ options(warn = 1)
 steps <- c(
   "scripts/01_prepare_boundaries.R",
   "scripts/02_prepare_population.R",
+  "scripts/02a_prepare_population_migration.R",
+  "scripts/02b_prepare_education_work.R",
   "scripts/03_prepare_elections_income.R",
   "scripts/04_prepare_buildings.R",
   "scripts/05_prepare_transport.R",

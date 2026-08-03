@@ -31,6 +31,8 @@ layer_ids <- vapply(manifest$layers, `[[`, character(1), "id")
 assert_unique(source_ids, "Manifest source IDs")
 assert_unique(layer_ids, "Manifest layer IDs")
 assert_true(manifest$defaultLayer %in% layer_ids, "Manifest default layer does not exist")
+assert_true(identical(manifest$version, "1.1.0"), "Manifest schema must be 1.1.0")
+assert_true(identical(section_reports$version, "1.1.0"), "Report schema must be 1.1.0")
 
 source_layer_ids <- unique(unlist(lapply(manifest$layers, `[[`, "sourceIds")))
 assert_true(all(source_layer_ids %in% source_ids), "A layer references a missing PMTiles source")
@@ -79,13 +81,41 @@ population_sections <- readRDS(file.path(processed_dir, "sections-2026-populatio
 population_percentiles <- sf::st_drop_geometry(population_sections)[
   c(
     "population_density_percentile", "under18_percentile",
-    "age65plus_percentile", "foreign_citizenship_percentile"
+    "age65plus_percentile", "population_change_5y_percentile"
   )
 ]
 assert_true(
   all(vapply(population_percentiles, function(x) all(dplyr::between(x, 0, 100), na.rm = TRUE), logical(1))),
   "Population percentile values are out of range"
 )
+assert_true(
+  all(is.na(population_sections$population_change_5y_pct[!population_sections$population_match_comparable])) &&
+    all(is.finite(population_sections$population_change_5y_pct[population_sections$population_match_comparable])),
+  "Five-year population change violates reciprocal 95% matching"
+)
+
+education_sections <- readRDS(file.path(processed_dir, "sections-2024-education-work.rds"))
+education_columns <- c("activity_rate_pct", "employment_rate_pct", "unemployment_rate_pct", "higher_education_pct", "low_education_pct")
+assert_true(
+  all(vapply(sf::st_drop_geometry(education_sections)[education_columns], function(x) all(dplyr::between(x, 0, 100), na.rm = TRUE), logical(1))),
+  "Education & Work values are out of range"
+)
+assert_true(
+  all(abs(education_sections$activity_rate_pct - education_sections$employment_rate_pct / (1 - education_sections$unemployment_rate_pct / 100)) < 1e-8, na.rm = TRUE),
+  "Education & Work rate identity failed"
+)
+
+migration_sections <- readRDS(file.path(processed_dir, "sections-2025-migration.rds"))
+country_slugs <- c("total", "venezuela", "colombia", "peru", "ecuador", "republica_dominicana", "argentina", "china", "marruecos")
+assert_true(
+  all(paste0("foreign_born_pct_", country_slugs) %in% names(migration_sections)) &&
+    all(paste0("foreign_citizenship_pct_", country_slugs) %in% names(migration_sections)),
+  "Country allow-list fields are incomplete"
+)
+for (slug in country_slugs) {
+  change <- migration_sections[[paste0("foreign_born_change_pp_", slug)]]
+  assert_true(all(is.na(change[!migration_sections$migration_match_comparable])), paste("Non-comparable migration change published for", slug))
+}
 
 income_sections <- readRDS(file.path(processed_dir, "sections-2023-thematics.rds"))
 assert_true(
@@ -97,9 +127,11 @@ assert_true(
   "Above-200%-median income values are out of range"
 )
 income_percentile_columns <- c(
-  "income_per_person_percentile", "below_60_median_percentile",
+  "income_per_person_percentile", "income_per_household_percentile", "pension_income_percentile", "below_60_median_percentile",
   "above_200_median_percentile", "gini_percentile", "income_p80_p20_percentile"
 )
+assert_true(all(income_sections$income_per_household_eur >= 0, na.rm = TRUE), "Negative household income values")
+assert_true(all(dplyr::between(income_sections$pension_income_pct, 0, 100), na.rm = TRUE), "Pension-income percentage out of range")
 assert_true(
   all(vapply(
     sf::st_drop_geometry(income_sections)[income_percentile_columns],
@@ -131,7 +163,7 @@ assert_true(
 )
 for (report in section_reports$sections) {
   assert_true(
-    !is.null(report$matches[["2023"]]$sectionId) && !is.null(report$matches[["2025"]]$sectionId),
+    all(vapply(c("2021", "2023", "2024", "2025"), function(year) !is.null(report$matches[[year]]$sectionId), logical(1))),
     paste("Section report is missing a historical match:", report$id)
   )
 }
@@ -154,12 +186,19 @@ for (election in c("general", "local", "assembly")) {
     identical(election_layers[[1]]$control$party, "leading"),
     paste("Results/Leading party is not first for", election)
   )
+  margin_layer <- Filter(function(layer) identical(layer$id, paste0("election-", election, "-left-right")), election_layers)
+  assert_true(length(margin_layer) == 1 && isTRUE(as.numeric(margin_layer[[1]]$scale$center) == 0), paste("Missing zero-centred Left–Right layer for", election))
 }
 
 election_checks <- lapply(c("general", "local", "assembly"), function(election) {
   metadata <- readRDS(file.path(processed_dir, paste0("election-", election, "-metadata.rds")))
   difference <- unlist(metadata$difference)
   assert_true(all(abs(difference) <= 2), paste(election, "election reconciliation drifted"))
+  values <- readRDS(file.path(processed_dir, paste0("election-", election, ".rds")))
+  assert_true(
+    all(abs(values$left_right_margin_pp - (values$right_share - values$left_share)) < 1e-10, na.rm = TRUE),
+    paste(election, "Left–Right margin formula failed")
+  )
   list(election = election, difference = metadata$difference, sections = metadata$sections)
 })
 

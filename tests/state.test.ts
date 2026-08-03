@@ -22,9 +22,21 @@ describe("URL state", () => {
   });
 
   it("falls back when enums are invalid", () => {
-    const state = parseHash("#group=unknown&election=old");
+    const state = parseHash("#group=unknown&election=old&country=not-real");
     expect(state.group).toBe(DEFAULT_STATE.group);
     expect(state.election).toBe(DEFAULT_STATE.election);
+    expect(state.country).toBe("total");
+  });
+
+  it("round-trips a migration country selection", () => {
+    const state = {
+      ...DEFAULT_STATE,
+      layer: "population-foreign-born-change",
+      country: "colombia",
+    };
+    const hash = serializeState(state);
+    expect(hash).toContain("country=colombia");
+    expect(parseHash(hash)).toEqual(state);
   });
 
   it("persists a transport-only view without a thematic layer", () => {
