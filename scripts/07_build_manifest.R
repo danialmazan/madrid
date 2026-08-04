@@ -100,6 +100,12 @@ symmetric_limit <- function(values) {
   max(0.01, unname(as.numeric(stats::quantile(valid, 0.95, names = FALSE, type = 7))))
 }
 
+capped_breaks <- function(cap) {
+  # Six colours need five transition points. Repeating the cap as the display
+  # maximum means the darkest colour starts at the cap and higher values clamp.
+  unname(c(seq(0, cap, length.out = 6), cap))
+}
+
 layer <- function(
   id, group, kind, label, short_label, description, unit, reference_date,
   geography, source_ids, property, palette, breaks, format,
@@ -133,13 +139,50 @@ country_labels <- c(
   ecuador = "Ecuador", republica_dominicana = "República Dominicana",
   argentina = "Argentina", china = "China", marruecos = "Marruecos"
 )
-country_control <- function(property_prefix, percentile_prefix) {
-  options <- lapply(names(country_labels), function(slug) list(
-    value = slug,
-    label = unname(country_labels[[slug]]),
-    property = paste0(property_prefix, slug),
-    percentileProperty = paste0(percentile_prefix, slug)
-  ))
+flag_ramp <- function(light, middle, dark) {
+  unname(grDevices::colorRampPalette(c(light, middle, dark))(6))
+}
+
+# One luminance-ordered ramp per country, derived from a colour in its flag.
+# Colombia deliberately uses gold; direction-based change maps remain red-white-blue.
+country_flag_palettes <- list(
+  venezuela = flag_ramp("#f3f6ff", "#547ccc", "#00247d"),
+  colombia = flag_ramp("#fffbea", "#f5cf3b", "#8a6400"),
+  peru = flag_ramp("#fff3f4", "#ef7180", "#9e1024"),
+  ecuador = flag_ramp("#fff7e8", "#eea233", "#8a4f00"),
+  republica_dominicana = flag_ramp("#f2f5ff", "#5b75ba", "#002d62"),
+  argentina = flag_ramp("#f4fbff", "#8ecae6", "#2e7698"),
+  china = flag_ramp("#fff2ee", "#ef634b", "#9d160f"),
+  marruecos = flag_ramp("#f1faf5", "#44a575", "#006233")
+)
+
+shared_foreign_born_breaks <- capped_breaks(10)
+shared_foreign_citizenship_breaks <- capped_breaks(10)
+shared_country_change_limit <- 5
+
+country_option_palettes <- c(list(total = brown_palette), country_flag_palettes)
+country_option_breaks <- function(total_breaks, shared_breaks) {
+  stats::setNames(lapply(names(country_labels), function(slug) {
+    if (slug == "total") total_breaks else shared_breaks
+  }), names(country_labels))
+}
+
+country_control <- function(property_prefix, percentile_prefix, palettes = NULL, breaks = NULL) {
+  options <- lapply(names(country_labels), function(slug) {
+    option <- list(
+      value = slug,
+      label = unname(country_labels[[slug]]),
+      property = paste0(property_prefix, slug),
+      percentileProperty = paste0(percentile_prefix, slug)
+    )
+    if (!is.null(palettes) && !is.null(palettes[[slug]])) {
+      option$palette <- unname(as.list(palettes[[slug]]))
+    }
+    if (!is.null(breaks) && !is.null(breaks[[slug]])) {
+      option$breaks <- unname(as.list(breaks[[slug]]))
+    }
+    option
+  })
   list(country = list(defaultValue = "total", options = options))
 }
 
@@ -159,6 +202,18 @@ section_context_2026 <- tooltip(
 
 population_change_limit <- symmetric_limit(population_values$population_change_5y_pct)
 migration_change_limit <- symmetric_limit(migration_values$foreign_born_change_pp_total)
+foreign_born_breaks_by_country <- country_option_breaks(
+  six_quantile_breaks(migration_values$foreign_born_pct_total),
+  shared_foreign_born_breaks
+)
+foreign_citizenship_breaks_by_country <- country_option_breaks(
+  six_quantile_breaks(migration_values$foreign_citizenship_pct_total),
+  shared_foreign_citizenship_breaks
+)
+foreign_born_change_breaks_by_country <- country_option_breaks(
+  c(-migration_change_limit, 0, migration_change_limit),
+  c(-shared_country_change_limit, 0, shared_country_change_limit)
+)
 
 layers_out <- list(
   layer(
@@ -209,7 +264,10 @@ layers_out <- list(
       ),
       field("section_id", "Section ID", "text")
     ),
-    control = country_control("foreign_born_pct_", "foreign_born_percentile_")
+    control = country_control(
+      "foreign_born_pct_", "foreign_born_percentile_",
+      country_option_palettes, foreign_born_breaks_by_country
+    )
   ),
   layer(
     "population-foreign-citizenship", "population", "choropleth", "Foreign citizenship", "Foreign citizenship",
@@ -223,7 +281,10 @@ layers_out <- list(
       ),
       field("section_id", "Section ID", "text")
     ),
-    control = country_control("foreign_citizenship_pct_", "foreign_citizenship_percentile_")
+    control = country_control(
+      "foreign_citizenship_pct_", "foreign_citizenship_percentile_",
+      country_option_palettes, foreign_citizenship_breaks_by_country
+    )
   ),
   layer(
     "population-foreign-born-change", "population", "choropleth", "2021–2025 foreign-born-share change (4 years)", "Foreign-born change",
@@ -237,7 +298,10 @@ layers_out <- list(
       ),
       field("section_id", "Section ID", "text")
     ),
-    control = country_control("foreign_born_change_pp_", "foreign_born_change_percentile_"),
+    control = country_control(
+      "foreign_born_change_pp_", "foreign_born_change_percentile_",
+      breaks = foreign_born_change_breaks_by_country
+    ),
     scale = list(type = "continuous-diverging", center = 0, clamp = TRUE)
   ),
   layer(
@@ -608,6 +672,7 @@ manifest <- list(
     "Population values are joined by official section identifiers; resident coverage must be at least 99.5%.",
     "Longitudinal change is shown only for reciprocal one-to-one section matches covering at least 95% of both vintages; split and merged sections remain No data.",
     "Country controls use 2025 INE sections for both birthplace and citizenship. Honduras and Paraguay are in Madrid's 2026 top ten but cannot be shown because INE groups them under Other countries of America.",
+    "The eight country-specific share maps use a common 0–10% scale and flag-derived sequential palettes; Total retains its own scale. Country-specific change retains the red-white-blue direction palette with a common ±5 percentage-point limit.",
     "The foreign-born comparison is explicitly four years (2021–2025) and is expressed in percentage points.",
     "Election shares use valid votes including blank ballots as the denominator.",
     "Election totals exclude non-geographic votes when they are absent from polling-table data.",

@@ -152,5 +152,27 @@ describe("published atlas data", () => {
         "total", "venezuela", "colombia", "peru", "ecuador", "republica_dominicana", "argentina", "china", "marruecos",
       ]);
     }
+
+    for (const id of ["population-foreign-born", "population-foreign-citizenship"]) {
+      const options = manifest.layers.find((layer) => layer.id === id)!.control!.country!.options;
+      const total = options[0]!;
+      const countries = options.slice(1);
+      const sharedBreaks = countries[0]!.breaks!;
+      expect(countries.every((option) => JSON.stringify(option.breaks) === JSON.stringify(sharedBreaks))).toBe(true);
+      expect(sharedBreaks[5]).toBe(sharedBreaks[6]);
+      expect(sharedBreaks).toEqual([0, 2, 4, 6, 8, 10, 10]);
+      expect(total.breaks).not.toEqual(sharedBreaks);
+      expect(new Set(countries.map((option) => option.palette!.join(","))).size).toBe(8);
+    }
+
+    const birthOptions = manifest.layers.find((layer) => layer.id === "population-foreign-born")!
+      .control!.country!.options;
+    expect(birthOptions.find((option) => option.value === "colombia")!.palette!.at(-1)!.toLowerCase()).toBe("#8a6400");
+
+    const changeCountries = manifest.layers.find((layer) => layer.id === "population-foreign-born-change")!
+      .control!.country!.options.slice(1);
+    const sharedChangeBreaks = changeCountries[0]!.breaks!;
+    expect(changeCountries.every((option) => JSON.stringify(option.breaks) === JSON.stringify(sharedChangeBreaks))).toBe(true);
+    expect(sharedChangeBreaks).toEqual([-5, 0, 5]);
   });
 });

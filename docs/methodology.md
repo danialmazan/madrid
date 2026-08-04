@@ -23,6 +23,11 @@ country count by all residents. Total means all foreign countries. The comparabl
 Venezuela, Colombia, Peru, Ecuador, Dominican Republic, Argentina, China and Morocco. Honduras and
 Paraguay are omitted because INE groups them under Other countries of America at section level.
 
+For each share measure, all eight country-specific maps use one common 0–10% scale. Values at or
+above 10% receive the darkest colour. Total retains its own citywide scale. Country maps use
+luminance-ordered, flag-derived palettes (gold for Colombia); the signed change map retains the
+common red-white-blue direction scale with a fixed ±5 percentage-point limit.
+
 The feature panel also reports each section’s rank across Madrid sections for density, under-18,
 65+, foreign-citizenship and foreign-born measures. Tied values receive their average percentile
 rank. Each country variant has its own citywide percentile distribution.

@@ -52,6 +52,10 @@ export function parseHash(hash: string): AtlasState {
   const rawSection = params.get("section");
   const selectedSection = rawSection && /^28079[0-9]{5}$/.test(rawSection) ? rawSection : null;
 
+  const country = group === "population" && countries.includes(params.get("country") as (typeof countries)[number])
+    ? (params.get("country") as string)
+    : DEFAULT_STATE.country;
+
   return {
     group,
     layer: params.get("layer") || DEFAULT_STATE.layer,
@@ -63,9 +67,7 @@ export function parseHash(hash: string): AtlasState {
       .map((item) => item.trim())
       .filter(Boolean),
     route: params.get("route") || DEFAULT_STATE.route,
-    country: countries.includes(params.get("country") as (typeof countries)[number])
-      ? (params.get("country") as string)
-      : DEFAULT_STATE.country,
+    country,
     camera: {
       lng: bounded(finiteNumber(params.get("lng"), DEFAULT_STATE.camera.lng), -180, 180),
       lat: bounded(finiteNumber(params.get("lat"), DEFAULT_STATE.camera.lat), -85, 85),
@@ -92,7 +94,7 @@ export function serializeState(state: AtlasState): string {
   }
   if (state.transport.length > 0) params.set("transport", state.transport.join(","));
   if (state.route !== "all") params.set("route", state.route);
-  if (state.country !== "total") params.set("country", state.country);
+  if (state.group === "population" && state.country !== "total") params.set("country", state.country);
   params.set("lng", round(state.camera.lng, 5));
   params.set("lat", round(state.camera.lat, 5));
   params.set("z", round(state.camera.zoom, 2));

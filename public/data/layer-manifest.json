@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-03T17:56:06Z",
+  "generatedAt": "2026-08-04T17:03:52Z",
   "version": "1.1.0",
   "defaultLayer": "population-density",
   "sources": [
@@ -834,55 +834,208 @@
               "value": "total",
               "label": "Total",
               "property": "foreign_born_pct_total",
-              "percentileProperty": "foreign_born_percentile_total"
+              "percentileProperty": "foreign_born_percentile_total",
+              "palette": [
+                "#f5eee9",
+                "#dfcdbf",
+                "#bf9f8a",
+                "#956e55",
+                "#694a38",
+                "#3f2b21"
+              ],
+              "breaks": [
+                4.4059795437,
+                14.9137709663,
+                20.9700650039,
+                27.3095919303,
+                34.4987400426,
+                43.7824309286,
+                66.3513513514
+              ]
             },
             {
               "value": "venezuela",
               "label": "Venezuela",
               "property": "foreign_born_pct_venezuela",
-              "percentileProperty": "foreign_born_percentile_venezuela"
+              "percentileProperty": "foreign_born_percentile_venezuela",
+              "palette": [
+                "#F3F6FF",
+                "#B3C5EA",
+                "#7394D6",
+                "#436ABC",
+                "#21479C",
+                "#00247D"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             },
             {
               "value": "colombia",
               "label": "Colombia",
               "property": "foreign_born_pct_colombia",
-              "percentileProperty": "foreign_born_percentile_colombia"
+              "percentileProperty": "foreign_born_percentile_colombia",
+              "palette": [
+                "#FFFBEA",
+                "#FBE9A3",
+                "#F7D75D",
+                "#DFB92F",
+                "#B48E17",
+                "#8A6400"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             },
             {
               "value": "peru",
               "label": "Perú",
               "property": "foreign_born_pct_peru",
-              "percentileProperty": "foreign_born_percentile_peru"
+              "percentileProperty": "foreign_born_percentile_peru",
+              "palette": [
+                "#FFF3F4",
+                "#F8BEC5",
+                "#F28B97",
+                "#DE5D6D",
+                "#BE3648",
+                "#9E1024"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             },
             {
               "value": "ecuador",
               "label": "Ecuador",
               "property": "foreign_born_pct_ecuador",
-              "percentileProperty": "foreign_born_percentile_ecuador"
+              "percentileProperty": "foreign_born_percentile_ecuador",
+              "palette": [
+                "#FFF7E8",
+                "#F8D59F",
+                "#F1B357",
+                "#DA9128",
+                "#B27014",
+                "#8A4F00"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             },
             {
               "value": "republica_dominicana",
               "label": "República Dominicana",
               "property": "foreign_born_pct_republica_dominicana",
-              "percentileProperty": "foreign_born_percentile_republica_dominicana"
+              "percentileProperty": "foreign_born_percentile_republica_dominicana",
+              "palette": [
+                "#F2F5FF",
+                "#B5C1E3",
+                "#798EC7",
+                "#4866A8",
+                "#244985",
+                "#002D62"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             },
             {
               "value": "argentina",
               "label": "Argentina",
               "property": "foreign_born_pct_argentina",
-              "percentileProperty": "foreign_born_percentile_argentina"
+              "percentileProperty": "foreign_born_percentile_argentina",
+              "palette": [
+                "#F4FBFF",
+                "#CBE7F5",
+                "#A2D3EB",
+                "#7AB9D6",
+                "#5497B7",
+                "#2E7698"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             },
             {
               "value": "china",
               "label": "China",
               "property": "foreign_born_pct_china",
-              "percentileProperty": "foreign_born_percentile_china"
+              "percentileProperty": "foreign_born_percentile_china",
+              "palette": [
+                "#FFF2EE",
+                "#F8B8AC",
+                "#F27F6B",
+                "#DE533E",
+                "#BD3426",
+                "#9D160F"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             },
             {
               "value": "marruecos",
               "label": "Marruecos",
               "property": "foreign_born_pct_marruecos",
-              "percentileProperty": "foreign_born_percentile_marruecos"
+              "percentileProperty": "foreign_born_percentile_marruecos",
+              "palette": [
+                "#F1FAF5",
+                "#ABD8C1",
+                "#66B68E",
+                "#369767",
+                "#1B7C4D",
+                "#006233"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             }
           ]
         }
@@ -944,55 +1097,208 @@
               "value": "total",
               "label": "Total",
               "property": "foreign_citizenship_pct_total",
-              "percentileProperty": "foreign_citizenship_percentile_total"
+              "percentileProperty": "foreign_citizenship_percentile_total",
+              "palette": [
+                "#f5eee9",
+                "#dfcdbf",
+                "#bf9f8a",
+                "#956e55",
+                "#694a38",
+                "#3f2b21"
+              ],
+              "breaks": [
+                2.2079116835,
+                8.6753098809,
+                12.8614902026,
+                17.3771358174,
+                22.1175545785,
+                29.0587440206,
+                50.8444962143
+              ]
             },
             {
               "value": "venezuela",
               "label": "Venezuela",
               "property": "foreign_citizenship_pct_venezuela",
-              "percentileProperty": "foreign_citizenship_percentile_venezuela"
+              "percentileProperty": "foreign_citizenship_percentile_venezuela",
+              "palette": [
+                "#F3F6FF",
+                "#B3C5EA",
+                "#7394D6",
+                "#436ABC",
+                "#21479C",
+                "#00247D"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             },
             {
               "value": "colombia",
               "label": "Colombia",
               "property": "foreign_citizenship_pct_colombia",
-              "percentileProperty": "foreign_citizenship_percentile_colombia"
+              "percentileProperty": "foreign_citizenship_percentile_colombia",
+              "palette": [
+                "#FFFBEA",
+                "#FBE9A3",
+                "#F7D75D",
+                "#DFB92F",
+                "#B48E17",
+                "#8A6400"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             },
             {
               "value": "peru",
               "label": "Perú",
               "property": "foreign_citizenship_pct_peru",
-              "percentileProperty": "foreign_citizenship_percentile_peru"
+              "percentileProperty": "foreign_citizenship_percentile_peru",
+              "palette": [
+                "#FFF3F4",
+                "#F8BEC5",
+                "#F28B97",
+                "#DE5D6D",
+                "#BE3648",
+                "#9E1024"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             },
             {
               "value": "ecuador",
               "label": "Ecuador",
               "property": "foreign_citizenship_pct_ecuador",
-              "percentileProperty": "foreign_citizenship_percentile_ecuador"
+              "percentileProperty": "foreign_citizenship_percentile_ecuador",
+              "palette": [
+                "#FFF7E8",
+                "#F8D59F",
+                "#F1B357",
+                "#DA9128",
+                "#B27014",
+                "#8A4F00"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             },
             {
               "value": "republica_dominicana",
               "label": "República Dominicana",
               "property": "foreign_citizenship_pct_republica_dominicana",
-              "percentileProperty": "foreign_citizenship_percentile_republica_dominicana"
+              "percentileProperty": "foreign_citizenship_percentile_republica_dominicana",
+              "palette": [
+                "#F2F5FF",
+                "#B5C1E3",
+                "#798EC7",
+                "#4866A8",
+                "#244985",
+                "#002D62"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             },
             {
               "value": "argentina",
               "label": "Argentina",
               "property": "foreign_citizenship_pct_argentina",
-              "percentileProperty": "foreign_citizenship_percentile_argentina"
+              "percentileProperty": "foreign_citizenship_percentile_argentina",
+              "palette": [
+                "#F4FBFF",
+                "#CBE7F5",
+                "#A2D3EB",
+                "#7AB9D6",
+                "#5497B7",
+                "#2E7698"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             },
             {
               "value": "china",
               "label": "China",
               "property": "foreign_citizenship_pct_china",
-              "percentileProperty": "foreign_citizenship_percentile_china"
+              "percentileProperty": "foreign_citizenship_percentile_china",
+              "palette": [
+                "#FFF2EE",
+                "#F8B8AC",
+                "#F27F6B",
+                "#DE533E",
+                "#BD3426",
+                "#9D160F"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             },
             {
               "value": "marruecos",
               "label": "Marruecos",
               "property": "foreign_citizenship_pct_marruecos",
-              "percentileProperty": "foreign_citizenship_percentile_marruecos"
+              "percentileProperty": "foreign_citizenship_percentile_marruecos",
+              "palette": [
+                "#F1FAF5",
+                "#ABD8C1",
+                "#66B68E",
+                "#369767",
+                "#1B7C4D",
+                "#006233"
+              ],
+              "breaks": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                10
+              ]
             }
           ]
         }
@@ -1048,55 +1354,100 @@
               "value": "total",
               "label": "Total",
               "property": "foreign_born_change_pp_total",
-              "percentileProperty": "foreign_born_change_percentile_total"
+              "percentileProperty": "foreign_born_change_percentile_total",
+              "breaks": [
+                -10.7846645421,
+                0,
+                10.7846645421
+              ]
             },
             {
               "value": "venezuela",
               "label": "Venezuela",
               "property": "foreign_born_change_pp_venezuela",
-              "percentileProperty": "foreign_born_change_percentile_venezuela"
+              "percentileProperty": "foreign_born_change_percentile_venezuela",
+              "breaks": [
+                -5,
+                0,
+                5
+              ]
             },
             {
               "value": "colombia",
               "label": "Colombia",
               "property": "foreign_born_change_pp_colombia",
-              "percentileProperty": "foreign_born_change_percentile_colombia"
+              "percentileProperty": "foreign_born_change_percentile_colombia",
+              "breaks": [
+                -5,
+                0,
+                5
+              ]
             },
             {
               "value": "peru",
               "label": "Perú",
               "property": "foreign_born_change_pp_peru",
-              "percentileProperty": "foreign_born_change_percentile_peru"
+              "percentileProperty": "foreign_born_change_percentile_peru",
+              "breaks": [
+                -5,
+                0,
+                5
+              ]
             },
             {
               "value": "ecuador",
               "label": "Ecuador",
               "property": "foreign_born_change_pp_ecuador",
-              "percentileProperty": "foreign_born_change_percentile_ecuador"
+              "percentileProperty": "foreign_born_change_percentile_ecuador",
+              "breaks": [
+                -5,
+                0,
+                5
+              ]
             },
             {
               "value": "republica_dominicana",
               "label": "República Dominicana",
               "property": "foreign_born_change_pp_republica_dominicana",
-              "percentileProperty": "foreign_born_change_percentile_republica_dominicana"
+              "percentileProperty": "foreign_born_change_percentile_republica_dominicana",
+              "breaks": [
+                -5,
+                0,
+                5
+              ]
             },
             {
               "value": "argentina",
               "label": "Argentina",
               "property": "foreign_born_change_pp_argentina",
-              "percentileProperty": "foreign_born_change_percentile_argentina"
+              "percentileProperty": "foreign_born_change_percentile_argentina",
+              "breaks": [
+                -5,
+                0,
+                5
+              ]
             },
             {
               "value": "china",
               "label": "China",
               "property": "foreign_born_change_pp_china",
-              "percentileProperty": "foreign_born_change_percentile_china"
+              "percentileProperty": "foreign_born_change_percentile_china",
+              "breaks": [
+                -5,
+                0,
+                5
+              ]
             },
             {
               "value": "marruecos",
               "label": "Marruecos",
               "property": "foreign_born_change_pp_marruecos",
-              "percentileProperty": "foreign_born_change_percentile_marruecos"
+              "percentileProperty": "foreign_born_change_percentile_marruecos",
+              "breaks": [
+                -5,
+                0,
+                5
+              ]
             }
           ]
         }
@@ -5960,83 +6311,84 @@
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://datos.madrid.es/dataset/200076-0-padron/resource/200076-2-padron-csv/download/200076_20260714_062859.csv",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-03"
+      "retrieved": "2026-08-04"
     },
     {
       "title": "Population by country of birth and nationality",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66428.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-03"
+      "retrieved": "2026-08-04"
     },
     {
       "title": "Education and economic activity by census section",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66753.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-03"
+      "retrieved": "2026-08-04"
     },
     {
       "title": "Catastro INSPIRE Buildings",
       "organisation": "Dirección General del Catastro",
       "url": "https://www.catastro.hacienda.gob.es/INSPIRE/Buildings/28/28900-MADRID/A.ES.SDGC.BU.28900.zip",
       "licence": "Catastro data-access conditions",
-      "retrieved": "2026-08-03"
+      "retrieved": "2026-08-04"
     },
     {
       "title": "Alturas de edificios",
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://geoportal.madrid.es/fsdescargas/IDEAM_WBGEOPORTAL/CARTOGRAFIA/CARTOGRAFIA_ACTUALIZADA/ALTURAS_EDIFICIOS/ALTURAS_EDIFICIOS.ZIP",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-03"
+      "retrieved": "2026-08-04"
     },
     {
       "title": "2023 election results by polling table",
       "organisation": "Madrid City Council / Interior Ministry",
       "url": "https://www.madrid.es/UnidadesDescentralizadas/UDCEstadistica/Nuevaweb/Elecciones%20y%20Participaci%C3%B3n%20Ciudadana/Elecciones/Resultados%20electorales/Congreso/Congreso%202023/Mesas/G1340123_prov.xlsx",
       "licence": "Public-sector information reuse terms",
-      "retrieved": "2026-08-03"
+      "retrieved": "2026-08-04"
     },
     {
       "title": "Household Income Distribution Atlas",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31097.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-03"
+      "retrieved": "2026-08-04"
     },
     {
       "title": "Income distribution by source",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31098.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-03"
+      "retrieved": "2026-08-04"
     },
     {
       "title": "CRTM open transport data",
       "organisation": "Consorcio Regional de Transportes de Madrid",
       "url": "https://transparencia.crtm.es/presupuestos-contratos-y-gastos/datos-abiertos/",
       "licence": "CRTM open-data licence",
-      "retrieved": "2026-08-03"
+      "retrieved": "2026-08-04"
     },
     {
       "title": "BiciMAD stations",
       "organisation": "EMT Madrid",
       "url": "https://datos.emtmadrid.es/dataset/5fcc0945-2cbd-46c3-801a-6a83f4167c11/resource/105ce5df-793f-4e0a-a88e-5d3b3f024a5d/download/bikestationbicimad_geojson.json",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-03"
+      "retrieved": "2026-08-04"
     },
     {
       "title": "Official Madrid street directory",
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://datos.madrid.es/dataset/213605-0-callejero-oficial-madrid/resource/213605-4-callejero-oficial-madrid-csv/download/213605-4-callejero-oficial-madrid-csv.csv",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-03"
+      "retrieved": "2026-08-04"
     }
   ],
   "notes": [
     "Population values are joined by official section identifiers; resident coverage must be at least 99.5%.",
     "Longitudinal change is shown only for reciprocal one-to-one section matches covering at least 95% of both vintages; split and merged sections remain No data.",
     "Country controls use 2025 INE sections for both birthplace and citizenship. Honduras and Paraguay are in Madrid's 2026 top ten but cannot be shown because INE groups them under Other countries of America.",
+    "The eight country-specific share maps use a common 0–10% scale and flag-derived sequential palettes; Total retains its own scale. Country-specific change retains the red-white-blue direction palette with a common ±5 percentage-point limit.",
     "The foreign-born comparison is explicitly four years (2021–2025) and is expressed in percentage points.",
     "Election shares use valid votes including blank ballots as the denominator.",
     "Election totals exclude non-geographic votes when they are absent from polling-table data.",

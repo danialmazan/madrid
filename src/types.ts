@@ -40,6 +40,8 @@ export interface LayerControl {
       label: string;
       property: string;
       percentileProperty: string;
+      palette?: string[];
+      breaks?: number[];
     }>;
   };
 }

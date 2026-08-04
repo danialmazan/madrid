@@ -124,6 +124,7 @@ async function fetchJson<T>(url: string): Promise<T> {
 }
 
 function normaliseInitialState(): void {
+  if (atlasState.group !== "population") atlasState.country = "total";
   const selected = manifest.layers.find((layer) => layer.id === atlasState.layer);
   if (!selected || selected.group === "transport") {
     atlasState.layer = manifest.defaultLayer;
@@ -588,6 +589,7 @@ function colorExpression(definition: LayerDefinition): ExpressionSpecification {
 
 function selectGroup(group: LayerGroup): void {
   atlasState.group = group;
+  if (group !== "population") atlasState.country = "total";
   if (group !== "transport" && getSelectedLayer().group !== group) {
     const first = manifest.layers.find((layer) => layer.group === group);
     if (first) atlasState.layer = first.id;
@@ -613,6 +615,7 @@ function selectLayer(layerId: string): void {
   atlasState.layer = layer.id;
   atlasState.dataLayerVisible = true;
   atlasState.group = layer.group;
+  if (layer.group !== "population") atlasState.country = "total";
   if (layer.control?.election) atlasState.election = layer.control.election;
   if (layer.control?.party) atlasState.party = layer.control.party;
   if (!isCensusSectionLayer(layer)) clearSelectedSection(false);
@@ -940,6 +943,8 @@ function effectiveDefinition(definition: LayerDefinition): LayerDefinition {
   return {
     ...definition,
     property: option.property,
+    palette: option.palette ?? definition.palette,
+    breaks: option.breaks ?? definition.breaks,
     label: `${definition.label.replace(/ · .*$/, "")} · ${option.label}`,
     tooltip: definition.tooltip.map((field) =>
       field.property === baseProperty

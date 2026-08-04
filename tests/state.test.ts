@@ -39,6 +39,18 @@ describe("URL state", () => {
     expect(parseHash(hash)).toEqual(state);
   });
 
+  it("drops migration country state outside the Population theme", () => {
+    const state = {
+      ...DEFAULT_STATE,
+      group: "income" as const,
+      layer: "income-per-person",
+      country: "ecuador",
+    };
+    const hash = serializeState(state);
+    expect(hash).not.toContain("country=");
+    expect(parseHash("#group=income&layer=income-per-person&country=ecuador").country).toBe("total");
+  });
+
   it("persists a transport-only view without a thematic layer", () => {
     const state = {
       ...DEFAULT_STATE,
