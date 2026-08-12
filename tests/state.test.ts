@@ -39,6 +39,12 @@ describe("URL state", () => {
     expect(parseHash(hash)).toEqual(state);
   });
 
+  it("round-trips the dark background map", () => {
+    const state = { ...DEFAULT_STATE, basemap: "dark" as const };
+    expect(serializeState(state)).toContain("basemap=dark");
+    expect(parseHash(serializeState(state))).toEqual(state);
+  });
+
   it("drops migration country state outside the Population theme", () => {
     const state = {
       ...DEFAULT_STATE,

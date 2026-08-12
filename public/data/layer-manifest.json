@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-04T17:03:52Z",
+  "generatedAt": "2026-08-12T10:49:35Z",
   "version": "1.1.0",
   "defaultLayer": "population-density",
   "sources": [
@@ -1831,12 +1831,13 @@
       ],
       "property": "height_m",
       "palette": [
-        "#fff2e8",
-        "#ffd2b6",
-        "#f8a56d",
-        "#fb7b2d",
-        "#d94c08",
-        "#963005"
+        "#453781",
+        "#2f6b8c",
+        "#269da3",
+        "#69c48b",
+        "#d6e96b",
+        "#f5a34b",
+        "#d94b45"
       ],
       "breaks": [
         0,
@@ -1845,7 +1846,7 @@
         14,
         24,
         40,
-        120
+        80
       ],
       "format": "decimal",
       "minzoom": 12,
@@ -3863,166 +3864,6 @@
         38,
         45,
         65
-      ],
-      "format": "decimal",
-      "minzoom": 8,
-      "maxzoom": 24,
-      "opacity": 0.72,
-      "tooltip": [
-        {
-          "property": "income_per_person_eur",
-          "label": "Net income / person",
-          "format": "currency",
-          "percentileProperty": "income_per_person_percentile"
-        },
-        {
-          "property": "income_per_household_eur",
-          "label": "Net income / household",
-          "format": "currency",
-          "percentileProperty": "income_per_household_percentile"
-        },
-        {
-          "property": "pension_income_pct",
-          "label": "Income from pensions",
-          "format": "percent",
-          "percentileProperty": "pension_income_percentile"
-        },
-        {
-          "property": "below_60_median_pct",
-          "label": "Below 60% median",
-          "format": "percent",
-          "percentileProperty": "below_60_median_percentile"
-        },
-        {
-          "property": "above_200_median_pct",
-          "label": "Above 200% median",
-          "format": "percent",
-          "percentileProperty": "above_200_median_percentile"
-        },
-        {
-          "property": "gini",
-          "label": "Gini coefficient",
-          "format": "decimal",
-          "percentileProperty": "gini_percentile"
-        },
-        {
-          "property": "income_p80_p20",
-          "label": "P80/P20 ratio",
-          "format": "decimal",
-          "percentileProperty": "income_p80_p20_percentile"
-        }
-      ]
-    },
-    {
-      "id": "income-above-200-median",
-      "group": "income",
-      "kind": "choropleth",
-      "label": "Population above 200% of median",
-      "shortLabel": "Above 200% median",
-      "description": "Share of people above twice the national median equivalised income.",
-      "unit": "%",
-      "referenceDate": "2023",
-      "geography": "2023 census sections",
-      "sourceIds": [
-        "sections-2023"
-      ],
-      "property": "above_200_median_pct",
-      "palette": [
-        "#edf5ed",
-        "#cce6d9",
-        "#8dceb4",
-        "#43aa8b",
-        "#247a67",
-        "#135348"
-      ],
-      "breaks": [
-        0,
-        4,
-        10,
-        18,
-        28,
-        40,
-        60
-      ],
-      "format": "percent",
-      "minzoom": 8,
-      "maxzoom": 24,
-      "opacity": 0.72,
-      "tooltip": [
-        {
-          "property": "income_per_person_eur",
-          "label": "Net income / person",
-          "format": "currency",
-          "percentileProperty": "income_per_person_percentile"
-        },
-        {
-          "property": "income_per_household_eur",
-          "label": "Net income / household",
-          "format": "currency",
-          "percentileProperty": "income_per_household_percentile"
-        },
-        {
-          "property": "pension_income_pct",
-          "label": "Income from pensions",
-          "format": "percent",
-          "percentileProperty": "pension_income_percentile"
-        },
-        {
-          "property": "below_60_median_pct",
-          "label": "Below 60% median",
-          "format": "percent",
-          "percentileProperty": "below_60_median_percentile"
-        },
-        {
-          "property": "above_200_median_pct",
-          "label": "Above 200% median",
-          "format": "percent",
-          "percentileProperty": "above_200_median_percentile"
-        },
-        {
-          "property": "gini",
-          "label": "Gini coefficient",
-          "format": "decimal",
-          "percentileProperty": "gini_percentile"
-        },
-        {
-          "property": "income_p80_p20",
-          "label": "P80/P20 ratio",
-          "format": "decimal",
-          "percentileProperty": "income_p80_p20_percentile"
-        }
-      ]
-    },
-    {
-      "id": "income-p80-p20",
-      "group": "income",
-      "kind": "choropleth",
-      "label": "P80/P20 income ratio",
-      "shortLabel": "P80/P20 ratio",
-      "description": "Income at the 80th percentile divided by income at the 20th percentile.",
-      "unit": "ratio",
-      "referenceDate": "2023",
-      "geography": "2023 census sections",
-      "sourceIds": [
-        "sections-2023"
-      ],
-      "property": "income_p80_p20",
-      "palette": [
-        "#fff2e8",
-        "#ffd2b6",
-        "#f8a56d",
-        "#fb7b2d",
-        "#d94c08",
-        "#963005"
-      ],
-      "breaks": [
-        1.8,
-        2.3,
-        2.5,
-        2.7,
-        2.9,
-        3.2,
-        4.1
       ],
       "format": "decimal",
       "minzoom": 8,
@@ -6311,77 +6152,77 @@
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://datos.madrid.es/dataset/200076-0-padron/resource/200076-2-padron-csv/download/200076_20260714_062859.csv",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-04"
+      "retrieved": "2026-08-12"
     },
     {
       "title": "Population by country of birth and nationality",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66428.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-04"
+      "retrieved": "2026-08-12"
     },
     {
       "title": "Education and economic activity by census section",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66753.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-04"
+      "retrieved": "2026-08-12"
     },
     {
       "title": "Catastro INSPIRE Buildings",
       "organisation": "Dirección General del Catastro",
       "url": "https://www.catastro.hacienda.gob.es/INSPIRE/Buildings/28/28900-MADRID/A.ES.SDGC.BU.28900.zip",
       "licence": "Catastro data-access conditions",
-      "retrieved": "2026-08-04"
+      "retrieved": "2026-08-12"
     },
     {
       "title": "Alturas de edificios",
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://geoportal.madrid.es/fsdescargas/IDEAM_WBGEOPORTAL/CARTOGRAFIA/CARTOGRAFIA_ACTUALIZADA/ALTURAS_EDIFICIOS/ALTURAS_EDIFICIOS.ZIP",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-04"
+      "retrieved": "2026-08-12"
     },
     {
       "title": "2023 election results by polling table",
       "organisation": "Madrid City Council / Interior Ministry",
       "url": "https://www.madrid.es/UnidadesDescentralizadas/UDCEstadistica/Nuevaweb/Elecciones%20y%20Participaci%C3%B3n%20Ciudadana/Elecciones/Resultados%20electorales/Congreso/Congreso%202023/Mesas/G1340123_prov.xlsx",
       "licence": "Public-sector information reuse terms",
-      "retrieved": "2026-08-04"
+      "retrieved": "2026-08-12"
     },
     {
       "title": "Household Income Distribution Atlas",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31097.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-04"
+      "retrieved": "2026-08-12"
     },
     {
       "title": "Income distribution by source",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31098.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-04"
+      "retrieved": "2026-08-12"
     },
     {
       "title": "CRTM open transport data",
       "organisation": "Consorcio Regional de Transportes de Madrid",
       "url": "https://transparencia.crtm.es/presupuestos-contratos-y-gastos/datos-abiertos/",
       "licence": "CRTM open-data licence",
-      "retrieved": "2026-08-04"
+      "retrieved": "2026-08-12"
     },
     {
       "title": "BiciMAD stations",
       "organisation": "EMT Madrid",
       "url": "https://datos.emtmadrid.es/dataset/5fcc0945-2cbd-46c3-801a-6a83f4167c11/resource/105ce5df-793f-4e0a-a88e-5d3b3f024a5d/download/bikestationbicimad_geojson.json",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-04"
+      "retrieved": "2026-08-12"
     },
     {
       "title": "Official Madrid street directory",
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://datos.madrid.es/dataset/213605-0-callejero-oficial-madrid/resource/213605-4-callejero-oficial-madrid-csv/download/213605-4-callejero-oficial-madrid-csv.csv",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-04"
+      "retrieved": "2026-08-12"
     }
   ],
   "notes": [

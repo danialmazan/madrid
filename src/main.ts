@@ -40,6 +40,7 @@ const featurePanel = requireElement<HTMLElement>("#feature-panel");
 const status = requireElement<HTMLElement>("#map-status");
 const searchInput = requireElement<HTMLInputElement>("#place-search");
 const searchResults = requireElement<HTMLElement>("#search-results");
+const basemapButton = requireElement<HTMLButtonElement>("#basemap-button");
 const pitchButton = requireElement<HTMLButtonElement>("#pitch-button");
 const resetButton = requireElement<HTMLButtonElement>("#reset-button");
 const shareButton = requireElement<HTMLButtonElement>("#share-button");
@@ -147,6 +148,7 @@ function normaliseInitialState(): void {
 }
 
 function bindStaticControls(): void {
+  syncBasemapButton();
   document.querySelectorAll<HTMLButtonElement>(".group-tab").forEach((button) => {
     button.addEventListener("click", () => {
       const group = button.dataset.group as LayerGroup;
@@ -155,6 +157,7 @@ function bindStaticControls(): void {
   });
 
   pitchButton.addEventListener("click", () => toggle3d());
+  basemapButton.addEventListener("click", switchBasemap);
   resetButton.addEventListener("click", () => resetView());
   shareButton.addEventListener("click", openShareDialog);
   sheetToggle.addEventListener("click", () => toggleMobilePanel("details"));
@@ -221,7 +224,9 @@ function bindStaticControls(): void {
 
   window.addEventListener("hashchange", () => {
     const incoming = parseHash(window.location.hash);
+    const basemapChanged = incoming.basemap !== atlasState.basemap;
     atlasState = incoming;
+    syncBasemapButton();
     normaliseInitialState();
     renderGroupTabs();
     renderControls();
@@ -233,7 +238,8 @@ function bindStaticControls(): void {
         bearing: atlasState.camera.bearing,
         pitch: atlasState.camera.pitch,
       });
-      if (map.isStyleLoaded()) void applyMapLayers();
+      if (basemapChanged) reloadBasemap();
+      else if (map.isStyleLoaded()) void applyMapLayers();
     }
     void renderFeaturePanelForState();
     if (atlasState.reportOpen) void openSelectedSectionReport(false);
@@ -253,7 +259,7 @@ function createMap(): void {
   try {
     map = new maplibregl.Map({
       container: "atlas-map",
-      style: "https://tiles.openfreemap.org/styles/positron",
+      style: basemapStyleUrl(),
       center: [atlasState.camera.lng, atlasState.camera.lat],
       zoom: atlasState.camera.zoom,
       bearing: atlasState.camera.bearing,
@@ -310,32 +316,66 @@ function createMap(): void {
 }
 
 function tuneBasemap(): void {
+  const dark = atlasState.basemap === "dark";
   const style = map.getStyle();
   for (const layer of style.layers ?? []) {
     const id = layer.id.toLowerCase();
     try {
-      if (layer.type === "background") map.setPaintProperty(layer.id, "background-color", "#f5f4ef");
+      if (layer.type === "background") {
+        map.setPaintProperty(layer.id, "background-color", dark ? "#0b0f0e" : "#f5f4ef");
+      }
       if (layer.type === "fill" && /(park|wood|grass|landcover)/.test(id)) {
-        map.setPaintProperty(layer.id, "fill-color", "#dfe9df");
+        map.setPaintProperty(layer.id, "fill-color", dark ? "#16251f" : "#dfe9df");
         map.setPaintProperty(layer.id, "fill-opacity", 0.7);
       }
       if (layer.type === "fill" && /water/.test(id)) {
-        map.setPaintProperty(layer.id, "fill-color", "#c8dfe9");
+        map.setPaintProperty(layer.id, "fill-color", dark ? "#101b21" : "#c8dfe9");
       }
       if (layer.type === "line" && /(road|street|highway)/.test(id)) {
-        map.setPaintProperty(layer.id, "line-color", "#d8d5cd");
+        map.setPaintProperty(layer.id, "line-color", dark ? "#2a2f2d" : "#d8d5cd");
       }
       if (layer.type === "symbol" && /(poi|transit)/.test(id)) {
         map.setLayoutProperty(layer.id, "visibility", "none");
       }
       if (layer.type === "symbol" && /label/.test(id)) {
-        map.setPaintProperty(layer.id, "text-color", "#52524d");
-        map.setPaintProperty(layer.id, "text-halo-color", "#fafaf7");
+        map.setPaintProperty(layer.id, "text-color", dark ? "#a8b0ab" : "#52524d");
+        map.setPaintProperty(layer.id, "text-halo-color", dark ? "#0b0f0e" : "#fafaf7");
       }
     } catch {
       // OpenFreeMap occasionally changes layer paint capabilities; safe to skip.
     }
   }
+}
+
+function basemapStyleUrl(): string {
+  return `https://tiles.openfreemap.org/styles/${atlasState.basemap === "dark" ? "dark" : "positron"}`;
+}
+
+function syncBasemapButton(): void {
+  const dark = atlasState.basemap === "dark";
+  basemapButton.setAttribute("aria-pressed", String(dark));
+  basemapButton.setAttribute("aria-label", `Switch to ${dark ? "light" : "dark"} background map`);
+  const label = basemapButton.querySelector<HTMLElement>(".button-label");
+  if (label) label.textContent = dark ? "Light map" : "Dark map";
+}
+
+function switchBasemap(): void {
+  atlasState.basemap = atlasState.basemap === "dark" ? "light" : "dark";
+  syncBasemapButton();
+  reloadBasemap();
+  scheduleHashUpdate(true);
+}
+
+function reloadBasemap(): void {
+  setStatus(`Loading ${atlasState.basemap} background map…`);
+  map.once("style.load", () => {
+    tuneBasemap();
+    addManifestSources();
+    addCanonicalSectionHitLayer();
+    void applyMapLayers().then(() => void renderFeaturePanelForState());
+    setStatus(`Ready · ${manifest.generatedAt.slice(0, 10)}`);
+  });
+  map.setStyle(basemapStyleUrl());
 }
 
 function addManifestSources(): void {
@@ -410,7 +450,7 @@ function addSelectedSectionOutline(): void {
       maxzoom: 24,
       filter: ["==", ["get", "section_id"], atlasState.selectedSection],
       paint: {
-        "line-color": "#11110f",
+        "line-color": atlasState.basemap === "dark" ? "#f4f0df" : "#11110f",
         "line-width": ["interpolate", ["linear"], ["zoom"], 8, 2, 16, 4],
         "line-opacity": 0.96,
       },

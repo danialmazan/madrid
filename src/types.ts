@@ -1,4 +1,5 @@
 export type LayerGroup = "population" | "education-work" | "buildings" | "elections" | "income" | "transport";
+export type BasemapTheme = "light" | "dark";
 export type LayerKind = "choropleth" | "fill" | "fill-extrusion" | "transport-line" | "transport-stop";
 export type ValueFormat = "integer" | "decimal" | "percent" | "pp" | "currency" | "year" | "text";
 export type ElectionKey = "general" | "local" | "assembly";
@@ -134,6 +135,7 @@ export interface AtlasState {
   transport: string[];
   route: string;
   country: string;
+  basemap: BasemapTheme;
   camera: CameraState;
   is3d: boolean;
   selectedSection: string | null;

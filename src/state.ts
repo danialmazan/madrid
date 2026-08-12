@@ -17,6 +17,7 @@ export const DEFAULT_STATE: AtlasState = {
   transport: [],
   route: "all",
   country: "total",
+  basemap: "light",
   camera: { ...MADRID_CAMERA },
   is3d: false,
   selectedSection: null,
@@ -68,6 +69,7 @@ export function parseHash(hash: string): AtlasState {
       .filter(Boolean),
     route: params.get("route") || DEFAULT_STATE.route,
     country,
+    basemap: params.get("basemap") === "dark" ? "dark" : "light",
     camera: {
       lng: bounded(finiteNumber(params.get("lng"), DEFAULT_STATE.camera.lng), -180, 180),
       lat: bounded(finiteNumber(params.get("lat"), DEFAULT_STATE.camera.lat), -85, 85),
@@ -95,6 +97,7 @@ export function serializeState(state: AtlasState): string {
   if (state.transport.length > 0) params.set("transport", state.transport.join(","));
   if (state.route !== "all") params.set("route", state.route);
   if (state.group === "population" && state.country !== "total") params.set("country", state.country);
+  if (state.basemap === "dark") params.set("basemap", "dark");
   params.set("lng", round(state.camera.lng, 5));
   params.set("lat", round(state.camera.lat, 5));
   params.set("z", round(state.camera.zoom, 2));

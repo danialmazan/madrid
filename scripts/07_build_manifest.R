@@ -88,6 +88,7 @@ green_palette <- c("#edf5ed", "#cce6d9", "#8dceb4", "#43aa8b", "#247a67", "#1353
 orange_palette <- c("#fff2e8", "#ffd2b6", "#f8a56d", "#fb7b2d", "#d94c08", "#963005")
 brown_palette <- c("#f5eee9", "#dfcdbf", "#bf9f8a", "#956e55", "#694a38", "#3f2b21")
 building_age_palette <- c("#184e77", "#52b69a", "#d9ed92", "#f9c74f", "#f9844a", "#c1121f")
+building_height_palette <- c("#453781", "#2f6b8c", "#269da3", "#69c48b", "#d6e96b", "#f5a34b", "#d94b45")
 diverging_palette <- c("#b2182b", "#ffffff", "#2166ac")
 
 six_quantile_breaks <- function(values) {
@@ -359,7 +360,7 @@ layers_out <- list(
     "building-height", "buildings", "fill-extrusion", "Estimated building height", "Height",
     "Estimated height above the footprint elevation; switch on 3D to extrude polygons.", "m",
     building_meta$reference_date_heights, "Municipal height polygons", building_height_sources,
-    "height_m", orange_palette, c(0, 4, 8, 14, 24, 40, 120), "decimal",
+    "height_m", building_height_palette, c(0, 4, 8, 14, 24, 40, 80), "decimal",
     tooltip(
       field("height_id", "Height polygon ID", "text"),
       field("height_m", "Height", "decimal", " m"),
@@ -528,19 +529,6 @@ layers_out <- append(layers_out, list(
     "Income inequality: higher values indicate a less equal distribution.", "index", "2023",
     "2023 census sections", "sections-2023", "gini",
     brown_palette, c(15, 22, 27, 32, 38, 45, 65), "decimal", income_tooltip
-  ),
-  layer(
-    "income-above-200-median", "income", "choropleth",
-    "Population above 200% of median", "Above 200% median",
-    "Share of people above twice the national median equivalised income.", "%", "2023",
-    "2023 census sections", "sections-2023", "above_200_median_pct",
-    green_palette, c(0, 4, 10, 18, 28, 40, 60), "percent", income_tooltip
-  ),
-  layer(
-    "income-p80-p20", "income", "choropleth", "P80/P20 income ratio", "P80/P20 ratio",
-    "Income at the 80th percentile divided by income at the 20th percentile.", "ratio", "2023",
-    "2023 census sections", "sections-2023", "income_p80_p20",
-    orange_palette, c(1.8, 2.3, 2.5, 2.7, 2.9, 3.2, 4.1), "decimal", income_tooltip
   )
 ))
 
