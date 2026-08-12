@@ -647,6 +647,12 @@ select:focus-visible,
   display: none;
 }
 
+.analysis-link {
+  color: var(--blue);
+  font-weight: 650;
+  text-underline-offset: 3px;
+}
+
 .panel-footer {
   position: relative;
   z-index: 2;

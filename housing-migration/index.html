@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="An interactive investigation of residential building age and recent migration across Madrid's census sections and districts." />
+    <meta name="theme-color" content="#f4f0e7" />
+    <meta property="og:title" content="Housing age and recent migration in Madrid" />
+    <meta property="og:description" content="A Carabanchel-led, citywide investigation using Catastro buildings and INE population data." />
+    <title>Housing age and recent migration in Madrid</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#analysis">Skip to the analysis</a>
+    <header class="analysis-header">
+      <a class="back-link" href="/madrid/" aria-label="Back to Madrid Interactive Atlas">← Madrid Interactive Atlas</a>
+      <p>Madrid · housing / migration · field note 01</p>
+    </header>
+
+    <main id="analysis">
+      <section class="hero" aria-labelledby="page-title">
+        <p class="chapter-label">An investigative case study</p>
+        <h1 id="page-title">Housing age and <em>recent migration</em> in Madrid</h1>
+        <p class="standfirst">
+          Did Carabanchel’s unusually concentrated 1960s housing stock create more capacity for a recent migration wave?
+          This page tests a plausible timing story against all 21 districts. It does not claim that old buildings cause migration.
+        </p>
+        <div class="hero-facts" aria-live="polite">
+          <p><strong id="hero-sixties-share">—</strong><span>of Carabanchel’s recorded dwellings were built in 1961–1970</span></p>
+          <p><strong id="hero-migration-change">—</strong><span>foreign-born residents in Carabanchel, 2021–2025</span></p>
+          <p><strong id="hero-city-dwellings">—</strong><span>recorded residential dwellings included citywide</span></p>
+        </div>
+      </section>
+
+      <section class="hypothesis-note" aria-labelledby="hypothesis-title">
+        <p class="chapter-label">The proposition</p>
+        <h2 id="hypothesis-title">A coincidence of housing turnover and migration</h2>
+        <div class="prose-columns">
+          <p>
+            The hypothesis is that a large wave of homes completed in the 1960s may now be reaching a common turnover period as original occupants age, die, or move. If that turnover coincided with Madrid’s recent migration wave, it could have made more homes available in Carabanchel at the right moment.
+          </p>
+          <p>
+            The available data can test the timing and scale of the housing stock, and whether recent foreign-born population growth is associated with it. It cannot observe the proposed household mechanism. The citywide chart is therefore as important for counterexamples as for supporting evidence.
+          </p>
+        </div>
+      </section>
+
+      <section class="district-control" aria-labelledby="district-control-title">
+        <div>
+          <p class="chapter-label">Compare places</p>
+          <h2 id="district-control-title">Choose up to three districts</h2>
+          <p id="selection-message" class="selection-message" aria-live="polite">Carabanchel is selected.</p>
+        </div>
+        <div id="district-selector" class="district-selector" role="group" aria-label="Madrid districts"></div>
+        <div id="district-legend" class="district-legend" aria-label="Selected district colours"></div>
+      </section>
+
+      <article class="chart-chapter" aria-labelledby="chart-one-title">
+        <header>
+          <p class="chapter-number">01 / Within districts</p>
+          <h2 id="chart-one-title">Dwelling-weighted building age by section</h2>
+          <p>Each census section gets one vertical distribution: the middle box contains half its recorded dwellings, while the whiskers span p10–p90. The thicker line is an equal-section-weighted trend, so large sections do not dominate it.</p>
+        </header>
+        <div id="section-age-chart" class="chart-frame" data-chart="section-age"></div>
+        <p class="chart-note">Hover or focus a section to see its exact values. Horizontal position describes residents; vertical position describes the dwellings recorded in Catastro.</p>
+      </article>
+
+      <article class="chart-chapter" aria-labelledby="chart-two-title">
+        <header>
+          <p class="chapter-number">02 / The housing stock</p>
+          <h2 id="chart-two-title">Residential construction-year distribution</h2>
+          <p>Solid lines treat every residential building as one observation. Dashed lines weight the same buildings by their recorded dwelling counts—closer to housing capacity than a simple footprint count.</p>
+        </header>
+        <div class="line-key" aria-label="Line styles"><span><i></i>Buildings</span><span><i class="dashed"></i>Recorded dwellings</span></div>
+        <div id="distribution-chart" class="chart-frame" data-chart="distribution"></div>
+        <p class="mobile-scroll-hint">Swipe the chart sideways to inspect later cohorts.</p>
+      </article>
+
+      <article class="chart-chapter" aria-labelledby="chart-three-title">
+        <header class="chart-header-with-control">
+          <div>
+            <p class="chapter-number">03 / Turn the question around</p>
+            <h2 id="chart-three-title">Foreign-born population by section housing cohort</h2>
+            <p>Sections are grouped by their dwelling-weighted median construction cohort. Boxes appear only when a district/cohort has at least five sections; genuinely small groups remain visible as individual points.</p>
+          </div>
+          <fieldset class="segmented-control" aria-label="Section outcome">
+            <legend>Y-axis</legend>
+            <label><input type="radio" name="section-outcome" value="share" checked />2025 share</label>
+            <label><input type="radio" name="section-outcome" value="change" />2021–25 change</label>
+          </fieldset>
+        </header>
+        <div id="cohort-outcome-chart" class="chart-frame" data-chart="cohort-outcome"></div>
+        <p class="chart-note">The change view excludes the <strong>130 sections</strong> whose 2021 and 2025 boundaries cannot be compared reciprocally at the 95% overlap threshold.</p>
+      </article>
+
+      <article class="chart-chapter citywide" aria-labelledby="chart-four-title">
+        <header class="chart-header-with-control">
+          <div>
+            <p class="chapter-number">04 / Try to disprove it</p>
+            <h2 id="chart-four-title">Citywide diagnostic</h2>
+            <p>Every district is shown. If 1960s stock were sufficient to explain recent migration, districts with a high share should consistently sit high on this chart. The labelled counterexamples make the limits of that story visible.</p>
+          </div>
+          <fieldset class="segmented-control" aria-label="District outcome">
+            <legend>Y-axis</legend>
+            <label><input type="radio" name="district-outcome" value="count" checked />Resident increase</label>
+            <label><input type="radio" name="district-outcome" value="change" />Share change</label>
+          </fieldset>
+        </header>
+        <div id="city-diagnostic-chart" class="chart-frame" data-chart="city-diagnostic"></div>
+        <p id="city-diagnostic-reading" class="editorial-reading"></p>
+      </article>
+
+      <section class="methodology" aria-labelledby="method-title">
+        <p class="chapter-label">How to read this</p>
+        <h2 id="method-title">Sources, calculation and limits</h2>
+        <div class="method-grid">
+          <section><h3>Buildings and weighting</h3><p>Catastro building records are kept when <code>currentUse</code> is residential and the construction year is valid. <code>numberOfDwellings</code> is the weight. A record with zero dwellings still counts in the building line but contributes zero to dwelling-weighted measures.</p></section>
+          <section><h3>Boundary matching</h3><p>Buildings are assigned by a point on their surface to current 2026 census sections. The 2025 foreign-born share is attached to that geography. A 2021–2025 section change is published only where the older and newer section match reciprocally with at least 95% overlap.</p></section>
+          <section><h3>District change</h3><p>District population values do not inherit section crosswalk uncertainty: 2021 and 2025 INE birthplace counts are aggregated directly by district code. The citywide comparison uses the share of recorded residential dwellings built from 1961 through 1970.</p></section>
+          <section><h3>Interpretation</h3><p>Dwellings represent housing capacity, not occupied households. Foreign-born residents are not synonymous with recent arrivals. Correlation here cannot distinguish housing supply, affordability, networks, tenure, location or many other mechanisms.</p></section>
+        </div>
+        <aside class="limits-callout">
+          <strong>What these data do not identify</strong>
+          <p>Owners, tenure, deaths, moves to care homes, vacancies, rents, household turnover, dwelling occupancy, or individual migration decisions. Those would require additional evidence before the proposed mechanism could be tested directly.</p>
+        </aside>
+        <div id="source-list" class="source-list"></div>
+        <p id="coverage-note" class="coverage-note"></p>
+      </section>
+    </main>
+
+    <footer class="analysis-footer">
+      <p>Housing age and recent migration in Madrid</p>
+      <a href="/madrid/">Return to the interactive atlas →</a>
+    </footer>
+    <div id="analysis-tooltip" class="analysis-tooltip" role="status" hidden></div>
+    <script type="module" src="/src/housing-migration.ts"></script>
+  </body>
+</html>

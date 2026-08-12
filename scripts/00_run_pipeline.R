@@ -11,6 +11,7 @@ steps <- c(
   "scripts/06_build_tiles.R",
   "scripts/07_build_manifest.R",
   "scripts/08_build_section_reports.R",
+  "scripts/08a_build_housing_migration_analysis.R",
   "scripts/09_validate_outputs.R"
 )
 

@@ -5,8 +5,11 @@ manifest_path <- file.path(public_data_dir, "layer-manifest.json")
 assert_true(file.exists(manifest_path), "Missing layer-manifest.json")
 section_report_path <- file.path(public_data_dir, "section-reports.json")
 assert_true(file.exists(section_report_path), "Missing section-reports.json")
+housing_analysis_path <- file.path(public_data_dir, "housing-migration-analysis.json")
+assert_true(file.exists(housing_analysis_path), "Missing housing-migration-analysis.json")
 manifest <- jsonlite::fromJSON(manifest_path, simplifyVector = FALSE)
 section_reports <- jsonlite::fromJSON(section_report_path, simplifyVector = FALSE)
+housing_analysis <- jsonlite::fromJSON(housing_analysis_path, simplifyVector = FALSE)
 places <- jsonlite::fromJSON(file.path(public_data_dir, "places.json"), simplifyVector = FALSE)
 place_bounds <- unlist(lapply(places, `[[`, "bbox"))
 assert_true(length(places) >= 150, "Place-search index is incomplete")
@@ -33,6 +36,7 @@ assert_unique(layer_ids, "Manifest layer IDs")
 assert_true(manifest$defaultLayer %in% layer_ids, "Manifest default layer does not exist")
 assert_true(identical(manifest$version, "1.1.0"), "Manifest schema must be 1.1.0")
 assert_true(identical(section_reports$version, "1.1.0"), "Report schema must be 1.1.0")
+assert_true(identical(housing_analysis$version, "1.0.0"), "Housing analysis schema must be 1.0.0")
 
 source_layer_ids <- unique(unlist(lapply(manifest$layers, `[[`, "sourceIds")))
 assert_true(all(source_layer_ids %in% source_ids), "A layer references a missing PMTiles source")
@@ -177,6 +181,63 @@ assert_true(
   "Section building counts do not reconcile with the city report total"
 )
 
+assert_true(length(housing_analysis$districts) == 21, "Housing analysis must contain all 21 districts")
+assert_true(length(housing_analysis$sections) == 2462, "Housing analysis must contain all current sections")
+housing_district_codes <- vapply(housing_analysis$districts, `[[`, character(1), "code")
+housing_section_ids <- vapply(housing_analysis$sections, `[[`, character(1), "id")
+assert_unique(housing_district_codes, "Housing analysis district codes")
+assert_unique(housing_section_ids, "Housing analysis section IDs")
+assert_true(
+  identical(sort(housing_section_ids), sort(report_ids)),
+  "Housing analysis sections do not match canonical section reports"
+)
+nullable_number <- function(value) if (is.null(value)) NA_real_ else as.numeric(value)
+missing_changes <- sum(vapply(
+  housing_analysis$sections,
+  function(section) is.null(section$foreignBornChangePp),
+  logical(1)
+))
+assert_true(missing_changes == 130, "Housing analysis must preserve 130 non-comparable section changes")
+for (section in housing_analysis$sections) {
+  assert_true(
+    as.numeric(section$residentialBuildingCount) >= 0 && as.numeric(section$dwellingCount) >= 0,
+    paste("Negative housing weight in section", section$id)
+  )
+  quantiles <- vapply(
+    section$constructionYear[c("p10", "q1", "median", "q3", "p90")],
+    nullable_number,
+    numeric(1)
+  )
+  valid_quantiles <- quantiles[is.finite(quantiles)]
+  assert_true(
+    length(valid_quantiles) %in% c(0, 5) && all(diff(valid_quantiles) >= 0),
+    paste("Invalid weighted construction-year quantiles in section", section$id)
+  )
+}
+for (district in housing_analysis$districts) {
+  building_total <- sum(vapply(district$distribution, function(item) as.numeric(item$buildingSharePct), numeric(1)))
+  dwelling_total <- sum(vapply(district$distribution, function(item) as.numeric(item$dwellingSharePct), numeric(1)))
+  assert_true(abs(building_total - 100) < 1e-6, paste("Building cohort shares do not total 100% for", district$name))
+  assert_true(abs(dwelling_total - 100) < 1e-6, paste("Dwelling cohort shares do not total 100% for", district$name))
+  hypothesis_share <- sum(vapply(
+    Filter(function(item) !is.null(item$startYear) && as.integer(item$startYear) %in% c(1961L, 1966L), district$distribution),
+    function(item) as.numeric(item$dwellingSharePct),
+    numeric(1)
+  ))
+  assert_true(
+    abs(hypothesis_share - as.numeric(district$shareDwellings1961To1970Pct)) < 1e-6,
+    paste("1961–1970 hypothesis measure does not reconcile for", district$name)
+  )
+}
+assert_true(
+  as.numeric(housing_analysis$coverage$currentSections) == 2462 &&
+    as.numeric(housing_analysis$coverage$sectionsWithPositiveDwellingWeight) >= 2460 &&
+    as.numeric(housing_analysis$coverage$sectionsWithForeignBorn2025) == 2462 &&
+    as.numeric(housing_analysis$coverage$missingSectionChanges) == 130 &&
+    as.numeric(housing_analysis$coverage$recordedDwellings) > 1500000,
+  "Housing analysis coverage counts are incomplete"
+)
+
 for (election in c("general", "local", "assembly")) {
   election_layers <- Filter(
     function(layer) identical(layer$group, "elections") && identical(layer$control$election, election),
@@ -223,7 +284,10 @@ report <- list(
     manifest_layers = length(layer_ids),
     pmtiles_archives = length(archive_paths),
     building_footprints = building$catastro_buildings,
-    building_height_polygons = building$height_polygons
+    building_height_polygons = building$height_polygons,
+    housing_analysis_sections = length(housing_analysis$sections),
+    housing_analysis_districts = length(housing_analysis$districts),
+    housing_analysis_recorded_dwellings = housing_analysis$coverage$recordedDwellings
   ),
   population = list(
     source_residents = population$source_total,

@@ -1,12 +1,15 @@
 {
-  "validated_at": "2026-08-12T11:16:14Z",
+  "validated_at": "2026-08-12T12:16:08Z",
   "passed": true,
   "counts": {
     "manifest_sources": 55,
     "manifest_layers": 52,
     "pmtiles_archives": 26,
     "building_footprints": 124329,
-    "building_height_polygons": 490298
+    "building_height_polygons": 490298,
+    "housing_analysis_sections": 2462,
+    "housing_analysis_districts": 21,
+    "housing_analysis_recorded_dwellings": 1523106
   },
   "population": {
     "source_residents": 3510354,
@@ -180,7 +183,7 @@
       "under_95_mb": true
     }
   ],
-  "public_artifact_bytes": 165650957,
+  "public_artifact_bytes": 167014396,
   "licences": [
     {
       "title": "Padrón municipal de habitantes",
