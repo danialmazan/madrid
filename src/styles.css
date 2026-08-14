@@ -592,6 +592,10 @@ select:focus-visible,
   margin-top: 8px;
 }
 
+.feature-actions--analysis {
+  justify-content: flex-start;
+}
+
 .report-link-button,
 .quiet-link-button,
 .report-print-button {
@@ -603,6 +607,14 @@ select:focus-visible,
   cursor: pointer;
   font-size: 0.64rem;
   font-weight: 650;
+}
+
+.housing-analysis-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
 }
 
 .quiet-link-button {
@@ -645,12 +657,6 @@ select:focus-visible,
 
 .mobile-info-panel {
   display: none;
-}
-
-.analysis-link {
-  color: var(--blue);
-  font-weight: 650;
-  text-underline-offset: 3px;
 }
 
 .panel-footer {

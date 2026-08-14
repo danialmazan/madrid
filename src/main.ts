@@ -9,6 +9,7 @@ import "./styles.css";
 import { MADRID_CAMERA, parseHash, serializeState } from "./state";
 import { renderMadridElectionCard, renderSectionReport, sectionProperties } from "./report";
 import { bindDistributionCharts } from "./report-interaction";
+import { renderFeatureActions } from "./feature-actions";
 import { shareOrCopy } from "./share";
 import type {
   AddressIndex,
@@ -1234,7 +1235,7 @@ function renderFeatureDetails(
     </div>
     <dl class="feature-grid">${fields}</dl>
     ${renderIncomeSuppressionNote(definition, properties)}
-    ${renderSectionActions(definition, isSection)}`;
+    ${renderFeatureActions(definition.group, isSection)}`;
   if (isSection) bindSectionCardActions();
   if (isMobileViewport()) setMobilePanel(true, "details");
 }
@@ -1249,14 +1250,6 @@ function renderIncomeSuppressionNote(
   const missing = properties.below_60_median_pct == null && properties.above_200_median_pct == null;
   if (!affected || !missing) return "";
   return `<aside class="feature-data-note"><strong>Official source suppression</strong><p>INE publishes no section values for the below-60% or above-200% median indicators in ${escapeHtml(district)}. The other income measures remain available.</p></aside>`;
-}
-
-function renderSectionActions(definition: LayerDefinition, isSection: boolean): string {
-  if (!isSection) return "";
-  return `<div class="feature-actions">
-    <button class="open-section-report report-link-button" type="button">See full report</button>
-    ${definition.group === "elections" ? '<button class="back-to-madrid quiet-link-button" type="button">Back to Madrid results</button>' : ""}
-  </div>`;
 }
 
 function renderElectionResultFeature(
@@ -1302,7 +1295,7 @@ function renderElectionResultFeature(
       </tbody>
     </table>
     <p class="results-coverage">${escapeHtml(formatValue(cumulative, "percent", "", 1))} of valid votes shown</p>
-    ${renderSectionActions(definition, isSection)}`;
+    ${renderFeatureActions(definition.group, isSection)}`;
   if (isSection) bindSectionCardActions();
 }
 
