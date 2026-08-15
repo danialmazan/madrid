@@ -245,8 +245,8 @@ layers_out <- list(
     dot_style = list(
       value = resident_dot_meta$dot_value,
       colors = list(light = "#145C9E", dark = "#77C4E4"),
-      radius_stops = list(c(9, 0.45), c(11, 0.75), c(13, 1.05), c(15, 1.55), c(17, 2), c(19, 2.3)),
-      opacity_stops = list(c(9, 0.55), c(11, 0.68), c(13, 0.78), c(15, 0.86))
+      radius_stops = list(c(8, 0.4), c(9, 0.45), c(11, 0.65), c(13, 0.9), c(15, 1.3), c(17, 1.75), c(19, 2.1)),
+      opacity_stops = list(c(8, 0.2), c(9, 0.24), c(11, 0.34), c(13, 0.46), c(15, 0.6), c(17, 0.72), c(19, 0.8))
     )
   ),
   layer(

@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { bytesToHeader } from "pmtiles";
@@ -185,11 +186,33 @@ describe("published atlas data", () => {
       sourceIds: ["resident-dots"],
       dotValue: 25,
       dotColors: { light: "#145C9E", dark: "#77C4E4" },
-      dotRadiusStops: [[9, 0.45], [11, 0.75], [13, 1.05], [15, 1.55], [17, 2], [19, 2.3]],
-      dotOpacityStops: [[9, 0.55], [11, 0.68], [13, 0.78], [15, 0.86]],
+      dotRadiusStops: [[8, 0.4], [9, 0.45], [11, 0.65], [13, 0.9], [15, 1.3], [17, 1.75], [19, 2.1]],
+      dotOpacityStops: [[8, 0.2], [9, 0.24], [11, 0.34], [13, 0.46], [15, 0.6], [17, 0.72], [19, 0.8]],
     });
     expect(manifest.sources.find((source) => source.id === "resident-dots")?.url).toBe(
       "data/resident-dots.pmtiles",
     );
+  });
+
+  it("retains every resident dot at every published zoom", () => {
+    const archivePath = resolve(projectRoot, "public/data/resident-dots.pmtiles");
+    const output = execFileSync(
+      process.execPath,
+      [resolve(projectRoot, "scripts/validate_resident_dot_tiles.mjs"), archivePath, "140423"],
+      { encoding: "utf8" },
+    );
+    const validation = JSON.parse(output) as {
+      drop_rate: number;
+      archive_bytes: number;
+      maximum_compressed_tile_bytes: number;
+      maximum_decoded_tile_bytes: number;
+      feature_counts_by_zoom: Record<string, number>;
+    };
+    expect(validation.drop_rate).toBe(1);
+    expect(validation.archive_bytes).toBeLessThan(10 * 1024 * 1024);
+    expect(validation.maximum_compressed_tile_bytes).toBeLessThan(3 * 1024 * 1024);
+    expect(validation.maximum_decoded_tile_bytes).toBeLessThan(3 * 1024 * 1024);
+    expect(validation.feature_counts_by_zoom["8"]).toBe(140_423);
+    expect(Object.values(validation.feature_counts_by_zoom).every((count) => count >= 140_423)).toBe(true);
   });
 });

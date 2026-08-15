@@ -6,7 +6,14 @@ assert_true(nzchar(tippecanoe), "Tippecanoe is required to build PMTiles archive
 tile_input_dir <- file.path(processed_dir, "tile-inputs")
 dir.create(tile_input_dir, recursive = TRUE, showWarnings = FALSE)
 
-run_tippecanoe <- function(output, layer_inputs, minimum_zoom, maximum_zoom, extra = character()) {
+run_tippecanoe <- function(
+  output,
+  layer_inputs,
+  minimum_zoom,
+  maximum_zoom,
+  extra = character(),
+  retain_all_points = FALSE
+) {
   if (file.exists(output)) unlink(output)
   args <- c(
     "-o", output,
@@ -17,7 +24,8 @@ run_tippecanoe <- function(output, layer_inputs, minimum_zoom, maximum_zoom, ext
     "--no-tile-size-limit",
     "--simplification", "8",
     "--detect-shared-borders",
-    "--coalesce-densest-as-needed",
+    if (!retain_all_points) "--coalesce-densest-as-needed",
+    if (retain_all_points) c("--drop-rate", "1"),
     extra,
     unlist(Map(function(layer, path) c("-L", paste0(layer, ":", path)), names(layer_inputs), layer_inputs))
   )
@@ -97,7 +105,8 @@ run_tippecanoe(
   file.path(public_data_dir, "resident-dots.pmtiles"),
   c(resident_dots = resident_dot_input),
   minimum_zoom = tile_zooms$resident_dots[["min"]],
-  maximum_zoom = tile_zooms$resident_dots[["max"]]
+  maximum_zoom = tile_zooms$resident_dots[["max"]],
+  retain_all_points = TRUE
 )
 
 message_step("Building district-split building archives")

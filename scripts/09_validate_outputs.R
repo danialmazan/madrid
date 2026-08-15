@@ -112,12 +112,39 @@ assert_true(
     identical(unname(tools::md5sum(resident_dot_geojson)), resident_dot_meta$coordinate_file_md5),
   "Resident-dot coordinate checksum does not match its generated metadata"
 )
+node <- Sys.which("node")
+assert_true(nzchar(node), "Node.js is required to validate resident-dot PMTiles")
+resident_dot_archive <- file.path(public_data_dir, "resident-dots.pmtiles")
+resident_dot_tile_output <- system2(
+  node,
+  c(
+    file.path("scripts", "validate_resident_dot_tiles.mjs"),
+    resident_dot_archive,
+    as.character(resident_dot_target)
+  ),
+  stdout = TRUE,
+  stderr = TRUE
+)
+resident_dot_tile_status <- attr(resident_dot_tile_output, "status")
+assert_true(
+  is.null(resident_dot_tile_status) || identical(resident_dot_tile_status, 0L),
+  paste("Resident-dot PMTiles validation failed:", paste(resident_dot_tile_output, collapse = "\n"))
+)
+resident_dot_tiles <- jsonlite::fromJSON(paste(resident_dot_tile_output, collapse = "\n"))
 resident_dot_layer <- Filter(function(layer) identical(layer$id, "population-total"), manifest$layers)
 assert_true(
   length(resident_dot_layer) == 1 &&
     identical(resident_dot_layer[[1]]$kind, "dot-density") &&
     as.numeric(resident_dot_layer[[1]]$dotValue) == 25 &&
     identical(unlist(resident_dot_layer[[1]]$dotColors), c(light = "#145C9E", dark = "#77C4E4")) &&
+    identical(
+      as.numeric(unlist(resident_dot_layer[[1]]$dotRadiusStops)),
+      c(8, 0.4, 9, 0.45, 11, 0.65, 13, 0.9, 15, 1.3, 17, 1.75, 19, 2.1)
+    ) &&
+    identical(
+      as.numeric(unlist(resident_dot_layer[[1]]$dotOpacityStops)),
+      c(8, 0.2, 9, 0.24, 11, 0.34, 13, 0.46, 15, 0.6, 17, 0.72, 19, 0.8)
+    ) &&
     identical(resident_dot_layer[[1]]$sourceIds[[1]], "resident-dots"),
   "Resident-dot manifest definition is incomplete"
 )
@@ -338,7 +365,8 @@ report <- list(
     resident_dots = resident_dot_meta$dot_count,
     represented_residents = resident_dot_meta$represented_population,
     rounding_difference = resident_dot_meta$rounding_difference,
-    coordinate_file_md5 = resident_dot_meta$coordinate_file_md5
+    coordinate_file_md5 = resident_dot_meta$coordinate_file_md5,
+    tile_retention = resident_dot_tiles
   ),
   elections = election_checks,
   archives = lapply(seq_along(archive_paths), function(index) {

@@ -17,9 +17,11 @@
     "pmtiles": "^4.3.0"
   },
   "devDependencies": {
+    "@mapbox/vector-tile": "^2.0.5",
     "@types/node": "^24.0.0",
     "jsdom": "^26.1.0",
     "lighthouse": "^13.4.1",
+    "pbf": "^4.0.1",
     "typescript": "^5.8.3",
     "vite": "^7.0.0",
     "vitest": "^3.2.4"

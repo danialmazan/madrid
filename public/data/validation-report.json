@@ -1,5 +1,5 @@
 {
-  "validated_at": "2026-08-15T13:21:15Z",
+  "validated_at": "2026-08-15T19:02:52Z",
   "passed": true,
   "counts": {
     "manifest_sources": 56,
@@ -21,7 +21,26 @@
     "resident_dots": 140423,
     "represented_residents": 3510575,
     "rounding_difference": 221,
-    "coordinate_file_md5": "9c4bc4e69b36abd65ad96c8272d56428"
+    "coordinate_file_md5": "9c4bc4e69b36abd65ad96c8272d56428",
+    "tile_retention": {
+      "min_zoom": 8,
+      "max_zoom": 16,
+      "drop_rate": 1,
+      "archive_bytes": 5038990,
+      "maximum_compressed_tile_bytes": 317879,
+      "maximum_decoded_tile_bytes": 2274584,
+      "feature_counts_by_zoom": {
+        "8": 140423,
+        "9": 158332,
+        "10": 149079,
+        "11": 152639,
+        "12": 152697,
+        "13": 150535,
+        "14": 151980,
+        "15": 151736,
+        "16": 151818
+      }
+    }
   },
   "elections": [
     {
@@ -166,7 +185,7 @@
     },
     {
       "name": "resident-dots.pmtiles",
-      "bytes": 1479521,
+      "bytes": 5038990,
       "under_95_mb": true
     },
     {
@@ -195,7 +214,7 @@
       "under_95_mb": true
     }
   ],
-  "public_artifact_bytes": 168495454,
+  "public_artifact_bytes": 172054998,
   "licences": [
     {
       "title": "Padrón municipal de habitantes",

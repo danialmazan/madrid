@@ -25,6 +25,8 @@ assigned building footprints, so rebuilding the same inputs produces the same po
 modelled locations, not identified households or individual residents. Section `2807910157` has no
 Catastro footprint; its 29 dots use official address points linked to municipal building-height
 polygons as a documented fallback. Section cards and reports retain the exact padrón counts.
+The complete generated dot set is retained at every supported zoom; apparent merging at small
+scales is only the visual result of translucent dots overlapping.
 
 Foreign-born and foreign-citizenship layers use 2025 INE annual census tables and divide the selected
 country count by all residents. Total means all foreign countries. The comparable change is the
