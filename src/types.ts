@@ -1,6 +1,6 @@
 export type LayerGroup = "population" | "education-work" | "buildings" | "elections" | "income" | "transport";
 export type BasemapTheme = "light" | "dark";
-export type LayerKind = "choropleth" | "fill" | "fill-extrusion" | "transport-line" | "transport-stop";
+export type LayerKind = "choropleth" | "dot-density" | "fill" | "fill-extrusion" | "transport-line" | "transport-stop";
 export type ValueFormat = "integer" | "decimal" | "percent" | "pp" | "currency" | "year" | "text";
 export type ElectionKey = "general" | "local" | "assembly";
 
@@ -74,6 +74,10 @@ export interface LayerDefinition {
   opacity?: number;
   lineColor?: string;
   lineWidth?: number;
+  dotValue?: number;
+  dotColors?: { light: string; dark: string };
+  dotRadiusStops?: Array<[number, number]>;
+  dotOpacityStops?: Array<[number, number]>;
   tooltip: TooltipField[];
   control?: LayerControl;
   scale?: LayerScale;

@@ -18,6 +18,7 @@ sources <- yaml::read_yaml(file.path(project_root, "config", "sources.yml"))
 
 tile_zooms <- list(
   sections = c(min = 8L, max = 15L),
+  resident_dots = c(min = 8L, max = 16L),
   buildings = c(min = 12L, max = 16L),
   transport = c(min = 8L, max = 16L)
 )

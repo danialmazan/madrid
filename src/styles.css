@@ -429,6 +429,23 @@ select:focus-visible,
   -webkit-line-clamp: 2;
 }
 
+.legend-dot-key {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  color: var(--ink);
+  font-family: "Geist Mono", monospace;
+  font-size: 0.64rem;
+  font-weight: 550;
+}
+
+.legend-dot-key i {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  border-radius: 50%;
+}
+
 .legend-swatch-list {
   display: grid;
   gap: 6px;

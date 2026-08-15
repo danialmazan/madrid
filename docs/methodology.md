@@ -17,6 +17,15 @@ includes Spanish and foreign citizens of all genders. Under-18 and 65+ values di
 age total by all registered residents. Density divides residents by section area in square kilometres.
 Five-year population change compares the latest monthly padrón with the same month of 2021.
 
+The **Total residents** map is a derived dasymetric dot-density view. Each dot represents 25
+registered residents. Within every current census section, the authoritative padrón total is divided
+by 25 and rounded, then apportioned among Catastro buildings classified as residential in proportion
+to their recorded dwelling counts. A fixed random seed places the resulting dots inside their
+assigned building footprints, so rebuilding the same inputs produces the same points. These are
+modelled locations, not identified households or individual residents. Section `2807910157` has no
+Catastro footprint; its 29 dots use official address points linked to municipal building-height
+polygons as a documented fallback. Section cards and reports retain the exact padrón counts.
+
 Foreign-born and foreign-citizenship layers use 2025 INE annual census tables and divide the selected
 country count by all residents. Total means all foreign countries. The comparable change is the
 2025 share minus the 2021 share, explicitly a four-year percentage-point change. The selector offers

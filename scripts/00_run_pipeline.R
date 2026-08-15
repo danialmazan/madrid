@@ -7,6 +7,7 @@ steps <- c(
   "scripts/02b_prepare_education_work.R",
   "scripts/03_prepare_elections_income.R",
   "scripts/04_prepare_buildings.R",
+  "scripts/04a_prepare_population_dots.R",
   "scripts/05_prepare_transport.R",
   "scripts/06_build_tiles.R",
   "scripts/07_build_manifest.R",

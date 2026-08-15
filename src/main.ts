@@ -474,7 +474,24 @@ function addDefinitionToMap(definition: LayerDefinition, overlay: boolean): void
       maxzoom: definition.maxzoom,
     };
 
-    if (definition.kind === "transport-line") {
+    if (definition.kind === "dot-density") {
+      map.addLayer(
+        {
+          ...common,
+          type: "circle",
+          paint: {
+            "circle-radius": zoomInterpolation(definition.dotRadiusStops ?? [[9, 0.45], [19, 2.3]]),
+            "circle-color": definition.dotColors?.[atlasState.basemap] ?? definition.palette[0] ?? "#145C9E",
+            "circle-opacity": zoomInterpolation(definition.dotOpacityStops ?? [[9, 0.55], [15, 0.86]]),
+            "circle-stroke-width": 0,
+            "circle-blur": 0,
+            "circle-pitch-scale": "viewport",
+            "circle-pitch-alignment": "viewport",
+          },
+        },
+        beforeId,
+      );
+    } else if (definition.kind === "transport-line") {
       const filter = routeFilter(definition);
       const lineColor: string | ExpressionSpecification =
         definition.control?.transportMode === "metro"
@@ -561,6 +578,12 @@ function addDefinitionToMap(definition: LayerDefinition, overlay: boolean): void
     }
     activeMapLayerIds.push(id);
   }
+}
+
+function zoomInterpolation(stops: Array<[number, number]>): ExpressionSpecification {
+  const expression: unknown[] = ["interpolate", ["linear"], ["zoom"]];
+  for (const [zoom, value] of stops) expression.push(zoom, value);
+  return expression as ExpressionSpecification;
 }
 
 function routeFilter(definition: LayerDefinition): ExpressionSpecification | undefined {
@@ -907,6 +930,17 @@ function renderLegend(): void {
   legendTitle.textContent = selected.label;
   legendDate.textContent = shortDate(selected.referenceDate);
 
+  if (selected.kind === "dot-density") {
+    const dotColor = selected.dotColors?.[atlasState.basemap] ?? selected.palette[0] ?? "#145C9E";
+    legend.innerHTML = `
+      <div class="legend-dot-key">
+        <i style="background:${escapeHtml(dotColor)}"></i>
+        <span>1 dot = ${(selected.dotValue ?? 25).toLocaleString("en-GB")} residents</span>
+      </div>
+      <p class="legend-note">${escapeHtml(selected.description)}</p>`;
+    return;
+  }
+
   if (selected.format === "text") {
     const rows: string[] = [];
     for (let index = 0; index < selected.palette.length; index += 2) {
@@ -1115,6 +1149,14 @@ function bindSectionCardActions(): void {
 }
 
 function handleMapClick(event: MapMouseEvent): void {
+  const selectedDefinition = getSelectedLayer();
+  if (
+    atlasState.dataLayerVisible &&
+    selectedDefinition.kind === "dot-density" &&
+    selectCanonicalSectionAtPoint(event)
+  ) {
+    return;
+  }
   const features = map
     .queryRenderedFeatures(event.point)
     .filter((feature) => activeMapLayerIds.includes(feature.layer.id));
@@ -1145,8 +1187,27 @@ function handleMapClick(event: MapMouseEvent): void {
   scheduleHashUpdate();
 }
 
+function selectCanonicalSectionAtPoint(event: MapMouseEvent): boolean {
+  const canonical = map.queryRenderedFeatures(event.point, { layers: [SECTION_HIT_LAYER] })[0];
+  const sectionId = canonical?.properties?.section_id;
+  if (typeof sectionId !== "string" || !/^28079[0-9]{5}$/.test(sectionId)) return false;
+  atlasState.selectedSection = sectionId;
+  atlasState.reportOpen = false;
+  if (map.getLayer(SECTION_OUTLINE_LAYER)) map.removeLayer(SECTION_OUTLINE_LAYER);
+  addSelectedSectionOutline();
+  scheduleHashUpdate();
+  void renderSelectedSection(sectionId);
+  return true;
+}
+
 function handleMapHover(event: MapMouseEvent): void {
   if (!map) return;
+  const selectedDefinition = getSelectedLayer();
+  if (atlasState.dataLayerVisible && selectedDefinition.kind === "dot-density") {
+    const section = map.queryRenderedFeatures(event.point, { layers: [SECTION_HIT_LAYER] })[0];
+    map.getCanvas().style.cursor = section ? "pointer" : "";
+    return;
+  }
   const features = map
     .queryRenderedFeatures(event.point)
     .filter((feature) => activeMapLayerIds.includes(feature.layer.id));

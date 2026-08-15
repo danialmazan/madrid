@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-12T10:49:35Z",
-  "version": "1.1.0",
+  "generatedAt": "2026-08-15T13:15:14Z",
+  "version": "1.2.0",
   "defaultLayer": "population-density",
   "sources": [
     {
@@ -34,6 +34,14 @@
       "attribution": "INE ADRH · Madrid/Interior election results · INE census sections",
       "minzoom": 8,
       "maxzoom": 15
+    },
+    {
+      "id": "resident-dots",
+      "url": "data/resident-dots.pmtiles",
+      "sourceLayer": "resident_dots",
+      "attribution": "Madrid City Council padrón · Catastro INSPIRE Buildings · derived dasymetric allocation",
+      "minzoom": 8,
+      "maxzoom": 16
     },
     {
       "id": "building-age-01",
@@ -448,38 +456,28 @@
     {
       "id": "population-total",
       "group": "population",
-      "kind": "choropleth",
+      "kind": "dot-density",
       "label": "Resident population",
       "shortLabel": "Total residents",
-      "description": "Residents registered in the municipal padrón.",
+      "description": "Modelled within residential buildings using recorded dwellings.",
       "unit": "residents",
       "referenceDate": "2026-07-01",
-      "geography": "2026 census sections",
+      "geography": "2026 census sections · modelled within residential buildings",
       "sourceIds": [
-        "sections-2026"
+        "resident-dots"
       ],
       "property": "population_total",
       "palette": [
-        "#edf4f8",
-        "#c9e0eb",
-        "#8dbfd3",
-        "#4a91b5",
-        "#145c9e",
-        "#0b396e"
+        "#145C9E",
+        "#77C4E4"
       ],
       "breaks": [
-        0,
-        500,
-        1000,
-        1500,
-        2200,
-        3500,
-        6000
+        25
       ],
       "format": "integer",
       "minzoom": 8,
       "maxzoom": 24,
-      "opacity": 0.72,
+      "opacity": 0.86,
       "tooltip": [
         {
           "property": "population_total",
@@ -510,6 +508,26 @@
           "format": "percent",
           "percentileProperty": "population_change_5y_percentile"
         }
+      ],
+      "methodology": "Each dot represents 25 registered residents. Section totals are apportioned among Catastro residential buildings by recorded dwellings, then placed reproducibly inside the assigned footprint. Locations are modelled estimates, not households or individuals.",
+      "dotValue": 25,
+      "dotColors": {
+        "light": "#145C9E",
+        "dark": "#77C4E4"
+      },
+      "dotRadiusStops": [
+        [9, 0.45],
+        [11, 0.75],
+        [13, 1.05],
+        [15, 1.55],
+        [17, 2],
+        [19, 2.3]
+      ],
+      "dotOpacityStops": [
+        [9, 0.55],
+        [11, 0.68],
+        [13, 0.78],
+        [15, 0.86]
       ]
     },
     {
@@ -6152,81 +6170,83 @@
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://datos.madrid.es/dataset/200076-0-padron/resource/200076-2-padron-csv/download/200076_20260714_062859.csv",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-12"
+      "retrieved": "2026-08-15"
     },
     {
       "title": "Population by country of birth and nationality",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66428.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-12"
+      "retrieved": "2026-08-15"
     },
     {
       "title": "Education and economic activity by census section",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66753.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-12"
+      "retrieved": "2026-08-15"
     },
     {
       "title": "Catastro INSPIRE Buildings",
       "organisation": "Dirección General del Catastro",
       "url": "https://www.catastro.hacienda.gob.es/INSPIRE/Buildings/28/28900-MADRID/A.ES.SDGC.BU.28900.zip",
       "licence": "Catastro data-access conditions",
-      "retrieved": "2026-08-12"
+      "retrieved": "2026-08-15"
     },
     {
       "title": "Alturas de edificios",
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://geoportal.madrid.es/fsdescargas/IDEAM_WBGEOPORTAL/CARTOGRAFIA/CARTOGRAFIA_ACTUALIZADA/ALTURAS_EDIFICIOS/ALTURAS_EDIFICIOS.ZIP",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-12"
+      "retrieved": "2026-08-15"
     },
     {
       "title": "2023 election results by polling table",
       "organisation": "Madrid City Council / Interior Ministry",
       "url": "https://www.madrid.es/UnidadesDescentralizadas/UDCEstadistica/Nuevaweb/Elecciones%20y%20Participaci%C3%B3n%20Ciudadana/Elecciones/Resultados%20electorales/Congreso/Congreso%202023/Mesas/G1340123_prov.xlsx",
       "licence": "Public-sector information reuse terms",
-      "retrieved": "2026-08-12"
+      "retrieved": "2026-08-15"
     },
     {
       "title": "Household Income Distribution Atlas",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31097.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-12"
+      "retrieved": "2026-08-15"
     },
     {
       "title": "Income distribution by source",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31098.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-12"
+      "retrieved": "2026-08-15"
     },
     {
       "title": "CRTM open transport data",
       "organisation": "Consorcio Regional de Transportes de Madrid",
       "url": "https://transparencia.crtm.es/presupuestos-contratos-y-gastos/datos-abiertos/",
       "licence": "CRTM open-data licence",
-      "retrieved": "2026-08-12"
+      "retrieved": "2026-08-15"
     },
     {
       "title": "BiciMAD stations",
       "organisation": "EMT Madrid",
       "url": "https://datos.emtmadrid.es/dataset/5fcc0945-2cbd-46c3-801a-6a83f4167c11/resource/105ce5df-793f-4e0a-a88e-5d3b3f024a5d/download/bikestationbicimad_geojson.json",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-12"
+      "retrieved": "2026-08-15"
     },
     {
       "title": "Official Madrid street directory",
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://datos.madrid.es/dataset/213605-0-callejero-oficial-madrid/resource/213605-4-callejero-oficial-madrid-csv/download/213605-4-callejero-oficial-madrid-csv.csv",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-12"
+      "retrieved": "2026-08-15"
     }
   ],
   "notes": [
     "Population values are joined by official section identifiers; resident coverage must be at least 99.5%.",
+    "Resident dots are a derived dasymetric view: one dot represents 25 residents, allocated within each section by Catastro dwelling counts. Dot locations are modelled estimates, not households or individuals.",
+    "Section 2807910157 has no Catastro footprint and uses official address-linked municipal building polygons as a documented fallback.",
     "Longitudinal change is shown only for reciprocal one-to-one section matches covering at least 95% of both vintages; split and merged sections remain No data.",
     "Country controls use 2025 INE sections for both birthplace and citizenship. Honduras and Paraguay are in Madrid's 2026 top ten but cannot be shown because INE groups them under Other countries of America.",
     "The eight country-specific share maps use a common 0–10% scale and flag-derived sequential palettes; Total retains its own scale. Country-specific change retains the red-white-blue direction palette with a common ±5 percentage-point limit.",

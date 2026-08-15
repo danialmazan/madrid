@@ -144,7 +144,7 @@ describe("published atlas data", () => {
 
   it("publishes country-controlled migration variants and the new theme", () => {
     const manifest = readJson<LayerManifest>("public/data/layer-manifest.json");
-    expect(manifest.version).toBe("1.1.0");
+    expect(manifest.version).toBe("1.2.0");
     expect(manifest.layers.filter((layer) => layer.group === "education-work")).toHaveLength(5);
     for (const id of ["population-foreign-born", "population-foreign-citizenship", "population-foreign-born-change"]) {
       const options = manifest.layers.find((layer) => layer.id === id)?.control?.country?.options;
@@ -174,5 +174,22 @@ describe("published atlas data", () => {
     const sharedChangeBreaks = changeCountries[0]!.breaks!;
     expect(changeCountries.every((option) => JSON.stringify(option.breaks) === JSON.stringify(sharedChangeBreaks))).toBe(true);
     expect(sharedChangeBreaks).toEqual([-5, 0, 5]);
+  });
+
+  it("publishes the resident total as a non-interactive dasymetric dot layer", () => {
+    const manifest = readJson<LayerManifest>("public/data/layer-manifest.json");
+    const layer = manifest.layers.find((candidate) => candidate.id === "population-total");
+    expect(layer).toMatchObject({
+      id: "population-total",
+      kind: "dot-density",
+      sourceIds: ["resident-dots"],
+      dotValue: 25,
+      dotColors: { light: "#145C9E", dark: "#77C4E4" },
+      dotRadiusStops: [[9, 0.45], [11, 0.75], [13, 1.05], [15, 1.55], [17, 2], [19, 2.3]],
+      dotOpacityStops: [[9, 0.55], [11, 0.68], [13, 0.78], [15, 0.86]],
+    });
+    expect(manifest.sources.find((source) => source.id === "resident-dots")?.url).toBe(
+      "data/resident-dots.pmtiles",
+    );
   });
 });

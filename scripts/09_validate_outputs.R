@@ -34,7 +34,7 @@ layer_ids <- vapply(manifest$layers, `[[`, character(1), "id")
 assert_unique(source_ids, "Manifest source IDs")
 assert_unique(layer_ids, "Manifest layer IDs")
 assert_true(manifest$defaultLayer %in% layer_ids, "Manifest default layer does not exist")
-assert_true(identical(manifest$version, "1.1.0"), "Manifest schema must be 1.1.0")
+assert_true(identical(manifest$version, "1.2.0"), "Manifest schema must be 1.2.0")
 assert_true(identical(section_reports$version, "1.1.0"), "Report schema must be 1.1.0")
 assert_true(identical(housing_analysis$version, "1.0.0"), "Housing analysis schema must be 1.0.0")
 
@@ -65,7 +65,7 @@ for (source_url in unique_source_urls) {
 }
 
 archive_paths <- list.files(public_data_dir, pattern = "\\.pmtiles$", full.names = TRUE)
-assert_true(length(archive_paths) >= 25, "Expected section, building and transport PMTiles archives")
+assert_true(length(archive_paths) >= 26, "Expected section, resident-dot, building and transport PMTiles archives")
 archive_size <- file.info(archive_paths)$size
 limit <- 95 * 1024^2
 assert_true(all(archive_size < limit), "One or more PMTiles archives exceed 95 MB")
@@ -82,6 +82,45 @@ assert_true(
   "Population reference date is invalid"
 )
 population_sections <- readRDS(file.path(processed_dir, "sections-2026-population.rds"))
+resident_dots <- readRDS(file.path(processed_dir, "resident-dots.rds"))
+resident_dot_meta <- readRDS(file.path(processed_dir, "resident-dots-metadata.rds"))
+resident_dot_target <- sum(round(population_sections$population_total / resident_dot_meta$dot_value))
+resident_dot_section_counts <- sf::st_drop_geometry(resident_dots) |>
+  count(section_id, name = "dot_count")
+resident_dot_reconciliation <- population_sections |>
+  sf::st_drop_geometry() |>
+  transmute(section_id, expected_dots = round(population_total / resident_dot_meta$dot_value)) |>
+  left_join(resident_dot_section_counts, by = "section_id")
+assert_true(
+  identical(as.integer(resident_dot_meta$dot_value), 25L) &&
+    nrow(resident_dots) == resident_dot_target &&
+    as.numeric(resident_dot_meta$dot_count) == resident_dot_target &&
+    as.numeric(resident_dot_meta$sections_reconciled) == nrow(population_sections) &&
+    all(resident_dot_reconciliation$expected_dots == resident_dot_reconciliation$dot_count),
+  "Resident dots do not reconcile with 25-resident section targets"
+)
+assert_true(
+  isTRUE(resident_dot_meta$points_inside_assigned_geometry) &&
+    identical(as.character(resident_dot_meta$fallback_section_id), "2807910157") &&
+    as.numeric(resident_dot_meta$fallback_dot_count) == 29 &&
+    sum(resident_dots$allocation_method == "municipal-address-fallback") == 29,
+  "Resident-dot containment or fallback validation failed"
+)
+resident_dot_geojson <- file.path(processed_dir, "tile-inputs", "resident-dots.geojson")
+assert_true(
+  file.exists(resident_dot_geojson) &&
+    identical(unname(tools::md5sum(resident_dot_geojson)), resident_dot_meta$coordinate_file_md5),
+  "Resident-dot coordinate checksum does not match its generated metadata"
+)
+resident_dot_layer <- Filter(function(layer) identical(layer$id, "population-total"), manifest$layers)
+assert_true(
+  length(resident_dot_layer) == 1 &&
+    identical(resident_dot_layer[[1]]$kind, "dot-density") &&
+    as.numeric(resident_dot_layer[[1]]$dotValue) == 25 &&
+    identical(unlist(resident_dot_layer[[1]]$dotColors), c(light = "#145C9E", dark = "#77C4E4")) &&
+    identical(resident_dot_layer[[1]]$sourceIds[[1]], "resident-dots"),
+  "Resident-dot manifest definition is incomplete"
+)
 population_percentiles <- sf::st_drop_geometry(population_sections)[
   c(
     "population_density_percentile", "under18_percentile",
@@ -287,12 +326,19 @@ report <- list(
     building_height_polygons = building$height_polygons,
     housing_analysis_sections = length(housing_analysis$sections),
     housing_analysis_districts = length(housing_analysis$districts),
-    housing_analysis_recorded_dwellings = housing_analysis$coverage$recordedDwellings
+    housing_analysis_recorded_dwellings = housing_analysis$coverage$recordedDwellings,
+    resident_dots = resident_dot_meta$dot_count,
+    resident_dot_fallback = resident_dot_meta$fallback_dot_count
   ),
   population = list(
     source_residents = population$source_total,
     joined_residents = population$joined_total,
-    coverage = population$coverage
+    coverage = population$coverage,
+    resident_dot_value = resident_dot_meta$dot_value,
+    resident_dots = resident_dot_meta$dot_count,
+    represented_residents = resident_dot_meta$represented_population,
+    rounding_difference = resident_dot_meta$rounding_difference,
+    coordinate_file_md5 = resident_dot_meta$coordinate_file_md5
   ),
   elections = election_checks,
   archives = lapply(seq_along(archive_paths), function(index) {

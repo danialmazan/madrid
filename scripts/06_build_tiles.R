@@ -90,6 +90,16 @@ for (year in c("2026", "2025", "2024", "2023")) {
   )
 }
 
+message_step("Building resident-dot archive")
+resident_dot_input <- file.path(tile_input_dir, "resident-dots.geojson")
+assert_true(file.exists(resident_dot_input), "Missing resident-dot tile input")
+run_tippecanoe(
+  file.path(public_data_dir, "resident-dots.pmtiles"),
+  c(resident_dots = resident_dot_input),
+  minimum_zoom = tile_zooms$resident_dots[["min"]],
+  maximum_zoom = tile_zooms$resident_dots[["max"]]
+)
+
 message_step("Building district-split building archives")
 building_dir <- file.path(processed_dir, "buildings")
 for (code in names(district_names)) {

@@ -1,20 +1,27 @@
 {
-  "validated_at": "2026-08-12T12:16:08Z",
+  "validated_at": "2026-08-15T13:21:15Z",
   "passed": true,
   "counts": {
-    "manifest_sources": 55,
+    "manifest_sources": 56,
     "manifest_layers": 52,
-    "pmtiles_archives": 26,
+    "pmtiles_archives": 27,
     "building_footprints": 124329,
     "building_height_polygons": 490298,
     "housing_analysis_sections": 2462,
     "housing_analysis_districts": 21,
-    "housing_analysis_recorded_dwellings": 1523106
+    "housing_analysis_recorded_dwellings": 1523106,
+    "resident_dots": 140423,
+    "resident_dot_fallback": 29
   },
   "population": {
     "source_residents": 3510354,
     "joined_residents": 3510354,
-    "coverage": 1
+    "coverage": 1,
+    "resident_dot_value": 25,
+    "resident_dots": 140423,
+    "represented_residents": 3510575,
+    "rounding_difference": 221,
+    "coordinate_file_md5": "9c4bc4e69b36abd65ad96c8272d56428"
   },
   "elections": [
     {
@@ -158,6 +165,11 @@
       "under_95_mb": true
     },
     {
+      "name": "resident-dots.pmtiles",
+      "bytes": 1479521,
+      "under_95_mb": true
+    },
+    {
       "name": "sections-2023.pmtiles",
       "bytes": 7434824,
       "under_95_mb": true
@@ -183,7 +195,7 @@
       "under_95_mb": true
     }
   ],
-  "public_artifact_bytes": 167014396,
+  "public_artifact_bytes": 168495454,
   "licences": [
     {
       "title": "Padrón municipal de habitantes",

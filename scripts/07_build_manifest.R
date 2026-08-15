@@ -4,6 +4,7 @@ population_meta <- readRDS(file.path(processed_dir, "population-metadata.rds"))
 migration_meta <- readRDS(file.path(processed_dir, "migration-metadata.rds"))
 education_meta <- readRDS(file.path(processed_dir, "education-work-metadata.rds"))
 building_meta <- readRDS(file.path(processed_dir, "buildings-metadata.rds"))
+resident_dot_meta <- readRDS(file.path(processed_dir, "resident-dots-metadata.rds"))
 transport_meta <- readRDS(file.path(processed_dir, "transport-metadata.rds"))
 
 source_definition <- function(id, url, source_layer, attribution, minzoom = 0, maxzoom = 16) {
@@ -37,6 +38,11 @@ sources_out <- list(
     "sections-2023", "data/sections-2023.pmtiles", "sections_2023",
     "INE ADRH · Madrid/Interior election results · INE census sections",
     tile_zooms$sections[["min"]], tile_zooms$sections[["max"]]
+  ),
+  source_definition(
+    "resident-dots", "data/resident-dots.pmtiles", "resident_dots",
+    "Madrid City Council padrón · Catastro INSPIRE Buildings · derived dasymetric allocation",
+    tile_zooms$resident_dots[["min"]], tile_zooms$resident_dots[["max"]]
   )
 )
 
@@ -112,7 +118,7 @@ layer <- function(
   geography, source_ids, property, palette, breaks, format,
   tooltip_fields, minzoom = 8, maxzoom = 24, opacity = 0.72,
   control = NULL, methodology = NULL, line_color = NULL, line_width = NULL,
-  scale = NULL
+  scale = NULL, dot_style = NULL
 ) {
   out <- list(
     id = id, group = group, kind = kind, label = label, shortLabel = short_label,
@@ -127,6 +133,12 @@ layer <- function(
   if (!is.null(line_color)) out$lineColor <- line_color
   if (!is.null(line_width)) out$lineWidth <- line_width
   if (!is.null(scale)) out$scale <- scale
+  if (!is.null(dot_style)) {
+    out$dotValue <- dot_style$value
+    out$dotColors <- dot_style$colors
+    out$dotRadiusStops <- unname(dot_style$radius_stops)
+    out$dotOpacityStops <- unname(dot_style$opacity_stops)
+  }
   out
 }
 
@@ -218,11 +230,24 @@ foreign_born_change_breaks_by_country <- country_option_breaks(
 
 layers_out <- list(
   layer(
-    "population-total", "population", "choropleth", "Resident population", "Total residents",
-    "Residents registered in the municipal padrón.", "residents",
-    population_meta$reference_date, "2026 census sections", "sections-2026",
-    "population_total", blue_palette, c(0, 500, 1000, 1500, 2200, 3500, 6000), "integer",
-    section_context_2026
+    "population-total", "population", "dot-density", "Resident population", "Total residents",
+    "Modelled within residential buildings using recorded dwellings.", "residents",
+    population_meta$reference_date,
+    "2026 census sections · modelled within residential buildings", "resident-dots",
+    "population_total", c("#145C9E", "#77C4E4"), c(resident_dot_meta$dot_value), "integer",
+    section_context_2026,
+    minzoom = tile_zooms$resident_dots[["min"]], maxzoom = 24, opacity = 0.86,
+    methodology = paste(
+      "Each dot represents 25 registered residents. Section totals are apportioned among",
+      "Catastro residential buildings by recorded dwellings, then placed reproducibly inside",
+      "the assigned footprint. Locations are modelled estimates, not households or individuals."
+    ),
+    dot_style = list(
+      value = resident_dot_meta$dot_value,
+      colors = list(light = "#145C9E", dark = "#77C4E4"),
+      radius_stops = list(c(9, 0.45), c(11, 0.75), c(13, 1.05), c(15, 1.55), c(17, 2), c(19, 2.3)),
+      opacity_stops = list(c(9, 0.55), c(11, 0.68), c(13, 0.78), c(15, 0.86))
+    )
   ),
   layer(
     "population-density", "population", "choropleth", "Population density", "Density",
@@ -651,13 +676,15 @@ references <- list(
 
 manifest <- list(
   generatedAt = paste0(format(Sys.time(), "%Y-%m-%dT%H:%M:%S"), "Z"),
-  version = "1.1.0",
+  version = "1.2.0",
   defaultLayer = "population-density",
   sources = sources_out,
   layers = layers_out,
   references = references,
   notes = list(
     "Population values are joined by official section identifiers; resident coverage must be at least 99.5%.",
+    "Resident dots are a derived dasymetric view: one dot represents 25 residents, allocated within each section by Catastro dwelling counts. Dot locations are modelled estimates, not households or individuals.",
+    "Section 2807910157 has no Catastro footprint and uses official address-linked municipal building polygons as a documented fallback.",
     "Longitudinal change is shown only for reciprocal one-to-one section matches covering at least 95% of both vintages; split and merged sections remain No data.",
     "Country controls use 2025 INE sections for both birthplace and citizenship. Honduras and Paraguay are in Madrid's 2026 top ten but cannot be shown because INE groups them under Other countries of America.",
     "The eight country-specific share maps use a common 0–10% scale and flag-derived sequential palettes; Total retains its own scale. Country-specific change retains the red-white-blue direction palette with a common ±5 percentage-point limit.",
