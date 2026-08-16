@@ -1299,6 +1299,16 @@ function renderFeatureDetails(
     ${renderFeatureActions(definition.group, isSection)}`;
   if (isSection) bindSectionCardActions();
   if (isMobileViewport()) setMobilePanel(true, "details");
+  revealFeatureActions();
+}
+
+function revealFeatureActions(): void {
+  window.requestAnimationFrame(() => {
+    featurePanel.querySelector<HTMLElement>(".feature-actions")?.scrollIntoView({
+      block: "nearest",
+      inline: "nearest",
+    });
+  });
 }
 
 function renderIncomeSuppressionNote(
@@ -1358,6 +1368,7 @@ function renderElectionResultFeature(
     <p class="results-coverage">${escapeHtml(formatValue(cumulative, "percent", "", 1))} of valid votes shown</p>
     ${renderFeatureActions(definition.group, isSection)}`;
   if (isSection) bindSectionCardActions();
+  revealFeatureActions();
 }
 
 function zoomToLayerMinimum(layer: LayerDefinition): void {
