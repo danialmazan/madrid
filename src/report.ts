@@ -196,7 +196,7 @@ export function renderSectionReport(
       <footer class="report-sources">
         <h3>Sources &amp; interpretation</h3>
         <p>Percentiles compare valid Madrid census-section observations. A higher percentile means a higher raw value, not necessarily a better outcome. Histograms use equal-width value buckets, so each bar’s area represents its number of sections. Suppressed observations remain No data.</p>
-        <p><strong>Geography.</strong> Current ${escapeHtml(index.geographyVintages.canonical)} sections are canonical. Population change compares ${escapeHtml(index.geographyVintages.populationChange)}; income and elections use ${escapeHtml(index.geographyVintages.incomeAndElections)}, Education &amp; Work uses ${escapeHtml(index.geographyVintages.educationWork)}, and migration uses ${escapeHtml(index.geographyVintages.migration)} sections. Longitudinal values appear only for reciprocal one-to-one matches covering at least 95% of both boundaries; split and merged sections remain No data. Snapshot chapters use greatest overlap for report display without area-weighting or imputation.</p>
+        <p><strong>Geography.</strong> Current ${escapeHtml(index.geographyVintages.canonical)} sections are canonical. Population change compares ${escapeHtml(index.geographyVintages.populationChange)}; income uses ${escapeHtml(index.geographyVintages.income)}, elections use ${escapeHtml(index.geographyVintages.elections)}, Education &amp; Work uses ${escapeHtml(index.geographyVintages.educationWork)}, and migration uses ${escapeHtml(index.geographyVintages.migration)} sections. Longitudinal values appear only for reciprocal one-to-one matches covering at least 95% of both boundaries; split and merged sections remain No data. Snapshot chapters use greatest overlap for report display without area-weighting or imputation.</p>
         <p><strong>Country availability.</strong> Honduras and Paraguay are among Madrid's current top ten birth countries, but INE groups them under Other countries of America at section level, so the Atlas provides the eight individually published countries.</p>
         <p><a href="${escapeHtml(index.methodologyUrl)}">Read the full methodology</a></p>
         <ul>${index.references
@@ -275,10 +275,9 @@ function renderNoDataChart(distribution: ReportDistribution): string {
 }
 
 function renderIncomeSuppression(section: SectionReport): string {
-  const affected = ["Carabanchel", "Fuencarral-El Pardo"].includes(section.district);
-  const missing = section.income.below_60_median_pct?.value === null;
-  if (!affected || !missing) return "";
-  return `<aside class="report-data-note"><strong>Official source suppression</strong><p>INE publishes no section values for the below-60% or above-200% median indicators in ${escapeHtml(section.district)}. The other income measures remain available.</p></aside>`;
+  const missing = Object.values(section.income).some((metric) => metric.value === null);
+  if (!missing) return "";
+  return `<aside class="report-data-note"><strong>Official source suppression</strong><p>Some income indicators are not published for this section. They remain No data; the other published measures remain available.</p></aside>`;
 }
 
 function renderElectionComparison(

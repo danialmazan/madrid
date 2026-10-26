@@ -1,4 +1,5 @@
 options(warn = 1)
+source("scripts/tests/test_population.R", local = new.env(parent = globalenv()))
 
 steps <- c(
   "scripts/01_prepare_boundaries.R",
@@ -6,6 +7,7 @@ steps <- c(
   "scripts/02a_prepare_population_migration.R",
   "scripts/02b_prepare_education_work.R",
   "scripts/03_prepare_elections_income.R",
+  "scripts/03a_prepare_income.R",
   "scripts/04_prepare_buildings.R",
   "scripts/04a_prepare_population_dots.R",
   "scripts/05_prepare_transport.R",

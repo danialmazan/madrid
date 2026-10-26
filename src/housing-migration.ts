@@ -20,7 +20,7 @@ const required = <T extends Element>(selector: string): T => {
 };
 
 const fetchAnalysis = async (): Promise<HousingMigrationAnalysis> => {
-  const response = await fetch(`${import.meta.env.BASE_URL}data/housing-migration-analysis.json`);
+  const response = await fetch(`${import.meta.env.BASE_URL}data/housing-migration-analysis.json?v=${import.meta.env.VITE_ATLAS_DATA_VERSION}`);
   if (!response.ok) throw new Error(`Could not load analysis data (${response.status})`);
   return response.json() as Promise<HousingMigrationAnalysis>;
 };

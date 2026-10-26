@@ -1,6 +1,8 @@
 {
-  "generatedAt": "2026-08-15T19:02:21Z",
+  "generatedAt": "2026-10-26T10:45:04Z",
   "version": "1.2.0",
+  "dataRelease": "2026-10-26",
+  "sourceVersionsUrl": "data/source-versions.json",
   "defaultLayer": "population-density",
   "sources": [
     {
@@ -31,7 +33,15 @@
       "id": "sections-2023",
       "url": "data/sections-2023.pmtiles",
       "sourceLayer": "sections_2023",
-      "attribution": "INE ADRH · Madrid/Interior election results · INE census sections",
+      "attribution": "Madrid/Interior 2023 election results · INE 2023 census sections",
+      "minzoom": 8,
+      "maxzoom": 15
+    },
+    {
+      "id": "income-2024",
+      "url": "data/income-2024.pmtiles",
+      "sourceLayer": "income_2024",
+      "attribution": "INE ADRH · 2024 income · 2025 census sections",
       "minzoom": 8,
       "maxzoom": 15
     },
@@ -461,7 +471,7 @@
       "shortLabel": "Total residents",
       "description": "Modelled within residential buildings using recorded dwellings.",
       "unit": "residents",
-      "referenceDate": "2026-07-01",
+      "referenceDate": "2026-10-01",
       "geography": "2026 census sections · modelled within residential buildings",
       "sourceIds": [
         "resident-dots"
@@ -542,7 +552,7 @@
       "shortLabel": "Density",
       "description": "Registered residents per square kilometre of section area.",
       "unit": "residents / km²",
-      "referenceDate": "2026-07-01",
+      "referenceDate": "2026-10-01",
       "geography": "2026 census sections",
       "sourceIds": [
         "sections-2026"
@@ -609,7 +619,7 @@
       "shortLabel": "Under 18",
       "description": "Share of registered residents aged 0–17.",
       "unit": "%",
-      "referenceDate": "2026-07-01",
+      "referenceDate": "2026-10-01",
       "geography": "2026 census sections",
       "sourceIds": [
         "sections-2026"
@@ -676,7 +686,7 @@
       "shortLabel": "65 and older",
       "description": "Share of registered residents aged 65 and older.",
       "unit": "%",
-      "referenceDate": "2026-07-01",
+      "referenceDate": "2026-10-01",
       "geography": "2026 census sections",
       "sourceIds": [
         "sections-2026"
@@ -743,7 +753,7 @@
       "shortLabel": "5-year change",
       "description": "Change in registered residents from the same month of 2021 to the current month. Only reciprocal one-to-one boundary matches covering at least 95% of both sections are shown.",
       "unit": "%",
-      "referenceDate": "2026-07-01",
+      "referenceDate": "2026-10-01",
       "geography": "2026 census sections matched to 2021",
       "sourceIds": [
         "sections-2026"
@@ -755,9 +765,9 @@
         "#2166ac"
       ],
       "breaks": [
-        -17.1442090025,
+        -18.4190647482,
         0,
-        17.1442090025
+        18.4190647482
       ],
       "format": "percent",
       "minzoom": 8,
@@ -1733,7 +1743,7 @@
       "shortLabel": "Construction year",
       "description": "Earliest recorded construction year; the full interval is shown in details.",
       "unit": "year",
-      "referenceDate": "2026-02-20",
+      "referenceDate": "2026-08-21",
       "geography": "Building footprints",
       "sourceIds": [
         "building-age-01",
@@ -1826,7 +1836,7 @@
       "shortLabel": "Height",
       "description": "Estimated height above the footprint elevation; switch on 3D to extrude polygons.",
       "unit": "m",
-      "referenceDate": "2026-06-18",
+      "referenceDate": "2026-07-01",
       "geography": "Municipal height polygons",
       "sourceIds": [
         "building-height-01",
@@ -3544,10 +3554,10 @@
       "shortLabel": "Income per person",
       "description": "Mean annual net income per resident.",
       "unit": "€ / person",
-      "referenceDate": "2023",
-      "geography": "2023 census sections",
+      "referenceDate": "2024",
+      "geography": "2025 census sections · income year 2024",
       "sourceIds": [
-        "sections-2023"
+        "income-2024"
       ],
       "property": "income_per_person_eur",
       "palette": [
@@ -3624,10 +3634,10 @@
       "shortLabel": "Income per household",
       "description": "Mean annual net income per household.",
       "unit": "€ / household",
-      "referenceDate": "2023",
-      "geography": "2023 census sections",
+      "referenceDate": "2024",
+      "geography": "2025 census sections · income year 2024",
       "sourceIds": [
-        "sections-2023"
+        "income-2024"
       ],
       "property": "income_per_household_eur",
       "palette": [
@@ -3639,13 +3649,13 @@
         "#0b396e"
       ],
       "breaks": [
-        17450,
-        31930.1666666667,
-        36164.6666666667,
-        42608,
-        51280.6666666667,
-        66352.8333333333,
-        104774
+        18570,
+        34357.3333333333,
+        38525,
+        45484.5,
+        54215,
+        70446.5,
+        112163
       ],
       "format": "currency",
       "minzoom": 8,
@@ -3704,10 +3714,10 @@
       "shortLabel": "Pension income share",
       "description": "Percentage of total section income coming from pensions; this is not a euro amount.",
       "unit": "% of total income",
-      "referenceDate": "2023",
-      "geography": "2023 census sections",
+      "referenceDate": "2024",
+      "geography": "2025 census sections · income year 2024",
       "sourceIds": [
-        "sections-2023"
+        "income-2024"
       ],
       "property": "pension_income_pct",
       "palette": [
@@ -3719,13 +3729,13 @@
         "#963005"
       ],
       "breaks": [
-        1.5,
-        12.4,
-        16.8,
-        19.6,
-        22.1,
-        26.2,
-        48.1
+        1.1,
+        11.9,
+        16,
+        18.8,
+        21.2,
+        25.4,
+        47.5
       ],
       "format": "percent",
       "minzoom": 8,
@@ -3784,10 +3794,10 @@
       "shortLabel": "Below 60% median",
       "description": "Share of people below 60% of the national median equivalised income.",
       "unit": "%",
-      "referenceDate": "2023",
-      "geography": "2023 census sections",
+      "referenceDate": "2024",
+      "geography": "2025 census sections · income year 2024",
       "sourceIds": [
-        "sections-2023"
+        "income-2024"
       ],
       "property": "below_60_median_pct",
       "palette": [
@@ -3864,10 +3874,10 @@
       "shortLabel": "Gini coefficient",
       "description": "Income inequality: higher values indicate a less equal distribution.",
       "unit": "index",
-      "referenceDate": "2023",
-      "geography": "2023 census sections",
+      "referenceDate": "2024",
+      "geography": "2025 census sections · income year 2024",
       "sourceIds": [
-        "sections-2023"
+        "income-2024"
       ],
       "property": "gini",
       "palette": [
@@ -3944,7 +3954,7 @@
       "shortLabel": "Metro lines",
       "description": "Static network snapshot.",
       "unit": "route",
-      "referenceDate": "2026-08-03",
+      "referenceDate": "2025-05-27",
       "geography": "Regional transport network",
       "sourceIds": [
         "metro-lines"
@@ -3982,7 +3992,7 @@
       "shortLabel": "Metro stops",
       "description": "All stops appear together at zoom 12.",
       "unit": "stop",
-      "referenceDate": "2026-08-03",
+      "referenceDate": "2025-05-27",
       "geography": "Regional transport network",
       "sourceIds": [
         "metro-stops"
@@ -4019,7 +4029,7 @@
       "shortLabel": "Metro Ligero lines",
       "description": "Static network snapshot.",
       "unit": "route",
-      "referenceDate": "2026-08-03",
+      "referenceDate": "2026-10-15",
       "geography": "Regional transport network",
       "sourceIds": [
         "metro_ligero-lines"
@@ -4057,7 +4067,7 @@
       "shortLabel": "Metro Ligero stops",
       "description": "All stops appear together at zoom 12.",
       "unit": "stop",
-      "referenceDate": "2026-08-03",
+      "referenceDate": "2026-10-15",
       "geography": "Regional transport network",
       "sourceIds": [
         "metro_ligero-stops"
@@ -4169,7 +4179,7 @@
       "shortLabel": "EMT lines",
       "description": "Static network snapshot.",
       "unit": "route",
-      "referenceDate": "2026-08-03",
+      "referenceDate": "2026-10-13",
       "geography": "Regional transport network",
       "sourceIds": [
         "emt-lines"
@@ -4227,7 +4237,7 @@
           },
           {
             "value": "6",
-            "label": "6 · Plaza Tirso de Molina - Orcasitas"
+            "label": "6 · Plaza de Tirso de Molina - Orcasitas"
           },
           {
             "value": "7",
@@ -5095,7 +5105,7 @@
           },
           {
             "value": "SE709",
-            "label": "SE709 · Feria de Madrid - Hospital Enfermera Isabel Zendal"
+            "label": "SE709 · Feria de Madrid - Valdebebas"
           },
           {
             "value": "SE718",
@@ -5154,7 +5164,7 @@
       "shortLabel": "EMT stops",
       "description": "All stops appear together at zoom 12.",
       "unit": "stop",
-      "referenceDate": "2026-08-03",
+      "referenceDate": "2026-10-13",
       "geography": "Regional transport network",
       "sourceIds": [
         "emt-stops"
@@ -5212,7 +5222,7 @@
           },
           {
             "value": "6",
-            "label": "6 · Plaza Tirso de Molina - Orcasitas"
+            "label": "6 · Plaza de Tirso de Molina - Orcasitas"
           },
           {
             "value": "7",
@@ -6080,7 +6090,7 @@
           },
           {
             "value": "SE709",
-            "label": "SE709 · Feria de Madrid - Hospital Enfermera Isabel Zendal"
+            "label": "SE709 · Feria de Madrid - Valdebebas"
           },
           {
             "value": "SE718",
@@ -6172,79 +6182,79 @@
     {
       "title": "Padrón municipal de habitantes",
       "organisation": "Ayuntamiento de Madrid",
-      "url": "https://datos.madrid.es/dataset/200076-0-padron/resource/200076-2-padron-csv/download/200076_20260714_062859.csv",
+      "url": "https://datos.madrid.es/dataset/200076-0-padron/resource/200076-2-padron-csv/download/200076_20261006_220058.csv",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-15"
+      "retrieved": "2026-10-26"
     },
     {
       "title": "Population by country of birth and nationality",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66428.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-15"
+      "retrieved": "2026-10-26"
     },
     {
       "title": "Education and economic activity by census section",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66753.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-15"
+      "retrieved": "2026-10-26"
     },
     {
       "title": "Catastro INSPIRE Buildings",
       "organisation": "Dirección General del Catastro",
       "url": "https://www.catastro.hacienda.gob.es/INSPIRE/Buildings/28/28900-MADRID/A.ES.SDGC.BU.28900.zip",
       "licence": "Catastro data-access conditions",
-      "retrieved": "2026-08-15"
+      "retrieved": "2026-10-26"
     },
     {
       "title": "Alturas de edificios",
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://geoportal.madrid.es/fsdescargas/IDEAM_WBGEOPORTAL/CARTOGRAFIA/CARTOGRAFIA_ACTUALIZADA/ALTURAS_EDIFICIOS/ALTURAS_EDIFICIOS.ZIP",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-15"
+      "retrieved": "2026-10-26"
     },
     {
       "title": "2023 election results by polling table",
       "organisation": "Madrid City Council / Interior Ministry",
       "url": "https://www.madrid.es/UnidadesDescentralizadas/UDCEstadistica/Nuevaweb/Elecciones%20y%20Participaci%C3%B3n%20Ciudadana/Elecciones/Resultados%20electorales/Congreso/Congreso%202023/Mesas/G1340123_prov.xlsx",
       "licence": "Public-sector information reuse terms",
-      "retrieved": "2026-08-15"
+      "retrieved": "2026-10-26"
     },
     {
       "title": "Household Income Distribution Atlas",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31097.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-15"
+      "retrieved": "2026-10-26"
     },
     {
       "title": "Income distribution by source",
       "organisation": "Instituto Nacional de Estadística",
       "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31098.csv",
       "licence": "INE standard reuse conditions",
-      "retrieved": "2026-08-15"
+      "retrieved": "2026-10-26"
     },
     {
       "title": "CRTM open transport data",
       "organisation": "Consorcio Regional de Transportes de Madrid",
       "url": "https://transparencia.crtm.es/presupuestos-contratos-y-gastos/datos-abiertos/",
       "licence": "CRTM open-data licence",
-      "retrieved": "2026-08-15"
+      "retrieved": "2026-10-26"
     },
     {
       "title": "BiciMAD stations",
       "organisation": "EMT Madrid",
       "url": "https://datos.emtmadrid.es/dataset/5fcc0945-2cbd-46c3-801a-6a83f4167c11/resource/105ce5df-793f-4e0a-a88e-5d3b3f024a5d/download/bikestationbicimad_geojson.json",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-15"
+      "retrieved": "2026-10-26"
     },
     {
       "title": "Official Madrid street directory",
       "organisation": "Ayuntamiento de Madrid",
       "url": "https://datos.madrid.es/dataset/213605-0-callejero-oficial-madrid/resource/213605-4-callejero-oficial-madrid-csv/download/213605-4-callejero-oficial-madrid-csv.csv",
       "licence": "Madrid open-data reuse terms",
-      "retrieved": "2026-08-15"
+      "retrieved": "2026-10-26"
     }
   ],
   "notes": [
@@ -6257,7 +6267,8 @@
     "The foreign-born comparison is explicitly four years (2021–2025) and is expressed in percentage points.",
     "Election shares use valid votes including blank ballots as the denominator.",
     "Election totals exclude non-geographic votes when they are absent from polling-table data.",
-    "INE publishes no 2023 section values for the below-60% and above-200% median indicators in Carabanchel and Fuencarral-El Pardo; these remain No data.",
+    "Income values refer to 2024 and use the January 2025 census frame. The ADRH 2024 disclosure rules replace the previous blanket missingness in Carabanchel and Fuencarral-El Pardo; genuine source suppressions remain No data.",
+    "Padrón totals include the open-ended 100+ age category. Three source residents have no census-section identifier and cannot be mapped.",
     "Percentiles compare valid Madrid census-section observations; a higher percentile means a higher raw value, not necessarily a better outcome.",
     "Transport is a static network snapshot; live vehicles and bicycle availability are intentionally excluded.",
     "Building archives are split by district and checked against a 95 MB per-file publication limit."

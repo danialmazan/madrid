@@ -69,6 +69,7 @@ prepare_cercanias_features <- function(item) {
   saveRDS(routes, file.path(processed_dir, "routes-cercanias.rds"))
   list(
     source_url = sources$cercanias_feature_service,
+    reference_date = source_record("cercanias-lines.geojson")$reference_date,
     item_id = item$item_id,
     routes = nrow(routes),
     lines = nrow(lines),
@@ -192,6 +193,7 @@ prepare_gtfs <- function(mode, item) {
 
   list(
     source_url = url,
+    reference_date = source_record(paste0("gtfs-", mode, ".zip"))$reference_date,
     item_id = item$item_id,
     routes = nrow(route_fields),
     lines = nrow(lines),
@@ -220,11 +222,12 @@ bicimad <- make_valid_wgs84(bicimad) |>
 write_geojson(bicimad, file.path(transport_dir, "bicimad-stops.geojson"))
 
 save_metadata("transport", list(
-  reference_date = format(Sys.Date(), "%Y-%m-%d"),
+  checked_at = source_lock$release,
   snapshot = TRUE,
   gtfs = gtfs_metadata,
   bicimad = list(
     source_url = sources$bicimad_geojson,
+    reference_date = source_record("bicimad-stations.geojson")$reference_date,
     stations = nrow(bicimad)
   )
 ))

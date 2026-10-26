@@ -3,8 +3,9 @@
 ## Geography and missing data
 
 The atlas covers Madrid municipality. Regional transport is retained beyond the municipal
-boundary so journeys can be understood in context. Thematic values are joined only to the census
-section vintage matching the observation year: 2026, 2025, 2024, 2023 or 2021. A failed or absent match remains
+boundary so journeys can be understood in context. Population, migration, education/work and elections use their declared census-section vintages
+(2026, 2025, 2024, 2023 or 2021). Income year 2024 uses the January 2025 census frame, following
+INE ADRH methodology; observation year and geography vintage are recorded separately. A failed or absent match remains
 null and is displayed as **No data**.
 
 Longitudinal measures require a reciprocal one-to-one polygon match covering at least 95% of both
@@ -12,10 +13,12 @@ section geometries. Split and merged sections are not area-weighted or imputed a
 
 ## Population
 
-The latest monthly municipal padrón is summed by section and single year of age. Total population
+The monthly municipal padrón is summed by section and age, including the open-ended `100 o +`
+category and individual ages above 100 in historical files. Total population
 includes Spanish and foreign citizens of all genders. Under-18 and 65+ values divide the relevant
 age total by all registered residents. Density divides residents by section area in square kilometres.
-Five-year population change compares the latest monthly padrón with the same month of 2021.
+This release uses 1 October 2026 and compares it with October 2021. Three residents in the current
+source have no section identifier: they are counted in source reconciliation but cannot be mapped.
 
 The **Total residents** map is a derived dasymetric dot-density view. Each dot represents 25
 registered residents. Within every current census section, the authoritative padrón total is divided
@@ -23,7 +26,7 @@ by 25 and rounded, then apportioned among Catastro buildings classified as resid
 to their recorded dwelling counts. A fixed random seed places the resulting dots inside their
 assigned building footprints, so rebuilding the same inputs produces the same points. These are
 modelled locations, not identified households or individual residents. Section `2807910157` has no
-Catastro footprint; its 29 dots use official address points linked to municipal building-height
+Catastro footprint; its section dot target uses official address points linked to municipal building-height
 polygons as a documented fallback. Section cards and reports retain the exact padrón counts.
 The complete generated dot set is retained at every supported zoom; apparent merging at small
 scales is only the visual result of translucent dots overlapping.
@@ -79,12 +82,27 @@ Right is PP + VOX. Every smaller candidacy is excluded from both blocs.
 ## Income and inequality
 
 Net income per person and per household; the percentage of total income from pensions; the population below 60% and above 200% of median equivalised income; the
-Gini coefficient; and the P80/P20 income ratio come from the 2023 INE Household Income Distribution
-Atlas. They are retained as separate measures and joined to 2023 sections.
+Gini coefficient; and the P80/P20 income ratio come from the 2024 INE Household Income Distribution
+Atlas, released on 19 October 2026. They are retained as separate measures and joined to 2025 INE
+sections, the January census frame following the income reference year. The atlas uses a dedicated
+income archive; election values retain their 2023 geography. The 2024 source supplies all seven
+measures for the 2,462 active Madrid sections, including the below-60% and above-200% indicators
+previously suppressed in Carabanchel and Fuencarral-El Pardo. ADRH 2024 changed disclosure rules
+to minimum population counts by classification combination with complementary protection. Any
+genuine source suppression remains null. See [INE methodology](https://www.ine.es/metodologia/metodologia_adrh.pdf).
 
 ## Transport
 
-Metro, Metro Ligero, Cercanías and EMT routes and stops are generated from CRTM GTFS snapshots.
-BiciMAD contains station locations only. Every stop layer appears in full at zoom 12, while an EMT
+Metro, Metro Ligero and EMT routes and stops are generated from CRTM GTFS snapshots.
+Cercanías uses CRTM static line and station feature layers. BiciMAD contains station locations only. Every stop layer appears in full at zoom 12, while an EMT
 route selector prevents the complete network from obscuring other information. This release does
 not imply live vehicle positions, service status or bicycle availability.
+
+## Release provenance
+
+The source lock and published `data/source-versions.json` distinguish observation date, geometry
+vintage, upstream file modification and actual retrieval. Catastro uses the 21 August 2026 download;
+the municipal height product is dated 1 July with a ZIP modified on 28 July. Transport dates are
+specific to each source: EMT 13 October, Metro Ligero 15 October, Metro feed version 27 May 2025,
+and retained 3 August atlas snapshots for Cercanías and BiciMAD, rechecked without content changes
+on 26 October. A snapshot date for these last two is not an upstream observation date.

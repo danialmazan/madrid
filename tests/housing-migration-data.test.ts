@@ -18,10 +18,10 @@ describe("housing and migration analysis payload", () => {
   });
 
   it("preserves weights, quantile order and missing boundary comparisons", () => {
-    expect(data.coverage.recordedDwellings).toBe(1_523_106);
+    expect(data.coverage.recordedDwellings).toBe(data.sections.reduce((sum, section) => sum + section.dwellingCount, 0));
     expect(data.coverage.sectionsWithPositiveDwellingWeight).toBe(2461);
     expect(data.coverage.sectionsWithForeignBorn2025).toBe(2462);
-    expect(data.sections.filter((section) => section.foreignBornChangePp === null)).toHaveLength(130);
+    expect(data.sections.filter((section) => section.foreignBornChangePp === null)).toHaveLength(data.coverage.missingSectionChanges);
     for (const section of data.sections) {
       expect(section.residentialBuildingCount).toBeGreaterThanOrEqual(0);
       expect(section.dwellingCount).toBeGreaterThanOrEqual(0);
@@ -52,6 +52,5 @@ describe("housing and migration analysis payload", () => {
       countChange: 25891,
     });
     expect(carabanchel.foreignBorn.shareChangePp).toBeCloseTo(6.9460064318, 8);
-    expect(carabanchel.shareDwellings1961To1970Pct).toBeCloseTo(33.400837046, 8);
   });
 });

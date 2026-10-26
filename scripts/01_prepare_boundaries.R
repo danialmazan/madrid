@@ -122,6 +122,7 @@ download_cached(sources$madrid_street_addresses_csv, address_path)
 addresses <- suppressMessages(readr::read_delim(
   address_path,
   delim = ";",
+  # The download header says UTF-8, but the official CSV bytes are Latin-1.
   locale = readr::locale(encoding = "ISO-8859-1", decimal_mark = ","),
   col_types = readr::cols(.default = readr::col_character()),
   show_col_types = FALSE,
@@ -138,7 +139,10 @@ assert_true(
 )
 
 title_es <- function(value) {
-  result <- tools::toTitleCase(tolower(ifelse(is.na(value), "", value)))
+  # Street classes/names repeat across portals; format each distinct label once.
+  values <- ifelse(is.na(value), "", value)
+  unique_values <- unique(values)
+  result <- tools::toTitleCase(tolower(unique_values))
   for (connector in c("De", "Del", "La", "Las", "Los", "Y")) {
     result <- gsub(
       paste0("\\b", connector, "\\b"),
@@ -147,7 +151,7 @@ title_es <- function(value) {
       perl = TRUE
     )
   }
-  trimws(result)
+  trimws(result)[match(values, unique_values)]
 }
 
 addresses <- addresses |>
@@ -194,7 +198,7 @@ address_records <- lapply(seq_len(nrow(addresses)), function(index) {
 })
 jsonlite::write_json(
   list(
-    referenceDate = format(Sys.Date(), "%Y-%m-%d"),
+    referenceDate = source_record("madrid-street-addresses.csv")$reference_date,
     records = address_records
   ),
   file.path(public_data_dir, "addresses.json"),

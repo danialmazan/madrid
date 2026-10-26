@@ -20,12 +20,16 @@ assert_true(all(required %in% names(population_raw)), "Unexpected Madrid padrón
 population <- population_raw |>
   mutate(
     section_id = paste0("28079", sprintf("%05d", as.integer(cod_dist_seccion))),
-    age = as.integer(cod_edad_int),
+    age = parse_padron_age(cod_edad_int),
     spanish = rowSums(across(c(espanoleshombres, espanolesmujeres), ~coalesce(as.numeric(.x), 0))),
     foreign = rowSums(across(c(extranjeroshombres, extranjerosmujeres), ~coalesce(as.numeric(.x), 0))),
     residents = spanish + foreign
-  ) |>
-  filter(grepl("^28079[0-9]{5}$", section_id), !is.na(age)) |>
+  )
+all_source_total <- sum(population$residents)
+unassigned_total <- sum(population$residents[!grepl("^28079[0-9]{5}$", population$section_id)])
+age100_total <- sum(population$residents[population$age == 100 & grepl("^28079[0-9]{5}$", population$section_id)])
+population <- population |>
+  filter(grepl("^28079[0-9]{5}$", section_id)) |>
   group_by(section_id) |>
   summarise(
     population_total = sum(residents, na.rm = TRUE),
@@ -51,6 +55,8 @@ sections_2026 <- sections_2026 |>
 source_total <- sum(population$population_total, na.rm = TRUE)
 joined_total <- sum(sections_2026$population_total, na.rm = TRUE)
 coverage <- joined_total / source_total
+assert_true(all_source_total == source_total + unassigned_total, "Padrón source residents were lost before the geometry join")
+assert_true(source_total == joined_total, "One or more assigned padrón residents have no current geometry")
 assert_true(coverage >= 0.995, sprintf("Population join coverage %.3f%% is below 99.5%%", 100 * coverage))
 assert_true(all(sections_2026$population_total >= 0, na.rm = TRUE), "Negative population totals")
 assert_true(all(dplyr::between(sections_2026$under18_pct, 0, 100), na.rm = TRUE), "Under-18 percentage out of range")
@@ -80,6 +86,9 @@ save_metadata("population", list(
   reference_date = reference_date,
   source_url = population_url,
   source_total = source_total,
+  all_source_total = all_source_total,
+  unassigned_total = unassigned_total,
+  age100_total = age100_total,
   joined_total = joined_total,
   coverage = coverage
 ))

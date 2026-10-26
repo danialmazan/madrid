@@ -6,6 +6,7 @@ dist/
 .Rproj.user/
 data/raw/
 data/processed/
+data/releases/
 public/data/*.geojson
 public/data/*.csv
 playwright-report/

@@ -70,7 +70,7 @@ sections_2024 <- readRDS(file.path(processed_dir, "sections-2024-education-work.
     across(where(is.numeric), ~round(.x, 2))
   ) |>
   select(section_id, section_name, district, ends_with("_pct"), ends_with("_percentile"), geometry)
-sections_2023 <- readRDS(file.path(processed_dir, "sections-2023-thematics.rds")) |>
+sections_2023 <- readRDS(file.path(processed_dir, "sections-2023-elections.rds")) |>
   mutate(
     section_name = section_name(pick(everything())),
     across(where(is.numeric), ~round(.x, 2))
@@ -97,6 +97,14 @@ for (year in c("2026", "2025", "2024", "2023")) {
     maximum_zoom = tile_zooms$sections[["max"]]
   )
 }
+
+message_step("Building 2024 income on matching 2025 geography")
+income <- readRDS(file.path(processed_dir, "sections-2025-income-2024.rds")) |>
+  mutate(section_name = section_name(pick(everything())), across(where(is.numeric), ~round(.x, 2)))
+income_input <- file.path(tile_input_dir, "income-2024.geojson")
+write_geojson(income, income_input)
+run_tippecanoe(file.path(public_data_dir, "income-2024.pmtiles"), c(income_2024 = income_input),
+  minimum_zoom = tile_zooms$sections[["min"]], maximum_zoom = tile_zooms$sections[["max"]])
 
 message_step("Building resident-dot archive")
 resident_dot_input <- file.path(tile_input_dir, "resident-dots.geojson")

@@ -120,7 +120,7 @@ function requireElement<T extends Element>(selector: string): T {
 }
 
 async function fetchJson<T>(url: string): Promise<T> {
-  const response = await fetch(url);
+  const response = await fetch(`${url}?v=${import.meta.env.VITE_ATLAS_DATA_VERSION}`);
   if (!response.ok) throw new Error(`${url}: HTTP ${response.status}`);
   return (await response.json()) as T;
 }
@@ -411,7 +411,9 @@ function addCanonicalSectionHitLayer(): void {
 
 function resolveAssetUrl(url: string): string {
   if (/^https?:\/\//.test(url)) return url;
-  return new URL(url.replace(/^\//, ""), new URL(BASE_URL, window.location.origin)).toString();
+  const resolved = new URL(url.replace(/^\//, ""), new URL(BASE_URL, window.location.origin));
+  resolved.searchParams.set("v", import.meta.env.VITE_ATLAS_DATA_VERSION);
+  return resolved.toString();
 }
 
 async function applyMapLayers(): Promise<void> {
@@ -1316,11 +1318,9 @@ function renderIncomeSuppressionNote(
   properties: Record<string, unknown>,
 ): string {
   if (definition.group !== "income") return "";
-  const district = String(properties.district ?? "");
-  const affected = district === "Carabanchel" || district === "Fuencarral-El Pardo";
-  const missing = properties.below_60_median_pct == null && properties.above_200_median_pct == null;
-  if (!affected || !missing) return "";
-  return `<aside class="feature-data-note"><strong>Official source suppression</strong><p>INE publishes no section values for the below-60% or above-200% median indicators in ${escapeHtml(district)}. The other income measures remain available.</p></aside>`;
+  const indicators = ["income_per_person_eur", "income_per_household_eur", "pension_income_pct", "below_60_median_pct", "above_200_median_pct", "gini", "income_p80_p20"];
+  if (!indicators.some((key) => properties[key] == null)) return "";
+  return `<aside class="feature-data-note"><strong>Official source suppression</strong><p>Some income indicators are not published for this section. They remain No data; the other published measures remain available.</p></aside>`;
 }
 
 function renderElectionResultFeature(

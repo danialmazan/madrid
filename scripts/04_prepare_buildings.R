@@ -23,6 +23,7 @@ catastro <- sf::st_read(
   stringsAsFactors = FALSE
 )
 catastro <- normalise_sf_names(catastro)
+raw_catastro_count <- nrow(catastro)
 geometry_col <- attr(catastro, "sf_column")
 assert_true(!is.null(geometry_col), "Catastro buildings did not include geometry")
 
@@ -63,6 +64,7 @@ heights <- sf::st_read(
   stringsAsFactors = FALSE
 )
 heights <- normalise_sf_names(heights)
+raw_height_count <- nrow(heights)
 heights <- heights |>
   transmute(
     height_id = as.character(id_3d),
@@ -112,14 +114,18 @@ for (code in names(district_names)) {
 }
 
 save_metadata("buildings", list(
-  reference_date_catastro = "2026-02-20",
-  reference_date_heights = "2026-06-18",
+  reference_date_catastro = source_record("catastro-buildings-28900.zip")$reference_date,
+  reference_date_heights = source_record("madrid-building-heights.zip")$reference_date,
+  download_modified_catastro = source_record("catastro-buildings-28900.zip")$last_modified,
+  download_modified_heights = source_record("madrid-building-heights.zip")$last_modified,
   catastro_source_url = sources$catastro_buildings_zip,
   heights_source_url = sources$madrid_building_heights_zip,
   counts = district_counts,
   construction_year_available = sum(!is.na(catastro$construction_start_year)),
   catastro_buildings = nrow(catastro),
-  height_polygons = nrow(heights)
+  height_polygons = nrow(heights),
+  raw_catastro_buildings = raw_catastro_count,
+  raw_height_polygons = raw_height_count
 ))
 
 message_step(

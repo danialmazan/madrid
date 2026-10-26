@@ -34,13 +34,13 @@ spatial sources.
 its source archive and vector-layer name, property, unit, reference date, matching geography,
 palette, class breaks, tooltip fields, zoom range and source attribution.
 
-- July 2026 monthly padrón measures use Madrid’s current 2026 census sections.
+- October 2026 monthly padrón measures use Madrid’s current 2026 census sections.
 - 2025 foreign-born and foreign-citizenship measures use country-controlled INE section data.
 - 2024 Education & Work measures use their matching INE section vintage.
 - Longitudinal change uses reciprocal ≥95% one-to-one matches to 2021 sections.
-- 2023 elections and income measures use 2023 INE census sections.
+- 2023 elections use 2023 INE census sections; 2024 income uses the January 2025 census frame.
 - Catastro construction dates and municipal height polygons retain their own footprints.
-- Transport is a static GTFS/BiciMAD network snapshot.
+- Transport uses source-specific static snapshots: EMT 13 October 2026, Metro Ligero 15 October 2026, and the retained Metro/Cercanías/BiciMAD inputs.
 
 Missing values remain null and render as “No data”; they are never replaced with zero.
 
@@ -48,9 +48,27 @@ Missing values remain null and render as “No data”; they are never replaced 
 
 `Rscript scripts/09_validate_outputs.R` checks identifier uniqueness, source references, resident
 join coverage, election reconciliation, transport completeness, building counts, per-archive size
-and total Pages artifact size. `npm test` covers URL-state restoration and input bounds. A mobile
-Lighthouse audit of the production build scores 100 for accessibility, with first contentful paint
-at 1.23 seconds under simulated mobile throttling.
+and total Pages artifact size. `npm test` covers URL state, published data, reports and interaction behaviour. The pipeline also runs
+a regression check for the open-ended 100+ population category. See the validation record for
+release-specific QA; historical Lighthouse results are labelled with their original release.
 
 See [docs/methodology.md](docs/methodology.md) for calculation definitions and source notes, and
 [docs/validation.md](docs/validation.md) for the validation record.
+
+## Reproducing a release
+
+`config/source-lock.json` selects the release's resolved source URLs, dates, encodings and SHA-256
+checksums. `download_cached()` verifies selected bytes before using an input, including when a
+caller requests a refresh. A changed upstream file stops the build instead of silently mixing
+releases. Catalogue selections are frozen in the lock. Historical WFS boundaries use an additional
+feature-collection checksum because the service changes its response timestamp on every request.
+CSV columns are read as text before explicit Spanish-number and age conversion.
+
+Keep an archive of the selected raw files: mutable upstream URLs cannot serve every past release.
+For this refresh, the previous raw inputs and election baseline are preserved locally under
+`data/releases/2026-08-16/`; the selected October inputs are in `data/raw/` and archived under
+`data/releases/2026-10-26/`. These directories are
+excluded from Git. To refresh again, audit the new sources, update the lock and same-month population
+comparator together, stage the selected files, and run the full pipeline. `public/data/source-versions.json`
+publishes the release's provenance. Client data requests carry a source-lock-derived cache version. `section-reports.json` is schema **2.0.0**, separating income and
+election geographies; public map layer IDs and shared URL state remain compatible.

@@ -173,7 +173,7 @@ addresses <- suppressMessages(readr::read_delim(
   file.path(raw_dir, "madrid-street-addresses.csv"),
   delim = ";",
   col_types = readr::cols(.default = readr::col_character()),
-  locale = readr::locale(encoding = "UTF-8"),
+  locale = readr::locale(encoding = source_record("madrid-street-addresses.csv")$encoding),
   trim_ws = TRUE,
   progress = FALSE
 ))

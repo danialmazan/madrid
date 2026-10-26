@@ -5,6 +5,8 @@ migration_meta <- readRDS(file.path(processed_dir, "migration-metadata.rds"))
 education_meta <- readRDS(file.path(processed_dir, "education-work-metadata.rds"))
 building_meta <- readRDS(file.path(processed_dir, "buildings-metadata.rds"))
 resident_dot_meta <- readRDS(file.path(processed_dir, "resident-dots-metadata.rds"))
+income_meta <- readRDS(file.path(processed_dir, "income-metadata.rds"))
+income_values <- readRDS(file.path(processed_dir, "sections-2025-income-2024.rds"))
 transport_meta <- readRDS(file.path(processed_dir, "transport-metadata.rds"))
 
 source_definition <- function(id, url, source_layer, attribution, minzoom = 0, maxzoom = 16) {
@@ -36,7 +38,12 @@ sources_out <- list(
   ),
   source_definition(
     "sections-2023", "data/sections-2023.pmtiles", "sections_2023",
-    "INE ADRH · Madrid/Interior election results · INE census sections",
+    "Madrid/Interior 2023 election results · INE 2023 census sections",
+    tile_zooms$sections[["min"]], tile_zooms$sections[["max"]]
+  ),
+  source_definition(
+    "income-2024", "data/income-2024.pmtiles", "income_2024",
+    "INE ADRH · 2024 income · 2025 census sections",
     tile_zooms$sections[["min"]], tile_zooms$sections[["max"]]
   ),
   source_definition(
@@ -145,7 +152,7 @@ layer <- function(
 population_values <- readRDS(file.path(processed_dir, "sections-2026-population.rds"))
 migration_values <- readRDS(file.path(processed_dir, "sections-2025-migration.rds"))
 education_values <- readRDS(file.path(processed_dir, "sections-2024-education-work.rds"))
-election_income_values <- readRDS(file.path(processed_dir, "sections-2023-thematics.rds"))
+election_income_values <- readRDS(file.path(processed_dir, "sections-2023-elections.rds"))
 
 country_labels <- c(
   total = "Total", venezuela = "Venezuela", colombia = "Colombia", peru = "Perú",
@@ -527,32 +534,32 @@ income_tooltip <- tooltip(
 layers_out <- append(layers_out, list(
   layer(
     "income-per-person", "income", "choropleth", "Net income per person", "Income per person",
-    "Mean annual net income per resident.", "€ / person", "2023",
-    "2023 census sections", "sections-2023", "income_per_person_eur",
+    "Mean annual net income per resident.", "€ / person", income_meta$reference_date,
+    "2025 census sections · income year 2024", "income-2024", "income_per_person_eur",
     blue_palette, c(5000, 10000, 14000, 18000, 24000, 34000, 70000), "currency", income_tooltip
   ),
   layer(
     "income-per-household", "income", "choropleth", "Net income per household", "Income per household",
-    "Mean annual net income per household.", "€ / household", "2023",
-    "2023 census sections", "sections-2023", "income_per_household_eur",
-    blue_palette, six_quantile_breaks(election_income_values$income_per_household_eur), "currency", income_tooltip
+    "Mean annual net income per household.", "€ / household", income_meta$reference_date,
+    "2025 census sections · income year 2024", "income-2024", "income_per_household_eur",
+    blue_palette, six_quantile_breaks(income_values$income_per_household_eur), "currency", income_tooltip
   ),
   layer(
     "income-pensions", "income", "choropleth", "Income from pensions", "Pension income share",
-    "Percentage of total section income coming from pensions; this is not a euro amount.", "% of total income", "2023",
-    "2023 census sections", "sections-2023", "pension_income_pct",
-    orange_palette, six_quantile_breaks(election_income_values$pension_income_pct), "percent", income_tooltip
+    "Percentage of total section income coming from pensions; this is not a euro amount.", "% of total income", income_meta$reference_date,
+    "2025 census sections · income year 2024", "income-2024", "pension_income_pct",
+    orange_palette, six_quantile_breaks(income_values$pension_income_pct), "percent", income_tooltip
   ),
   layer(
     "income-below-median", "income", "choropleth", "Population below 60% of median", "Below 60% median",
-    "Share of people below 60% of the national median equivalised income.", "%", "2023",
-    "2023 census sections", "sections-2023", "below_60_median_pct",
+    "Share of people below 60% of the national median equivalised income.", "%", income_meta$reference_date,
+    "2025 census sections · income year 2024", "income-2024", "below_60_median_pct",
     orange_palette, c(0, 8, 14, 20, 28, 38, 65), "percent", income_tooltip
   ),
   layer(
     "income-gini", "income", "choropleth", "Gini coefficient", "Gini coefficient",
-    "Income inequality: higher values indicate a less equal distribution.", "index", "2023",
-    "2023 census sections", "sections-2023", "gini",
+    "Income inequality: higher values indicate a less equal distribution.", "index", income_meta$reference_date,
+    "2025 census sections · income year 2024", "income-2024", "gini",
     brown_palette, c(15, 22, 27, 32, 38, 45, 65), "decimal", income_tooltip
   )
 ))
@@ -581,6 +588,7 @@ route_options <- lapply(seq_len(nrow(emt_routes)), function(index) {
 
 for (mode in names(transport_style)) {
   style <- transport_style[[mode]]
+  mode_date <- if (mode == "bicimad") transport_meta$bicimad$reference_date else transport_meta$gtfs[[mode]]$reference_date
   control <- list(transportMode = unname(mode_control[[mode]]))
   if (mode == "emt") {
     control$routeProperty <- "route_short_name"
@@ -590,7 +598,7 @@ for (mode in names(transport_style)) {
     layers_out <- append(layers_out, list(layer(
       paste0("transport-", mode, "-lines"), "transport", "transport-line",
       paste(style$label, "lines"), paste(style$label, "lines"),
-      "Static network snapshot.", "route", transport_meta$reference_date,
+      "Static network snapshot.", "route", mode_date,
       "Regional transport network", paste0(mode, "-lines"), "route_short_name",
       character(), numeric(), "text",
       tooltip(
@@ -605,7 +613,7 @@ for (mode in names(transport_style)) {
     paste0("transport-", mode, "-stops"), "transport", "transport-stop",
     paste(style$label, if (mode == "bicimad") "stations" else "stops"),
     paste(style$label, "stops"), "All stops appear together at zoom 12.", "stop",
-    transport_meta$reference_date, "Regional transport network",
+    mode_date, "Regional transport network",
     paste0(mode, "-stops"), "stop_name", character(), numeric(), "text",
     tooltip(
       field("stop_name", if (mode == "bicimad") "Station" else "Stop", "text"),
@@ -620,63 +628,65 @@ references <- list(
   list(
     title = "Padrón municipal de habitantes", organisation = "Ayuntamiento de Madrid",
     url = population_meta$source_url, licence = "Madrid open-data reuse terms",
-    retrieved = format(Sys.Date(), "%Y-%m-%d")
+    retrieved = source_lock$release
   ),
   list(
     title = "Population by country of birth and nationality", organisation = "Instituto Nacional de Estadística",
     url = sources$ine_birth_country_csv, licence = "INE standard reuse conditions",
-    retrieved = format(Sys.Date(), "%Y-%m-%d")
+    retrieved = source_lock$release
   ),
   list(
     title = "Education and economic activity by census section", organisation = "Instituto Nacional de Estadística",
     url = sources$ine_education_csv, licence = "INE standard reuse conditions",
-    retrieved = format(Sys.Date(), "%Y-%m-%d")
+    retrieved = source_lock$release
   ),
   list(
     title = "Catastro INSPIRE Buildings", organisation = "Dirección General del Catastro",
     url = sources$catastro_buildings_zip, licence = "Catastro data-access conditions",
-    retrieved = format(Sys.Date(), "%Y-%m-%d")
+    retrieved = source_lock$release
   ),
   list(
     title = "Alturas de edificios", organisation = "Ayuntamiento de Madrid",
     url = sources$madrid_building_heights_zip, licence = "Madrid open-data reuse terms",
-    retrieved = format(Sys.Date(), "%Y-%m-%d")
+    retrieved = source_lock$release
   ),
   list(
     title = "2023 election results by polling table", organisation = "Madrid City Council / Interior Ministry",
     url = sources$election_general_xlsx, licence = "Public-sector information reuse terms",
-    retrieved = format(Sys.Date(), "%Y-%m-%d")
+    retrieved = source_lock$release
   ),
   list(
     title = "Household Income Distribution Atlas", organisation = "Instituto Nacional de Estadística",
     url = sources$ine_income_person_csv, licence = "INE standard reuse conditions",
-    retrieved = format(Sys.Date(), "%Y-%m-%d")
+    retrieved = source_lock$release
   ),
   list(
     title = "Income distribution by source", organisation = "Instituto Nacional de Estadística",
     url = sources$ine_income_sources_csv, licence = "INE standard reuse conditions",
-    retrieved = format(Sys.Date(), "%Y-%m-%d")
+    retrieved = source_lock$release
   ),
   list(
     title = "CRTM open transport data", organisation = "Consorcio Regional de Transportes de Madrid",
     url = "https://transparencia.crtm.es/presupuestos-contratos-y-gastos/datos-abiertos/",
-    licence = "CRTM open-data licence", retrieved = format(Sys.Date(), "%Y-%m-%d")
+    licence = "CRTM open-data licence", retrieved = source_lock$release
   ),
   list(
     title = "BiciMAD stations", organisation = "EMT Madrid",
     url = sources$bicimad_geojson, licence = "Madrid open-data reuse terms",
-    retrieved = format(Sys.Date(), "%Y-%m-%d")
+    retrieved = source_lock$release
   ),
   list(
     title = "Official Madrid street directory", organisation = "Ayuntamiento de Madrid",
     url = sources$madrid_street_addresses_csv, licence = "Madrid open-data reuse terms",
-    retrieved = format(Sys.Date(), "%Y-%m-%d")
+    retrieved = source_lock$release
   )
 )
 
 manifest <- list(
-  generatedAt = paste0(format(Sys.time(), "%Y-%m-%dT%H:%M:%S"), "Z"),
+  generatedAt = paste0(format(Sys.time(), "%Y-%m-%dT%H:%M:%S", tz = "UTC"), "Z"),
   version = "1.2.0",
+  dataRelease = source_lock$release,
+  sourceVersionsUrl = "data/source-versions.json",
   defaultLayer = "population-density",
   sources = sources_out,
   layers = layers_out,
@@ -691,11 +701,13 @@ manifest <- list(
     "The foreign-born comparison is explicitly four years (2021–2025) and is expressed in percentage points.",
     "Election shares use valid votes including blank ballots as the denominator.",
     "Election totals exclude non-geographic votes when they are absent from polling-table data.",
-    "INE publishes no 2023 section values for the below-60% and above-200% median indicators in Carabanchel and Fuencarral-El Pardo; these remain No data.",
+    "Income values refer to 2024 and use the January 2025 census frame. The ADRH 2024 disclosure rules replace the previous blanket missingness in Carabanchel and Fuencarral-El Pardo; genuine source suppressions remain No data.",
+    "Padrón totals include the open-ended 100+ age category. Three source residents have no census-section identifier and cannot be mapped.",
     "Percentiles compare valid Madrid census-section observations; a higher percentile means a higher raw value, not necessarily a better outcome.",
     "Transport is a static network snapshot; live vehicles and bicycle availability are intentionally excluded.",
     "Building archives are split by district and checked against a 95 MB per-file publication limit."
   )
 )
+write_json_pretty(source_lock, file.path(public_data_dir, "source-versions.json"))
 write_json_pretty(manifest, file.path(public_data_dir, "layer-manifest.json"))
 message_step("Layer manifest ready: ", length(layers_out), " layers")

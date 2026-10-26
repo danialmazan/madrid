@@ -15,6 +15,30 @@ dir.create(processed_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(public_data_dir, recursive = TRUE, showWarnings = FALSE)
 
 sources <- yaml::read_yaml(file.path(project_root, "config", "sources.yml"))
+source_lock <- jsonlite::fromJSON(file.path(project_root, "config", "source-lock.json"), simplifyVector = FALSE)
+
+sha256_file <- function(path, mode = "bytes") {
+  if (identical(mode, "geojson_features")) {
+    # WFS response timestamps change on every request; only map features define this input.
+    features <- jsonlite::fromJSON(path, simplifyVector = FALSE)$features
+    temporary <- tempfile(fileext = ".json")
+    on.exit(unlink(temporary))
+    writeChar(jsonlite::toJSON(features, auto_unbox = TRUE, digits = NA, null = "null", na = "null"), temporary, eos = NULL, useBytes = TRUE)
+    return(sha256_file(temporary))
+  }
+  executable <- if (nzchar(Sys.which("sha256sum"))) "sha256sum" else "shasum"
+  args <- c(if (executable == "shasum") c("-a", "256"), shQuote(path))
+  result <- system2(executable, args, stdout = TRUE)
+  value <- strsplit(result[[1]], "[[:space:]]+")[[1]][[1]]
+  if (!grepl("^[0-9a-f]{64}$", value)) stop("Could not hash ", path)
+  value
+}
+
+source_record <- function(filename) {
+  record <- source_lock$files[[basename(filename)]]
+  if (is.null(record)) stop("Input is not in config/source-lock.json: ", filename)
+  record
+}
 
 tile_zooms <- list(
   sections = c(min = 8L, max = 15L),
@@ -28,8 +52,13 @@ message_step <- function(...) {
 }
 
 download_cached <- function(url, destination, insecure = FALSE, refresh = FALSE) {
-  if (file.exists(destination) && file.info(destination)$size > 0 && !refresh) {
-    message_step("Using cached ", basename(destination))
+  locked <- source_record(destination)
+  hash_mode <- if (is.null(locked$hash_mode)) "bytes" else locked$hash_mode
+  expected_hash <- if (identical(hash_mode, "bytes")) locked$sha256 else locked$semantic_sha256
+  if (!identical(url, locked$url)) stop("Source URL differs from the release lock: ", basename(destination))
+  # A release is reproducible: even refresh requests must use the selected, verified bytes.
+  if (file.exists(destination) && identical(sha256_file(destination, hash_mode), expected_hash)) {
+    message_step("Using verified release input ", basename(destination))
     return(normalizePath(destination, winslash = "/"))
   }
   dir.create(dirname(destination), recursive = TRUE, showWarnings = FALSE)
@@ -44,6 +73,10 @@ download_cached <- function(url, destination, insecure = FALSE, refresh = FALSE)
   if (!identical(status, 0L)) {
     if (file.exists(partial)) unlink(partial)
     stop("Download failed: ", url)
+  }
+  if (!identical(sha256_file(partial, hash_mode), expected_hash)) {
+    unlink(partial)
+    stop("Upstream bytes differ from the selected release. Audit and update source-lock.json: ", url)
   }
   if (!file.rename(partial, destination)) stop("Could not move download to ", destination)
   normalizePath(destination, winslash = "/")
@@ -71,6 +104,16 @@ parse_es_number <- function(x) {
     locale = readr::locale(decimal_mark = ",", grouping_mark = "."),
     na = c("", ".", "..", "...", "NA", "N/A")
   )
+}
+
+parse_padron_age <- function(x) {
+  value <- trimws(as.character(x))
+  value[value == "100 o +"] <- "100"
+  result <- suppressWarnings(as.integer(value))
+  if (any(is.na(result))) stop("Unrecognised padrón age: ", paste(unique(value[is.na(result)]), collapse = ", "))
+  # Historical files contain individual ages above 100; retain those source rows too.
+  if (any(result < 0)) stop("Negative padrón age")
+  result
 }
 
 section_percentile <- function(x) {
@@ -123,7 +166,8 @@ read_semicolon <- function(path) {
   out <- suppressMessages(readr::read_delim(
     path,
     delim = delimiter,
-    locale = readr::locale(encoding = "UTF-8"),
+    col_types = readr::cols(.default = readr::col_character()),
+    locale = readr::locale(encoding = if (is.null(source_lock$files[[basename(path)]]$encoding)) "UTF-8" else source_lock$files[[basename(path)]]$encoding),
     show_col_types = FALSE,
     progress = FALSE,
     trim_ws = TRUE,
@@ -192,6 +236,8 @@ district_names <- c(
 )
 
 package_resources <- function(package_id) {
+  frozen <- source_lock$catalogues[[package_id]]
+  if (!is.null(frozen)) return(dplyr::bind_rows(frozen))
   destination <- file.path(raw_dir, paste0("madrid-package-", package_id, ".json"))
   url <- paste0(sources$madrid_open_data_api, "?id=", package_id)
   download_cached(url, destination, refresh = TRUE)

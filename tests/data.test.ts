@@ -29,7 +29,7 @@ describe("published atlas data", () => {
     const reports = readJson<SectionReportIndex>("public/data/section-reports.json");
     const sectionEntries = Object.entries(reports.sections);
     expect(reports.canonicalVintage).toBe("2026");
-    expect(reports.version).toBe("1.1.0");
+    expect(reports.version).toBe("2.0.0");
     expect(sectionEntries).toHaveLength(2462);
     for (const [id, report] of sectionEntries) {
       expect(report.id).toBe(id);
@@ -115,19 +115,20 @@ describe("published atlas data", () => {
     expect(mismatches).toEqual([]);
   });
 
-  it("preserves known income suppression without hiding other measures", () => {
+  it("publishes 2024 income on the 2025 census frame, including formerly suppressed districts", () => {
     const reports = readJson<SectionReportIndex>("public/data/section-reports.json");
-    const carabanchel = Object.values(reports.sections).filter(
-      (report) => report.district === "Carabanchel",
-    );
-    expect(carabanchel).toHaveLength(182);
-    for (const report of carabanchel) {
-      expect(report.income.below_60_median_pct!.value).toBeNull();
-      expect(report.income.above_200_median_pct!.value).toBeNull();
-      expect(report.income.income_per_person_eur!.value).not.toBeNull();
-      expect(report.income.gini!.value).not.toBeNull();
-      expect(report.income.income_p80_p20!.value).not.toBeNull();
+    const manifest = readJson<LayerManifest>("public/data/layer-manifest.json");
+    expect(reports.dataDates.income).toBe("2024");
+    expect(reports.geographyVintages).toMatchObject({ income: "2025", elections: "2023" });
+    for (const layer of manifest.layers.filter((layer) => layer.group === "income")) {
+      expect(layer.referenceDate).toBe("2024");
+      expect(layer.sourceIds).toEqual(["income-2024"]);
     }
+    for (const report of Object.values(reports.sections)) {
+      for (const metric of Object.values(report.income)) expect(metric.value, report.id).not.toBeNull();
+    }
+    const validation = readJson<{ population: { joined_residents: number; all_source_residents: number; unassigned_residents: number; age100_residents: number } }>("public/data/validation-report.json");
+    expect(validation.population).toMatchObject({ joined_residents: 3535821, all_source_residents: 3535824, unassigned_residents: 3, age100_residents: 2554 });
   });
 
   it("puts Results/Leading party first for each election", () => {
@@ -195,10 +196,11 @@ describe("published atlas data", () => {
   });
 
   it("retains every resident dot at every published zoom", () => {
+    const expected = readJson<{ population: { resident_dots: number } }>("public/data/validation-report.json").population.resident_dots;
     const archivePath = resolve(projectRoot, "public/data/resident-dots.pmtiles");
     const output = execFileSync(
       process.execPath,
-      [resolve(projectRoot, "scripts/validate_resident_dot_tiles.mjs"), archivePath, "140423"],
+      [resolve(projectRoot, "scripts/validate_resident_dot_tiles.mjs"), archivePath, String(expected)],
       { encoding: "utf8" },
     );
     const validation = JSON.parse(output) as {
@@ -212,7 +214,7 @@ describe("published atlas data", () => {
     expect(validation.archive_bytes).toBeLessThan(10 * 1024 * 1024);
     expect(validation.maximum_compressed_tile_bytes).toBeLessThan(3 * 1024 * 1024);
     expect(validation.maximum_decoded_tile_bytes).toBeLessThan(3 * 1024 * 1024);
-    expect(validation.feature_counts_by_zoom["8"]).toBe(140_423);
-    expect(Object.values(validation.feature_counts_by_zoom).every((count) => count >= 140_423)).toBe(true);
+    expect(validation.feature_counts_by_zoom["8"]).toBe(expected);
+    expect(Object.values(validation.feature_counts_by_zoom).every((count) => count >= expected)).toBe(true);
   });
 });

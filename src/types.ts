@@ -235,7 +235,8 @@ export interface SectionReportIndex {
   geographyVintages: {
     canonical: string;
     populationChange: string;
-    incomeAndElections: string;
+    income: string;
+    elections: string;
     educationWork: string;
     migration: string;
   };

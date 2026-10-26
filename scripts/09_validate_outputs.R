@@ -35,7 +35,7 @@ assert_unique(source_ids, "Manifest source IDs")
 assert_unique(layer_ids, "Manifest layer IDs")
 assert_true(manifest$defaultLayer %in% layer_ids, "Manifest default layer does not exist")
 assert_true(identical(manifest$version, "1.2.0"), "Manifest schema must be 1.2.0")
-assert_true(identical(section_reports$version, "1.1.0"), "Report schema must be 1.1.0")
+assert_true(identical(section_reports$version, "2.0.0"), "Report schema must be 2.0.0")
 assert_true(identical(housing_analysis$version, "1.0.0"), "Housing analysis schema must be 1.0.0")
 
 source_layer_ids <- unique(unlist(lapply(manifest$layers, `[[`, "sourceIds")))
@@ -76,6 +76,8 @@ assert_true(artifact_size < 1024^3, "Pages public artifact exceeds 1 GB")
 
 population <- readRDS(file.path(processed_dir, "population-metadata.rds"))
 assert_true(population$coverage >= 0.995, "Population resident join coverage is below 99.5%")
+assert_true(population$all_source_total == population$joined_total + population$unassigned_total, "Source-to-map resident accounting failed")
+assert_true(population$all_source_total == 3535824 && population$joined_total == 3535821 && population$unassigned_total == 3 && population$age100_total == 2554, "Audited October population including 100+ does not reconcile")
 assert_true(
   grepl("^20[0-9]{2}-[0-9]{2}-[0-9]{2}$", population$reference_date) &&
     as.integer(substr(population$reference_date, 1, 4)) <= as.integer(format(Sys.Date(), "%Y")),
@@ -102,8 +104,9 @@ assert_true(
 assert_true(
   isTRUE(resident_dot_meta$points_inside_assigned_geometry) &&
     identical(as.character(resident_dot_meta$fallback_section_id), "2807910157") &&
-    as.numeric(resident_dot_meta$fallback_dot_count) == 29 &&
-    sum(resident_dots$allocation_method == "municipal-address-fallback") == 29,
+    as.numeric(resident_dot_meta$fallback_dot_count) ==
+      sum(round(population_sections$population_total[population_sections$section_id == resident_dot_meta$fallback_section_id] / 25)) &&
+    sum(resident_dots$allocation_method == "municipal-address-fallback") == resident_dot_meta$fallback_dot_count,
   "Resident-dot containment or fallback validation failed"
 )
 resident_dot_geojson <- file.path(processed_dir, "tile-inputs", "resident-dots.geojson")
@@ -187,7 +190,7 @@ for (slug in country_slugs) {
   assert_true(all(is.na(change[!migration_sections$migration_match_comparable])), paste("Non-comparable migration change published for", slug))
 }
 
-income_sections <- readRDS(file.path(processed_dir, "sections-2023-thematics.rds"))
+income_sections <- readRDS(file.path(processed_dir, "sections-2025-income-2024.rds"))
 assert_true(
   all(income_sections$income_p80_p20 >= 1, na.rm = TRUE),
   "P80/P20 income values are out of range"
@@ -210,19 +213,14 @@ assert_true(
   )),
   "Income percentile values are out of range"
 )
-suppressed_districts <- c("Carabanchel", "Fuencarral-El Pardo")
-suppressed_income <- income_sections |> filter(district %in% suppressed_districts)
-assert_true(
-  all(is.na(suppressed_income$below_60_median_pct)) &&
-    all(is.na(suppressed_income$above_200_median_pct)),
-  "Known INE-suppressed income indicators unexpectedly contain section values"
-)
-assert_true(
-  all(is.finite(suppressed_income$income_per_person_eur)) &&
-    all(is.finite(suppressed_income$gini)) &&
-    all(is.finite(suppressed_income$income_p80_p20)),
-  "Non-suppressed Carabanchel/Fuencarral income measures are incomplete"
-)
+income_columns <- c("income_per_person_eur", "income_per_household_eur", "pension_income_pct", "below_60_median_pct", "above_200_median_pct", "gini", "income_p80_p20")
+income_geometry <- readRDS(file.path(processed_dir, "sections-2025.rds"))
+assert_true(identical(sort(income_sections$section_id), sort(income_geometry$section_id)), "Income must use the January 2025 census frame")
+assert_true(all(vapply(sf::st_drop_geometry(income_sections)[income_columns], function(values) sum(is.finite(values)) == 2462, logical(1))), "Audited 2024 income coverage changed; inspect source suppressions")
+assert_true(identical(section_reports$dataDates$income, "2024") && identical(section_reports$geographyVintages$income, "2025") && identical(section_reports$geographyVintages$elections, "2023"), "Income/election dates or geographies are mixed")
+for (layer in Filter(function(x) identical(x$group, "income"), manifest$layers)) {
+  assert_true(identical(layer$referenceDate, "2024") && identical(unlist(layer$sourceIds), "income-2024"), "Income manifest points to the wrong vintage")
+}
 
 report_ids <- names(section_reports$sections)
 assert_true(length(report_ids) == 2462, "Section report index must cover all 2,462 current sections")
@@ -263,7 +261,8 @@ missing_changes <- sum(vapply(
   function(section) is.null(section$foreignBornChangePp),
   logical(1)
 ))
-assert_true(missing_changes == 130, "Housing analysis must preserve 130 non-comparable section changes")
+expected_missing_changes <- sum(vapply(section_reports$sections, function(section) is.null(section$migration$total$foreignBornChange$value), logical(1)))
+assert_true(missing_changes == expected_missing_changes, "Housing analysis and canonical reports disagree on comparable section changes")
 for (section in housing_analysis$sections) {
   assert_true(
     as.numeric(section$residentialBuildingCount) >= 0 && as.numeric(section$dwellingCount) >= 0,
@@ -299,7 +298,7 @@ assert_true(
   as.numeric(housing_analysis$coverage$currentSections) == 2462 &&
     as.numeric(housing_analysis$coverage$sectionsWithPositiveDwellingWeight) >= 2460 &&
     as.numeric(housing_analysis$coverage$sectionsWithForeignBorn2025) == 2462 &&
-    as.numeric(housing_analysis$coverage$missingSectionChanges) == 130 &&
+    as.numeric(housing_analysis$coverage$missingSectionChanges) == expected_missing_changes &&
     as.numeric(housing_analysis$coverage$recordedDwellings) > 1500000,
   "Housing analysis coverage counts are incomplete"
 )
@@ -343,7 +342,7 @@ assert_true(building$catastro_buildings > 100000, "Too few Catastro buildings")
 assert_true(building$height_polygons > 400000, "Too few height polygons")
 
 report <- list(
-  validated_at = paste0(format(Sys.time(), "%Y-%m-%dT%H:%M:%S"), "Z"),
+  validated_at = paste0(format(Sys.time(), "%Y-%m-%dT%H:%M:%S", tz = "UTC"), "Z"),
   passed = TRUE,
   counts = list(
     manifest_sources = length(source_ids),
@@ -359,6 +358,11 @@ report <- list(
   ),
   population = list(
     source_residents = population$source_total,
+    all_source_residents = population$all_source_total,
+    unassigned_residents = population$unassigned_total,
+    age100_residents = population$age100_total,
+    reference_date = population$reference_date,
+    comparison_date = source_lock$population_comparison_date,
     joined_residents = population$joined_total,
     coverage = population$coverage,
     resident_dot_value = resident_dot_meta$dot_value,
@@ -368,6 +372,8 @@ report <- list(
     coordinate_file_md5 = resident_dot_meta$coordinate_file_md5,
     tile_retention = resident_dot_tiles
   ),
+  income = list(reference_year = "2024", geography_vintage = "2025", matched_sections = nrow(income_sections)),
+  source_release = source_lock$release,
   elections = election_checks,
   archives = lapply(seq_along(archive_paths), function(index) {
     list(

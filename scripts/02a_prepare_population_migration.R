@@ -21,11 +21,12 @@ padron_totals <- function(raw) {
   raw |>
     mutate(
       section_id = paste0("28079", sprintf("%05d", as.integer(cod_dist_seccion))),
+      age = parse_padron_age(cod_edad_int),
       residents = rowSums(
         across(c(espanoleshombres, espanolesmujeres, extranjeroshombres, extranjerosmujeres), ~coalesce(as.numeric(.x), 0))
       )
     ) |>
-    filter(grepl("^28079[0-9]{5}$", section_id), !is.na(as.integer(cod_edad_int))) |>
+    filter(grepl("^28079[0-9]{5}$", section_id)) |>
     group_by(section_id) |>
     summarise(population_2021 = sum(residents, na.rm = TRUE), .groups = "drop")
 }

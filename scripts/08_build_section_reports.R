@@ -6,7 +6,8 @@ current <- readRDS(file.path(processed_dir, "sections-2026-population.rds")) |>
   mutate(population_total_percentile = section_percentile(population_total))
 migration <- readRDS(file.path(processed_dir, "sections-2025-migration.rds"))
 education_work <- readRDS(file.path(processed_dir, "sections-2024-education-work.rds"))
-historic <- readRDS(file.path(processed_dir, "sections-2023-thematics.rds"))
+historic <- readRDS(file.path(processed_dir, "sections-2023-elections.rds"))
+income <- readRDS(file.path(processed_dir, "sections-2025-income-2024.rds"))
 sections_2021 <- readRDS(file.path(processed_dir, "sections-2021.rds"))
 
 greatest_overlap_crosswalk <- function(current_sections, source_sections, vintage) {
@@ -66,6 +67,10 @@ report_rows <- report_rows |>
   left_join(
     historic |> sf::st_drop_geometry() |> select(-district, -district_code, -section),
     by = c("source_section_id_2023" = "section_id")
+  ) |>
+  left_join(
+    income |> sf::st_drop_geometry() |> select(-district, -district_code, -section),
+    by = c("source_section_id_2025" = "section_id")
   )
 
 message_step("Aggregating Catastro buildings to current sections")
@@ -173,9 +178,9 @@ distribution_sources <- c(
     activity_rate_pct = education_work$activity_rate_pct, employment_rate_pct = education_work$employment_rate_pct,
     unemployment_rate_pct = education_work$unemployment_rate_pct, higher_education_pct = education_work$higher_education_pct,
     low_education_pct = education_work$low_education_pct,
-    income_per_person_eur = historic$income_per_person_eur, income_per_household_eur = historic$income_per_household_eur,
-    pension_income_pct = historic$pension_income_pct, below_60_median_pct = historic$below_60_median_pct,
-    above_200_median_pct = historic$above_200_median_pct, gini = historic$gini, income_p80_p20 = historic$income_p80_p20
+    income_per_person_eur = income$income_per_person_eur, income_per_household_eur = income$income_per_household_eur,
+    pension_income_pct = income$pension_income_pct, below_60_median_pct = income$below_60_median_pct,
+    above_200_median_pct = income$above_200_median_pct, gini = income$gini, income_p80_p20 = income$income_p80_p20
   ),
   as.list(migration |> sf::st_drop_geometry() |> select(all_of(grep("^foreign_", names(migration), value = TRUE)[!grepl("percentile", grep("^foreign_", names(migration), value = TRUE))])))
 )
@@ -267,9 +272,9 @@ city_era_counts <- table(factor(matched_buildings$construction_era, levels = era
 population_metadata <- readRDS(file.path(processed_dir, "population-metadata.rds"))
 building_metadata <- readRDS(file.path(processed_dir, "buildings-metadata.rds"))
 report_index <- list(
-  generatedAt = paste0(format(Sys.time(), "%Y-%m-%dT%H:%M:%S"), "Z"), version = "1.1.0", canonicalVintage = "2026",
-  geographyVintages = list(canonical = "2026", populationChange = "2021", incomeAndElections = "2023", educationWork = "2024", migration = "2025"),
-  dataDates = list(population = population_metadata$reference_date, migration = "2025", educationWork = "2024", income = "2023", buildings = building_metadata$reference_date_catastro),
+  generatedAt = paste0(format(Sys.time(), "%Y-%m-%dT%H:%M:%S", tz = "UTC"), "Z"), version = "2.0.0", canonicalVintage = "2026",
+  geographyVintages = list(canonical = "2026", populationChange = "2021", income = "2025", elections = "2023", educationWork = "2024", migration = "2025"),
+  dataDates = list(population = population_metadata$reference_date, migration = "2025", educationWork = "2024", income = as.character(source_lock$income_year), buildings = building_metadata$reference_date_catastro),
   countries = as.list(country_labels), methodologyUrl = "https://github.com/danialmazan/madrid/blob/main/docs/methodology.md",
   distributions = distributions, constructionEras = unname(as.list(era_labels)),
   cityBuildings = list(

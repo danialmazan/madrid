@@ -1,47 +1,58 @@
 {
-  "validated_at": "2026-08-15T19:02:52Z",
+  "validated_at": "2026-10-26T10:46:19Z",
   "passed": true,
   "counts": {
-    "manifest_sources": 56,
+    "manifest_sources": 57,
     "manifest_layers": 52,
-    "pmtiles_archives": 27,
-    "building_footprints": 124329,
-    "building_height_polygons": 490298,
+    "pmtiles_archives": 28,
+    "building_footprints": 124393,
+    "building_height_polygons": 492318,
     "housing_analysis_sections": 2462,
     "housing_analysis_districts": 21,
-    "housing_analysis_recorded_dwellings": 1523106,
-    "resident_dots": 140423,
-    "resident_dot_fallback": 29
+    "housing_analysis_recorded_dwellings": 1524538,
+    "resident_dots": 141443,
+    "resident_dot_fallback": 30
   },
   "population": {
-    "source_residents": 3510354,
-    "joined_residents": 3510354,
+    "source_residents": 3535821,
+    "all_source_residents": 3535824,
+    "unassigned_residents": 3,
+    "age100_residents": 2554,
+    "reference_date": "2026-10-01",
+    "comparison_date": "2021-10-01",
+    "joined_residents": 3535821,
     "coverage": 1,
     "resident_dot_value": 25,
-    "resident_dots": 140423,
-    "represented_residents": 3510575,
-    "rounding_difference": 221,
-    "coordinate_file_md5": "9c4bc4e69b36abd65ad96c8272d56428",
+    "resident_dots": 141443,
+    "represented_residents": 3536075,
+    "rounding_difference": 254,
+    "coordinate_file_md5": "316dd5de8ffd25c79700e068ad28bf83",
     "tile_retention": {
       "min_zoom": 8,
       "max_zoom": 16,
       "drop_rate": 1,
-      "archive_bytes": 5038990,
-      "maximum_compressed_tile_bytes": 317879,
-      "maximum_decoded_tile_bytes": 2274584,
+      "archive_bytes": 5063432,
+      "maximum_compressed_tile_bytes": 319512,
+      "maximum_decoded_tile_bytes": 2290812,
       "feature_counts_by_zoom": {
-        "8": 140423,
-        "9": 158332,
-        "10": 149079,
-        "11": 152639,
-        "12": 152697,
-        "13": 150535,
-        "14": 151980,
-        "15": 151736,
-        "16": 151818
+        "8": 141443,
+        "9": 159498,
+        "10": 150173,
+        "11": 153781,
+        "12": 153764,
+        "13": 151618,
+        "14": 153025,
+        "15": 152718,
+        "16": 152746
       }
     }
   },
+  "income": {
+    "reference_year": "2024",
+    "geography_vintage": "2025",
+    "matched_sections": 2462
+  },
+  "source_release": "2026-10-26",
   "elections": [
     {
       "election": "general",
@@ -80,117 +91,122 @@
   "archives": [
     {
       "name": "buildings-01.pmtiles",
-      "bytes": 6177419,
+      "bytes": 6212671,
       "under_95_mb": true
     },
     {
       "name": "buildings-02.pmtiles",
-      "bytes": 3238902,
+      "bytes": 3264408,
       "under_95_mb": true
     },
     {
       "name": "buildings-03.pmtiles",
-      "bytes": 2656911,
+      "bytes": 2667069,
       "under_95_mb": true
     },
     {
       "name": "buildings-04.pmtiles",
-      "bytes": 5109973,
+      "bytes": 5119390,
       "under_95_mb": true
     },
     {
       "name": "buildings-05.pmtiles",
-      "bytes": 5159761,
+      "bytes": 5168921,
       "under_95_mb": true
     },
     {
       "name": "buildings-06.pmtiles",
-      "bytes": 5450529,
+      "bytes": 5389183,
       "under_95_mb": true
     },
     {
       "name": "buildings-07.pmtiles",
-      "bytes": 4582270,
+      "bytes": 4590122,
       "under_95_mb": true
     },
     {
       "name": "buildings-08.pmtiles",
-      "bytes": 8267965,
+      "bytes": 8380954,
       "under_95_mb": true
     },
     {
       "name": "buildings-09.pmtiles",
-      "bytes": 8628162,
+      "bytes": 8779084,
       "under_95_mb": true
     },
     {
       "name": "buildings-10.pmtiles",
-      "bytes": 5644204,
+      "bytes": 5691867,
       "under_95_mb": true
     },
     {
       "name": "buildings-11.pmtiles",
-      "bytes": 6966413,
+      "bytes": 6995746,
       "under_95_mb": true
     },
     {
       "name": "buildings-12.pmtiles",
-      "bytes": 3756437,
+      "bytes": 3792853,
       "under_95_mb": true
     },
     {
       "name": "buildings-13.pmtiles",
-      "bytes": 6252150,
+      "bytes": 6260066,
       "under_95_mb": true
     },
     {
       "name": "buildings-14.pmtiles",
-      "bytes": 1516708,
+      "bytes": 1519407,
       "under_95_mb": true
     },
     {
       "name": "buildings-15.pmtiles",
-      "bytes": 5400579,
+      "bytes": 5405506,
       "under_95_mb": true
     },
     {
       "name": "buildings-16.pmtiles",
-      "bytes": 6882993,
+      "bytes": 6926531,
       "under_95_mb": true
     },
     {
       "name": "buildings-17.pmtiles",
-      "bytes": 3454358,
+      "bytes": 3464186,
       "under_95_mb": true
     },
     {
       "name": "buildings-18.pmtiles",
-      "bytes": 2977327,
+      "bytes": 3061148,
       "under_95_mb": true
     },
     {
       "name": "buildings-19.pmtiles",
-      "bytes": 2332706,
+      "bytes": 2338561,
       "under_95_mb": true
     },
     {
       "name": "buildings-20.pmtiles",
-      "bytes": 5390571,
+      "bytes": 5393655,
       "under_95_mb": true
     },
     {
       "name": "buildings-21.pmtiles",
-      "bytes": 2717980,
+      "bytes": 2725988,
+      "under_95_mb": true
+    },
+    {
+      "name": "income-2024.pmtiles",
+      "bytes": 3118766,
       "under_95_mb": true
     },
     {
       "name": "resident-dots.pmtiles",
-      "bytes": 5038990,
+      "bytes": 5063432,
       "under_95_mb": true
     },
     {
       "name": "sections-2023.pmtiles",
-      "bytes": 7434824,
+      "bytes": 5947257,
       "under_95_mb": true
     },
     {
@@ -200,26 +216,26 @@
     },
     {
       "name": "sections-2025.pmtiles",
-      "bytes": 6720831,
+      "bytes": 6720887,
       "under_95_mb": true
     },
     {
       "name": "sections-2026.pmtiles",
-      "bytes": 2521069,
+      "bytes": 2518683,
       "under_95_mb": true
     },
     {
       "name": "transport.pmtiles",
-      "bytes": 2870470,
+      "bytes": 2875022,
       "under_95_mb": true
     }
   ],
-  "public_artifact_bytes": 172054998,
+  "public_artifact_bytes": 174333114,
   "licences": [
     {
       "title": "Padrón municipal de habitantes",
       "licence": "Madrid open-data reuse terms",
-      "url": "https://datos.madrid.es/dataset/200076-0-padron/resource/200076-2-padron-csv/download/200076_20260714_062859.csv"
+      "url": "https://datos.madrid.es/dataset/200076-0-padron/resource/200076-2-padron-csv/download/200076_20261006_220058.csv"
     },
     {
       "title": "Population by country of birth and nationality",

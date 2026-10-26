@@ -254,7 +254,7 @@ building_meta <- readRDS(file.path(processed_dir, "buildings-metadata.rds"))
 migration_meta <- readRDS(file.path(processed_dir, "migration-metadata.rds"))
 payload <- list(
   version = "1.0.0",
-  generatedAt = paste0(format(Sys.time(), "%Y-%m-%dT%H:%M:%S"), "Z"),
+  generatedAt = paste0(format(Sys.time(), "%Y-%m-%dT%H:%M:%S", tz = "UTC"), "Z"),
   title = "Housing age and recent migration in Madrid",
   canonicalGeography = "Madrid census sections, 2026",
   defaultDistrictCode = "11",

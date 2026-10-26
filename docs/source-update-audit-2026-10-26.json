@@ -1,0 +1,609 @@
+{
+  "audit_date": "2026-10-26",
+  "production_url": "https://danielalmazan.com/madrid/",
+  "baseline": {
+    "commit": "72426b3380eff3a74aae76d8e249b52ee198e97d",
+    "deployment_url": "https://github.com/danialmazan/madrid/actions/runs/31939412022",
+    "deployment_completed_at": "2026-08-16T09:35:36Z",
+    "manifest_generated_at": "2026-08-15T19:02:21Z",
+    "local_manifest_sha256": "b54b7ff82b5bf635c7aa1320c41242d9aae752a3bbe11296fcdd50920a6bf2da",
+    "live_manifest_sha256": "b54b7ff82b5bf635c7aa1320c41242d9aae752a3bbe11296fcdd50920a6bf2da",
+    "live_manifest_semantically_matches_local": true,
+    "manifest_layers": 52,
+    "pmtiles_archives": 27
+  },
+  "sources": [
+    {
+      "id": "ine-69211",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/69211.csv",
+      "checked_at": "2026-10-26T10:15:21.975213+00:00",
+      "bytes": 18618254,
+      "sha256": "c30eace1de6dc0867ade5faa02ac7835d96ba724be1f361ad456140a41265217",
+      "cached_bytes": 18618254,
+      "cached_sha256": "c30eace1de6dc0867ade5faa02ac7835d96ba724be1f361ad456140a41265217",
+      "bytes_equal": true,
+      "status": "unchanged",
+      "source_headers": {
+        "last-modified": "Wed, 29 Apr 2026 09:00:02 GMT",
+        "content-type": "text/plain;charset=ISO-8859-15"
+      },
+      "download_completeness": "full response body; server ignored Range",
+      "csv_header": "Provincias\tMunicipios\tSecciones\tSexo\tLugar de nacimiento\tPeriodo\tTotal",
+      "first_data_row": "28 Madrid\t\t\tTotal\tTotal\t2025\t7.113.886"
+    },
+    {
+      "id": "ine-66428",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66428.csv",
+      "checked_at": "2026-10-26T10:15:38.834630+00:00",
+      "bytes": 133105914,
+      "sha256": "a1a46ddc4d57b750331aab6ae1f398c164ada8423b813c099da13293afe04571",
+      "cached_bytes": 133105914,
+      "cached_sha256": "a1a46ddc4d57b750331aab6ae1f398c164ada8423b813c099da13293afe04571",
+      "bytes_equal": true,
+      "status": "unchanged",
+      "source_headers": {
+        "last-modified": "Wed, 29 Apr 2026 09:00:02 GMT",
+        "content-type": "text/plain;charset=ISO-8859-15"
+      },
+      "download_completeness": "full response body; server ignored Range",
+      "csv_header": "Provincias\tMunicipios\tSecciones\tSexo\tPaís de nacimiento\tPeriodo\tTotal",
+      "first_data_row": "28 Madrid\t\t\tTotal\tTotal\t2025\t7.113.886"
+    },
+    {
+      "id": "ine-66429",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66429.csv",
+      "checked_at": "2026-10-26T10:15:38.222138+00:00",
+      "bytes": 139178114,
+      "sha256": "55a58bda2b480a76ac1860b941d3f635d3ff5f43c6f83b7e63a5334e4b638032",
+      "cached_bytes": 139178114,
+      "cached_sha256": "55a58bda2b480a76ac1860b941d3f635d3ff5f43c6f83b7e63a5334e4b638032",
+      "bytes_equal": true,
+      "status": "unchanged",
+      "source_headers": {
+        "last-modified": "Wed, 29 Apr 2026 09:00:02 GMT",
+        "content-type": "text/plain;charset=ISO-8859-15"
+      },
+      "download_completeness": "full response body; server ignored Range",
+      "csv_header": "Provincias\tMunicipios\tSecciones\tSexo\tPaís de nacionalidad\tPeriodo\tTotal",
+      "first_data_row": "28 Madrid\t\t\tTotal\tTotal\t2025\t7.113.886"
+    },
+    {
+      "id": "ine-66753",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66753.csv",
+      "checked_at": "2026-10-26T10:15:25.301753+00:00",
+      "bytes": 32536777,
+      "sha256": "51d6228fae668f5cd402f0a7d2e7246f8abdc95ae404f1c02fb274d2456f44d1",
+      "cached_bytes": 32536777,
+      "cached_sha256": "51d6228fae668f5cd402f0a7d2e7246f8abdc95ae404f1c02fb274d2456f44d1",
+      "bytes_equal": true,
+      "status": "unchanged",
+      "source_headers": {
+        "last-modified": "Wed, 29 Apr 2026 09:01:42 GMT",
+        "content-type": "text/plain;charset=ISO-8859-15"
+      },
+      "download_completeness": "full response body; server ignored Range",
+      "csv_header": "Provincias\tMunicipios\tSecciones\tSexo\tNivel de formación alcanzado\tPeriodo\tTotal",
+      "first_data_row": "28 Madrid\t\t\tTotal\tTotal\t2024\t6.053.698"
+    },
+    {
+      "id": "ine-66755",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/66755.csv",
+      "checked_at": "2026-10-26T10:15:25.390450+00:00",
+      "bytes": 33892110,
+      "sha256": "f79aa76b7e02f398e135f3c34989b8c38a9ecc0d283bc411c6ef99f0a2662d3c",
+      "cached_bytes": 33892110,
+      "cached_sha256": "f79aa76b7e02f398e135f3c34989b8c38a9ecc0d283bc411c6ef99f0a2662d3c",
+      "bytes_equal": true,
+      "status": "unchanged",
+      "source_headers": {
+        "last-modified": "Wed, 29 Apr 2026 09:01:42 GMT",
+        "content-type": "text/plain;charset=ISO-8859-15"
+      },
+      "download_completeness": "full response body; server ignored Range",
+      "csv_header": "Provincias\tMunicipios\tSecciones\tSexo\tRelación con la actividad\tPeriodo\tTotal",
+      "first_data_row": "28 Madrid\t\t\tTotal\tTotal\t2024\t5.975.512"
+    },
+    {
+      "id": "ine-31097",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31097.csv",
+      "checked_at": "2026-10-26T10:15:25.737940+00:00",
+      "bytes": 37419631,
+      "sha256": "edf3cd3a3347c741d3632bd8ba81c944e4759d3ad216ca4564dffa42e7b84272",
+      "cached_bytes": 33355300,
+      "cached_sha256": "e567f10f235d9d6b53fb39ff0df2bde09678230ad2fb78a8499de21f09d32796",
+      "bytes_equal": false,
+      "status": "updated_2024_income",
+      "source_headers": {
+        "last-modified": "Mon, 19 Oct 2026 10:11:21 GMT",
+        "content-type": "text/plain;charset=ISO-8859-15"
+      },
+      "download_completeness": "full response body; server ignored Range",
+      "csv_header": "Municipios\tDistritos\tSecciones\tIndicadores de renta media y mediana\tPeriodo\tTotal",
+      "first_data_row": "28001 Acebeda, La\t\t\tRenta neta media por persona\t2024\t17.216"
+    },
+    {
+      "id": "ine-31098",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31098.csv",
+      "checked_at": "2026-10-26T10:15:28.777475+00:00",
+      "bytes": 31106945,
+      "sha256": "07f2d493e0322957843a0fe209630046963a55cdab2f35f0b06bc4f098b0e926",
+      "cached_bytes": 27682382,
+      "cached_sha256": "43a584bf1fae287339cb0d212d921711b1657104e18139f0be0ac46b45ac4dfa",
+      "bytes_equal": false,
+      "status": "updated_2024_income",
+      "source_headers": {
+        "last-modified": "Mon, 19 Oct 2026 10:11:21 GMT",
+        "content-type": "text/plain;charset=ISO-8859-15"
+      },
+      "download_completeness": "full response body; server ignored Range",
+      "csv_header": "Municipios\tDistritos\tSecciones\tDistribución por fuente de ingresos\tPeriodo\tTotal",
+      "first_data_row": "28001 Acebeda, La\t\t\tFuente de ingreso: salario\t2024\t."
+    },
+    {
+      "id": "ine-31102",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/31102.csv",
+      "checked_at": "2026-10-26T10:15:43.618739+00:00",
+      "bytes": 155211421,
+      "sha256": "26e78e141b0d68d155d3a602ff0a7ad54eec3cb82ea9a654ccb90f7d8bd9f4d2",
+      "cached_bytes": 138358283,
+      "cached_sha256": "fc29d2482395753f9c99b53e62bf7129f989e7986d4749b91a2042a29bba98f4",
+      "bytes_equal": false,
+      "status": "updated_2024_income",
+      "source_headers": {
+        "last-modified": "Mon, 19 Oct 2026 10:11:21 GMT",
+        "content-type": "text/plain;charset=ISO-8859-15"
+      },
+      "download_completeness": "full response body; server ignored Range",
+      "csv_header": "Municipios\tDistritos\tSecciones\tSexo\tDistribución de la renta por unidad de consumo\tPeriodo\tTotal",
+      "first_data_row": "28001 Acebeda, La\t\t\tTotal\tPoblación con ingresos por unidad de consumo por debajo 40% de la mediana\t2024\t."
+    },
+    {
+      "id": "ine-37727",
+      "url": "https://www.ine.es/jaxiT3/files/t/es/csv_bd/37727.csv",
+      "checked_at": "2026-10-26T10:15:27.756013+00:00",
+      "bytes": 11464631,
+      "sha256": "e3e66cc27c678127ff3b4fd70db24b32e6ce00f393f8bfb668370c57a509c7d1",
+      "cached_bytes": 10217862,
+      "cached_sha256": "79592703c78398ffceeb2850ca552bbdbaba5556394df4826de95912009310b7",
+      "bytes_equal": false,
+      "status": "updated_2024_income",
+      "source_headers": {
+        "last-modified": "Mon, 19 Oct 2026 10:11:21 GMT",
+        "content-type": "text/plain;charset=ISO-8859-15"
+      },
+      "download_completeness": "full response body; server ignored Range",
+      "csv_header": "Municipios\tDistritos\tSecciones\tÍndice de Gini y Distribución de la renta P80/P20\tPeriodo\tTotal",
+      "first_data_row": "28001 Acebeda, La\t\t\tÍndice de Gini\t2024\t."
+    },
+    {
+      "id": "madrid_current_sections_zip",
+      "url": "https://geoportal.madrid.es/fsdescargas/IDEAM_WBGEOPORTAL/LIMITES_ADMINISTRATIVOS/Seccionado/Secciones_Censales.zip",
+      "checked_at": "2026-10-26T10:15:26.048272+00:00",
+      "bytes": 510524,
+      "sha256": "36c0bbe0913606cead6842b3b2dc31c6e812ccf474eab0443ed825565c105cb2",
+      "cached_bytes": 509753,
+      "cached_sha256": "ac2388ea94298706aebc9e089139ce7a2d0deb74be4c00726b61d7b9f68727d5",
+      "bytes_equal": false,
+      "status": "changed_geometry",
+      "source_headers": {
+        "last-modified": "Fri, 18 Sep 2026 11:26:00 GMT",
+        "etag": "\"7ca3c-65bc02a346df0\"",
+        "content-length": "510524",
+        "content-type": "application/zip"
+      }
+    },
+    {
+      "id": "madrid_street_addresses_csv",
+      "url": "https://datos.madrid.es/dataset/213605-0-callejero-oficial-madrid/resource/213605-4-callejero-oficial-madrid-csv/download/213605-4-callejero-oficial-madrid-csv.csv",
+      "checked_at": "2026-10-26T10:15:28.644412+00:00",
+      "bytes": 34705052,
+      "sha256": "a69b2507e2b8660295433b46895ed94a3f7d9c5760ab3bacef019a90b9a93816",
+      "cached_bytes": 34696474,
+      "cached_sha256": "45c538dfc5bfa411950fbaeb0ee12fb08e27ae9a6ca00a5787f89dcb790fd2b6",
+      "bytes_equal": false,
+      "status": "changed",
+      "source_headers": {
+        "content-type": "text/csv; charset=utf-8",
+        "content-length": "34705052",
+        "last-modified": "Tue, 20 Oct 2026 11:20:27 GMT",
+        "etag": "\"1792495227.3868432-34705052-2903512525\""
+      }
+    },
+    {
+      "id": "madrid_building_heights_zip",
+      "url": "https://geoportal.madrid.es/fsdescargas/IDEAM_WBGEOPORTAL/CARTOGRAFIA/CARTOGRAFIA_ACTUALIZADA/ALTURAS_EDIFICIOS/ALTURAS_EDIFICIOS.ZIP",
+      "checked_at": "2026-10-26T10:15:29.942987+00:00",
+      "bytes": 50225954,
+      "sha256": "6059d4e9c5bfe7515ef22df0095af4fd3fdc21cfebe9a9407cc01d2c935169f0",
+      "cached_bytes": 46541251,
+      "cached_sha256": "0565645730752169567def6317942c07bfe6939be6e3f55d87908d8614fb5954",
+      "bytes_equal": false,
+      "status": "newer_input_available_before_last_deploy",
+      "source_headers": {
+        "last-modified": "Tue, 28 Jul 2026 13:27:03 GMT",
+        "etag": "\"2fe6322-657abcb65162f\"",
+        "content-length": "50225954",
+        "content-type": "application/zip"
+      }
+    },
+    {
+      "id": "catastro_buildings_zip",
+      "url": "https://www.catastro.hacienda.gob.es/INSPIRE/Buildings/28/28900-MADRID/A.ES.SDGC.BU.28900.zip",
+      "checked_at": "2026-10-26T10:17:25.003196+00:00",
+      "bytes": 116809103,
+      "sha256": "7c6551bb1f7a3faa925af387f31dcc82f39ac9e08a9261140b9659fcc5cfe348",
+      "cached_bytes": 105185640,
+      "cached_sha256": "a9e268ce05baa286e28df0421db36dc6608568bd1b76b504d3d966382ec634a1",
+      "bytes_equal": false,
+      "status": "changed",
+      "source_headers": {
+        "content-type": "application/x-zip-compressed",
+        "last-modified": "Fri, 21 Aug 2026 18:47:44 GMT",
+        "etag": "\"23557f8d9d31dd1:0\"",
+        "content-length": "116809103"
+      }
+    },
+    {
+      "id": "bicimad_geojson",
+      "url": "https://datos.emtmadrid.es/dataset/5fcc0945-2cbd-46c3-801a-6a83f4167c11/resource/105ce5df-793f-4e0a-a88e-5d3b3f024a5d/download/bikestationbicimad_geojson.json",
+      "checked_at": "2026-10-26T10:15:29.055650+00:00",
+      "bytes": 260785,
+      "sha256": "a2967fa177b4aed0c52bfe2329ca076b419ceb1e97a12e4475d37f3c1e808b91",
+      "cached_bytes": 260785,
+      "cached_sha256": "a2967fa177b4aed0c52bfe2329ca076b419ceb1e97a12e4475d37f3c1e808b91",
+      "bytes_equal": true,
+      "status": "unchanged",
+      "source_headers": {
+        "content-type": "application/json",
+        "content-length": "260785",
+        "last-modified": "Thu, 20 Nov 2025 10:03:53 GMT",
+        "etag": "\"1763633033.9176202-260785-2159809299\""
+      }
+    },
+    {
+      "id": "election_general_xlsx",
+      "url": "https://www.madrid.es/UnidadesDescentralizadas/UDCEstadistica/Nuevaweb/Elecciones%20y%20Participaci%C3%B3n%20Ciudadana/Elecciones/Resultados%20electorales/Congreso/Congreso%202023/Mesas/G1340123_prov.xlsx",
+      "checked_at": "2026-10-26T10:15:29.123990+00:00",
+      "bytes": 472783,
+      "sha256": "74a7d938e099660bdd2ae4f846f88a777c0bff4f0ae1a2ee970ab22e66726c7a",
+      "cached_bytes": 472783,
+      "cached_sha256": "74a7d938e099660bdd2ae4f846f88a777c0bff4f0ae1a2ee970ab22e66726c7a",
+      "bytes_equal": true,
+      "status": "unchanged",
+      "source_headers": {
+        "last-modified": "Sun, 29 Jun 2025 14:13:29 GMT",
+        "etag": "\"736cf-638b683f8d130-gzip\"",
+        "content-type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      }
+    },
+    {
+      "id": "election_local_xlsx",
+      "url": "https://www.madrid.es/UnidadesDescentralizadas/UDCEstadistica/Nuevaweb/Elecciones%20y%20Participaci%C3%B3n%20Ciudadana/Elecciones/Resultados%20electorales/Ayto/Ayuntamiento%202023/Mesas/G1140123.xlsx",
+      "checked_at": "2026-10-26T10:15:29.328344+00:00",
+      "bytes": 634496,
+      "sha256": "9e710f24d77ca36fb0efd448c91ce26f766f938c559a1fa44c9eaf23326c2ce5",
+      "cached_bytes": 634496,
+      "cached_sha256": "9e710f24d77ca36fb0efd448c91ce26f766f938c559a1fa44c9eaf23326c2ce5",
+      "bytes_equal": true,
+      "status": "unchanged",
+      "source_headers": {
+        "last-modified": "Sun, 30 Mar 2025 15:37:57 GMT",
+        "etag": "\"9ae80-63191167af41a-gzip\"",
+        "content-type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      }
+    },
+    {
+      "id": "election_assembly_xlsx",
+      "url": "https://www.madrid.es/UnidadesDescentralizadas/UDCEstadistica/Nuevaweb/Elecciones%20y%20Participaci%C3%B3n%20Ciudadana/Elecciones/Resultados%20electorales/Asamblea/Asamblea%202023/Mesas/G1240123.xlsx",
+      "checked_at": "2026-10-26T10:15:29.411425+00:00",
+      "bytes": 466371,
+      "sha256": "d03015c7111ae86cba8c44e1051a685071a407dad7c059b2d4aaf485f8dcbac6",
+      "cached_bytes": 466371,
+      "cached_sha256": "d03015c7111ae86cba8c44e1051a685071a407dad7c059b2d4aaf485f8dcbac6",
+      "bytes_equal": true,
+      "status": "unchanged",
+      "source_headers": {
+        "last-modified": "Sun, 30 Mar 2025 17:31:23 GMT",
+        "etag": "\"71dc3-63192ac231756-gzip\"",
+        "content-type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      }
+    },
+    {
+      "id": "madrid_birth_country_2026_xlsx",
+      "url": "https://www.madrid.es/UnidadesDescentralizadas/UDCEstadistica/Nuevaweb/Demograf%C3%ADa%20y%20poblaci%C3%B3n/Cifras%20de%20poblaci%C3%B3n/PMH/Caracter%C3%ADsticas/Lugar%20de%20Nacimiento/C14141126.xlsx",
+      "checked_at": "2026-10-26T10:15:29.565465+00:00",
+      "bytes": 399110,
+      "sha256": "eb7b18817b189b0361bb04964ef6dbc37dc1b9a503affa512f815e2f7a6e8ab9",
+      "status": "predates_deployment_no_cached_comparator",
+      "source_headers": {
+        "last-modified": "Fri, 08 May 2026 06:42:45 GMT",
+        "etag": "\"61706-65148b45526c1-gzip\"",
+        "content-type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      }
+    },
+    {
+      "id": "gtfs-metro",
+      "url": "https://www.arcgis.com/sharing/rest/content/items/5c7f2951962540d69ffe8f640d94c246/data",
+      "checked_at": "2026-10-26T10:15:30.360097+00:00",
+      "bytes": 1503773,
+      "sha256": "16e8e53ce16ab6d73efc2896be7aaeeb351a1f48f661ac7faa0a9e5b38204fb7",
+      "cached_bytes": 1503773,
+      "cached_sha256": "16e8e53ce16ab6d73efc2896be7aaeeb351a1f48f661ac7faa0a9e5b38204fb7",
+      "bytes_equal": true,
+      "feed_info": "feed_publisher_name,feed_publisher_url,feed_lang,feed_start_date,feed_end_date,feed_version\r\nConsorcio Regional de Transportes de Madrid,https://www.crtm.es,es,,,20250527\r\n",
+      "status": "unchanged",
+      "source_headers": {
+        "content-type": "application/zip",
+        "content-length": "1503773",
+        "etag": "\"19721110cd8\""
+      }
+    },
+    {
+      "id": "gtfs-metro_ligero",
+      "url": "https://www.arcgis.com/sharing/rest/content/items/aaed26cc0ff64b0c947ac0bc3e033196/data",
+      "checked_at": "2026-10-26T10:15:30.504681+00:00",
+      "bytes": 417242,
+      "sha256": "44bf654e955c9350599f671f1b30984d894dc5c088a568f5f141805a098f1a36",
+      "cached_bytes": 417241,
+      "cached_sha256": "b83b5343bcfbfba664b7ae633d563c0c5e9de3b0d03eec140a8fac5b07ff313b",
+      "bytes_equal": false,
+      "feed_info": "feed_publisher_name,feed_publisher_url,feed_lang,feed_start_date,feed_end_date,feed_version\r\nConsorcio Regional de Transportes de Madrid,https://www.crtm.es,es,,,20261015\r\n",
+      "status": "calendar_and_feed_metadata_only",
+      "source_headers": {
+        "content-type": "application/zip",
+        "content-length": "417242",
+        "etag": "\"1a144e7e2d0\""
+      }
+    },
+    {
+      "id": "gtfs-emt",
+      "url": "https://www.arcgis.com/sharing/rest/content/items/868df0e58fca47e79b942902dffd7da0/data",
+      "checked_at": "2026-10-26T10:15:31.094942+00:00",
+      "bytes": 21047059,
+      "sha256": "41f957e84dbfe82b963d3600555bfdf9ce292e90e5c26d8797c7c4be1906c0c2",
+      "cached_bytes": 20102675,
+      "cached_sha256": "2068e3c01f6a2383ecc0a2c44b8ce23b8fff5b4553498094f1647292828f627d",
+      "bytes_equal": false,
+      "status": "changed_network",
+      "source_headers": {
+        "content-type": "application/zip",
+        "content-length": "21047059",
+        "etag": "\"1a144dd3858\""
+      }
+    },
+    {
+      "id": "cercanias-stations",
+      "url": "https://services5.arcgis.com/UxADft6QPcvFyDU1/arcgis/rest/services/M5_Red/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson&outSR=4326",
+      "checked_at": "2026-10-26T10:15:31.138485+00:00",
+      "bytes": 143693,
+      "sha256": "d6baf53d31c1b45cbb6de365ee43112bb2ff99e1c783e62630ea27e617735839",
+      "cached_bytes": 143693,
+      "cached_sha256": "d6baf53d31c1b45cbb6de365ee43112bb2ff99e1c783e62630ea27e617735839",
+      "bytes_equal": true,
+      "status": "unchanged",
+      "source_headers": {
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "143693",
+        "last-modified": "Thu, 04 Jun 2026 12:03:03 GMT",
+        "etag": "sd1844_867903489"
+      }
+    },
+    {
+      "id": "cercanias-lines",
+      "url": "https://services5.arcgis.com/UxADft6QPcvFyDU1/arcgis/rest/services/M5_Red/FeatureServer/4/query?where=1%3D1&outFields=*&f=geojson&outSR=4326",
+      "checked_at": "2026-10-26T10:15:31.753389+00:00",
+      "bytes": 1010642,
+      "sha256": "8dcdbc090fc3e9ed15e2fadcf711c97fa25b2433eb7853d0ae67ebad0f88f6ba",
+      "cached_bytes": 1010642,
+      "cached_sha256": "8dcdbc090fc3e9ed15e2fadcf711c97fa25b2433eb7853d0ae67ebad0f88f6ba",
+      "bytes_equal": true,
+      "status": "unchanged",
+      "source_headers": {
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "1010642",
+        "last-modified": "Thu, 04 Jun 2026 12:03:07 GMT",
+        "etag": "sd1848_894817809"
+      }
+    },
+    {
+      "id": "neighbourhoods",
+      "url": "https://geoportal.madrid.es/fsdescargas/IDEAM_WBGEOPORTAL/LIMITES_ADMINISTRATIVOS/Barrios/TopoJSON/Barrios.json",
+      "checked_at": "2026-10-26T10:15:31.250142+00:00",
+      "bytes": 253545,
+      "sha256": "92a16bbe7c790cb53650ed538aae68fb82da5ec8ac249c400dd2503925920ac7",
+      "cached_bytes": 248402,
+      "cached_sha256": "a32d4e82b08f7a843f79e13a6463fe6eefaa8f20da66e7e8e9261a93dcf0a9d3",
+      "bytes_equal": false,
+      "status": "changed_geometry",
+      "source_headers": {
+        "last-modified": "Thu, 17 Sep 2026 11:11:50 GMT",
+        "etag": "\"3de69-65babd9bec586\"",
+        "content-length": "253545",
+        "content-type": "text/plain"
+      }
+    },
+    {
+      "id": "padron-latest",
+      "url": "https://datos.madrid.es/dataset/200076-0-padron/resource/200076-2-padron-csv/download/200076_20261006_220058.csv",
+      "checked_at": "2026-10-26T10:16:44.672964+00:00",
+      "bytes": 34089438,
+      "sha256": "5333f9ac9b56204f3050c7136f748dbcd12b9b0e3029c1d746040514b53634fc",
+      "cached_bytes": 34072100,
+      "cached_sha256": "537fd5c194d3f0b779ce62fa6343d37bc2684cb6ab33883ef906cdf486477897",
+      "bytes_equal": false,
+      "status": "updated_2026_10_01",
+      "source_headers": {
+        "content-type": "text/csv; charset=utf-8",
+        "content-length": "34089438",
+        "last-modified": "Tue, 06 Oct 2026 22:02:58 GMT",
+        "etag": "\"1791324178.2237296-34089438-1591742202\""
+      }
+    },
+    {
+      "id": "padron-2021-07",
+      "url": "https://datos.madrid.es/dataset/209163-0-padron-municipal-historico/resource/209163-104-padron-municipal-historico-csv/download/209163-104-padron-municipal-historico-csv.csv",
+      "checked_at": "2026-10-26T10:21:43.199794+00:00",
+      "bytes": 22597971,
+      "sha256": "7358d5314362d415b870f0741b635f32b9b81303050bb7481584fcca4abf4de4",
+      "cached_bytes": 22597971,
+      "cached_sha256": "7358d5314362d415b870f0741b635f32b9b81303050bb7481584fcca4abf4de4",
+      "bytes_equal": true,
+      "status": "unchanged",
+      "source_headers": {
+        "content-type": "text/csv; charset=utf-8",
+        "content-length": "22597971",
+        "last-modified": "Sun, 15 Feb 2026 22:53:33 GMT",
+        "etag": "\"1771196013.832531-22597971-18028371\""
+      }
+    },
+    {
+      "id": "padron-2021-10",
+      "url": "https://datos.madrid.es/dataset/209163-0-padron-municipal-historico/resource/209163-50-padron-municipal-historico-csv/download/209163-50-padron-municipal-historico-csv.csv",
+      "checked_at": "2026-10-26T10:21:43.565420+00:00",
+      "bytes": 22616815,
+      "sha256": "c88ca881f52d32078948c223f190f173d29a43bb3abf505302cdbe3dc2c1ced3",
+      "status": "new_comparator_available",
+      "source_headers": {
+        "content-type": "text/csv; charset=utf-8",
+        "content-length": "22616815",
+        "last-modified": "Sun, 15 Feb 2026 23:09:49 GMT",
+        "etag": "\"1771196989.964529-22616815-4026734371\""
+      }
+    },
+    {
+      "id": "boundary-2021",
+      "url": "https://www.ine.es/geoserver/WMS_INE_SECCIONES_G01/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=WMS_INE_SECCIONES_G01%3ASecciones_2021&outputFormat=application%2Fjson&CQL_FILTER=CUMUN%3D%2728079%27%20AND%20CSEC%3C%3E%27000%27&count=10000&srsName=EPSG%3A4326",
+      "checked_at": "2026-10-26T10:17:20.794364+00:00",
+      "bytes": 3713501,
+      "sha256": "21858072fabd8e57474ec47a4c0092ae7d81b5ec2b32731ef701ddcd300732d7",
+      "cached_bytes": 3713501,
+      "cached_sha256": "9f5bfda64fbf74f76cc66b04752394d2bf49616c7c3784781614d6c866ef33da",
+      "bytes_equal": false,
+      "status": "features_unchanged_response_timestamp_only",
+      "source_headers": {
+        "content-type": "application/json;charset=UTF-8"
+      },
+      "feature_collection_equal": true
+    },
+    {
+      "id": "boundary-2023",
+      "url": "https://www.ine.es/geoserver/WMS_INE_SECCIONES_G01/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=WMS_INE_SECCIONES_G01%3ASecciones_2023&outputFormat=application%2Fjson&CQL_FILTER=CUMUN%3D%2728079%27%20AND%20CSEC%3C%3E%27000%27&count=10000&srsName=EPSG%3A4326",
+      "checked_at": "2026-10-26T10:17:00.077473+00:00",
+      "bytes": 3703074,
+      "sha256": "3dff5c7bcbe39bcc8adbbf3a1394639bb2825740e8ac68f454e47f7b3704a628",
+      "cached_bytes": 3703074,
+      "cached_sha256": "1c01cf95f4679e99782f33e8a6c89476fcd8a9113516de49e8be16fecf16be54",
+      "bytes_equal": false,
+      "status": "features_unchanged_response_timestamp_only",
+      "source_headers": {
+        "content-type": "application/json;charset=UTF-8"
+      },
+      "feature_collection_equal": true
+    },
+    {
+      "id": "boundary-2024",
+      "url": "https://www.ine.es/geoserver/WMS_INE_SECCIONES_G01/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=WMS_INE_SECCIONES_G01%3ASecciones_2024&outputFormat=application%2Fjson&CQL_FILTER=CUMUN%3D%2728079%27%20AND%20CSEC%3C%3E%27000%27&count=10000&srsName=EPSG%3A4326",
+      "checked_at": "2026-10-26T10:16:45.430898+00:00",
+      "bytes": 3705082,
+      "sha256": "1e2b96e5ca578902a305cd120e9764bc3ad57aea370264489cdd9967d3907582",
+      "cached_bytes": 3705082,
+      "cached_sha256": "895b921168f989f8e62de8d039adf2a882926616222a2b06e52e4082a4548c36",
+      "bytes_equal": false,
+      "status": "features_unchanged_response_timestamp_only",
+      "source_headers": {
+        "content-type": "application/json;charset=UTF-8"
+      },
+      "feature_collection_equal": true
+    },
+    {
+      "id": "boundary-2025",
+      "url": "https://www.ine.es/geoserver/WMS_INE_SECCIONES_G01/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=WMS_INE_SECCIONES_G01%3ASecciones_2025&outputFormat=application%2Fjson&CQL_FILTER=CUMUN%3D%2728079%27%20AND%20CSEC%3C%3E%27000%27&count=10000&srsName=EPSG%3A4326",
+      "checked_at": "2026-10-26T10:16:46.548490+00:00",
+      "bytes": 3712637,
+      "sha256": "d29a6f9fad429712159ebcbce51a03e960728033d2e8198745334f335137d437",
+      "cached_bytes": 3712637,
+      "cached_sha256": "0d12baa7f7e6aee01835b5d2a044f3bcdf4b42131a77946844987fa4d4ef8563",
+      "bytes_equal": false,
+      "status": "features_unchanged_response_timestamp_only",
+      "source_headers": {
+        "content-type": "application/json;charset=UTF-8"
+      },
+      "feature_collection_equal": true
+    }
+  ],
+  "spatial_checks": {
+    "countOld": 2462,
+    "countNew": 2462,
+    "sameIdentifiers": true,
+    "validOld": true,
+    "validNew": true,
+    "topologicallyChangedIds": [
+      "09002",
+      "09072",
+      "09073",
+      "09079",
+      "09083",
+      "09085",
+      "09088",
+      "09089",
+      "09092",
+      "09093",
+      "09096",
+      "10151",
+      "10152",
+      "10154",
+      "10158"
+    ]
+  },
+  "source_feature_counts": {
+    "new_catastro_raw_buildings": 124396,
+    "old_height_raw_records": 490740,
+    "new_height_raw_records": 492776,
+    "neighbourhoods_old": 131,
+    "neighbourhoods_new": 131,
+    "neighbourhoods_topologically_changed": 109,
+    "emt_old_routes": 236,
+    "emt_new_routes": 236,
+    "emt_old_stops": 4924,
+    "emt_new_stops": 4928
+  },
+  "income_2024": {
+    "release_date": "2026-10-19",
+    "reference_year": 2024,
+    "matching_geography_year": 2025,
+    "active_madrid_sections_all_seven_metrics": 2462,
+    "geography_2025_missing_income_ids": 0,
+    "income_ids_missing_geography_2025": 0,
+    "income_ids_missing_geography_2023_or_2024": 19,
+    "geography_2023_or_2024_ids_without_income": 7,
+    "districts_08_11_active_sections_with_poverty_and_high_income_values": 369,
+    "methodology_url": "https://www.ine.es/metodologia/metodologia_adrh.pdf",
+    "suppression_rules_changed": true
+  },
+  "population_reconciliation": {
+    "july": {
+      "observation_date": "2026-07-01",
+      "all_source_residents": 3512850,
+      "unassigned_section_residents": 1,
+      "mapped_including_100_plus": 3512849,
+      "omitted_100_plus_assigned_residents": 2495,
+      "existing_parser_mapped_residents": 3510354
+    },
+    "october": {
+      "observation_date": "2026-10-01",
+      "all_source_residents": 3535824,
+      "unassigned_section_residents": 3,
+      "mapped_including_100_plus": 3535821,
+      "omitted_100_plus_assigned_residents": 2554,
+      "existing_parser_mapped_residents": 3533267
+    }
+  },
+  "limits": [
+    "No production rebuild or deployment performed.",
+    "Catastro ZIP required the certificate workaround already used in this repository. Its archive and main building GML were read successfully.",
+    "A guessed Catastro provincial Atom URL returned HTML and was excluded from version evidence.",
+    "Raw source bodies remained in a temporary audit directory; only the audit ledger and plan were added to the repository.",
+    "OpenFreeMap basemaps are remote runtime inputs and were not treated as frozen atlas build inputs.",
+    "Municipal 2026 birthplace ranking workbook predates deployment; its historical bytes cannot be checked because there is no cached original."
+  ]
+}
