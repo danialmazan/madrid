@@ -72,3 +72,7 @@ excluded from Git. To refresh again, audit the new sources, update the lock and 
 comparator together, stage the selected files, and run the full pipeline. `public/data/source-versions.json`
 publishes the release's provenance. Client data requests carry a source-lock-derived cache version. `section-reports.json` is schema **2.0.0**, separating income and
 election geographies; public map layer IDs and shared URL state remain compatible.
+
+## Browser analytics opt-out
+
+The HTML entry loads Cloudflare Web Analytics only when `localStorage.getItem("exclude_cf_analytics") !== "1"`. To exclude this browser profile, run `localStorage.setItem("exclude_cf_analytics", "1"); location.reload();` in the site console. To restore tracking, run `localStorage.removeItem("exclude_cf_analytics"); location.reload();`. The preference persists for the exact origin and is shared by all project paths under `https://danielalmazan.com`. Other browsers and profiles retain normal tracking. Reload existing tabs after changing it. No visible settings or other analytics integrations are changed.
